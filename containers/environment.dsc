@@ -33,7 +33,6 @@ pip3 install iniconfig==1.1.1
 pip3 install Jinja2==2.11.3
 pip3 install joblib==1.0.1
 pip3 install kiwisolver==1.3.1
-pip3 install llvmlite==0.35.0
 pip3 install MarkupSafe==1.1.1
 pip3 install matplotlib==3.3.4
 pip3 install networkx==2.5
