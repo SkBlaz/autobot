@@ -86,6 +86,7 @@ class GAlearner:
                  classifier_hyperparameters=None,
                  custom_transformer_pipeline=None,
                  combine_with_existing_representation = False,
+                 conceptnet_url = "https://s3.amazonaws.com/conceptnet/downloads/2019/edges/conceptnet-assertions-5.7.0.csv.gz",
                  verbose = 1):
         """
         The object initialization method
@@ -105,6 +106,7 @@ class GAlearner:
         :param memory_storage: The storage of conceptnet.txt.gz-like triplet database
         :param classifier: custom classifier. If none, linear learners are used.
         :param classifier_hyperparameters: The space to be optimized w.r.t. the classifier param.
+        :param conceptnet_url: URL of the conceptnet used.
         """
         
         logo = """
@@ -206,9 +208,8 @@ class GAlearner:
                 )
 
                 os.mkdir("./memory")
-                url = "https://s3.amazonaws.com/conceptnet/downloads/2019/edges/conceptnet-assertions-5.7.0.csv.gz"
 
-                wget.download(url, out="memory")
+                wget.download(conceptnet_url, out="memory")
                 fname = list(
                     os.walk("memory"))[0][2][0]  ## Get the new file name
 
@@ -228,10 +229,10 @@ class GAlearner:
                 cnames = list(
                     os.walk("memory"))[0][2][0]
                 self.memory_storage = self.memory_storage+"/"+cnames
-                if self.verbose: logging.info(f"Found the knowledge graph memory storage. Please do the following: \n a) Check if there is empty memory folder. \n b) Download manually into the created memory folder via: {url} \n c) Check if the file is not corrupted. \n autoBOT will now continue without the ConceptNet-based features!")
                 
-            except:
-                if self.verbose: logging.info("Could not find the conceptnet memory storage.")
+            except Exception as es:
+
+                if self.verbose: logging.info(f"Could not find the knowledge graph memory storage. Please do the following: \n a) Check if there is empty memory folder. \n b) Download manually into the created memory folder via: {conceptnet_url} \n c) Check if the file is not corrupted. \n autoBOT will now continue without the ConceptNet-based features!")
                 self.include_concept_features = False
             
 
