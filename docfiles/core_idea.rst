@@ -29,7 +29,7 @@ The minimal example is given next. Let's first inspect how a model is trained.
 		hof_size=3,  # size of the hall of fame
 		top_k_importances=25,  # how many top features to output as final ranking
 		memory_storage=
-		"../memory/conceptnet.txt.gz",  # tripled base for concept features
+		"./memory",  # tripled base for concept features
 		representation_type="neurosymbolic")  # or symbolic or neural
 		
 	autoBOTLibObj.evolve(

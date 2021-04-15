@@ -20,7 +20,7 @@ autoBOTLibObj = autoBOTLib.GAlearner(
     hof_size=3,  # size of the hall of fame
     top_k_importances=25,  # how many top features to output as final ranking
     memory_storage=
-    "../memory",  # tripled base for concept features
+    "./memory",  # tripled base for concept features
     representation_type="neurosymbolic")  # or symbolic or neural
 
 autoBOTLibObj.evolve(

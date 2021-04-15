@@ -227,7 +227,7 @@ class GAlearner:
 
             try:
                 cnames = list(
-                    os.walk("memory"))[0][2][0]
+                    os.walk(self.memory_storage))[0][2][0]
                 self.memory_storage = self.memory_storage+"/"+cnames
                 
             except Exception as es:
