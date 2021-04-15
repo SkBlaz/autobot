@@ -1,6 +1,6 @@
 Potentially interesting further work
 ===============
-We finally discuss the potential implications of the current version of autoBOT, how and where it could be further.
+We finally discuss the potential implications of the current version of autoBOT, how and where it could be further used.
 
 Extensions with contextual neural representations
 ---------
