@@ -1,7 +1,6 @@
 # autoBOT - Explainable AutoML for text classification
 Welcome to *autoBOT*'s documentation and source pages. Here, you can find simple examples to get you started,
-but also delve deeper into autoBOT's capabilities. Tutorials and more extensive documentation are available [here](link to docs).
-
+but also delve deeper into autoBOT's capabilities.
 <pre>
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWM

@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Potentially interesting further work &mdash; autoBOT  documentation</title>
@@ -87,11 +88,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">About:</span></p>
+              <p><span class="caption-text">About:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="key_idea.html">Key idea behind autoBOTLib</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Tutorial and first steps:</span></p>
+<p><span class="caption-text">Tutorial and first steps:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_idea.html">autoBOTLib library</a></li>
@@ -107,7 +108,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Contents:</span></p>
+<p><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="autobot.html">autobot package</a></li>
 </ul>
@@ -177,30 +178,30 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="potentially-interesting-further-work">
+  <section id="potentially-interesting-further-work">
 <h1>Potentially interesting further work<a class="headerlink" href="#potentially-interesting-further-work" title="Permalink to this headline">¶</a></h1>
 <p>We finally discuss the potential implications of the current version of autoBOT, how and where it could be further.</p>
-<div class="section" id="extensions-with-contextual-neural-representations">
+<section id="extensions-with-contextual-neural-representations">
 <h2>Extensions with contextual neural representations<a class="headerlink" href="#extensions-with-contextual-neural-representations" title="Permalink to this headline">¶</a></h2>
 <p>Current version of autoBOT does not include any Transformer-based e.g., sentence representations.
 Adding this functionality is one API call away, and could notably boost the performance.</p>
-</div>
-<div class="section" id="improving-the-classification-phase">
+</section>
+<section id="improving-the-classification-phase">
 <h2>Improving the classification phase<a class="headerlink" href="#improving-the-classification-phase" title="Permalink to this headline">¶</a></h2>
 <p>Given that the current implementation of autoBOT includes the SGD-based linear learners, a natural extension at this point
 is the use of more involved classifiers. Current implementation (see <cite>examples</cite>) offers this functionality out-of-the-box.</p>
-</div>
-<div class="section" id="speeding-up-evolution">
+</section>
+<section id="speeding-up-evolution">
 <h2>Speeding up evolution<a class="headerlink" href="#speeding-up-evolution" title="Permalink to this headline">¶</a></h2>
 <p>Current implementation of evolution is one of the most basic ones. Should more involved, potentially multi-objective
 scenarios be considered, it’s possible this step can be drastically improved via e.g., inclusion of Pareto front-based traversals etc.</p>
-</div>
-<div class="section" id="meta-transfer-learning">
+</section>
+<section id="meta-transfer-learning">
 <h2>Meta-transfer learning<a class="headerlink" href="#meta-transfer-learning" title="Permalink to this headline">¶</a></h2>
 <p>Given that current implementation of autoBOT results in solution vectors that potentially represent the representation space suitable
 for a given document, we believe that using such information as <cite>priors</cite> could speed up the evolution on novel data sets from the same domain.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
