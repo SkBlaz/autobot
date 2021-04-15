@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Potentially interesting further work &mdash; autoBOT  documentation</title>
@@ -39,7 +40,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="autobot package" href="autobot.html" />
-    <link rel="prev" title="Singularity container for autoBOT" href="containerization.html" /> 
+    <link rel="prev" title="Using custom background knowledge" href="custom_knowledge.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -87,11 +88,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">About:</span></p>
+              <p><span class="caption-text">About:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="key_idea.html">Key idea behind autoBOTLib</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Tutorial and first steps:</span></p>
+<p><span class="caption-text">Tutorial and first steps:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_idea.html">autoBOTLib library</a></li>
@@ -100,6 +101,7 @@
 <li class="toctree-l1"><a class="reference internal" href="model_persistence.html">Model persistence</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cli_usage.html">autoBOTLib CLI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="containerization.html">Singularity container for autoBOT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_knowledge.html">Using custom background knowledge</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Potentially interesting further work</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#extensions-with-contextual-neural-representations">Extensions with contextual neural representations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#improving-the-classification-phase">Improving the classification phase</a></li>
@@ -108,7 +110,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Contents:</span></p>
+<p><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="autobot.html">autobot package</a></li>
 </ul>
@@ -178,30 +180,30 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="potentially-interesting-further-work">
+  <section id="potentially-interesting-further-work">
 <h1>Potentially interesting further work<a class="headerlink" href="#potentially-interesting-further-work" title="Permalink to this headline">¶</a></h1>
 <p>We finally discuss the potential implications of the current version of autoBOT, how and where it could be further used.</p>
-<div class="section" id="extensions-with-contextual-neural-representations">
+<section id="extensions-with-contextual-neural-representations">
 <h2>Extensions with contextual neural representations<a class="headerlink" href="#extensions-with-contextual-neural-representations" title="Permalink to this headline">¶</a></h2>
 <p>Current version of autoBOT does not include any Transformer-based e.g., sentence representations.
 Adding this functionality is one API call away, and could notably boost the performance.</p>
-</div>
-<div class="section" id="improving-the-classification-phase">
+</section>
+<section id="improving-the-classification-phase">
 <h2>Improving the classification phase<a class="headerlink" href="#improving-the-classification-phase" title="Permalink to this headline">¶</a></h2>
 <p>Given that the current implementation of autoBOT includes the SGD-based linear learners, a natural extension at this point
 is the use of more involved classifiers. Current implementation (see <cite>examples</cite>) offers this functionality out-of-the-box.</p>
-</div>
-<div class="section" id="speeding-up-evolution">
+</section>
+<section id="speeding-up-evolution">
 <h2>Speeding up evolution<a class="headerlink" href="#speeding-up-evolution" title="Permalink to this headline">¶</a></h2>
 <p>Current implementation of evolution is one of the most basic ones. Should more involved, potentially multi-objective
 scenarios be considered, it’s possible this step can be drastically improved via e.g., inclusion of Pareto front-based traversals etc.</p>
-</div>
-<div class="section" id="meta-transfer-learning">
+</section>
+<section id="meta-transfer-learning">
 <h2>Meta-transfer learning<a class="headerlink" href="#meta-transfer-learning" title="Permalink to this headline">¶</a></h2>
 <p>Given that current implementation of autoBOT results in solution vectors that potentially represent the representation space suitable
 for a given document, we believe that using such information as <cite>priors</cite> could speed up the evolution on novel data sets from the same domain.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -210,7 +212,7 @@ for a given document, we believe that using such information as <cite>priors</ci
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="autobot.html" class="btn btn-neutral float-right" title="autobot package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="containerization.html" class="btn btn-neutral float-left" title="Singularity container for autoBOT" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="custom_knowledge.html" class="btn btn-neutral float-left" title="Using custom background knowledge" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

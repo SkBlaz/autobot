@@ -20,6 +20,7 @@ Welcome to *autoBOT*'s documentation
    model_persistence.rst
    cli_usage.rst
    containerization.rst
+   custom_knowledge.rst
    ideas.rst
 
 .. toctree::
