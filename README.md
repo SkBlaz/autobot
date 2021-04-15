@@ -36,3 +36,5 @@ MMMMMMMMMMMMMWKkl;. .l0d.     ...:k0xclONWNkldONMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMWKkl:lkx,.    ..:x0d:ckNNOdx0NWMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMN0OXO:,,,;;o0K0kocdXNNWMMMMMMMMMMMMMMMMMMMMMMMMMM
 </pre>
+
+To explore autoBOT's functionality, start with the [docs](https://skblaz.github.io/autobot/).
