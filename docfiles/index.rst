@@ -1,7 +1,7 @@
 Welcome to *autoBOT*'s documentation
 ===================================
 
-`autoBOT <https://github.com/SkBlaz/autobot/>`_ is an autoML system for automatic explainable classification of *texts*. It includes automatically generated features at different granualrities, evolved to offer optimal performance/explainability tradeoff.
+`autoBOT <https://github.com/SkBlaz/autobot/>`_ is an autoML system for automatic explainable classification of *texts*. It includes automatically generated features at different granularities, evolved to offer optimal performance/explainability tradeoff.
 
 .. toctree::
    :maxdepth: 3
