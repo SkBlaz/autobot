@@ -30,9 +30,9 @@ autoBOTLibObj.evolve(
     mutpb=0.4)  ## mutation rate
 
 ## Persistence demonstration (how to store models for further use?)
-autoBOTLib.store_autoBOTLib_model(autoBOTLibObj,
+autoBOTLib.store_autobot_model(autoBOTLibObj,
                             "../stored_models/example_insults_model.pickle")
-autoBOTLibObj = autoBOTLib.load_autoBOTLib_model(
+autoBOTLibObj = autoBOTLib.load_autobot_model(
     "../stored_models/example_insults_model.pickle")
 
 dataframe2 = pd.read_csv("../data/insults/test.tsv", sep="\t")
