@@ -31,7 +31,7 @@ We next demonstrate how simple it is to load a pre-trained model and obtain some
        mutpb=0.4)  ## mutation rate
 
     ## Persistence demonstration (how to store models for further use?)
-    autoBOTLib.store_autoBOTLib_model(autoBOTLibObj, "../stored_models/example_insults_model.pickle")
+    autoBOTLib.store_autobot_model(autoBOTLibObj, "../stored_models/example_insults_model.pickle")
 
 
 Let's next load the very same model and do some predictions.
@@ -45,7 +45,7 @@ Let's next load the very same model and do some predictions.
     import pandas as pd
 
     ## Simply load the model
-    autoBOTLibObj = autoBOTLib.load_autoBOTLib_model("../stored_models/example_insults_model.pickle")
+    autoBOTLibObj = autoBOTLib.load_autobot_model("../stored_models/example_insults_model.pickle")
     dataframe2 = pd.read_csv("../data/insults/test.tsv", sep="\t")
     test_sequences = dataframe2['text_a'].values.tolist()
     test_targets = dataframe2['label'].values
