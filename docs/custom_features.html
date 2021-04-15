@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Using custom feature transformers &mdash; autoBOT  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Model persistence" href="model_persistence.html" />
+    <link rel="prev" title="Using custom classifiers" href="custom_classifiers.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> autoBOT
+          
+
+          
+            
+            <img src="_static/autobotScheme.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">About:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="key_idea.html">Key idea behind autoBOTLib</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorial and first steps:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_idea.html">autoBOTLib library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_classifiers.html">Using custom classifiers</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using custom feature transformers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#using-custom-features">Using custom features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#extending-existing-feature-spaces">Extending existing feature spaces</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="model_persistence.html">Model persistence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_usage.html">autoBOTLib CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ideas.html">Potentially interesting further work</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="autobot.html">autobot package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">autoBOT</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Using custom feature transformers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/custom_features.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-custom-feature-transformers">
+<h1>Using custom feature transformers<a class="headerlink" href="#using-custom-feature-transformers" title="Permalink to this headline">¶</a></h1>
+<p>You can use any custom feature transformer classes as part of the evolution. In the following examples, we demonstrate one of the most powerful functionalities of autoBOTLib - its modularity.</p>
+<div class="section" id="using-custom-features">
+<h2>Using custom features<a class="headerlink" href="#using-custom-features" title="Permalink to this headline">¶</a></h2>
+<p>Let’s explore the following example.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## how to use custom features?</span>
+<span class="kn">import</span> <span class="nn">autoBOTLib</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">pipeline</span> <span class="c1">## A necessary import</span>
+
+<span class="c1">## Load example data frame</span>
+<span class="n">dataframe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/insults/train.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">train_sequences</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;text_a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">train_targets</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+
+<span class="c1">## Let&#39;s say we wish to use only the following two text-to-feature transformer objects</span>
+<span class="n">tfidf_word_unigram</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+                                     <span class="n">sublinear_tf</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                     <span class="n">max_features</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">tfidf_char_bigram</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">analyzer</span><span class="o">=</span><span class="s1">&#39;char&#39;</span><span class="p">,</span>
+                                    <span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+                                    <span class="n">max_features</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1">## Note: You can use any transformer class that is implemented in accordance with the scikit-learn API (.fit, .transform, .fit_transform, .get_feature_names, etc.)</span>
+
+
+<span class="c1">## Next, put them into a list. Note the use of text_col class.</span>
+<span class="n">custom_features</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s1">&#39;word_features&#39;</span><span class="p">,</span>
+                 <span class="n">pipeline</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;s1&#39;</span><span class="p">,</span> <span class="n">autoBOTLib</span><span class="o">.</span><span class="n">feature_constructors</span><span class="o">.</span><span class="n">text_col</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;no_stopwords&#39;</span><span class="p">)),</span>
+                                    <span class="p">(</span><span class="s1">&#39;word_tfidf_unigram&#39;</span><span class="p">,</span> <span class="n">tfidf_word_unigram</span><span class="p">)])),</span>
+                <span class="p">(</span><span class="s1">&#39;char_features&#39;</span><span class="p">,</span>
+                 <span class="n">pipeline</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;s2&#39;</span><span class="p">,</span> <span class="n">autoBOTLib</span><span class="o">.</span><span class="n">feature_constructors</span><span class="o">.</span><span class="n">text_col</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;no_stopwords&#39;</span><span class="p">)),</span>
+                                    <span class="p">(</span><span class="s1">&#39;char_tfidf_bigram&#39;</span><span class="p">,</span> <span class="n">tfidf_char_bigram</span><span class="p">)]))</span>
+            <span class="p">]</span>
+
+<span class="c1">## Finally, specify this list as</span>
+<span class="n">autoBOTLibObj</span> <span class="o">=</span> <span class="n">autoBOTLib</span><span class="o">.</span><span class="n">GAlearner</span><span class="p">(</span><span class="n">train_sequences</span><span class="p">,</span>
+                               <span class="n">train_targets</span><span class="p">,</span>
+                               <span class="n">time_constraint</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                               <span class="n">custom_transformer_pipeline</span> <span class="o">=</span> <span class="n">custom_features</span><span class="p">)</span><span class="o">.</span><span class="n">evolve</span><span class="p">()</span>
+
+
+<span class="c1">## Down-stream task</span>
+<span class="n">dataframe2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/insults/test.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">test_sequences</span> <span class="o">=</span> <span class="n">dataframe2</span><span class="p">[</span><span class="s1">&#39;text_a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">autoBOTLibObj</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_sequences</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that the only constraints for you to include a custom transformation class are the following:</p>
+<ol class="arabic simple">
+<li><p>The class must have the sklearn-like API</p></li>
+<li><p>Join it as a series of <cite>pipeline</cite> objects.</p></li>
+</ol>
+<p>To see how to implement an example custom class, you can inspect for example the
+<a class="reference external" href="https://github.com/SkBlaz/autoBOTLib/autoBOTLib/keyword_features.py">keyword-based features</a>.</p>
+</div>
+<div class="section" id="extending-existing-feature-spaces">
+<h2>Extending existing feature spaces<a class="headerlink" href="#extending-existing-feature-spaces" title="Permalink to this headline">¶</a></h2>
+<p>Let’s finally inspect how to <em>extend</em> the existing feature space of autoBOTLib with some custom features. Why would this be useful? Assume you have your one interesting feature constructor, but would like to exploit the existing ones (instead of implementing them from scratch).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">autoBOTLib</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">pipeline</span>  <span class="c1">## A necessary import</span>
+
+<span class="c1">## Load example data frame</span>
+<span class="n">dataframe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/insults/train.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">train_sequences</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;text_a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">train_targets</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+
+<span class="c1">## Define custom transformer classes as in the example above</span>
+<span class="n">tfidf_word_unigram</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+                                     <span class="n">sublinear_tf</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                     <span class="n">max_features</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">tfidf_char_bigram</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">analyzer</span><span class="o">=</span><span class="s1">&#39;char&#39;</span><span class="p">,</span>
+                                    <span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+                                    <span class="n">max_features</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">custom_features</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;word_features_custom&#39;</span><span class="p">,</span>
+     <span class="n">pipeline</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">([</span>
+         <span class="p">(</span><span class="s1">&#39;s1&#39;</span><span class="p">,</span> <span class="n">autoBOTLib</span><span class="o">.</span><span class="n">feature_constructors</span><span class="o">.</span><span class="n">text_col</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;no_stopwords&#39;</span><span class="p">)),</span>
+         <span class="p">(</span><span class="s1">&#39;word_tfidf_unigram&#39;</span><span class="p">,</span> <span class="n">tfidf_word_unigram</span><span class="p">)</span>
+     <span class="p">])),</span>
+    <span class="p">(</span><span class="s1">&#39;char_features_cusom&#39;</span><span class="p">,</span>
+     <span class="n">pipeline</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">([</span>
+         <span class="p">(</span><span class="s1">&#39;s2&#39;</span><span class="p">,</span> <span class="n">autoBOTLib</span><span class="o">.</span><span class="n">feature_constructors</span><span class="o">.</span><span class="n">text_col</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;no_stopwords&#39;</span><span class="p">)),</span>
+         <span class="p">(</span><span class="s1">&#39;char_tfidf_bigram&#39;</span><span class="p">,</span> <span class="n">tfidf_char_bigram</span><span class="p">)</span>
+     <span class="p">]))</span>
+<span class="p">]</span>
+
+<span class="c1">## Finally, use the flag &quot;combine_with_existing_representation&quot; to append the new transformer pipeline to an existing one (e.g., neurosymbolic). This way, you can easily extend current autoBOTLib!</span>
+<span class="n">autoBOTLibObj</span> <span class="o">=</span> <span class="n">autoBOTLib</span><span class="o">.</span><span class="n">GAlearner</span><span class="p">(</span>
+    <span class="n">train_sequences</span><span class="p">,</span>
+    <span class="n">train_targets</span><span class="p">,</span>
+    <span class="n">time_constraint</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">representation_type</span> <span class="o">=</span> <span class="s2">&quot;neurosymbolic&quot;</span><span class="p">,</span>
+    <span class="n">custom_transformer_pipeline</span><span class="o">=</span><span class="n">custom_features</span><span class="p">,</span>
+    <span class="n">combine_with_existing_representation</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">evolve</span><span class="p">()</span>
+
+<span class="n">dataframe2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/insults/test.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">test_sequences</span> <span class="o">=</span> <span class="n">dataframe2</span><span class="p">[</span><span class="s1">&#39;text_a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">autoBOTLibObj</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_sequences</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note how you only need to specify the <cite>combine_with_existing_representation</cite> flag apart from the custom pipeline, which will be appended to the existing (e.g., neurosymbolic) one.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="model_persistence.html" class="btn btn-neutral float-right" title="Model persistence" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="custom_classifiers.html" class="btn btn-neutral float-left" title="Using custom classifiers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Blaz Skrlj.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
