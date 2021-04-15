@@ -46,4 +46,3 @@ The *vanilla* implementation of autoBOTLib uses the *SGDClassifier* class, suita
 		strategy="evolution",  ## optimization strategy
 		crossover_proba=0.6,  ## crossover rate
 		mutpb=0.4)  ## mutation rate
-

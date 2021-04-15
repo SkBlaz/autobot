@@ -65,7 +65,7 @@ Note that the only constraints for you to include a custom transformation class 
 2.  Join it as a series of `pipeline` objects.
 
 To see how to implement an example custom class, you can inspect for example the
-`keyword-based features <https://github.com/SkBlaz/autoBOTLib/autoBOTLib/keyword_features.py>`_.
+`keyword-based features <https://github.com/SkBlaz/autobot/autoBOTLib/keyword_features.py>`_.
 
 
 Extending existing feature spaces

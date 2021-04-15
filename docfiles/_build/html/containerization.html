@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>autoBOTLib CLI &mdash; autoBOT  documentation</title>
+  <title>Singularity container for autoBOT &mdash; autoBOT  documentation</title>
   
 
   
@@ -39,8 +39,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Singularity container for autoBOT" href="containerization.html" />
-    <link rel="prev" title="Model persistence" href="model_persistence.html" /> 
+    <link rel="next" title="Potentially interesting further work" href="ideas.html" />
+    <link rel="prev" title="autoBOTLib CLI" href="cli_usage.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -99,8 +99,8 @@
 <li class="toctree-l1"><a class="reference internal" href="custom_classifiers.html">Using custom classifiers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_features.html">Using custom feature transformers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_persistence.html">Model persistence</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">autoBOTLib CLI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="containerization.html">Singularity container for autoBOT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_usage.html">autoBOTLib CLI</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Singularity container for autoBOT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ideas.html">Potentially interesting further work</a></li>
 </ul>
 <p><span class="caption-text">Contents:</span></p>
@@ -154,13 +154,13 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>autoBOTLib CLI</li>
+      <li>Singularity container for autoBOT</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/cli_usage.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/containerization.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -173,48 +173,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="autobotlib-cli">
-<h1>autoBOTLib CLI<a class="headerlink" href="#autobotlib-cli" title="Permalink to this headline">¶</a></h1>
-<p>To streamline the experiments, it makes a lot of sense to directly use the <em>autoBOTLib</em> as a CLI tool. The library itself implements wrappers for main functions, and can be executed as follows. By running</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>python autoBOTLib --arguments
-</pre></div>
-</div>
-<p>The arguments are defined as follows.</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: autoBOTLib [-h] [--classifier CLASSIFIER] [--time TIME] [--popsize POPSIZE]
-               [--output_folder OUTPUT_FOLDER] [--hof_size HOF_SIZE]
-               [--representation_type REPRESENTATION_TYPE] [--datafolder DATAFOLDER]
-               [--mutation_rate MUTATION_RATE] [--crossover_rate CROSSOVER_RATE]
-               [--predict_data PREDICT_DATA] [--load_model LOAD_MODEL] [--num_cpu NUM_CPU]
-               [--mode MODE]
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --classifier CLASSIFIER
-  --time TIME
-  --popsize POPSIZE
-  --output_folder OUTPUT_FOLDER
-  --hof_size HOF_SIZE
-  --representation_type REPRESENTATION_TYPE
-  --datafolder DATAFOLDER
-  --mutation_rate MUTATION_RATE
-  --crossover_rate CROSSOVER_RATE
-  --predict_data PREDICT_DATA
-  --load_model LOAD_MODEL
-  --num_cpu NUM_CPU
-  --mode MODE
-</pre></div>
-</div>
-<p>The code outputs the main results into the <em>results</em> folder by default.</p>
-<p>Note that there are two main modes of operation: learning and prediction.
-An example of the output is given in <a class="reference external" href="https://github.com/SkBlaz/autoBOTLib/tree/master/results">results folder.</a>. A working full CLI cycle (training+prediction) is given in <a class="reference external" href="https://github.com/SkBlaz/autoBOTLib/tree/master/cli_example.sh">this script.</a></p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>## Train an autoBOTLib classifier
-python autoBOTLib --mode learning --datafolder ./data/insults --output_folder results --classifier autoBOTLib-base --time 1 --hof_size 3 --representation_type neurosymbolic --mutation_rate 0.3 --crossover_rate 0.6
-
-## Obtain predictions from a trained model
-python autoBOTLib --mode prediction --load_model ./results/autoBOTLibmodel.pickle --predict_data ./data/insults/test.tsv
-</pre></div>
-</div>
-<p>This will result in a file called <cite>test_predictions.tsv</cite> in the <cite>results</cite> folder.</p>
+  <section id="singularity-container-for-autobot">
+<h1>Singularity container for autoBOT<a class="headerlink" href="#singularity-container-for-autobot" title="Permalink to this headline">¶</a></h1>
+<p>One of the simplest ways to run autoBOT is via containerization. In this work, we adopt the Singularity containers, which are very suitable for ML-based tools. To use them, the following is in order:</p>
+<ol class="arabic simple">
+<li><p>./containers/generate.sh generates a singularity container</p></li>
+<li><p>You can run any autoBOT-based code as <cite>singularity exec [imageName] python autoBOT [someSettings+DatasetsHere]</cite></p></li>
+</ol>
 </section>
 
 
@@ -223,8 +188,8 @@ python autoBOTLib --mode prediction --load_model ./results/autoBOTLibmodel.pickl
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="containerization.html" class="btn btn-neutral float-right" title="Singularity container for autoBOT" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="model_persistence.html" class="btn btn-neutral float-left" title="Model persistence" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ideas.html" class="btn btn-neutral float-right" title="Potentially interesting further work" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cli_usage.html" class="btn btn-neutral float-left" title="autoBOTLib CLI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
