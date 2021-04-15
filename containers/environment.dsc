@@ -75,5 +75,6 @@ pip3 install tqdm==4.56.0
 pip3 install urllib3==1.26.3
 pip3 install wget==3.2
 pip3 install yapf==0.30.0
+pip3 install autoBOTLib
 
 unset DEBIAN_FRONTEND
