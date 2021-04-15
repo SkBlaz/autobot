@@ -23,4 +23,4 @@ There is a dedicated parameter called *memory_storage*, which is a **path** that
     /a/[/r/DerivedFrom/,/c/en/acontextual/,/c/en/contextual/]	/r/DerivedFrom	/c/en/acontextual	/c/en/contextual	{"dataset": "/d/wiktionary/en", "license": "cc:by-sa/4.0", "sources": [{"contributor": "/s/resource/wiktionary/en", "process": "/s/process/wikiparsec/2"}], "weight": 1.0}
 
 
-The database is formatted according to the `conceptnet <https://github.com/commonsense/conceptnet5/wiki/Downloads>`_. Note that you only need the first three columns of this file (subject-predicate-object). To use your own knowledge, simply provide a custom triplet database.
+The database is formatted according to the `conceptnet <https://github.com/commonsense/conceptnet5/wiki/Downloads>`_. Note that you only need the first few columns of this file (subject-predicate-object). To use your own knowledge, simply provide a custom triplet database.
