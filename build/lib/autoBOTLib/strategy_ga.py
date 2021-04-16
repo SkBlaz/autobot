@@ -153,6 +153,7 @@ class GAlearner:
         
         if self.verbose: logging.info("Instantiated the evolution-based learner.")
         self.scoring_metric = scoring_metric
+
         self.representation_type = representation_type
         self.custom_transformer_pipeline = custom_transformer_pipeline
         self.combine_with_existing_representation = combine_with_existing_representation
@@ -280,6 +281,13 @@ class GAlearner:
         if self.verbose: logging.info(
             "Loaded a dataset of {} texts with {} unique labels.".format(
                 self.train_seq.shape[0], len(set(train_targets))))
+
+        if self.scoring_metric is None:
+            if self.unique_labels > 2:
+                self.scoring_metric = "f1_macro"
+
+            else:
+                self.scoring_metric = "f1"
 
     def update_global_feature_importances(self):
         """
@@ -498,14 +506,7 @@ class GAlearner:
         else:
             svc = self.classifier
 
-        if self.scoring_metric is None:
-            if self.unique_labels > 2:
-                performance_score = "f1_macro"
-
-            else:
-                performance_score = "f1"
-        else:
-            performance_score = self.scoring_metric
+        performance_score = self.scoring_metric
 
         if final_run:
             clf = GridSearchCV(svc,
@@ -764,7 +765,7 @@ class GAlearner:
             report.append(str(fn) + "  " + str(np.round(imp, 2)))
 
         report.append("-" * 60)
-        report.append("Max F1: {}".format(max_f1))
+        report.append("Max {}: {}".format(self.scoring_metric, max_f1))
 
         print("\n".join(report))
 
