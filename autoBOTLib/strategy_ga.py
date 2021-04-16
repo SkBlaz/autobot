@@ -87,6 +87,7 @@ class GAlearner:
                  custom_transformer_pipeline=None,
                  combine_with_existing_representation = False,
                  conceptnet_url = "https://s3.amazonaws.com/conceptnet/downloads/2019/edges/conceptnet-assertions-5.7.0.csv.gz",
+                 default_importance = 0.05,
                  verbose = 1):
         """
         The object initialization method
@@ -107,6 +108,7 @@ class GAlearner:
         :param classifier: custom classifier. If none, linear learners are used.
         :param classifier_hyperparameters: The space to be optimized w.r.t. the classifier param.
         :param conceptnet_url: URL of the conceptnet used.
+        :param default_importance: Minimum possible initial weight.
         """
         
         logo = """
@@ -147,6 +149,7 @@ class GAlearner:
 
         self.verbose = verbose
         if self.verbose: print(logo)
+        self.default_importance = default_importance
         
         if self.verbose: logging.info("Instantiated the evolution-based learner.")
         self.scoring_metric = scoring_metric
@@ -415,7 +418,7 @@ class GAlearner:
             noise = np.random.uniform(low=0.95,
                                       high=1.05,
                                       size=self.weight_params)
-            generic_individual = generic_individual * noise + 0.001
+            generic_individual = generic_individual * noise + self.default_importance
             ind[:] = np.abs(generic_individual)
 
     def apply_weights(self,

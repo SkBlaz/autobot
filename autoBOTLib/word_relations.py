@@ -136,7 +136,7 @@ class relationExtractor:
                                                total=len(text_vector)):
             for enx, el in enumerate(wit_vec):
                 if el in local_distances and el in self.global_distances:
-                    fv = 1  #local_distances[el]/self.global_distances[el]
+                    fv = 1
                     if not np.isnan(fv):
                         rs.append(enin)
                         cs.append(enx)
@@ -160,9 +160,10 @@ class relationExtractor:
 
 if __name__ == "__main__":
 
-    example_text = pd.read_csv("../data/yelp/train.tsv", sep="\t")['text_a']
+    example_text = pd.read_csv("../data/spanish/train.tsv", sep="\t")['text_a']
     rex = relationExtractor()
     rex.fit(example_text)
     m = rex.transform(example_text)
     print(np.count_nonzero(m.todense()) / (5625 * 10000))
+    print(np.isnan(m.todense()).any())
     print(m.shape)

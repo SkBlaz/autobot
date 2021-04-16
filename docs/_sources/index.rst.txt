@@ -21,6 +21,7 @@ Welcome to *autoBOT*'s documentation
    cli_usage.rst
    containerization.rst
    custom_knowledge.rst
+   custom_metrics.rst
    ideas.rst
 
 .. toctree::

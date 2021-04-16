@@ -186,12 +186,13 @@ class ConceptFeatures:
 
 if __name__ == "__main__":
 
-    example_text = pd.read_csv("../data/insults/train.tsv", sep="\t")
+    example_text = pd.read_csv("../data/spanish/train.tsv", sep="\t")
     text = example_text['text_a']
     labels = example_text['label']
 
-    rex = ConceptFeatures()
+    rex = ConceptFeatures(knowledge_graph = "../examples/memory/conceptnet-assertions-5.7.0.csv.gz")
     m = rex.fit_transform(text)
     print(m.shape)
+    print(np.isnan(m.todense()).any())
     fnames = rex.get_feature_names()
     print(fnames[0:5])
