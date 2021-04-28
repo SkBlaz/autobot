@@ -30,7 +30,6 @@ pluggy==0.13.1
 py==1.10.0
 pyflakes==2.2.0
 Pygments==2.7.4
-pynndescent==0.5.1
 pyparsing==2.4.7
 pytest==6.2.3
 pytest-sugar==0.9.4
