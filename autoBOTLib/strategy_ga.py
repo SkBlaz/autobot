@@ -76,13 +76,14 @@ class GAlearner:
                  latent_dim=512,
                  sparsity=0.1,
                  hof_size=3,
+                 initial_separate_spaces = True,
                  scoring_metric=None,
                  top_k_importances=25,
                  representation_type="neurosymbolic",
                  binarize_importances=False,
                  memory_storage="memory",
                  classifier=None,
-                 n_fold_cv=5,
+                 n_fold_cv=4,
                  classifier_hyperparameters=None,
                  custom_transformer_pipeline=None,
                  combine_with_existing_representation = False,
@@ -100,6 +101,7 @@ class GAlearner:
         :param latent_dim: The latent dimension of embeddings
         :param sparsity: The assumed sparsity of the induced space (see paper)
         :param hof_size: Hof many final models to consider?
+        :param initial_separate_spaces: Whether to include separate spaces as part of the initial population.
         :param scoring_metric: The type of metric to optimize (sklearn-compatible)
         :param top_k_importances: How many top importances to remember for explanations.
         :param representation_type: symbolic, neurosymbolic or custom
@@ -157,6 +159,7 @@ class GAlearner:
         self.representation_type = representation_type
         self.custom_transformer_pipeline = custom_transformer_pipeline
         self.combine_with_existing_representation = combine_with_existing_representation
+        self.initial_separate_spaces = initial_separate_spaces
 
         if not self.custom_transformer_pipeline is None:
             if self.verbose: logging.info("Using custom feature transformations.")
@@ -428,6 +431,14 @@ class GAlearner:
                                       size=self.weight_params)
             generic_individual = generic_individual * noise + self.default_importance
             ind[:] = np.abs(generic_individual)
+
+        ## Separate spaces -- each subspace massively amplified
+        if self.initial_separate_spaces:
+            for k in range(self.weight_params):
+                individual = self.population[0]
+                individual[:] = np.zeros(self.weight_params)
+                individual[k] = 1 ## amplify particular subspace.
+                self.population.append(individual)
 
     def apply_weights(self,
                       parameters,
@@ -1055,7 +1066,7 @@ class GAlearner:
                 cf1 = f1
 
             self.population = self.toolbox.select(self.population + offspring,
-                                                  k=len(self.population),
+                                                  k=nind,
                                                   tournsize=int(nind / 3))
 
         try:
