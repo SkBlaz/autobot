@@ -90,8 +90,8 @@ class GAlearner:
                  conceptnet_url = "https://s3.amazonaws.com/conceptnet/downloads/2019/edges/conceptnet-assertions-5.7.0.csv.gz",
                  default_importance = 0.05,
                  verbose = 1):
-        """
-        The object initialization method
+        
+        """The object initialization method
 
         :param train_sequences_raw: a list of texts
         :param train_targets: a list of natural numbers (targets, multiclass)
@@ -111,6 +111,7 @@ class GAlearner:
         :param classifier_hyperparameters: The space to be optimized w.r.t. the classifier param.
         :param conceptnet_url: URL of the conceptnet used.
         :param default_importance: Minimum possible initial weight.
+
         """
         
         logo = """

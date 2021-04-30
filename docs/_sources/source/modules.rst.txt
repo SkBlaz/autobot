@@ -1,7 +1,7 @@
-autobot
-=======
+autoBOTLib
+==========
 
 .. toctree::
    :maxdepth: 4
 
-   autobot
+   autoBOTLib

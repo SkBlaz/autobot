@@ -28,7 +28,8 @@ Welcome to *autoBOT*'s documentation
    :maxdepth: 4
    :caption: Contents:
 
-   autobot.rst
+   modules.rst
+   autoBOTLib.rst
    
 ..
    Method index

@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Using custom background knowledge &mdash; autoBOT  documentation</title>
@@ -88,11 +87,11 @@
               
             
             
-              <p><span class="caption-text">About:</span></p>
+              <p class="caption"><span class="caption-text">About:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="key_idea.html">Key idea behind autoBOTLib</a></li>
 </ul>
-<p><span class="caption-text">Tutorial and first steps:</span></p>
+<p class="caption"><span class="caption-text">Tutorial and first steps:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_idea.html">autoBOTLib library</a></li>
@@ -105,9 +104,10 @@
 <li class="toctree-l1"><a class="reference internal" href="custom_metrics.html">Using custom metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ideas.html">Potentially interesting further work</a></li>
 </ul>
-<p><span class="caption-text">Contents:</span></p>
+<p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="autobot.html">autobot package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">autoBOTLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoBOTLib.html">autoBOTLib package</a></li>
 </ul>
 
             
@@ -175,7 +175,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="using-custom-background-knowledge">
+  <div class="section" id="using-custom-background-knowledge">
 <h1>Using custom background knowledge<a class="headerlink" href="#using-custom-background-knowledge" title="Permalink to this headline">¶</a></h1>
 <p>One of the key novelties of <em>autoBOT</em> is the use of triplet-based graph databases as background knowledge (i.e. knowledge graphs). As shown in the examples, when doing the initialization:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">autoBOTLibObj</span> <span class="o">=</span> <span class="n">autoBOTLib</span><span class="o">.</span><span class="n">GAlearner</span><span class="p">(</span>
@@ -195,7 +195,7 @@
 </div>
 </div></blockquote>
 <p>The database is formatted according to the <a class="reference external" href="https://github.com/commonsense/conceptnet5/wiki/Downloads">conceptnet</a>. Note that you only need the first few columns of this file (subject-predicate-object). To use your own knowledge, simply provide a custom triplet database.</p>
-</section>
+</div>
 
 
            </div>

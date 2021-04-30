@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>autobot package &mdash; autoBOT  documentation</title>
@@ -87,11 +86,11 @@
               
             
             
-              <p><span class="caption-text">About:</span></p>
+              <p class="caption"><span class="caption-text">About:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="key_idea.html">Key idea behind autoBOTLib</a></li>
 </ul>
-<p><span class="caption-text">Tutorial and first steps:</span></p>
+<p class="caption"><span class="caption-text">Tutorial and first steps:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_idea.html">autoBOTLib library</a></li>
@@ -104,7 +103,7 @@
 <li class="toctree-l1"><a class="reference internal" href="custom_metrics.html">Using custom metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ideas.html">Potentially interesting further work</a></li>
 </ul>
-<p><span class="caption-text">Contents:</span></p>
+<p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">autobot package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
@@ -112,11 +111,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-autobot.conceptnet_features">autobot.conceptnet_features module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-autobot.data_utils">autobot.data_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-autobot.feature_constructors">autobot.feature_constructors module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-autobot.helpers">autobot.helpers module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-autobot.keyword_features">autobot.keyword_features module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-autobot.metrics">autobot.metrics module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-autobot.minimal_test">autobot.minimal_test module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-autobot.minimal_test_load">autobot.minimal_test_load module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-autobot.rakun">autobot.rakun module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-autobot.sentence_embeddings">autobot.sentence_embeddings module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-autobot.strategy_ga">autobot.strategy_ga module</a></li>
@@ -192,12 +188,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="autobot-package">
+  <div class="section" id="autobot-package">
 <h1>autobot package<a class="headerlink" href="#autobot-package" title="Permalink to this headline">¶</a></h1>
-<section id="submodules">
+<div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="module-autobot.baselines">
+</div>
+<div class="section" id="module-autobot.baselines">
 <span id="autobot-baselines-module"></span><h2>autobot.baselines module<a class="headerlink" href="#module-autobot.baselines" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="autobot.baselines.get_bert_base">
@@ -250,8 +246,8 @@
 <code class="sig-prename descclassname">autobot.baselines.</code><code class="sig-name descname">get_tpot_word_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences</span></em>, <em class="sig-param"><span class="n">dev_sequences</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">dev_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">1000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autobot.baselines.get_tpot_word_pipeline" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</section>
-<section id="module-autobot.conceptnet_features">
+</div>
+<div class="section" id="module-autobot.conceptnet_features">
 <span id="autobot-conceptnet-features-module"></span><h2>autobot.conceptnet_features module<a class="headerlink" href="#module-autobot.conceptnet_features" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="autobot.conceptnet_features.ConceptFeatures">
@@ -316,8 +312,8 @@
 
 </dd></dl>
 
-</section>
-<section id="module-autobot.data_utils">
+</div>
+<div class="section" id="module-autobot.data_utils">
 <span id="autobot-data-utils-module"></span><h2>autobot.data_utils module<a class="headerlink" href="#module-autobot.data_utils" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="autobot.data_utils.DataProcessor">
@@ -362,7 +358,7 @@
 <dl class="py class">
 <dt id="autobot.data_utils.genericProcessor">
 <em class="property">class </em><code class="sig-prename descclassname">autobot.data_utils.</code><code class="sig-name descname">genericProcessor</code><a class="headerlink" href="#autobot.data_utils.genericProcessor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="source/autobot.html#autobot.data_utils.DataProcessor" title="autobot.data_utils.DataProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">autobot.data_utils.DataProcessor</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#autobot.data_utils.DataProcessor" title="autobot.data_utils.DataProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">autobot.data_utils.DataProcessor</span></code></a></p>
 <dl class="py method">
 <dt id="autobot.data_utils.genericProcessor.get_dev_examples">
 <code class="sig-name descname">get_dev_examples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_dir</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autobot.data_utils.genericProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
@@ -393,8 +389,8 @@
 <code class="sig-prename descclassname">autobot.data_utils.</code><code class="sig-name descname">simple_accuracy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">preds</span></em>, <em class="sig-param"><span class="n">labels</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autobot.data_utils.simple_accuracy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</section>
-<section id="module-autobot.feature_constructors">
+</div>
+<div class="section" id="module-autobot.feature_constructors">
 <span id="autobot-feature-constructors-module"></span><h2>autobot.feature_constructors module<a class="headerlink" href="#module-autobot.feature_constructors" title="Permalink to this headline">¶</a></h2>
 <p>AutoBOT. Skrlj et al. 2021</p>
 <dl class="py class">
@@ -637,42 +633,8 @@
 </dl>
 </dd></dl>
 
-</section>
-<section id="module-autobot.helpers">
-<span id="autobot-helpers-module"></span><h2>autobot.helpers module<a class="headerlink" href="#module-autobot.helpers" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="autobot.helpers.load_autobot_model">
-<code class="sig-prename descclassname">autobot.helpers.</code><code class="sig-name descname">load_autobot_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autobot.helpers.load_autobot_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load a pickled autoBOT model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> – The path to the output file</p></li>
-<li><p><strong>model_skeleton</strong> – The model object to be equipped with the stored model space</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return unpickled_model</dt>
-<dd class="field-even"><p>Returns a trained, unpickled model useful for further learning.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="autobot.helpers.store_autobot_model">
-<code class="sig-prename descclassname">autobot.helpers.</code><code class="sig-name descname">store_autobot_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_class</span></em>, <em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autobot.helpers.store_autobot_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>A simple model storage method. It pickles a trained autoBOT object.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model_class</strong> – The autoBOT object</p></li>
-<li><p><strong>path</strong> – The path to the output file</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-</section>
-<section id="module-autobot.keyword_features">
+</div>
+<div class="section" id="module-autobot.keyword_features">
 <span id="autobot-keyword-features-module"></span><h2>autobot.keyword_features module<a class="headerlink" href="#module-autobot.keyword_features" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="autobot.keyword_features.KeywordFeatures">
@@ -725,8 +687,8 @@
 
 </dd></dl>
 
-</section>
-<section id="module-autobot.metrics">
+</div>
+<div class="section" id="module-autobot.metrics">
 <span id="autobot-metrics-module"></span><h2>autobot.metrics module<a class="headerlink" href="#module-autobot.metrics" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="autobot.metrics.get_metric_report">
@@ -734,59 +696,8 @@
 <dd><p>A generic metric report; suitable for multiobjective experiments (not the core paper)</p>
 </dd></dl>
 
-</section>
-<section id="module-autobot.minimal_test">
-<span id="autobot-minimal-test-module"></span><h2>autobot.minimal_test module<a class="headerlink" href="#module-autobot.minimal_test" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
-<dt id="autobot.minimal_test.TestClass">
-<em class="property">class </em><code class="sig-prename descclassname">autobot.minimal_test.</code><code class="sig-name descname">TestClass</code><a class="headerlink" href="#autobot.minimal_test.TestClass" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt id="autobot.minimal_test.TestClass.mutReg">
-<code class="sig-name descname">mutReg</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">individual</span></em>, <em class="sig-param"><span class="n">p</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autobot.minimal_test.TestClass.mutReg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Custom mutation operator used for regularization optimization.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>individual</strong> – individual (vector of floats)</p>
-</dd>
-<dt class="field-even">Return individual</dt>
-<dd class="field-even"><p>An individual solution.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autobot.minimal_test.TestClass.somefun">
-<code class="sig-name descname">somefun</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autobot.minimal_test.TestClass.somefun" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt id="autobot.minimal_test.load_model">
-<code class="sig-prename descclassname">autobot.minimal_test.</code><code class="sig-name descname">load_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autobot.minimal_test.load_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="autobot.minimal_test.store_model">
-<code class="sig-prename descclassname">autobot.minimal_test.</code><code class="sig-name descname">store_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_class</span></em>, <em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autobot.minimal_test.store_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-autobot.minimal_test_load">
-<span id="autobot-minimal-test-load-module"></span><h2>autobot.minimal_test_load module<a class="headerlink" href="#module-autobot.minimal_test_load" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="autobot.minimal_test_load.load_model">
-<code class="sig-prename descclassname">autobot.minimal_test_load.</code><code class="sig-name descname">load_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autobot.minimal_test_load.load_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="autobot.minimal_test_load.store_model">
-<code class="sig-prename descclassname">autobot.minimal_test_load.</code><code class="sig-name descname">store_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_class</span></em>, <em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autobot.minimal_test_load.store_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-autobot.rakun">
+</div>
+<div class="section" id="module-autobot.rakun">
 <span id="autobot-rakun-module"></span><h2>autobot.rakun module<a class="headerlink" href="#module-autobot.rakun" title="Permalink to this headline">¶</a></h2>
 <p>RaKUn is an algorithm for graph-absed keyword extraction.</p>
 <dl class="py class">
@@ -831,8 +742,8 @@
 
 </dd></dl>
 
-</section>
-<section id="module-autobot.sentence_embeddings">
+</div>
+<div class="section" id="module-autobot.sentence_embeddings">
 <span id="autobot-sentence-embeddings-module"></span><h2>autobot.sentence_embeddings module<a class="headerlink" href="#module-autobot.sentence_embeddings" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="autobot.sentence_embeddings.documentEmbedder">
@@ -868,8 +779,8 @@ The class functions as a sklearn-like object.</p>
 
 </dd></dl>
 
-</section>
-<section id="module-autobot.strategy_ga">
+</div>
+<div class="section" id="module-autobot.strategy_ga">
 <span id="autobot-strategy-ga-module"></span><h2>autobot.strategy_ga module<a class="headerlink" href="#module-autobot.strategy_ga" title="Permalink to this headline">¶</a></h2>
 <p>This is the main GA underlying the autoBOT approach.
 This file contains, without warranty, the code that performs the optimization.
@@ -1145,11 +1056,11 @@ next, evolve.</p>
 
 </dd></dl>
 
-</section>
-<section id="autobot-strategy-random-search-module">
+</div>
+<div class="section" id="autobot-strategy-random-search-module">
 <h2>autobot.strategy_random_search module<a class="headerlink" href="#autobot-strategy-random-search-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="module-autobot.word_relations">
+</div>
+<div class="section" id="module-autobot.word_relations">
 <span id="autobot-word-relations-module"></span><h2>autobot.word_relations module<a class="headerlink" href="#module-autobot.word_relations" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="autobot.word_relations.relationExtractor">
@@ -1228,11 +1139,11 @@ next, evolve.</p>
 
 </dd></dl>
 
-</section>
-<section id="module-autobot">
+</div>
+<div class="section" id="module-autobot">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-autobot" title="Permalink to this headline">¶</a></h2>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

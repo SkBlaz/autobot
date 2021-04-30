@@ -12,7 +12,7 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../autobot'))
+sys.path.insert(0, os.path.abspath('../autoBOTLib'))
 
 # -- Project information -----------------------------------------------------
 

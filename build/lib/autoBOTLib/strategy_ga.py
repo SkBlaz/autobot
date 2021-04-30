@@ -83,7 +83,7 @@ class GAlearner:
                  binarize_importances=False,
                  memory_storage="memory",
                  classifier=None,
-                 n_fold_cv=5,
+                 n_fold_cv=4,
                  classifier_hyperparameters=None,
                  custom_transformer_pipeline=None,
                  combine_with_existing_representation = False,
@@ -1066,7 +1066,7 @@ class GAlearner:
                 cf1 = f1
 
             self.population = self.toolbox.select(self.population + offspring,
-                                                  k=len(self.population),
+                                                  k=nind,
                                                   tournsize=int(nind / 3))
 
         try:

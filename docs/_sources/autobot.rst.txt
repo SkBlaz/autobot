@@ -36,14 +36,6 @@ autobot.feature\_constructors module
    :undoc-members:
    :show-inheritance:
 
-autobot.helpers module
-----------------------
-
-.. automodule:: autobot.helpers
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 autobot.keyword\_features module
 --------------------------------
 
@@ -56,22 +48,6 @@ autobot.metrics module
 ----------------------
 
 .. automodule:: autobot.metrics
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-autobot.minimal\_test module
-----------------------------
-
-.. automodule:: autobot.minimal_test
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-autobot.minimal\_test\_load module
-----------------------------------
-
-.. automodule:: autobot.minimal_test_load
    :members:
    :undoc-members:
    :show-inheritance:

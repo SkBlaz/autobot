@@ -2,4 +2,6 @@ rm -rf _build
 sphinx-apidoc -f -o source ../autobot;
 cp source/* .;
 make html;
-cp -rvf _build/html/* ../docs/
+sphinx-apidoc -f -o source ../autoBOTLib;
+cp source/* .;
+cp -rvf _build/html/* ../docs/;
