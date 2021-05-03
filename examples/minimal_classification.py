@@ -12,7 +12,7 @@ def run():
     autoBOTLibObj = autoBOTLib.GAlearner(
         train_sequences,  # input sequences
         train_targets,  # target space 
-        time_constraint=1,  # time in hoursc
+        time_constraint = 1,  # time in hoursc
         num_cpu="all",  # number of CPUs to use
         latent_dim = 512, ## latent dim for neural representations
         sparsity = 0.05, ## latent_dim/sparsity dim for sparse representations
@@ -40,6 +40,7 @@ def run():
     test_sequences = dataframe2['text_a'].values.tolist()
     test_targets = dataframe2['label'].values
     predictions = autoBOTLibObj.predict(test_sequences)
+    print(predictions)
     performance = autoBOTLib.compute_metrics(
         "first_run_task_name", predictions,
         test_targets)  ## compute F1, acc and F1_acc (as in GLUE)

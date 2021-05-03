@@ -89,6 +89,7 @@ class GAlearner:
                  combine_with_existing_representation = False,
                  conceptnet_url = "https://s3.amazonaws.com/conceptnet/downloads/2019/edges/conceptnet-assertions-5.7.0.csv.gz",
                  default_importance = 0.05,
+                 classifier_preset = "default",
                  verbose = 1):
         
         """The object initialization method
@@ -110,6 +111,7 @@ class GAlearner:
         :param classifier: custom classifier. If none, linear learners are used.
         :param classifier_hyperparameters: The space to be optimized w.r.t. the classifier param.
         :param conceptnet_url: URL of the conceptnet used.
+        :param classifier_preset: Type of classification to be considered (default = paper), mini -> very lightweight regression, emphasis on space exploration.
         :param default_importance: Minimum possible initial weight.
 
         """
@@ -153,6 +155,7 @@ class GAlearner:
         self.verbose = verbose
         if self.verbose: print(logo)
         self.default_importance = default_importance
+        self.classifier_preset = classifier_preset
         
         if self.verbose: logging.info("Instantiated the evolution-based learner.")
         self.scoring_metric = scoring_metric
@@ -502,12 +505,27 @@ class GAlearner:
 
             else:
                 ## this is for screening purposes.
-                parameters = {
-                    "loss": ["hinge", "log"],
-                    "penalty": ["elasticnet"],
-                    "alpha": [0.01, 0.001, 0.0001],
-                    "l1_ratio": [0, 0.1, 0.5, 0.9]
-                }
+
+                if self.classifier_preset == "default":
+                    parameters = {
+                        "loss": ["hinge", "log"],
+                        "penalty": ["elasticnet"],
+                        "alpha": [0.01, 0.001, 0.0001],
+                        "l1_ratio": [0, 0.1, 0.5, 0.9]
+                    }
+                    
+                elif self.classifier_preset == "mini-l1":
+                     parameters = {
+                        "loss": ["log"],
+                        "penalty": ["l1"]
+                    }
+
+                elif self.classifier_preset == "mini-l2":
+                     parameters = {
+                        "loss": ["log"],
+                        "penalty": ["l2"]
+                    }
+                    
         else:
 
             parameters = self.classifier_hyperparameters
@@ -525,7 +543,7 @@ class GAlearner:
                                parameters,
                                verbose=self.verbose,
                                n_jobs=self.num_cpu,
-                               cv=10,
+                               cv=self.n_fold_cv,
                                scoring=performance_score,
                                refit=True)
 
