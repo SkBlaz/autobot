@@ -352,6 +352,15 @@ class GAlearner:
 
         return ((time.time() - self.initial_time) / 60) / 60
 
+    def prune_redundant_info(self):
+        """
+        A method for removing redundant additional info which increases the final object's size.                
+        """
+        
+        self.fitness_container = []
+        self.feature_importances = []
+        if self.verbose: logging.info("Cleaned fitness and importances, the object should be smaller now.")
+    
     def parallelize_dataframe(self, df, func):
         """
         A method for parallel traversal of a given dataframe.
