@@ -31,7 +31,6 @@ import requests  ## for downloading the KG
 ## modeling
 from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import GridSearchCV
-from sklearn import preprocessing
 
 ## monitoring
 import tqdm
@@ -176,7 +175,7 @@ class GAlearner:
         self.label_mapping, self.inverse_label_mapping = self.get_label_map(train_targets)
 
         ## Encoded target space for training purposes
-        train_targets = self.apply_label_map(train_targets)
+        train_targets = np.array(self.apply_label_map(train_targets))
 
         self.classifier = classifier
         self.classifier_hyperparameters = classifier_hyperparameters
@@ -303,6 +302,14 @@ class GAlearner:
 
     def get_label_map(self, train_targets):
 
+        """
+        Identify unique target labels and remember them.
+        
+        :param train_targets: The training target space (or any other for that matter)
+        :returns label_map, inverse_label_map: Two dicts, mapping to and from encoded space suitable for autoML loopings.
+
+        """
+        
         unique_train_target_labels = set(train_targets)
         label_map = {}
         for enx, j in enumerate(unique_train_target_labels):
@@ -313,6 +320,14 @@ class GAlearner:
 
     def apply_label_map(self, targets, inverse = False):
 
+        """
+        A simple mapping back from encoded target space.
+        
+        :param targets: The target space
+        :param inverse: Boolean if map to origin space or not (default encodes into continuum)
+        :returns new_targets: Encoded target space
+
+        """
         if inverse:
             new_targets = [self.inverse_label_mapping[x] for x in targets]
             
@@ -740,6 +755,7 @@ class GAlearner:
 
             ## generate the prediction matrix by maximum voting scheme.
             pspace = np.matrix(prediction_space).T
+            print(pspace)
             all_predictions = pd.DataFrame(pspace).mode(
                 axis=1).values.reshape(-1)
             if self.verbose: logging.info("Predictions obtained")
@@ -1145,8 +1161,7 @@ class GAlearner:
 
             except Exception as es:
                 if self.verbose: logging.info(
-                    "Evaluation did not produce any viable learners. Increase time!",
-                    es)
+                    f"Evaluation of individual {top_individual} did not produce a viable learner. Increase time!")
 
             coefficients = learner.best_estimator_.coef_
 

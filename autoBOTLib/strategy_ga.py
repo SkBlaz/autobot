@@ -175,7 +175,7 @@ class GAlearner:
         self.label_mapping, self.inverse_label_mapping = self.get_label_map(train_targets)
 
         ## Encoded target space for training purposes
-        train_targets = self.apply_label_map(train_targets)
+        train_targets = np.array(self.apply_label_map(train_targets))
 
         self.classifier = classifier
         self.classifier_hyperparameters = classifier_hyperparameters
@@ -755,6 +755,7 @@ class GAlearner:
 
             ## generate the prediction matrix by maximum voting scheme.
             pspace = np.matrix(prediction_space).T
+            print(pspace)
             all_predictions = pd.DataFrame(pspace).mode(
                 axis=1).values.reshape(-1)
             if self.verbose: logging.info("Predictions obtained")
@@ -1160,8 +1161,7 @@ class GAlearner:
 
             except Exception as es:
                 if self.verbose: logging.info(
-                    "Evaluation did not produce any viable learners. Increase time!",
-                    es)
+                    f"Evaluation of individual {top_individual} did not produce a viable learner. Increase time!")
 
             coefficients = learner.best_estimator_.coef_
 
