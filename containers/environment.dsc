@@ -45,7 +45,6 @@ pip3 install pluggy==0.13.1
 pip3 install py==1.10.0
 pip3 install pyflakes==2.2.0
 pip3 install Pygments==2.7.4
-pip3 install pynndescent==0.5.1
 pip3 install pyparsing==2.4.7
 pip3 install pytest==6.2.3
 pip3 install pytest-sugar==0.9.4

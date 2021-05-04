@@ -17,14 +17,6 @@ import logging
 logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
 logging.getLogger().setLevel(logging.INFO)
-try:
-    from py3plex.visualization.multilayer import *
-
-except Exception as es:
-    print(
-        "Please install py3plex library (pip install py3plex) for visualization capabilities!"
-    )
-
 
 class RakunDetector:
     def __init__(self, hyperparameters, verbose=True):
@@ -68,50 +60,6 @@ class RakunDetector:
             "edge_width": 0.08,
             "alpha_channel": 0.5
         }
-
-    def visualize_network(self, visualization_parameters=None, display=True):
-
-        if not visualization_parameters:
-            visualization_parameters = self.default_visualization_parameters
-
-        if self.verbose:
-            logging.info(nx.info(self.keyword_graph))
-
-        centrality = np.array(
-            [self.centrality[node] for node in self.keyword_graph.nodes()])
-        top_10 = list(
-            centrality.argsort()[-visualization_parameters['top_n']:][::-1])
-        node_list = set(x for enx, x in enumerate(self.keyword_graph.nodes())
-                        if enx in top_10)
-        rgba = [
-            "red" if enx in set(top_10) else "black"
-            for enx, x in enumerate(list(centrality))
-        ]
-        labels = [x for x in self.keyword_graph.nodes() if x in node_list]
-        node_sizes = [
-            visualization_parameters['max_node_size']
-            if x in node_list else visualization_parameters['min_node_size']
-            for x in self.keyword_graph.nodes()
-        ]
-
-        # visualize the self.keyword_graph's communities!
-        hairball_plot(
-            self.keyword_graph,
-            labels=labels,
-            label_font_size=visualization_parameters['label_font_size'],
-            color_list=rgba,
-            text_color=visualization_parameters['text_color'],
-            node_sizes=node_sizes,
-            layout_parameters={
-                "iterations": visualization_parameters['num_layout_iterations']
-            },
-            scale_by_size=True,
-            edge_width=visualization_parameters['edge_width'],
-            alpha_channel=visualization_parameters['alpha_channel'],
-            layout_algorithm="force",
-            legend=False)
-        if display:
-            plt.show()
 
     def corpus_graph(self,
                      language_file,
@@ -478,7 +426,5 @@ if __name__ == "__main__":
     keywords = keyword_detector.find_keywords(example_data)
     print(keywords)
 
-#    keyword_detector.visualize_network()
 #    keyword_detector.verbose = False
 #    keyword_detector.validate_on_corpus("../datasets/Schutz2008")
-#    keyword_detector.visualize_network()
