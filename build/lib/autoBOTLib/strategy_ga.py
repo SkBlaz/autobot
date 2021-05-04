@@ -171,8 +171,12 @@ class GAlearner:
         self.binarize_importances = binarize_importances
         self.latent_dim = latent_dim
         self.sparsity = sparsity
-        self.label_encoder = preprocessing.LabelEncoder()
-        train_targets = self.label_encoder.fit_transform(train_targets)
+
+        ## Dict of labels to int
+        self.label_mapping, self.inverse_label_mapping = self.get_label_map(train_targets)
+
+        ## Encoded target space for training purposes
+        train_targets = self.apply_label_map(train_targets)
 
         self.classifier = classifier
         self.classifier_hyperparameters = classifier_hyperparameters
@@ -296,6 +300,27 @@ class GAlearner:
             else:
                 self.scoring_metric = "f1"
 
+
+    def get_label_map(self, train_targets):
+
+        unique_train_target_labels = set(train_targets)
+        label_map = {}
+        for enx, j in enumerate(unique_train_target_labels):
+            label_map[j] = enx
+
+        inverse_label_map = {y:x for x,y in label_map.items()}
+        return label_map, inverse_label_map
+
+    def apply_label_map(self, targets, inverse = False):
+
+        if inverse:
+            new_targets = [self.inverse_label_mapping[x] for x in targets]
+            
+        else:
+            new_targets = [self.label_mapping[x] for x in targets]
+            
+        return new_targets
+                
     def update_global_feature_importances(self):
         """
         Aggregate feature importances across top learners to obtain the final ranking.
@@ -718,8 +743,10 @@ class GAlearner:
             all_predictions = pd.DataFrame(pspace).mode(
                 axis=1).values.reshape(-1)
             if self.verbose: logging.info("Predictions obtained")
-            all_predictions = self.label_encoder.inverse_transform(
-                all_predictions)
+
+            ## Transform back to origin space
+            all_predictions = self.apply_label_map(all_predictions,
+                                                   inverse=True)
             return all_predictions
 
     def summarise_final_learners(self):
