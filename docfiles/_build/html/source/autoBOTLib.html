@@ -805,11 +805,6 @@
 <code class="sig-name descname">hypervertex_prunning</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">distance_threshold</span></em>, <em class="sig-param"><span class="n">pair_diff_max</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">distance_method</span><span class="o">=</span><span class="default_value">'editdistance'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.rakun.RakunDetector.hypervertex_prunning" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt id="autoBOTLib.rakun.RakunDetector.visualize_network">
-<code class="sig-name descname">visualize_network</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">visualization_parameters</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">display</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.rakun.RakunDetector.visualize_network" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 </div>
@@ -865,6 +860,23 @@ In general, the workflow for working with this class is as follows:
 1.) Instantiate the class
 2.) Evolve
 3.) Predict</p>
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.apply_label_map">
+<code class="sig-name descname">apply_label_map</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">targets</span></em>, <em class="sig-param"><span class="n">inverse</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.apply_label_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple mapping back from encoded target space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>targets</strong> – The target space</p></li>
+<li><p><strong>inverse</strong> – Boolean if map to origin space or not (default encodes into continuum)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns new_targets</dt>
+<dd class="field-even"><p>Encoded target space</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt id="autoBOTLib.strategy_ga.GAlearner.apply_weights">
 <code class="sig-name descname">apply_weights</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parameters</span></em>, <em class="sig-param"><span class="n">custom_feature_space</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">custom_feature_matrix</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.apply_weights" title="Permalink to this definition">¶</a></dt>
@@ -1010,9 +1022,37 @@ next, evolve.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.get_label_map">
+<code class="sig-name descname">get_label_map</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_targets</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.get_label_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identify unique target labels and remember them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>train_targets</strong> – The training target space (or any other for that matter)</p>
+</dd>
+<dt class="field-even">Returns label_map, inverse_label_map</dt>
+<dd class="field-even"><p>Two dicts, mapping to and from encoded space suitable for autoML loopings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="autoBOTLib.strategy_ga.GAlearner.instantiate_validation_env">
 <code class="sig-name descname">instantiate_validation_env</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.instantiate_validation_env" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method refreshes the feature space. This is needed to maximize efficiency.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.mode_pred">
+<code class="sig-name descname">mode_pred</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prediction_matrix</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.mode_pred" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain most frequent elements for each row.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>prediction_matrix</strong> – Matrix of predictions.</p>
+</dd>
+<dt class="field-even">Returns prediction_vector</dt>
+<dd class="field-even"><p>Vector of aggregate predictions.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1052,6 +1092,12 @@ next, evolve.</p>
 <dd class="field-odd"><p><strong>instances</strong> – predict labels for new instances = texts.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.prune_redundant_info">
+<code class="sig-name descname">prune_redundant_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.prune_redundant_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>A method for removing redundant additional info which increases the final object’s size.</p>
 </dd></dl>
 
 <dl class="py method">
