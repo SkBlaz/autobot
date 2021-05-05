@@ -176,7 +176,8 @@ class GAlearner:
 
         ## Encoded target space for training purposes
         train_targets = np.array(self.apply_label_map(train_targets))
-
+        counts = np.bincount(train_targets)
+        self.majority_class = np.argmax(counts)
         self.classifier = classifier
         self.classifier_hyperparameters = classifier_hyperparameters
 
@@ -755,15 +756,35 @@ class GAlearner:
 
             ## generate the prediction matrix by maximum voting scheme.
             pspace = np.matrix(prediction_space).T
-            print(pspace)
-            all_predictions = pd.DataFrame(pspace).mode(
-                axis=1).values.reshape(-1)
+            np.nan_to_num(pspace, copy = False, nan = self.majority_class)
+            all_predictions = self.mode_pred(pspace) ## Most common prediction is chosen.
             if self.verbose: logging.info("Predictions obtained")
 
             ## Transform back to origin space
             all_predictions = self.apply_label_map(all_predictions,
                                                    inverse=True)
             return all_predictions
+
+    def mode_pred(self, prediction_matrix):
+
+        """        
+        Obtain most frequent elements for each row.
+        
+        :param prediction_matrix: Matrix of predictions.
+        :returns prediction_vector: Vector of aggregate predictions.
+
+        """
+        
+        if prediction_matrix.ndim == 1:
+            return prediction_matrix.reshape(-1).tolist()
+        
+        prediction_vector = []
+        for k in range(len(prediction_matrix)):
+            counts = np.bincount(np.asarray(prediction_matrix[k,:])[0])
+            prediction = np.argmax(counts)
+            prediction_vector.append(prediction)
+            
+        return prediction_vector
 
     def summarise_final_learners(self):
 
