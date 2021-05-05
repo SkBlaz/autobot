@@ -18,6 +18,9 @@ def run():
     dataframe2 = pd.read_csv("../data/insults/test.tsv", sep="\t")
     test_sequences = dataframe2['text_a'].values.tolist()
     predictions = autoBOTLibObj.predict(test_sequences)
+    prob_predictions = autoBOTLibObj.predict_proba(test_sequences)
+    print(predictions)
+    print(prob_predictions)
 
 if __name__ == "__main__":
     run()

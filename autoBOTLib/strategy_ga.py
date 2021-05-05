@@ -704,13 +704,106 @@ class GAlearner:
         assert transformed_instances.shape[0] == len(self.train_targets)
         return (transformed_instances, self.train_targets)
 
-    def predict(self, instances):
+    def predict_proba(self, instances):
         """
         Predict on new instances. Note that the prediction is actually a maxvote across the hall-of-fame.
 
         :param instances: predict labels for new instances = texts.
         """
+        
+        if self.verbose: logging.info("Obtaining final predictions from {} models.".format(
+            len(self.ensemble_of_learners)))
+        
+        if not self.ensemble_of_learners:
+            if self.verbose: logging.info("Please, evolve the model first!")
+            return None
 
+        else:
+
+            instances = self.return_dataframe_from_text(instances)
+            transformed_instances = self.vectorizer.transform(instances)
+            prediction_space = []
+
+            # transformed_instances = self.update_intermediary_feature_space(custom_space = transformed_instances)
+            if self.verbose: logging.info("Representation obtained ..")
+            for learner_tuple in self.ensemble_of_learners:
+
+                try:
+
+                    ## get the solution.
+                    learner, individual, score = learner_tuple
+                    learner = learner.best_estimator_
+
+                    ## Subset the matrix.
+                    subsetted_space = self.apply_weights(
+                        individual,
+                        custom_feature_space=True,
+                        custom_feature_matrix=transformed_instances)
+
+                    ## obtain the predictions.
+                    if not prediction_space is None:
+                        prediction_space.append(
+                            learner.predict(subsetted_space).tolist())
+
+                    else:
+                        prediction_space.append(
+                            learner.predict(subsetted_space).tolist())
+
+                except Exception as es:
+                    print(
+                        es,
+                        "Please, re-check the data you are predicting from!")
+
+            ## generate the prediction matrix by maximum voting scheme.
+            pspace = np.matrix(prediction_space).T
+            np.nan_to_num(pspace, copy = False, nan = self.majority_class)
+            all_predictions = self.probability_extraction(pspace) ## Most common prediction is chosen.
+            if self.verbose: logging.info("Predictions obtained")
+            return all_predictions
+
+    def probability_extraction(self, pred_matrix):
+
+        """
+        Predict probabilities for individual classes. Probabilities are based as proportions of a particular label predicted with a given classifier.
+        
+        :param pred_matrix: Matrix of predictions.
+        :return prob_df: A DataFrame of probabilities for each class.
+
+        """
+
+        ## identify individual class labels
+        pred_matrix = np.asarray(pred_matrix)
+        unique_values = np.unique(pred_matrix).tolist()
+        prediction_matrix_final = []
+        for k in range(pred_matrix.shape[0]):
+            pred_row = np.asarray(pred_matrix[k,:])
+            assert len(pred_row) == pred_matrix.shape[1]
+            counts = np.bincount(pred_row)
+            gsum = np.sum(counts)
+            probability_vector = []
+            for p in range(len(unique_values)):
+                if p+1 <= len(counts):
+                    prob = counts[p]/gsum
+                    assert prob <= 1
+                else:
+                    prob = 0       
+                probability_vector.append(prob)
+            assert len(probability_vector) == len(unique_values)
+            prediction_matrix_final.append(probability_vector)
+        final_matrix = np.array(prediction_matrix_final)
+        prob_df = pd.DataFrame(final_matrix)        
+        prob_df.columns = self.apply_label_map(unique_values, inverse=True)
+        return prob_df
+        
+    def predict(self, instances):
+        """
+        Predict on new instances. Note that the prediction is actually a maxvote across the hall-of-fame.
+
+        :param instances: predict labels for new instances = texts.
+        :returns all_predictions: Vector of predictions (decoded)
+
+        """
+        
         if self.verbose: logging.info("Obtaining final predictions from {} models.".format(
             len(self.ensemble_of_learners)))
 
@@ -771,7 +864,7 @@ class GAlearner:
         Obtain most frequent elements for each row.
         
         :param prediction_matrix: Matrix of predictions.
-        :returns prediction_vector: Vector of aggregate predictions.
+        :return prediction_vector: Vector of aggregate predictions.
 
         """
         

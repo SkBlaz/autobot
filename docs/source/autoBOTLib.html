@@ -1049,7 +1049,7 @@ next, evolve.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>prediction_matrix</strong> – Matrix of predictions.</p>
 </dd>
-<dt class="field-even">Returns prediction_vector</dt>
+<dt class="field-even">Return prediction_vector</dt>
 <dd class="field-even"><p>Vector of aggregate predictions.</p>
 </dd>
 </dl>
@@ -1090,6 +1090,34 @@ next, evolve.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>instances</strong> – predict labels for new instances = texts.</p>
+</dd>
+<dt class="field-even">Returns all_predictions</dt>
+<dd class="field-even"><p>Vector of predictions (decoded)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.predict_proba">
+<code class="sig-name descname">predict_proba</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">instances</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.predict_proba" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict on new instances. Note that the prediction is actually a maxvote across the hall-of-fame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>instances</strong> – predict labels for new instances = texts.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.probability_extraction">
+<code class="sig-name descname">probability_extraction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pred_matrix</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.probability_extraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict probabilities for individual classes. Probabilities are based as proportions of a particular label predicted with a given classifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pred_matrix</strong> – Matrix of predictions.</p>
+</dd>
+<dt class="field-even">Return prob_df</dt>
+<dd class="field-even"><p>A DataFrame of probabilities for each class.</p>
 </dd>
 </dl>
 </dd></dl>
