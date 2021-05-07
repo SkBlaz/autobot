@@ -782,16 +782,15 @@ class GAlearner:
             pred_row = np.asarray(pred_matrix[k,:])
             assert len(pred_row) == pred_matrix.shape[1]
             counts = np.bincount(pred_row)
-            gsum = np.sum(counts)
-            probability_vector = []
+            probability_vector = []                
             for p in range(len(unique_values)):
                 if p+1 <= len(counts):
-                    prob = counts[p]/gsum
-                    assert prob <= 1
+                    prob = counts[p]
                 else:
-                    prob = 0       
+                    prob = 0
                 probability_vector.append(prob)
             assert len(probability_vector) == len(unique_values)
+            
             prediction_matrix_final.append(probability_vector)
         final_matrix = np.array(prediction_matrix_final)
         prob_df = pd.DataFrame(final_matrix)        
@@ -802,6 +801,14 @@ class GAlearner:
         for l in all_possible_labels:
             if not l in prob_df.columns:
                 prob_df[l] = 0.0
+
+        ## Normalization
+        prob_df = prob_df.div(prob_df.sum(axis=1), axis=0)        
+        csum = prob_df.sum(axis=1).values
+        zero_index = np.where(csum == 0)[0]
+        for j in zero_index:
+            prob_df.iloc[j,self.majority_class] = 1
+        assert len(np.where(prob_df.sum(axis=1) < 1)[0]) == 0
         
         return prob_df
         
