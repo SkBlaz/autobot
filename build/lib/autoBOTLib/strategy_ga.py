@@ -89,6 +89,7 @@ class GAlearner:
                  conceptnet_url = "https://s3.amazonaws.com/conceptnet/downloads/2019/edges/conceptnet-assertions-5.7.0.csv.gz",
                  default_importance = 0.05,
                  classifier_preset = "default",
+                 include_concept_features = True,
                  verbose = 1):
         
         """The object initialization method
@@ -111,6 +112,7 @@ class GAlearner:
         :param classifier_hyperparameters: The space to be optimized w.r.t. the classifier param.
         :param conceptnet_url: URL of the conceptnet used.
         :param classifier_preset: Type of classification to be considered (default = paper), mini -> very lightweight regression, emphasis on space exploration.
+        :param include_concept_features: Whether to include external background knowledge if possible
         :param default_importance: Minimum possible initial weight.
 
         """
@@ -211,44 +213,45 @@ class GAlearner:
         self.hof = []  ## The hall of fame
 
         self.memory_storage = memory_storage  ## Path to the memory storage
-        self.include_concept_features = True
-        
-        if not os.path.exists(self.memory_storage):
-            if self.verbose:
-                logging.info(f"Attempting to download the knowledge graph. Folder: {self.memory_storage}")
-            try:
+        self.include_concept_features = include_concept_features
 
-                if self.verbose: logging.info(
-                    "Memory (ConceptNet) not found! Downloading into ./memory folder. Please wait a few minutes (a few hundred MB is being downloaded)."
-                )
+        if self.include_concept_features:
+            if not os.path.exists(self.memory_storage):
+                if self.verbose:
+                    logging.info(f"Attempting to download the knowledge graph. Folder: {self.memory_storage}")
+                try:
 
-                os.mkdir("./memory")
+                    if self.verbose: logging.info(
+                        "Memory (ConceptNet) not found! Downloading into ./memory folder. Please wait a few minutes (a few hundred MB is being downloaded)."
+                    )
 
-                wget.download(conceptnet_url, out="memory")
-                fname = list(
-                    os.walk("memory"))[0][2][0]  ## Get the new file name
+                    os.mkdir("./memory")
 
-                self.memory_storage = f"memory/{fname}"
-                if self.verbose: logging.info(
-                    f"Memory storage downloaded: {self.memory_storage}")
+                    wget.download(conceptnet_url, out="memory")
+                    fname = list(
+                        os.walk("memory"))[0][2][0]  ## Get the new file name
 
-            except Exception as es:
-                if self.verbose: logging.info(
-                    f"ConceptNet could not be downloaded. Please download it and store it as memory/conceptnet.txt.gz. Omitting this feature type.{es}"
-                )
-                self.include_concept_features = False
-                
-        else:
+                    self.memory_storage = f"memory/{fname}"
+                    if self.verbose: logging.info(
+                        f"Memory storage downloaded: {self.memory_storage}")
 
-            try:
-                cnames = list(
-                    os.walk(self.memory_storage))[0][2][0]
-                self.memory_storage = self.memory_storage+"/"+cnames
-                
-            except Exception as es:
+                except Exception as es:
+                    if self.verbose: logging.info(
+                        f"ConceptNet could not be downloaded. Please download it and store it as memory/conceptnet.txt.gz. Omitting this feature type.{es}"
+                    )
+                    self.include_concept_features = False
 
-                if self.verbose: logging.info(f"Could not find the knowledge graph memory storage. Please do the following: \n a) Check if there is empty memory folder. \n b) Download manually into the created memory folder via: {conceptnet_url} \n c) Check if the file is not corrupted. \n autoBOT will now continue without the ConceptNet-based features!")
-                self.include_concept_features = False
+            else:
+
+                try:
+                    cnames = list(
+                        os.walk(self.memory_storage))[0][2][0]
+                    self.memory_storage = self.memory_storage+"/"+cnames
+
+                except Exception as es:
+
+                    if self.verbose: logging.info(f"Could not find the knowledge graph memory storage. Please do the following: \n a) Check if there is empty memory folder. \n b) Download manually into the created memory folder via: {conceptnet_url} \n c) Check if the file is not corrupted. \n autoBOT will now continue without the ConceptNet-based features!")
+                    self.include_concept_features = False
             
 
         self.population = None  ## this object gets evolved
