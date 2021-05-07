@@ -796,6 +796,13 @@ class GAlearner:
         final_matrix = np.array(prediction_matrix_final)
         prob_df = pd.DataFrame(final_matrix)        
         prob_df.columns = self.apply_label_map(unique_values, inverse=True)
+
+        ## It's possible some labels are never predicted!
+        all_possible_labels = list(self.label_mapping.keys())
+        for l in all_possible_labels:
+            if not l in prob_df.columns:
+                prob_df[l] = 0.0
+        
         return prob_df
         
     def predict(self, instances):
