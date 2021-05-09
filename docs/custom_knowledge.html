@@ -103,6 +103,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Using custom background knowledge</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_metrics.html">Using custom metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ideas.html">Potentially interesting further work</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updates.html">Releases</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
@@ -180,6 +181,7 @@
 <p>One of the key novelties of <em>autoBOT</em> is the use of triplet-based graph databases as background knowledge (i.e. knowledge graphs). As shown in the examples, when doing the initialization:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">autoBOTLibObj</span> <span class="o">=</span> <span class="n">autoBOTLib</span><span class="o">.</span><span class="n">GAlearner</span><span class="p">(</span>
         <span class="n">train_sequences</span><span class="p">,</span>  <span class="c1"># input sequences</span>
+            <span class="n">use_concept_features</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">train_targets</span><span class="p">,</span>  <span class="c1"># target space</span>
         <span class="n">memory_storage</span><span class="o">=</span>
         <span class="s2">&quot;./memory&quot;</span><span class="p">,</span>  <span class="c1"># tripled base for concept features</span>

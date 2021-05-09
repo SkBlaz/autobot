@@ -89,7 +89,7 @@ class GAlearner:
                  conceptnet_url = "https://s3.amazonaws.com/conceptnet/downloads/2019/edges/conceptnet-assertions-5.7.0.csv.gz",
                  default_importance = 0.05,
                  classifier_preset = "default",
-                 include_concept_features = True,
+                 include_concept_features = False,
                  verbose = 1):
         
         """The object initialization method
@@ -693,8 +693,8 @@ class GAlearner:
         """
 
         f1_top = self.generate_and_update_stats(fits)
-        if self.verbose: logging.info(r"{} (gen {}) F1: {}, time: {}min".format(
-            self.task, gen, np.round(f1_top, 3),
+        if self.verbose: logging.info(r"{} (gen {}) {}: {}, time: {}min".format(
+                self.task, gen, self.scoring_metric, np.round(f1_top, 3),
             np.round(self.compute_time_diff(), 2) * 60))
         return f1_top
 
@@ -805,9 +805,10 @@ class GAlearner:
         ## Normalization
         prob_df = prob_df.div(prob_df.sum(axis=1), axis=0)        
         csum = prob_df.sum(axis=1).values
-        zero_index = np.where(csum == 0)[0]
+        zero_index = np.where(csum == 0)[0]        
         for j in zero_index:
             prob_df.iloc[j,self.majority_class] = 1
+        prob_df = prob_df.fillna(0)        
         assert len(np.where(prob_df.sum(axis=1) < 1)[0]) == 0
         
         return prob_df

@@ -160,10 +160,11 @@ class relationExtractor:
 
 if __name__ == "__main__":
 
-    example_text = pd.read_csv("../data/spanish/train.tsv", sep="\t")['text_a']
-    rex = relationExtractor()
+    example_text = pd.read_csv("../data/spanish/train.tsv", sep="\t")['tweet']
+    rex = relationExtractor(min_token = "word")
     rex.fit(example_text)
     m = rex.transform(example_text)
     print(np.count_nonzero(m.todense()) / (5625 * 10000))
     print(np.isnan(m.todense()).any())
     print(m.shape)
+    print(rex.get_feature_names()[0:10])

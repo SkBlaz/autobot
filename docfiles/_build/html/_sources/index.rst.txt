@@ -23,6 +23,7 @@ Welcome to *autoBOT*'s documentation
    custom_knowledge.rst
    custom_metrics.rst
    ideas.rst
+   updates.rst
 
 .. toctree::
    :maxdepth: 4

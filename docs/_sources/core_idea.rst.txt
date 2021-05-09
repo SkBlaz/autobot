@@ -13,7 +13,6 @@ The minimal example is given next. Let's first inspect how a model is trained.
 	import matplotlib.pyplot as plt
 	import seaborn as sns
 
-
 	## Load example data frame
 	dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t")
 	train_sequences = dataframe['text_a'].values.tolist()
@@ -28,6 +27,7 @@ The minimal example is given next. Let's first inspect how a model is trained.
 		scoring_metric = "f1", # sklearn-compatible scoring metric as the fitness.
 		hof_size=3,  # size of the hall of fame
 		top_k_importances=25,  # how many top features to output as final ranking
+		include_concept_features = True, # Download ConceptNet and use relational features
 		memory_storage=
 		"./memory",  # tripled base for concept features
 		representation_type="neurosymbolic")  # or symbolic or neural

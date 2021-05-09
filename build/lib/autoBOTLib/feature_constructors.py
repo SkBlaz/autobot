@@ -385,6 +385,9 @@ def get_features(df_data,
             lr_rel_features_unigram = relationExtractor(
                 max_features=max_num_feat, min_token="unigrams")
 
+            lr_rel_features_token = relationExtractor(
+                max_features=max_num_feat, min_token="word")
+
             keyword_features = KeywordFeatures(max_features=max_num_feat,
                                                targets=targets)
 
@@ -401,10 +404,14 @@ def get_features(df_data,
                  pipeline.Pipeline([('s3', text_col(key='pos_tag_seq')),
                                     ('pos_tfidf_unigram', tfidf_pos_unigram)
                                     ])),
-                ('relational_features',
+                ('relational_features_char',
                  pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
                                     ('relational_features_unigram',
                                      lr_rel_features_unigram)])),
+                ('relational_features_token',
+                 pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
+                                    ('relational_features_token',
+                                     lr_rel_features_token)])),
                 ('keyword_features',
                  pipeline.Pipeline([('s5', text_col(key='no_stopwords')),
                                     ('keyword_features', keyword_features)]))

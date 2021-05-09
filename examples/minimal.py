@@ -22,5 +22,9 @@ def run():
     print(predictions)
     print(prob_predictions)
 
+    importances_local, importances_global = autoBOTLibObj.feature_type_importances()
+    print(importances_global)
+    print(importances_local)
+
 if __name__ == "__main__":
     run()

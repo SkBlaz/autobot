@@ -103,6 +103,7 @@
 <li class="toctree-l1"><a class="reference internal" href="custom_knowledge.html">Using custom background knowledge</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_metrics.html">Using custom metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ideas.html">Potentially interesting further work</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updates.html">Releases</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
@@ -185,7 +186,6 @@ The data used in the example is accessible at: <a class="reference external" hre
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-
 <span class="c1">## Load example data frame</span>
 <span class="n">dataframe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/insults/train.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">train_sequences</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;text_a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -200,6 +200,7 @@ The data used in the example is accessible at: <a class="reference external" hre
         <span class="n">scoring_metric</span> <span class="o">=</span> <span class="s2">&quot;f1&quot;</span><span class="p">,</span> <span class="c1"># sklearn-compatible scoring metric as the fitness.</span>
         <span class="n">hof_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>  <span class="c1"># size of the hall of fame</span>
         <span class="n">top_k_importances</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>  <span class="c1"># how many top features to output as final ranking</span>
+        <span class="n">include_concept_features</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="c1"># Download ConceptNet and use relational features</span>
         <span class="n">memory_storage</span><span class="o">=</span>
         <span class="s2">&quot;./memory&quot;</span><span class="p">,</span>  <span class="c1"># tripled base for concept features</span>
         <span class="n">representation_type</span><span class="o">=</span><span class="s2">&quot;neurosymbolic&quot;</span><span class="p">)</span>  <span class="c1"># or symbolic or neural</span>

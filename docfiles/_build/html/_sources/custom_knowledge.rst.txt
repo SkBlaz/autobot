@@ -8,6 +8,7 @@ One of the key novelties of *autoBOT* is the use of triplet-based graph database
 	  
     autoBOTLibObj = autoBOTLib.GAlearner(
 	    train_sequences,  # input sequences
+		use_concept_features = True,
 	    train_targets,  # target space 
 	    memory_storage=
 	    "./memory",  # tripled base for concept features

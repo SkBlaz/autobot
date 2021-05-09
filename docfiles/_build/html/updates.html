@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Installation &mdash; autoBOT  documentation</title>
+  <title>Releases &mdash; autoBOT  documentation</title>
   
 
   
@@ -38,8 +38,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="autoBOTLib library" href="core_idea.html" />
-    <link rel="prev" title="Key idea behind autoBOTLib" href="key_idea.html" /> 
+    <link rel="next" title="autoBOTLib" href="modules.html" />
+    <link rel="prev" title="Potentially interesting further work" href="ideas.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -93,7 +93,7 @@
 </ul>
 <p class="caption"><span class="caption-text">Tutorial and first steps:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_idea.html">autoBOTLib library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_classifiers.html">Using custom classifiers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_features.html">Using custom feature transformers</a></li>
@@ -103,7 +103,7 @@
 <li class="toctree-l1"><a class="reference internal" href="custom_knowledge.html">Using custom background knowledge</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_metrics.html">Using custom metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ideas.html">Potentially interesting further work</a></li>
-<li class="toctree-l1"><a class="reference internal" href="updates.html">Releases</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Releases</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
@@ -157,13 +157,13 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Installation</li>
+      <li>Releases</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/installation.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/updates.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -176,32 +176,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>To install the stable version of the code, you can try:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install autoBOTLib
-</pre></div>
-</div>
-<p>Or for the current master branch</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install git+https://github.com/SkBlaz/autobot
-</pre></div>
-</div>
-<p>Or directly from the repo</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python setup.py install
-</pre></div>
-</div>
-<p>Requirements can be installed via (from the repo folder):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install -r requirements.txt
-</pre></div>
-</div>
-<p>We also provide the conda virtual env specification file (yml), found in the root directory of <a class="reference external" href="https://github.com/SkBlaz/autobot/">autoBOT</a> repo.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda env create -f conda_env.yml
-</pre></div>
-</div>
-<p>To test whether the core library functionality works well, you can run the test suite from the ./tests folder (<a class="reference external" href="https://github.com/SkBlaz/autobot/">autoBOT</a>) as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">py</span><span class="o">.</span><span class="n">test</span>
-</pre></div>
-</div>
+  <div class="section" id="releases">
+<h1>Releases<a class="headerlink" href="#releases" title="Permalink to this headline">¶</a></h1>
+<p>Please see the tagged versions of the code to inspect different releases of the library. As we remain actively exploring what’s possible, the codebase could change (and defaults with it). Note however, that the <em>vMLJ</em> release was the one used for benchmarking.</p>
 </div>
 
 
@@ -210,8 +187,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="core_idea.html" class="btn btn-neutral float-right" title="autoBOTLib library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="key_idea.html" class="btn btn-neutral float-left" title="Key idea behind autoBOTLib" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="autoBOTLib" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ideas.html" class="btn btn-neutral float-left" title="Potentially interesting further work" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
