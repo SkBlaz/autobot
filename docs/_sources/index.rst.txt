@@ -24,6 +24,7 @@ Welcome to *autoBOT*'s documentation
    custom_metrics.rst
    ideas.rst
    updates.rst
+   shared_tasks.rst
 
 .. toctree::
    :maxdepth: 4

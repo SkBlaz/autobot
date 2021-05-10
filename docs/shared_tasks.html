@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Singularity container for autoBOT &mdash; autoBOT  documentation</title>
+  <title>Performance on shared tasks &mdash; autoBOT  documentation</title>
   
 
   
@@ -38,8 +38,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Using custom background knowledge" href="custom_knowledge.html" />
-    <link rel="prev" title="autoBOTLib CLI" href="cli_usage.html" /> 
+    <link rel="next" title="autoBOTLib" href="modules.html" />
+    <link rel="prev" title="Releases" href="updates.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -99,12 +99,12 @@
 <li class="toctree-l1"><a class="reference internal" href="custom_features.html">Using custom feature transformers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_persistence.html">Model persistence</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cli_usage.html">autoBOTLib CLI</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Singularity container for autoBOT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="containerization.html">Singularity container for autoBOT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_knowledge.html">Using custom background knowledge</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_metrics.html">Using custom metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ideas.html">Potentially interesting further work</a></li>
 <li class="toctree-l1"><a class="reference internal" href="updates.html">Releases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shared_tasks.html">Performance on shared tasks</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Performance on shared tasks</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
@@ -158,13 +158,13 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Singularity container for autoBOT</li>
+      <li>Performance on shared tasks</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/containerization.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/shared_tasks.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -177,13 +177,38 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="singularity-container-for-autobot">
-<h1>Singularity container for autoBOT<a class="headerlink" href="#singularity-container-for-autobot" title="Permalink to this headline">¶</a></h1>
-<p>One of the simplest ways to run autoBOT is via containerization. In this work, we adopt the Singularity containers, which are very suitable for ML-based tools. To use them, the following is in order:</p>
-<ol class="arabic simple">
-<li><p>./containers/generate.sh generates a singularity container</p></li>
-<li><p>You can run any autoBOT-based code as <cite>singularity exec [imageName] python autoBOT [someSettings+DatasetsHere]</cite></p></li>
-</ol>
+  <div class="section" id="performance-on-shared-tasks">
+<h1>Performance on shared tasks<a class="headerlink" href="#performance-on-shared-tasks" title="Permalink to this headline">¶</a></h1>
+<p>This page serves as a storage of past performances on various shared tasks. If you also run autoBOT somewhere, please, feel free to open a pull request with your result!</p>
+<table class="colwidths-given docutils align-default" id="id1">
+<caption><span class="caption-text">Shared</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Task name</p></th>
+<th class="head"><p>Setting</p></th>
+<th class="head"><p>Link</p></th>
+<th class="head"><p>Task</p></th>
+<th class="head"><p>Placement</p></th>
+<th class="head"><p>Top percent</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Malavi news classification</p></td>
+<td><p>Defaults (4h)</p></td>
+<td><p><a class="reference external" href="https://zindi.africa/competitions/ai4d-malawi-news-classification-challenge">https://zindi.africa/competitions/ai4d-malawi-news-classification-challenge</a></p></td>
+<td><p>News classification</p></td>
+<td><p>24/323 (shared with others)</p></td>
+<td><p>top 7.4%</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 
 
@@ -192,8 +217,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="custom_knowledge.html" class="btn btn-neutral float-right" title="Using custom background knowledge" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="cli_usage.html" class="btn btn-neutral float-left" title="autoBOTLib CLI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="autoBOTLib" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="updates.html" class="btn btn-neutral float-left" title="Releases" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
