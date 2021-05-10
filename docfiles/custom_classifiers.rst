@@ -36,7 +36,7 @@ The *vanilla* implementation of autoBOTLib uses the *SGDClassifier* class, suita
 		task_name="example test",  # task identifier
 		hof_size=3,  # size of the hall of fame
 		top_k_importances=25,  # how many top features to output as final ranking
-		memory_storage="../memory/conceptnet.txt.gz",
+		memory_storage="../memory",
 		representation_type="symbolic",
 		classifier = custom_classifier,
 		classifier_hyperparameters = classifier_hyperparameters)  # or neurosymbolic or neural
