@@ -422,14 +422,17 @@ def get_features(df_data,
                  pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
                                     ('relational_features_unigram',
                                      lr_rel_features_unigram)])),
+                ('keyword_features',
+                 pipeline.Pipeline([('s5', text_col(key='no_stopwords')),
+                                    ('keyword_features', keyword_features)])),
                 ('relational_features_token',
                  pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
                                     ('relational_features_token',
-                                     lr_rel_features_token)])),
-                ('keyword_features',
-                 pipeline.Pipeline([('s5', text_col(key='no_stopwords')),
-                                    ('keyword_features', keyword_features)]))
+                                     lr_rel_features_token)]))
             ]
+
+            if "neurosymbolic-default" in representation_type:
+                symbolic_features.pop()
             
             if concept_features:
                 concept_features = ConceptFeatures(max_features=max_num_feat,
@@ -444,7 +447,7 @@ def get_features(df_data,
         if representation_type == "symbolic":
             features = symbolic_features
 
-        elif representation_type == "neurosymbolic":
+        elif "neurosymbolic" in representation_type:
             features = symbolic_features + neural_features
 
         else:

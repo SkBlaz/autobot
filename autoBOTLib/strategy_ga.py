@@ -78,7 +78,7 @@ class GAlearner:
                  initial_separate_spaces = True,
                  scoring_metric=None,
                  top_k_importances=25,
-                 representation_type="neurosymbolic",
+                 representation_type="neurosymbolic-default",
                  binarize_importances=False,
                  memory_storage="memory",
                  classifier=None,

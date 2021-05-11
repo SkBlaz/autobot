@@ -74,9 +74,11 @@ class RelationalDocs:
                 set2 = t_tokens[text_list[b]]
                 jaccard = self.jaccard_index(set1, set2)
                 nlist[(a,b)] = jaccard
+                
         self.core_documents = t_tokens
         self.G = self.get_graph(nlist, len(text_list))
         G = nx.to_scipy_sparse_matrix(self.G, nodelist = list(range(len(text_list))))
+        
         if self.verbose:
             logging.info("Graph normalization in progress.")
             
@@ -171,55 +173,56 @@ class RelationalDocs:
 
 if __name__ == "__main__":
     
-    example_text = pd.read_csv("../data/insults/train.tsv", sep="\t")['text_a']
-    labels = pd.read_csv("../data/insults/train.tsv", sep="\t")['label'].values.tolist()
+    example_text = pd.read_csv("../data/hatespeech/train.tsv", sep="\t")['text_a']
+    labels = pd.read_csv("../data/hatespeech/train.tsv", sep="\t")['label'].values.tolist()
     clx = RelationalDocs(percentile_threshold = 90, ed_cutoff = -2)
     sim_features = clx.fit_transform(example_text)
 
     import matplotlib.pyplot as plt
     import seaborn as sns
     import operator
+    
     from sklearn.linear_model import LogisticRegression
     from sentence_embeddings import *
     from sklearn.model_selection import cross_val_score
     from sklearn.dummy import DummyClassifier
 
-    dem = documentEmbedder()
-    dem_features = dem.fit_transform(example_text).todense()
+    # dem = documentEmbedder()
+    # dem_features = dem.fit_transform(example_text).todense()
 
     # clf = LogisticRegression()
     # lc = labels.copy()
     # cross_val_score = cross_val_score(clf, dem_features, lc, cv = 5)
     # print(cross_val_score, "doc2vec")
 
-    clf = LogisticRegression()
-    lc = labels.copy()
-    cross_val_score = cross_val_score(clf, sim_features, lc, cv = 5)
-    print(cross_val_score, "dsim")
+    # clf = LogisticRegression()
+    # lc = labels.copy()
+    # cross_val_score = cross_val_score(clf, sim_features, lc, cv = 5)
+    # print(cross_val_score, "dsim")
 
-    # clf = DummyClassifier()
-    # cross_val_score = cross_val_score(clf, sim_features, labels.copy(), cv = 5)
-    # print(cross_val_score, "dummy")
+    clf = DummyClassifier()
+    cross_val_score = cross_val_score(clf, sim_features, labels.copy(), cv = 5)
+    print(cross_val_score, "dummy")
     
-    # print("Plotting")
-    # doc_graph = clx.G
-    # prx = nx.pagerank(doc_graph)
-    # ranks = [y for _,y in prx.items()]
-    # colors = []
-    # mdoc = list(sorted(prx.items(), key=operator.itemgetter(1)))[-10:]
-    # for ex in mdoc:
-    #     print(example_text[ex[0]], ex[1])
+    print("Plotting")
+    doc_graph = clx.G
+    prx = nx.pagerank(doc_graph)
+    ranks = [y for _,y in prx.items()]
+    colors = []
+    mdoc = list(sorted(prx.items(), key=operator.itemgetter(1)))[-10:]
+    for ex in mdoc:
+        print(example_text[ex[0]], ex[1])
 
-    # print(nx.info(doc_graph))
-    # node_sizes = []
-    # for n in doc_graph.nodes():
-    #     colors.append(prx[n])
-    #     if prx[n] != max(ranks):
-    #         node_sizes.append(6)
-    #     else:
-    #         node_sizes.append(10)
+    print(nx.info(doc_graph))
+    node_sizes = []
+    for n in doc_graph.nodes():
+        colors.append(prx[n])
+        if prx[n] != max(ranks):
+            node_sizes.append(6)
+        else:
+            node_sizes.append(10)
 
-    # pos = nx.spring_layout(doc_graph,scale=2, iterations = 100)
-    # nx.draw_networkx_nodes(doc_graph, pos, node_size = node_sizes, node_color = colors)
-    # nx.draw_networkx_edges(doc_graph, pos, alpha = 0.1)
-    # plt.show()
+    pos = nx.spring_layout(doc_graph,scale=2, iterations = 100)
+    nx.draw_networkx_nodes(doc_graph, pos, node_size = node_sizes, node_color = colors)
+    nx.draw_networkx_edges(doc_graph, pos, alpha = 0.1)
+    plt.show()
