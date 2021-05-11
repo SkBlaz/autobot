@@ -28,6 +28,14 @@ autoBOTLib.data\_utils module
    :undoc-members:
    :show-inheritance:
 
+autoBOTLib.doc\_similarity module
+---------------------------------
+
+.. automodule:: autoBOTLib.doc_similarity
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 autoBOTLib.feature\_constructors module
 ---------------------------------------
 

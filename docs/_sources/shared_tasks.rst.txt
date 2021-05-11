@@ -13,7 +13,7 @@ This page serves as a storage of past performances on various shared tasks. If y
      - Placement
      - Top percent
    * - Malavi news classification
-     - Defaults (4h)
+     - Defaults (4h) (v0.34)
      - https://zindi.africa/competitions/ai4d-malawi-news-classification-challenge
      - News classification
      - 24/323 (shared with others)

@@ -25,6 +25,7 @@ def run():
     importances_local, importances_global = autoBOTLibObj.feature_type_importances()
     print(importances_global)
     print(importances_local)
+    importances_local.to_csv("local_insults.tsv",sep = "\t")
 
 if __name__ == "__main__":
     run()

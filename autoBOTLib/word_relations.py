@@ -23,9 +23,11 @@ class relationExtractor:
                  split_char="|||",
                  witem_separator="&&&&",
                  num_cpu=1,
+                 neighborhood_token = 10, ## Context window size for relation mapping of words (added in >.34)
                  min_token="bigrams"):
 
         self.max_features = max_features
+        self.neighborhood_token = neighborhood_token
         self.vocabulary = {}
         self.split_char = split_char
         self.min_token = min_token
@@ -81,6 +83,9 @@ class relationExtractor:
             pairs = combinations(set(tokens), 2)
             for pair in pairs:
                 w1, w2, distance = self.compute_distance(pair, token_dict)
+                if self.min_token == "word":
+                    if distance > self.neighborhood_token:
+                        continue
                 if distance > 1:
                     encoded_witem = w1 + "--" + str(distance) + "--" + w2
                     if not encoded_witem in global_distances:

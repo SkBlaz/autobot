@@ -803,7 +803,7 @@ class GAlearner:
                 prob_df[l] = 0.0
 
         ## Normalization
-        prob_df = prob_df.div(prob_df.sum(axis=1), axis=0)        
+        prob_df = prob_df.div(prob_df.sum(axis=1), axis=0)
         csum = prob_df.sum(axis=1).values
         zero_index = np.where(csum == 0)[0]        
         for j in zero_index:

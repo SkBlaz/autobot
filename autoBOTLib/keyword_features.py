@@ -124,7 +124,7 @@ class KeywordFeatures:
 
         return self.keyword_vectorizer.get_feature_names()
 
-    def fit_transform(self, text_vector, b=None):
+    def fit_transform(self, text_vector, b = None):
         """
         A classifc fit-transform method.
 

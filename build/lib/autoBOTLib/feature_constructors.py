@@ -41,6 +41,7 @@ from .word_relations import *
 from .sentence_embeddings import *
 from .keyword_features import *
 from .conceptnet_features import *
+from .doc_similarity import *
 
 ## sklearn dependencies
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -352,25 +353,38 @@ def get_features(df_data,
 
         max_tokenizer, max_feature_names, max_data_matrix = None, None, None
         logging.info("Constructing {} features.".format(representation_type))
-        if representation_type == "neural" or representation_type == "neurosymbolic":
-            sentence_embedder_dm1 = documentEmbedder(max_features=max_num_feat,
-                                                     dm=1,
-                                                     ndim=embedding_dim)
-            sentence_embedder_dm2 = documentEmbedder(max_features=max_num_feat,
-                                                     dm=0,
-                                                     ndim=embedding_dim)
+        
+        if representation_type == "neural" or "neurosymbolic" in representation_type:
+            
+            sentence_embedder_dm1 = documentEmbedder(max_features = max_num_feat,
+                                                     dm = 1,
+                                                     ndim = embedding_dim)
+            
+            sentence_embedder_dm2 = documentEmbedder(max_features = max_num_feat,
+                                                     dm = 0,
+                                                     ndim = embedding_dim)
+            
+            doc_sim_features = RelationalDocs(ndim = embedding_dim)
+            
             neural_features = [
                 ('neural_features_v1',
                  pipeline.Pipeline([('s6', text_col(key='no_stopwords')),
                                     ('sentence_embedding_mean',
-                                     sentence_embedder_dm1)])),
+                                     sentence_embedder_dm1)])) ,
                 ('neural_features_v2',
                  pipeline.Pipeline([('s7', text_col(key='no_stopwords')),
                                     ('sentence_embedding_mean',
-                                     sentence_embedder_dm2)]))
+                                     sentence_embedder_dm2)])),
+                ('doc_graph',
+                 pipeline.Pipeline([('s5', text_col(key='no_stopwords')),
+                                    ('doc_similarity_features', doc_sim_features)]))
             ]
+            
+            if "neurosymbolic-default" in representation_type:
+                neural_features.pop()
 
-        if representation_type == "symbolic" or representation_type == "neurosymbolic":
+        if representation_type == "symbolic" or "neurosymbolic" in representation_type:
+            
             tfidf_word_unigram = TfidfVectorizer(ngram_range=(1, 3),
                                                  sublinear_tf=False,
                                                  max_features=max_num_feat)
