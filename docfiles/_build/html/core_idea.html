@@ -204,7 +204,7 @@ The data used in the example is accessible at: <a class="reference external" hre
         <span class="n">include_concept_features</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="c1"># Download ConceptNet and use relational features</span>
         <span class="n">memory_storage</span><span class="o">=</span>
         <span class="s2">&quot;./memory&quot;</span><span class="p">,</span>  <span class="c1"># tripled base for concept features</span>
-        <span class="n">representation_type</span><span class="o">=</span><span class="s2">&quot;neurosymbolic&quot;</span><span class="p">)</span>  <span class="c1"># or symbolic or neural</span>
+        <span class="n">representation_type</span><span class="o">=</span><span class="s2">&quot;neurosymbolic-default&quot;</span><span class="p">)</span>  <span class="c1"># or symbolic or neural or neurosymbolic (neurosymbolic includes doc2graph transformation which is in beta)</span>
 
 <span class="n">autoBOTLibObj</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span>
                 <span class="n">nind</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>  <span class="c1">## population size</span>

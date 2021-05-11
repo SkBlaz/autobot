@@ -30,7 +30,7 @@ The minimal example is given next. Let's first inspect how a model is trained.
 		include_concept_features = True, # Download ConceptNet and use relational features
 		memory_storage=
 		"./memory",  # tripled base for concept features
-		representation_type="neurosymbolic")  # or symbolic or neural
+		representation_type="neurosymbolic-default")  # or symbolic or neural or neurosymbolic (neurosymbolic includes doc2graph transformation which is in beta)
 		
 	autoBOTLibObj.evolve(
 			nind=10,  ## population size
