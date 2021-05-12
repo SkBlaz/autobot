@@ -173,8 +173,8 @@ class RelationalDocs:
 
 if __name__ == "__main__":
     
-    example_text = pd.read_csv("../data/hatespeech/train.tsv", sep="\t")['text_a']
-    labels = pd.read_csv("../data/hatespeech/train.tsv", sep="\t")['label'].values.tolist()
+    example_text = pd.read_csv("../data/sarcasm/train.tsv", sep="\t")['text_a']
+    labels = pd.read_csv("../data/sarcasm/train.tsv", sep="\t")['label'].values.tolist()
     clx = RelationalDocs(percentile_threshold = 90, ed_cutoff = -2)
     sim_features = clx.fit_transform(example_text)
 
@@ -200,9 +200,9 @@ if __name__ == "__main__":
     # cross_val_score = cross_val_score(clf, sim_features, lc, cv = 5)
     # print(cross_val_score, "dsim")
 
-    clf = DummyClassifier()
-    cross_val_score = cross_val_score(clf, sim_features, labels.copy(), cv = 5)
-    print(cross_val_score, "dummy")
+    # clf = DummyClassifier()
+    # cross_val_score = cross_val_score(clf, sim_features, labels.copy(), cv = 5)
+    # print(cross_val_score, "dummy")
     
     print("Plotting")
     doc_graph = clx.G
@@ -210,15 +210,21 @@ if __name__ == "__main__":
     ranks = [y for _,y in prx.items()]
     colors = []
     mdoc = list(sorted(prx.items(), key=operator.itemgetter(1)))[-10:]
+    
     for ex in mdoc:
+        
         print(example_text[ex[0]], ex[1])
 
     print(nx.info(doc_graph))
     node_sizes = []
+    
     for n in doc_graph.nodes():
         colors.append(prx[n])
+        
         if prx[n] != max(ranks):
+            
             node_sizes.append(6)
+            
         else:
             node_sizes.append(10)
 
