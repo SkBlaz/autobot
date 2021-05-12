@@ -1,5 +1,6 @@
 
 import logging
+from collections import defaultdict
 logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
 logging.getLogger().setLevel(logging.INFO)
@@ -18,24 +19,31 @@ class RelationalDocs:
 
     def __init__(self, ndim = 128,
                  random_seed = 1965123,
+                 targets = None,
                  ed_cutoff = -2, verbose = True,
+                 doc_limit = 2048,
                  percentile_threshold = 95):
 
         """
         Class initialization method.
 
         :param ndim: Number of latent dimensions
+        :param targets: The target vector
         :param random_seed: The random seed used
         :param ed_cutoff: Cutoff for fuzzy string matching when comparing documents
+        :param doc_limit: The max number of documents to be considered.
         :param verbose: Whether to have the printouts
         
         """
         
         self.ndim = ndim
+        self.targets = targets
         self.percentile_threshold = percentile_threshold
         self.verbose = verbose
         self.random_seed = random_seed
+        self.doc_limit = doc_limit
         self.ed_cutoff = ed_cutoff
+        self.subsample_classes = []
 
     def jaccard_index(self, set1, set2):
 
@@ -63,6 +71,29 @@ class RelationalDocs:
         if not type(text_list) == list:
             text_list = text_list.values.tolist()
 
+        ## Subsample the document space to reduce graph size.
+        if len(text_list) > self.doc_limit:
+            if self.targets is None:
+                if not self.doc_limit is None:
+                    text_list = text_list[:self.doc_limit]
+            else:
+                unique_targets = np.unique(self.targets)
+                utx = defaultdict(list)
+                for utarget in unique_targets:
+                    indices = np.where(self.targets == utarget)[0]
+                    utx[utarget] = indices.tolist()
+                increment = 0
+                sampled_docs = []       
+                while len(sampled_docs) < self.doc_limit:
+                    for k,v in utx.items():
+                        if len(v) > 0:
+                            relevant_index = v.pop()
+                            sampled_docs.append(text_list[relevant_index])
+                            self.subsample_classes.append(k)
+                assert len(sampled_docs) == self.doc_limit
+                text_list = sampled_docs
+                del sampled_docs
+                
         all_weights = []
         t_tokens = {a:set([x.lower()[:self.ed_cutoff] for x in a.strip().split(" ")]) for a in text_list}
         t_tokens = OrderedDict(t_tokens)
@@ -111,17 +142,18 @@ class RelationalDocs:
             logging.info("Transforming new documents.")
             
         all_embeddings = []
+        
         for doc in tqdm.tqdm(new_documents):
             doc_split = set([x.lower()[:self.ed_cutoff] for x in doc.strip().split(" ")])
             distances = []
+            
             for k, v in self.core_documents.items():
                 dist = self.jaccard_index(doc_split, v)
                 distances.append(dist)
+                
             distances = np.array(distances)
             sorted_dists = np.argsort(distances)[::-1]
             local_neigh_size = self.neigh_size
-            n_iter = 1000
-            ni = 0
             embedding = np.mean(self.node_embeddings[sorted_dists[0:local_neigh_size]], axis = 0)                
             all_embeddings.append(embedding)
         all_embeddings = np.array(all_embeddings)
@@ -173,9 +205,9 @@ class RelationalDocs:
 
 if __name__ == "__main__":
     
-    example_text = pd.read_csv("../data/sarcasm/train.tsv", sep="\t")['text_a']
-    labels = pd.read_csv("../data/sarcasm/train.tsv", sep="\t")['label'].values.tolist()
-    clx = RelationalDocs(percentile_threshold = 90, ed_cutoff = -2)
+    example_text = pd.read_csv("../data/pan-2017-age/train.tsv", sep="\t")['text_a']
+    labels = pd.read_csv("../data/pan-2017-age/train.tsv", sep="\t")['label'].values.tolist()
+    clx = RelationalDocs(percentile_threshold = 95, ed_cutoff = -2, targets = labels)
     sim_features = clx.fit_transform(example_text)
 
     import matplotlib.pyplot as plt
@@ -193,16 +225,16 @@ if __name__ == "__main__":
     # clf = LogisticRegression()
     # lc = labels.copy()
     # cross_val_score = cross_val_score(clf, dem_features, lc, cv = 5)
-    # print(cross_val_score, "doc2vec")
+    # print(np.mean(cross_val_score), "doc2vec")
 
-    # clf = LogisticRegression()
-    # lc = labels.copy()
-    # cross_val_score = cross_val_score(clf, sim_features, lc, cv = 5)
-    # print(cross_val_score, "dsim")
+    clf = LogisticRegression()
+    lc = labels.copy()
+    cross_val_score = cross_val_score(clf, sim_features, lc, cv = 5)
+    print(np.mean(cross_val_score), "dsim")
 
     # clf = DummyClassifier()
     # cross_val_score = cross_val_score(clf, sim_features, labels.copy(), cv = 5)
-    # print(cross_val_score, "dummy")
+    # print(np.mean(cross_val_score), "dummy")
     
     print("Plotting")
     doc_graph = clx.G
@@ -211,24 +243,13 @@ if __name__ == "__main__":
     colors = []
     mdoc = list(sorted(prx.items(), key=operator.itemgetter(1)))[-10:]
     
-    for ex in mdoc:
+    # for ex in mdoc:
         
-        print(example_text[ex[0]], ex[1])
+    #     print(example_text[ex[0]], ex[1])
 
     print(nx.info(doc_graph))
-    node_sizes = []
-    
-    for n in doc_graph.nodes():
-        colors.append(prx[n])
-        
-        if prx[n] != max(ranks):
-            
-            node_sizes.append(6)
-            
-        else:
-            node_sizes.append(10)
 
-    pos = nx.spring_layout(doc_graph,scale=2, iterations = 100)
-    nx.draw_networkx_nodes(doc_graph, pos, node_size = node_sizes, node_color = colors)
+    pos = nx.spring_layout(doc_graph,scale=2, iterations = 1000)
+    nx.draw_networkx_nodes(doc_graph, pos, node_size = 17, node_color = clx.targets, cmap = "Set2")
     nx.draw_networkx_edges(doc_graph, pos, alpha = 0.1)
     plt.show()

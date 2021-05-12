@@ -364,19 +364,19 @@ def get_features(df_data,
                                                      dm = 0,
                                                      ndim = embedding_dim)
             
-            doc_sim_features = RelationalDocs(ndim = embedding_dim)
+            doc_sim_features = RelationalDocs(ndim = embedding_dim, targets = targets)
             
             neural_features = [
                 ('neural_features_v1',
-                 pipeline.Pipeline([('s6', text_col(key='no_stopwords')),
+                 pipeline.Pipeline([('s6', text_col(key = 'no_stopwords')),
                                     ('sentence_embedding_mean',
                                      sentence_embedder_dm1)])) ,
                 ('neural_features_v2',
-                 pipeline.Pipeline([('s7', text_col(key='no_stopwords')),
+                 pipeline.Pipeline([('s7', text_col(key = 'no_stopwords')),
                                     ('sentence_embedding_mean',
                                      sentence_embedder_dm2)])),
                 ('doc_graph',
-                 pipeline.Pipeline([('s5', text_col(key='no_stopwords')),
+                 pipeline.Pipeline([('s5', text_col(key = 'no_stopwords')),
                                     ('doc_similarity_features', doc_sim_features)]))
             ]
             
