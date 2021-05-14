@@ -7,16 +7,16 @@ Made by Blaz Skrlj, Ljubljana 2020, Jozef Stefan Institute
 ## some generic logging
 import logging
 import wget  # For conceptnet download if necessary
-logging.basicConfig(format='%(asctime)s - %(message)s',
-                    datefmt='%d-%b-%y %H:%M:%S')
+logging.basicConfig(format = '%(asctime)s - %(message)s',
+                    datefmt = '%d-%b-%y %H:%M:%S')
 logging.getLogger().setLevel(logging.INFO)
 
 ## evolution helpers -> this needs to be global for proper persistence handling. If there is as better way, please open a pull request!
 from deap import base, creator, tools
 global gcreator
 gcreator = creator
-gcreator.create("FitnessMulti", base.Fitness, weights=(1.0, ))
-gcreator.create("Individual", list, fitness=creator.FitnessMulti)
+gcreator.create("FitnessMulti", base.Fitness, weights = (1.0, ))
+gcreator.create("Individual", list, fitness = creator.FitnessMulti)
 
 import operator
 
@@ -44,7 +44,7 @@ import multiprocessing as mp
 
 ## omit some redundant warnings
 from warnings import simplefilter
-simplefilter(action='ignore')
+simplefilter(action = 'ignore')
 
 ## relevant for visualization purposes, otherwise can be omitted.
 try:
@@ -70,21 +70,21 @@ class GAlearner:
                  train_sequences_raw,
                  train_targets,
                  time_constraint,
-                 num_cpu="all",
-                 task_name="update:",
-                 latent_dim=512,
-                 sparsity=0.1,
-                 hof_size=3,
+                 num_cpu = "all",
+                 task_name = "update:",
+                 latent_dim = 512,
+                 sparsity = 0.1,
+                 hof_size = 3,
                  initial_separate_spaces = True,
                  scoring_metric=None,
-                 top_k_importances=25,
-                 representation_type="neurosymbolic-default",
-                 binarize_importances=False,
-                 memory_storage="memory",
-                 classifier=None,
-                 n_fold_cv=4,
-                 classifier_hyperparameters=None,
-                 custom_transformer_pipeline=None,
+                 top_k_importances = 25,
+                 representation_type = "neurosymbolic-default",
+                 binarize_importances = False,
+                 memory_storage = "memory",
+                 classifier = None,
+                 n_fold_cv = 6,
+                 classifier_hyperparameters = None,
+                 custom_transformer_pipeline = None,
                  combine_with_existing_representation = False,
                  conceptnet_url = "https://s3.amazonaws.com/conceptnet/downloads/2019/edges/conceptnet-assertions-5.7.0.csv.gz",
                  default_importance = 0.05,
@@ -216,9 +216,12 @@ class GAlearner:
         self.include_concept_features = include_concept_features
 
         if self.include_concept_features:
+            
             if not os.path.exists(self.memory_storage):
+                
                 if self.verbose:
                     logging.info(f"Attempting to download the knowledge graph. Folder: {self.memory_storage}")
+                    
                 try:
 
                     if self.verbose: logging.info(
@@ -232,6 +235,7 @@ class GAlearner:
                         os.walk("memory"))[0][2][0]  ## Get the new file name
 
                     self.memory_storage = f"memory/{fname}"
+                    
                     if self.verbose: logging.info(
                         f"Memory storage downloaded: {self.memory_storage}")
 
@@ -246,14 +250,15 @@ class GAlearner:
                 try:
                     cnames = list(
                         os.walk(self.memory_storage))[0][2][0]
+                    
                     self.memory_storage = self.memory_storage+"/"+cnames
 
                 except Exception as es:
 
                     if self.verbose: logging.info(f"Could not find the knowledge graph memory storage. Please do the following: \n a) Check if there is empty memory folder. \n b) Download manually into the created memory folder via: {conceptnet_url} \n c) Check if the file is not corrupted. \n autoBOT will now continue without the ConceptNet-based features!")
+                    
                     self.include_concept_features = False
             
-
         self.population = None  ## this object gets evolved
 
         ## establish constraints
@@ -377,15 +382,15 @@ class GAlearner:
             mask = ["x"] * self.topk
             top5 = [
                 " : ".join([str(y) for y in x]) for x in sorted(
-                    tmp.items(), key=operator.itemgetter(1), reverse=True)
+                    tmp.items(), key = operator.itemgetter(1), reverse = True)
             ][0:self.topk]
             mask[0:len(top5)] = top5
             self.global_feature_map[k] = mask
         self.global_feature_map = pd.DataFrame(self.global_feature_map)
         self.sparsity_coef = np.mean(self.sparsity_coef)
         self._feature_importances = sorted(fdict.items(),
-                                           key=operator.itemgetter(1),
-                                           reverse=True)
+                                           key = operator.itemgetter(1),
+                                           reverse = True)
         if self.verbose: logging.info(
             "Feature importances can be accessed by ._feature_importances")
 
@@ -419,7 +424,7 @@ class GAlearner:
         df_split = np.array_split(df, self.num_cpu * 10)
         pool = mp.Pool(self.num_cpu)
         df = pd.concat(
-            tqdm.tqdm(pool.imap(func, df_split), total=len(df_split)))
+            tqdm.tqdm(pool.imap(func, df_split), total = len(df_split)))
 
         pool.close()
         pool.join()
@@ -450,8 +455,8 @@ class GAlearner:
         The initialization method, capable of generation of individuals.
         """
 
-        weights = np.random.uniform(low=0.6, high=1,
-                                    size=self.weight_params).tolist()
+        weights = np.random.uniform(low = 0.6, high = 1,
+                                    size = self.weight_params).tolist()
         weights[0:len(weights_importances)] = weights_importances
         generic_individual = np.array(weights)
 
@@ -468,7 +473,7 @@ class GAlearner:
 
         performances = []
         for subspace, name in zip(self.feature_subspaces, self.feature_names):
-            f1, _ = self.cross_val_scores(subspace, n_cpu=self.num_cpu)
+            f1, _ = self.cross_val_scores(subspace, n_cpu = self.num_cpu)
             performances.append(f1)
 
         pairs = [
@@ -483,9 +488,9 @@ class GAlearner:
         generic_individual = self.generate_random_initial_state(weights)
         assert len(generic_individual) == self.weight_params
         for ind in self.population:
-            noise = np.random.uniform(low=0.95,
-                                      high=1.05,
-                                      size=self.weight_params)
+            noise = np.random.uniform(low = 0.95,
+                                      high = 1.05,
+                                      size = self.weight_params)
             generic_individual = generic_individual * noise + self.default_importance
             ind[:] = np.abs(generic_individual)
 
@@ -499,8 +504,8 @@ class GAlearner:
 
     def apply_weights(self,
                       parameters,
-                      custom_feature_space=False,
-                      custom_feature_matrix=None):
+                      custom_feature_space = False,
+                      custom_feature_matrix = None):
         """
         This method applies weights to individual parts of the feature space.
 
@@ -535,7 +540,7 @@ class GAlearner:
 
         return tmp_space
 
-    def cross_val_scores(self, tmp_feature_space, final_run=False, n_cpu=None):
+    def cross_val_scores(self, tmp_feature_space, final_run = False, n_cpu = None):
         """
         Compute the learnability of the representation.
         
@@ -594,20 +599,20 @@ class GAlearner:
         if final_run:
             clf = GridSearchCV(svc,
                                parameters,
-                               verbose=self.verbose,
-                               n_jobs=self.num_cpu,
-                               cv=self.n_fold_cv,
-                               scoring=performance_score,
-                               refit=True)
+                               verbose = self.verbose,
+                               n_jobs = self.num_cpu,
+                               cv = self.n_fold_cv,
+                               scoring = performance_score,
+                               refit = True)
 
         else:
             clf = GridSearchCV(svc,
                                parameters,
-                               verbose=self.verbose,
-                               n_jobs=self.num_cpu,
-                               cv=self.n_fold_cv,
-                               scoring=performance_score,
-                               refit=False)
+                               verbose = self.verbose,
+                               n_jobs = self.num_cpu,
+                               cv = self.n_fold_cv,
+                               scoring = performance_score,
+                               refit = False)
 
         clf.fit(tmp_feature_space, self.train_targets)
         f1_perf = max(clf.cv_results_['mean_test_score'])
@@ -621,8 +626,8 @@ class GAlearner:
 
     def evaluate_fitness(self,
                          individual,
-                         max_num_feat=1000,
-                         return_clf_and_vec=False):
+                         max_num_feat = 1000,
+                         return_clf_and_vec = False):
         """
         A helper method for evaluating an individual solution. Given a real-valued vector, this constructs the representations and evaluates a given learner.
 
@@ -684,7 +689,7 @@ class GAlearner:
 
         return np.mean(f1_scores)
 
-    def report_performance(self, fits, gen=0):
+    def report_performance(self, fits, gen = 0):
         """
         A helper method for performance reports.
 
@@ -740,8 +745,8 @@ class GAlearner:
                     ## Subset the matrix.
                     subsetted_space = self.apply_weights(
                         individual,
-                        custom_feature_space=True,
-                        custom_feature_matrix=transformed_instances)
+                        custom_feature_space = True,
+                        custom_feature_matrix = transformed_instances)
 
                     ## obtain the predictions.
                     if not prediction_space is None:
@@ -804,12 +809,12 @@ class GAlearner:
 
         ## Normalization
         prob_df = prob_df.div(prob_df.sum(axis=1), axis=0)
-        csum = prob_df.sum(axis=1).values
+        csum = prob_df.sum(axis = 1).values
         zero_index = np.where(csum == 0)[0]        
         for j in zero_index:
             prob_df.iloc[j,self.majority_class] = 1
         prob_df = prob_df.fillna(0)        
-        assert len(np.where(prob_df.sum(axis=1) < 1)[0]) == 0
+        assert len(np.where(prob_df.sum(axis = 1) < 1)[0]) == 0
         
         return prob_df
         
@@ -848,8 +853,8 @@ class GAlearner:
                     ## Subset the matrix.
                     subsetted_space = self.apply_weights(
                         individual,
-                        custom_feature_space=True,
-                        custom_feature_matrix=transformed_instances)
+                        custom_feature_space = True,
+                        custom_feature_matrix = transformed_instances)
 
                     ## obtain the predictions.
                     if not prediction_space is None:
@@ -873,7 +878,7 @@ class GAlearner:
 
             ## Transform back to origin space
             all_predictions = self.apply_label_map(all_predictions,
-                                                   inverse=True)
+                                                   inverse = True)
             return all_predictions
 
     def mode_pred(self, prediction_matrix):
@@ -906,7 +911,7 @@ class GAlearner:
             performance_df = pd.DataFrame.from_dict(performance)
             performance_df['learner ID'] = f"Learner_{enx}"
             performances.append(performance_df)
-        return pd.concat(performances, axis=0)
+        return pd.concat(performances, axis = 0)
 
     def generate_id_intervals(self):
         """
@@ -921,7 +926,7 @@ class GAlearner:
 
                 interval = [0, 1]
                 layer_combs = list(
-                    itertools.product(interval, repeat=self.weight_params - 1))
+                    itertools.product(interval, repeat = self.weight_params - 1))
 
                 random.shuffle(layer_combs)
                 if self.verbose: logging.info(
@@ -983,7 +988,7 @@ class GAlearner:
 
         print("\n".join(report))
 
-    def mutReg(self, individual, p=1):
+    def mutReg(self, individual, p = 1):
         """
         Custom mutation operator used for regularization optimization.
 
@@ -994,7 +999,7 @@ class GAlearner:
         individual[0] += random.random() * self.reg_constant
         return individual,
 
-    def update_intermediary_feature_space(self, custom_space=None):
+    def update_intermediary_feature_space(self, custom_space = None):
         """
         Create the subset of the origin feature space based on the starting_feature_numbers vector that gets evolved.
         """
@@ -1051,12 +1056,12 @@ class GAlearner:
 
         self.vectorizer, self.feature_names, self.train_feature_space = get_features(
             self.train_seq,
-            representation_type=self.representation_type,
-            sparsity=self.sparsity,
-            embedding_dim=self.latent_dim,
-            targets=self.train_targets,
-            memory_location=self.memory_storage,
-            custom_pipeline=self.custom_transformer_pipeline,
+            representation_type = self.representation_type,
+            sparsity = self.sparsity,
+            embedding_dim = self.latent_dim,
+            targets = self.train_targets,
+            memory_location = self.memory_storage,
+            custom_pipeline = self.custom_transformer_pipeline,
             concept_features = self.include_concept_features,
             combine_with_existing_representation = self.combine_with_existing_representation)
 
@@ -1087,7 +1092,7 @@ class GAlearner:
         self.intermediary_indices = [0] + np.cumsum(
             np.array([x[1] for x in self.feature_space_tuples])).tolist()
 
-    def feature_type_importances(self, solution_index=0):
+    def feature_type_importances(self, solution_index = 0):
         """
         A method which prints feature type importances as a pandas df.
 
@@ -1105,7 +1110,7 @@ class GAlearner:
         feature_ranking = self.global_feature_map  ## all features
         return feature_ranking, dfx
 
-    def visualize_fitness(self, image_path="fitnessExample.png"):
+    def visualize_fitness(self, image_path = "fitnessExample.png"):
         """
         A method for visualizing fitness.
 
@@ -1127,12 +1132,12 @@ class GAlearner:
             if image_path is None:
                 return dfx
 
-            mean_fitness = dfx.mean(axis=1).values.tolist()
+            mean_fitness = dfx.mean(axis = 1).values.tolist()
             sns.lineplot(list(range(len(mean_fitness))), mean_fitness)
             plt.xlabel("Generation")
             plt.ylabel(f"Mean fitness ({self.scoring_metric})")
             plt.tight_layout()
-            plt.savefig(image_path, dpi=300)
+            plt.savefig(image_path, dpi = 300)
 
         except Exception as es:
             if self.verbose: logging.info(es)
@@ -1140,12 +1145,12 @@ class GAlearner:
         return dfx
 
     def evolve(self,
-               nind=10,
-               crossover_proba=0.4,
-               mutpb=0.15,
-               stopping_interval=20,
-               strategy="evolution",
-               validation_type="cv"):
+               nind = 10,
+               crossover_proba = 0.4,
+               mutpb = 0.15,
+               stopping_interval = 20,
+               strategy = "evolution",
+               validation_type = "cv"):
         """The core evolution method. First constrain the maximum number of features to be taken into account by lowering the bound w.r.t performance.
         next, evolve.
 
@@ -1173,21 +1178,21 @@ class GAlearner:
                               tools.initRepeat,
                               gcreator.Individual,
                               self.toolbox.attr_float,
-                              n=self.weight_params)
+                              n = self.weight_params)
 
         self.toolbox.register("population",
                               tools.initRepeat,
                               list,
                               self.toolbox.individual,
-                              n=nind)
+                              n = nind)
 
         self.toolbox.register("evaluate", self.evaluate_fitness)
-        self.toolbox.register("mate", tools.cxUniform, indpb=0.5)
+        self.toolbox.register("mate", tools.cxUniform, indpb = 0.5)
         self.toolbox.register("mutate",
                               tools.mutGaussian,
-                              mu=0,
-                              sigma=0.2,
-                              indpb=0.2)
+                              mu = 0,
+                              sigma = 0.2,
+                              indpb = 0.2)
 
         self.toolbox.register("mutReg", self.mutReg)
         self.toolbox.register("select", tools.selTournament)
@@ -1260,7 +1265,7 @@ class GAlearner:
 
             self.get_feature_importance_report(self.hof[0], fits)
 
-            f1 = self.report_performance(fits, gen=gen)
+            f1 = self.report_performance(fits, gen = gen)
 
             if f1 == cf1:
                 stopping += 1
@@ -1269,8 +1274,8 @@ class GAlearner:
                 cf1 = f1
 
             self.population = self.toolbox.select(self.population + offspring,
-                                                  k=nind,
-                                                  tournsize=int(nind / 3))
+                                                  k = nind,
+                                                  tournsize = int(nind / 3))
 
         try:
             selections = self.hof
@@ -1288,7 +1293,7 @@ class GAlearner:
 
             try:
                 learner, individual, score, feature_names, report = self.evaluate_fitness(
-                    top_individual, return_clf_and_vec=True)
+                    top_individual, return_clf_and_vec = True)
                 self.performance_reports.append(report)
 
             except Exception as es:
@@ -1299,7 +1304,7 @@ class GAlearner:
 
             ## coefficients are given for each class. We take maximum one (abs val)
             coefficients = np.asarray(np.abs(np.max(coefficients,
-                                                    axis=0))).reshape(-1)
+                                                    axis = 0))).reshape(-1)
 
             if self.verbose: logging.info("Coefficients and indices: {}".format(
                 len(coefficients)))
