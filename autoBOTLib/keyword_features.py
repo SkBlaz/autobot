@@ -19,7 +19,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.corpus import stopwords
 from .rakun import RakunDetector, defaultdict
 
-
 class KeywordFeatures:
     """
     Core class describing sentence embedding methodology employed here. 

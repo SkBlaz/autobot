@@ -50,9 +50,6 @@ from sklearn import pipeline
 from sklearn.preprocessing import Normalizer
 from sklearn import preprocessing
 
-## Seeds and np for np
-np.random.seed(456238)
-
 def remove_punctuation(text):
     """
     This method removes punctuation
@@ -335,11 +332,15 @@ def get_features(df_data,
                  memory_location = "memory/conceptnet.txt.gz",
                  custom_pipeline = None,
                  concept_features = True,
+                 random_seed = 54324,
                  combine_with_existing_representation = False):
     """
     Method that computes various TF-IDF-alike features.
     """
 
+    ## Seeds and np for np
+    np.random.seed(random_seed)
+    
     if not custom_pipeline is None and combine_with_existing_representation == False:
 
         features = custom_pipeline

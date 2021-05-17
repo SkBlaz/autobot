@@ -21,7 +21,6 @@ gcreator.create("Individual", list, fitness = creator.FitnessMulti)
 import operator
 
 ## feature space construction
-import random
 from .feature_constructors import *
 from .metrics import *
 from collections import defaultdict
@@ -83,6 +82,7 @@ class GAlearner:
                  memory_storage = "memory",
                  classifier = None,
                  n_fold_cv = 6,
+                 random_seed = 8954,
                  classifier_hyperparameters = None,
                  custom_transformer_pipeline = None,
                  combine_with_existing_representation = False,
@@ -116,6 +116,10 @@ class GAlearner:
         :param default_importance: Minimum possible initial weight.
 
         """
+        
+        ## Set the random seed
+        self.random_seed = random_seed
+        np.random.seed(random_seed)
         
         logo = """
 
@@ -928,7 +932,7 @@ class GAlearner:
                 layer_combs = list(
                     itertools.product(interval, repeat = self.weight_params - 1))
 
-                random.shuffle(layer_combs)
+                np.random.shuffle(layer_combs)
                 if self.verbose: logging.info(
                     "Ready to evaluate {} solutions at resolution: {}".format(
                         len(layer_combs) * len(reg_range), k))
@@ -996,7 +1000,7 @@ class GAlearner:
         :return individual: An individual solution.
         """
 
-        individual[0] += random.random() * self.reg_constant
+        individual[0] += np.random.random() * self.reg_constant
         return individual,
 
     def update_intermediary_feature_space(self, custom_space = None):
@@ -1060,6 +1064,7 @@ class GAlearner:
             sparsity = self.sparsity,
             embedding_dim = self.latent_dim,
             targets = self.train_targets,
+            random_seed = self.random_seed,
             memory_location = self.memory_storage,
             custom_pipeline = self.custom_transformer_pipeline,
             concept_features = self.include_concept_features,
@@ -1173,7 +1178,7 @@ class GAlearner:
 
         self.toolbox = base.Toolbox()
         self.weight_params = len(self.feature_names)
-        self.toolbox.register("attr_float", random.uniform, 0.00001, 0.999999)
+        self.toolbox.register("attr_float", np.random.uniform, 0.00001, 0.999999)
         self.toolbox.register("individual",
                               tools.initRepeat,
                               gcreator.Individual,
@@ -1239,7 +1244,7 @@ class GAlearner:
             ## Perform crossover
             for child1, child2 in zip(offspring[::2], offspring[1::2]):
 
-                if random.random() < crossover_proba:
+                if np.random.random() < crossover_proba:
 
                     self.toolbox.mate(child1, child2)
                     del child1.fitness.values
@@ -1248,7 +1253,7 @@ class GAlearner:
             ## Perform mutation
             for mutant in offspring:
 
-                if random.random() < mutpb:
+                if np.random.random() < mutpb:
                     self.toolbox.mutate(mutant)
                     del mutant.fitness.values
 
