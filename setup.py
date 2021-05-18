@@ -1,7 +1,6 @@
 from os import path
 from setuptools import setup, find_packages
 
-
 def parse_requirements(file):
     required_packages = []
     with open(path.join(path.dirname(__file__), file)) as req_file:
@@ -9,14 +8,12 @@ def parse_requirements(file):
             required_packages.append(line.strip())
     return required_packages
 
-
 packages = [x for x in find_packages() if x != "test"]
 setup(
     name='autoBOTLib',
-    version='0.42',
+    version='0.43',
     description="AutoBOT: Explainable AutoML for texts",
     url='https://github.com/skblaz/autobot',
-    #      python_requires='<3.9.0',
     author='Blaž Škrlj',
     author_email='blaz.skrlj@ijs.si',
     license='bsd-3-clause-clear',
