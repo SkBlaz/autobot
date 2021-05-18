@@ -5,6 +5,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import pipeline  ## A necessary import
 
+
 def run():
     ## Load example data frame
     dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t")
@@ -26,12 +27,14 @@ def run():
     custom_features = [
         ('word_features',
          pipeline.Pipeline([
-             ('s1', autoBOTLib.feature_constructors.text_col(key='no_stopwords')),
+             ('s1',
+              autoBOTLib.feature_constructors.text_col(key='no_stopwords')),
              ('word_tfidf_unigram', tfidf_word_unigram)
          ])),
         ('char_features',
          pipeline.Pipeline([
-             ('s2', autoBOTLib.feature_constructors.text_col(key='no_stopwords')),
+             ('s2',
+              autoBOTLib.feature_constructors.text_col(key='no_stopwords')),
              ('char_tfidf_bigram', tfidf_char_bigram)
          ]))
     ]
@@ -45,7 +48,8 @@ def run():
 
     dataframe2 = pd.read_csv("../data/insults/test.tsv", sep="\t")
     test_sequences = dataframe2['text_a'].values.tolist()
-    predictions = autoBOTLibLibObj.predict(test_sequences)
-    
+    autoBOTLibLibObj.predict(test_sequences)
+
+
 if __name__ == "__main__":
     run()

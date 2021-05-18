@@ -190,7 +190,9 @@ if __name__ == "__main__":
     text = example_text['text_a']
     labels = example_text['label']
 
-    rex = ConceptFeatures(knowledge_graph = "../examples/memory/conceptnet-assertions-5.7.0.csv.gz")
+    rex = ConceptFeatures(
+        knowledge_graph="../examples/memory/conceptnet-assertions-5.7.0.csv.gz"
+    )
     m = rex.fit_transform(text)
     print(m.shape)
     print(np.isnan(m.todense()).any())

@@ -36,6 +36,7 @@ except:
     def PerceptronTagger():
         return 0
 
+
 ## Feature constructors
 from .word_relations import *
 from .sentence_embeddings import *
@@ -51,6 +52,7 @@ from sklearn import preprocessing
 
 ## Seeds and np for np
 np.random.seed(456238)
+
 
 def remove_punctuation(text):
     """
@@ -142,7 +144,7 @@ def ttr(text):
     :param text: Input string of text
     :return float: Ratio of the unique/overall tokens
     """
-    
+
     if len(text.split(" ")) > 1 and len(text.split()) > 0:
         return len(set(text.split())) / len(text.split())
     else:
@@ -157,7 +159,6 @@ class text_col(BaseEstimator, TransformerMixin):
     :param TransformerMixin: Transformer object
     :return object: Returns particular text column
     """
-    
     def __init__(self, key):
         self.key = key
 
@@ -177,7 +178,6 @@ class digit_col(BaseEstimator, TransformerMixin):
     :param TransformerMixin: Transformer object
     :return object: Returns transformed (scaled) space
     """
-    
     def fit(self, x, y=None):
         return self
 
@@ -332,9 +332,9 @@ def get_features(df_data,
                  sparsity=0.1,
                  embedding_dim=512,
                  memory_location="memory/conceptnet.txt.gz",
-                 custom_pipeline = None,
-                 concept_features = True,
-                 combine_with_existing_representation = False):
+                 custom_pipeline=None,
+                 concept_features=True,
+                 combine_with_existing_representation=False):
     """
     Method that computes various TF-IDF-alike features.
     """
@@ -344,7 +344,7 @@ def get_features(df_data,
         features = custom_pipeline
 
     else:
-        
+
         max_num_feat = int(embedding_dim / sparsity)
         logging.info(
             "Considering {} features per type, assuming sparsity of {}.".
@@ -409,15 +409,16 @@ def get_features(df_data,
                  pipeline.Pipeline([('s5', text_col(key='no_stopwords')),
                                     ('keyword_features', keyword_features)]))
             ]
-            
+
             if concept_features:
-                concept_features = ConceptFeatures(max_features=max_num_feat,
-                                                   knowledge_graph=memory_location)
+                concept_features = ConceptFeatures(
+                    max_features=max_num_feat, knowledge_graph=memory_location)
 
                 cfx = ('concept_features',
                        pipeline.Pipeline([('s6', text_col(key='no_stopwords')),
-                                          ('concept_features', concept_features)]))
-                
+                                          ('concept_features',
+                                           concept_features)]))
+
                 symbolic_features.append(cfx)
 
         if representation_type == "symbolic":
@@ -431,7 +432,7 @@ def get_features(df_data,
 
     if not custom_pipeline is None and combine_with_existing_representation:
         features = features + custom_pipeline
-        
+
     feature_names = [x[0] for x in features]
     matrix = pipeline.Pipeline([('union',
                                  FeatureUnion(transformer_list=features,

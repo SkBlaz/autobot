@@ -1,5 +1,4 @@
 from autoBOT.data_utils import *
-from sklearn import preprocessing
 from autoBOT.feature_constructors import *
 from autoBOT.strategy_ga import *
 from autoBOT.helpers import *

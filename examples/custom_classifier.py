@@ -2,6 +2,7 @@ import autoBOTLib
 import pandas as pd
 from sklearn.linear_model import SGDClassifier
 
+
 def run():
     ## Load example data frame
     dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t")
@@ -39,6 +40,7 @@ def run():
         strategy="evolution",  ## optimization strategy
         crossover_proba=0.6,  ## crossover rate
         mutpb=0.4)  ## mutation rate
-        
+
+
 if __name__ == "__main__":
     run()

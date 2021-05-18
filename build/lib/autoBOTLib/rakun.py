@@ -6,7 +6,6 @@ RaKUn is an algorithm for graph-absed keyword extraction.
 import itertools
 import string
 from nltk import word_tokenize
-from nltk.stem.porter import *
 import operator
 from collections import defaultdict, Counter
 import networkx as nx
@@ -17,6 +16,7 @@ import logging
 logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
 logging.getLogger().setLevel(logging.INFO)
+
 
 class RakunDetector:
     def __init__(self, hyperparameters, verbose=True):

@@ -3,8 +3,8 @@ AutoBOT. Skrlj et al. 2021
 """
 
 import logging
-logging.basicConfig(format = '%(asctime)s - %(message)s',
-                    datefmt = '%d-%b-%y %H:%M:%S')
+logging.basicConfig(format='%(asctime)s - %(message)s',
+                    datefmt='%d-%b-%y %H:%M:%S')
 logging.getLogger().setLevel(logging.INFO)
 
 import numpy as np
@@ -36,6 +36,7 @@ except:
     def PerceptronTagger():
         return 0
 
+
 ## Feature constructors
 from .word_relations import *
 from .sentence_embeddings import *
@@ -50,6 +51,7 @@ from sklearn.pipeline import FeatureUnion
 from sklearn import pipeline
 from sklearn.preprocessing import Normalizer
 from sklearn import preprocessing
+
 
 def remove_punctuation(text):
     """
@@ -141,7 +143,7 @@ def ttr(text):
     :param text: Input string of text
     :return float: Ratio of the unique/overall tokens
     """
-    
+
     if len(text.split(" ")) > 1 and len(text.split()) > 0:
         return len(set(text.split())) / len(text.split())
     else:
@@ -156,11 +158,10 @@ class text_col(BaseEstimator, TransformerMixin):
     :param TransformerMixin: Transformer object
     :return object: Returns particular text column
     """
-    
     def __init__(self, key):
         self.key = key
 
-    def fit(self, x, y = None):
+    def fit(self, x, y=None):
         return self
 
     def transform(self, data_dict):
@@ -176,8 +177,7 @@ class digit_col(BaseEstimator, TransformerMixin):
     :param TransformerMixin: Transformer object
     :return object: Returns transformed (scaled) space
     """
-    
-    def fit(self, x, y = None):
+    def fit(self, x, y=None):
         return self
 
     def transform(self, hd_searches):
@@ -185,7 +185,7 @@ class digit_col(BaseEstimator, TransformerMixin):
             'text', 'no_punctuation', 'no_stopwords', 'text_clean', 'affixes',
             'pos_tag_seq'
         ]
-        hd_searches = hd_searches.drop(d_col_drops, axis = 1).values
+        hd_searches = hd_searches.drop(d_col_drops, axis=1).values
         scaler = preprocessing.MinMaxScaler().fit(hd_searches)
         return scaler.transform(hd_searches)
 
@@ -231,11 +231,11 @@ class FeaturePrunner:
     """
     Core class describing sentence embedding methodology employed here.
     """
-    def __init__(self, max_num_feat = 2048):
+    def __init__(self, max_num_feat=2048):
 
         self.max_num_feat = max_num_feat
 
-    def fit(self, input_data, y = None):
+    def fit(self, input_data, y=None):
 
         return self
 
@@ -259,11 +259,11 @@ def fast_screening_sgd(training, targets):
     ncores = 8
     clf = GridSearchCV(svc,
                        parameters,
-                       verbose = 0,
-                       n_jobs = ncores,
-                       cv = 5,
-                       scoring = f1_scoring,
-                       refit = False)
+                       verbose=0,
+                       n_jobs=ncores,
+                       cv=5,
+                       scoring=f1_scoring,
+                       refit=False)
     clf.fit(training, targets)
     f1_perf = max(clf.cv_results_['mean_test_score'])
     return f1_perf
@@ -284,33 +284,33 @@ def get_subset(indice_list, data_matrix, vectorizer):
     return hstack(feature_subspaces)
 
 
-def get_simple_features(df_data, max_num_feat = 10000):
+def get_simple_features(df_data, max_num_feat=10000):
 
-    tfidf_word_unigram = TfidfVectorizer(ngram_range = (1, 3),
-                                         sublinear_tf = False,
-                                         max_features = max_num_feat)
-    tfidf_pos_unigram = TfidfVectorizer(ngram_range = (1, 3),
-                                        max_features = max_num_feat)
-    tfidf_char_bigram = TfidfVectorizer(analyzer = 'char',
-                                        ngram_range = (2, 4),
-                                        max_features = max_num_feat)
-    lr_rel_features_unigram = relationExtractor(max_features = max_num_feat,
-                                                min_token = "unigrams")
+    tfidf_word_unigram = TfidfVectorizer(ngram_range=(1, 3),
+                                         sublinear_tf=False,
+                                         max_features=max_num_feat)
+    tfidf_pos_unigram = TfidfVectorizer(ngram_range=(1, 3),
+                                        max_features=max_num_feat)
+    tfidf_char_bigram = TfidfVectorizer(analyzer='char',
+                                        ngram_range=(2, 4),
+                                        max_features=max_num_feat)
+    lr_rel_features_unigram = relationExtractor(max_features=max_num_feat,
+                                                min_token="unigrams")
     symbolic_features = [
         ('word_features',
-         pipeline.Pipeline([('s1', text_col(key = 'no_stopwords')),
+         pipeline.Pipeline([('s1', text_col(key='no_stopwords')),
                             ('word_tfidf_unigram', tfidf_word_unigram)])),
         ('char_features',
-         pipeline.Pipeline([('s2', text_col(key = 'no_stopwords')),
+         pipeline.Pipeline([('s2', text_col(key='no_stopwords')),
                             ('char_tfidf_bigram', tfidf_char_bigram)])),
         ('pos_features',
-         pipeline.Pipeline([('s3', text_col(key = 'pos_tag_seq')),
+         pipeline.Pipeline([('s3', text_col(key='pos_tag_seq')),
                             ('pos_tfidf_unigram', tfidf_pos_unigram)]))
     ]
 
     feature_names = [x[0] for x in symbolic_features]
     matrix = pipeline.Pipeline([
-        ('union', FeatureUnion(transformer_list = symbolic_features, n_jobs = 8)),
+        ('union', FeatureUnion(transformer_list=symbolic_features, n_jobs=8)),
         ('normalize', Normalizer())
     ])
 
@@ -326,28 +326,28 @@ def get_simple_features(df_data, max_num_feat = 10000):
 
 
 def get_features(df_data,
-                 representation_type = "neurosymbolic",
-                 targets = None,
-                 sparsity = 0.1,
-                 embedding_dim = 512,
-                 memory_location = "memory/conceptnet.txt.gz",
-                 custom_pipeline = None,
-                 concept_features = True,
-                 random_seed = 54324,
-                 combine_with_existing_representation = False):
+                 representation_type="neurosymbolic",
+                 targets=None,
+                 sparsity=0.1,
+                 embedding_dim=512,
+                 memory_location="memory/conceptnet.txt.gz",
+                 custom_pipeline=None,
+                 concept_features=True,
+                 random_seed=54324,
+                 combine_with_existing_representation=False):
     """
     Method that computes various TF-IDF-alike features.
     """
 
     ## Seeds and np for np
     np.random.seed(random_seed)
-    
+
     if not custom_pipeline is None and combine_with_existing_representation == False:
 
         features = custom_pipeline
 
     else:
-        
+
         max_num_feat = int(embedding_dim / sparsity)
         logging.info(
             "Considering {} features per type, assuming sparsity of {}.".
@@ -355,88 +355,88 @@ def get_features(df_data,
 
         max_tokenizer, max_feature_names, max_data_matrix = None, None, None
         logging.info("Constructing {} features.".format(representation_type))
-        
+
         if representation_type == "neural" or "neurosymbolic" in representation_type:
-            
-            sentence_embedder_dm1 = documentEmbedder(max_features = max_num_feat,
-                                                     dm = 1,
-                                                     ndim = embedding_dim)
-            
-            sentence_embedder_dm2 = documentEmbedder(max_features = max_num_feat,
-                                                     dm = 0,
-                                                     ndim = embedding_dim)
-            
-            doc_sim_features = RelationalDocs(ndim = embedding_dim, targets = None)
-            
+
+            sentence_embedder_dm1 = documentEmbedder(max_features=max_num_feat,
+                                                     dm=1,
+                                                     ndim=embedding_dim)
+
+            sentence_embedder_dm2 = documentEmbedder(max_features=max_num_feat,
+                                                     dm=0,
+                                                     ndim=embedding_dim)
+
+            doc_sim_features = RelationalDocs(ndim=embedding_dim, targets=None)
+
             neural_features = [
                 ('neural_features_v1',
-                 pipeline.Pipeline([('s7', text_col(key = 'no_stopwords')),
+                 pipeline.Pipeline([('s7', text_col(key='no_stopwords')),
                                     ('sentence_embedding_mean',
-                                     sentence_embedder_dm1)])) ,
+                                     sentence_embedder_dm1)])),
                 ('neural_features_v2',
-                 pipeline.Pipeline([('s8', text_col(key = 'no_stopwords')),
+                 pipeline.Pipeline([('s8', text_col(key='no_stopwords')),
                                     ('sentence_embedding_mean',
                                      sentence_embedder_dm2)])),
                 ('doc_graph',
-                 pipeline.Pipeline([('s9', text_col(key = 'no_stopwords')),
-                                    ('doc_similarity_features', doc_sim_features)]))
+                 pipeline.Pipeline([('s9', text_col(key='no_stopwords')),
+                                    ('doc_similarity_features',
+                                     doc_sim_features)]))
             ]
-            
+
             if "neurosymbolic-default" in representation_type:
                 neural_features.pop()
 
         if representation_type == "symbolic" or "neurosymbolic" in representation_type:
-            
-            tfidf_word_unigram = TfidfVectorizer(ngram_range = (1, 3),
-                                                 sublinear_tf = False,
-                                                 max_features = max_num_feat)
 
-            tfidf_pos_unigram = TfidfVectorizer(ngram_range = (1, 3),
-                                                max_features = max_num_feat)
+            tfidf_word_unigram = TfidfVectorizer(ngram_range=(1, 3),
+                                                 sublinear_tf=False,
+                                                 max_features=max_num_feat)
 
-            tfidf_char_bigram = TfidfVectorizer(analyzer = 'char',
-                                                ngram_range = (2, 4),
-                                                max_features = max_num_feat)
+            tfidf_pos_unigram = TfidfVectorizer(ngram_range=(1, 3),
+                                                max_features=max_num_feat)
+
+            tfidf_char_bigram = TfidfVectorizer(analyzer='char',
+                                                ngram_range=(2, 4),
+                                                max_features=max_num_feat)
 
             lr_rel_features_unigram = relationExtractor(
-                max_features = max_num_feat, min_token = "unigrams")
+                max_features=max_num_feat, min_token="unigrams")
 
             lr_rel_features_token = relationExtractor(
-                max_features = max_num_feat, min_token = "word")
+                max_features=max_num_feat, min_token="word")
 
-            keyword_features = KeywordFeatures(max_features = max_num_feat,
-                                               targets = targets)
+            keyword_features = KeywordFeatures(max_features=max_num_feat,
+                                               targets=targets)
 
-            topic_features = TopicDocs(ndim = embedding_dim)
+            topic_features = TopicDocs(ndim=embedding_dim)
 
             symbolic_features = [
                 ('word_features',
-                 pipeline.Pipeline([('s1', text_col(key = 'no_stopwords')),
+                 pipeline.Pipeline([('s1', text_col(key='no_stopwords')),
                                     ('word_tfidf_unigram', tfidf_word_unigram)
                                     ])),
                 ('char_features',
-                 pipeline.Pipeline([('s2', text_col(key = 'no_stopwords')),
+                 pipeline.Pipeline([('s2', text_col(key='no_stopwords')),
                                     ('char_tfidf_bigram', tfidf_char_bigram)
                                     ])),
                 ('pos_features',
-                 pipeline.Pipeline([('s3', text_col(key = 'pos_tag_seq')),
+                 pipeline.Pipeline([('s3', text_col(key='pos_tag_seq')),
                                     ('pos_tfidf_unigram', tfidf_pos_unigram)
                                     ])),
                 ('relational_features_char',
-                 pipeline.Pipeline([('s4', text_col(key = 'no_stopwords')),
+                 pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
                                     ('relational_features_unigram',
                                      lr_rel_features_unigram)])),
                 ('keyword_features',
-                 pipeline.Pipeline([('s5', text_col(key = 'no_stopwords')),
+                 pipeline.Pipeline([('s5', text_col(key='no_stopwords')),
                                     ('keyword_features', keyword_features)])),
                 ('relational_features_token',
-                 pipeline.Pipeline([('s4', text_col(key = 'no_stopwords')),
+                 pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
                                     ('relational_features_token',
                                      lr_rel_features_token)])),
                 ('topic_features',
-                 pipeline.Pipeline([('s6', text_col(key = 'no_stopwords')),
-                                    ('topic_features',
-                                     topic_features)]))
+                 pipeline.Pipeline([('s6', text_col(key='no_stopwords')),
+                                    ('topic_features', topic_features)]))
             ]
 
             if "neurosymbolic-default" in representation_type:
@@ -444,15 +444,16 @@ def get_features(df_data,
                 ## Last two feature types are new since the initial publication.
                 symbolic_features.pop()
                 symbolic_features.pop()
-            
+
             if concept_features:
-                concept_features = ConceptFeatures(max_features = max_num_feat,
-                                                   knowledge_graph = memory_location)
+                concept_features = ConceptFeatures(
+                    max_features=max_num_feat, knowledge_graph=memory_location)
 
                 cfx = ('concept_features',
-                       pipeline.Pipeline([('s6', text_col(key = 'no_stopwords')),
-                                          ('concept_features', concept_features)]))
-                
+                       pipeline.Pipeline([('s6', text_col(key='no_stopwords')),
+                                          ('concept_features',
+                                           concept_features)]))
+
                 symbolic_features.append(cfx)
 
         if representation_type == "symbolic":
@@ -466,11 +467,11 @@ def get_features(df_data,
 
     if not custom_pipeline is None and combine_with_existing_representation:
         features = features + custom_pipeline
-        
+
     feature_names = [x[0] for x in features]
     matrix = pipeline.Pipeline([('union',
-                                 FeatureUnion(transformer_list = features,
-                                              n_jobs = 1)),
+                                 FeatureUnion(transformer_list=features,
+                                              n_jobs=1)),
                                 ('normalize', Normalizer())])
 
     try:
@@ -488,10 +489,10 @@ def get_autoBOT_manual(train_sequences,
                        dev_sequences,
                        train_targets,
                        dev_targets,
-                       time_constraint = 1,
-                       num_cpu = 1,
-                       max_features = 1000,
-                       clf_type = "LR"):
+                       time_constraint=1,
+                       num_cpu=1,
+                       max_features=1000,
+                       clf_type="LR"):
 
     total_sequences_training = train_sequences.values.tolist(
     ) + dev_sequences.values.tolist()
@@ -503,56 +504,56 @@ def get_autoBOT_manual(train_sequences,
     representation_type = "neurosymbolic"
     embedding_dim = 512
     if representation_type == "neural" or representation_type == "neurosymbolic":
-        sentence_embedder_dm1 = documentEmbedder(max_features = max_num_feat,
-                                                 dm = 1,
-                                                 ndim = embedding_dim)
+        sentence_embedder_dm1 = documentEmbedder(max_features=max_num_feat,
+                                                 dm=1,
+                                                 ndim=embedding_dim)
         sentence_embedder_dm2 = documentEmbedder(max_features=max_num_feat,
-                                                 dm = 0,
-                                                 ndim = embedding_dim)
+                                                 dm=0,
+                                                 ndim=embedding_dim)
         neural_features = [
             ('neural_features_v1',
-             pipeline.Pipeline([('s6', text_col(key = 'no_stopwords')),
+             pipeline.Pipeline([('s6', text_col(key='no_stopwords')),
                                 ('sentence_embedding_mean',
                                  sentence_embedder_dm1)])),
             ('neural_features_v2',
-             pipeline.Pipeline([('s7', text_col(key = 'no_stopwords')),
+             pipeline.Pipeline([('s7', text_col(key='no_stopwords')),
                                 ('sentence_embedding_mean',
                                  sentence_embedder_dm2)]))
         ]
 
     if representation_type == "symbolic" or representation_type == "neurosymbolic":
-        tfidf_word_unigram = TfidfVectorizer(ngram_range = (1, 3),
-                                             sublinear_tf = False,
-                                             max_features = max_num_feat)
-        tfidf_pos_unigram = TfidfVectorizer(ngram_range = (1, 3),
-                                            max_features = max_num_feat)
-        tfidf_char_bigram = TfidfVectorizer(analyzer = 'char',
-                                            ngram_range = (2, 4),
-                                            max_features = max_num_feat)
-        lr_rel_features_unigram = relationExtractor(max_features = max_num_feat,
-                                                    min_token = "unigrams")
-        keyword_features = KeywordFeatures(max_features = max_num_feat,
-                                           targets = train_targets)
-        concept_features = ConceptFeatures(max_features = max_num_feat)
+        tfidf_word_unigram = TfidfVectorizer(ngram_range=(1, 3),
+                                             sublinear_tf=False,
+                                             max_features=max_num_feat)
+        tfidf_pos_unigram = TfidfVectorizer(ngram_range=(1, 3),
+                                            max_features=max_num_feat)
+        tfidf_char_bigram = TfidfVectorizer(analyzer='char',
+                                            ngram_range=(2, 4),
+                                            max_features=max_num_feat)
+        lr_rel_features_unigram = relationExtractor(max_features=max_num_feat,
+                                                    min_token="unigrams")
+        keyword_features = KeywordFeatures(max_features=max_num_feat,
+                                           targets=train_targets)
+        concept_features = ConceptFeatures(max_features=max_num_feat)
         symbolic_features = [
             ('word_features',
-             pipeline.Pipeline([('s1', text_col(key = 'no_stopwords')),
+             pipeline.Pipeline([('s1', text_col(key='no_stopwords')),
                                 ('word_tfidf_unigram', tfidf_word_unigram)])),
             ('char_features',
-             pipeline.Pipeline([('s2', text_col(key = 'no_stopwords')),
+             pipeline.Pipeline([('s2', text_col(key='no_stopwords')),
                                 ('char_tfidf_bigram', tfidf_char_bigram)])),
             ('pos_features',
-             pipeline.Pipeline([('s3', text_col(key = 'pos_tag_seq')),
+             pipeline.Pipeline([('s3', text_col(key='pos_tag_seq')),
                                 ('pos_tfidf_unigram', tfidf_pos_unigram)])),
             ('relational_features',
-             pipeline.Pipeline([('s4', text_col(key = 'no_stopwords')),
+             pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
                                 ('relational_features_unigram',
                                  lr_rel_features_unigram)])),
             ('keyword_features',
-             pipeline.Pipeline([('s5', text_col(key = 'no_stopwords')),
+             pipeline.Pipeline([('s5', text_col(key='no_stopwords')),
                                 ('keyword_features', keyword_features)])),
             ('concept_features',
-             pipeline.Pipeline([('s6', text_col(key = 'no_stopwords')),
+             pipeline.Pipeline([('s6', text_col(key='no_stopwords')),
                                 ('concept_features', concept_features)]))
         ]
 
@@ -566,8 +567,8 @@ def get_autoBOT_manual(train_sequences,
         clf = LinearSVC()
 
     cpipeline = pipeline.Pipeline([('union',
-                                    FeatureUnion(transformer_list = features,
-                                                 n_jobs = 1)),
+                                    FeatureUnion(transformer_list=features,
+                                                 n_jobs=1)),
                                    ('normalize', Normalizer()),
                                    ('classifier', clf)])
     return cpipeline.fit(total_sequences_training, total_labels_training)

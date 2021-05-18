@@ -1,5 +1,3 @@
-
-
 ## A simple example showcasing the minimal usecase of autoBOTLib on an insults classification data.
 
 import autoBOTLib
@@ -17,13 +15,13 @@ def test_minimal():
     train_targets = dataframe['label'].values
 
     autoBOTLibObj = autoBOTLib.GAlearner(train_sequences,
-                                   train_targets,
-                                   time_constraint=0.1).evolve()
+                                         train_targets,
+                                         time_constraint=0.1).evolve()
 
     dataframe2 = pd.read_csv("./data/insults/test.tsv", sep="\t")
     test_sequences = dataframe2['text_a'].values.tolist()
-    predictions = autoBOTLibObj.predict(test_sequences)
-    
+    autoBOTLibObj.predict(test_sequences)
+
 
 def test_custom_classifier():
     dataframe = pd.read_csv("./data/insults/train.tsv", sep="\t")
@@ -64,7 +62,7 @@ def test_custom_classifier():
 
 
 def test_custom_features():
-    
+
     ## Load example data frame
     dataframe = pd.read_csv("./data/insults/train.tsv", sep="\t")
     train_sequences = dataframe['text_a'].values.tolist()
@@ -85,12 +83,14 @@ def test_custom_features():
     custom_features = [
         ('word_features',
          pipeline.Pipeline([
-             ('s1', autoBOTLib.feature_constructors.text_col(key='no_stopwords')),
+             ('s1',
+              autoBOTLib.feature_constructors.text_col(key='no_stopwords')),
              ('word_tfidf_unigram', tfidf_word_unigram)
          ])),
         ('char_features',
          pipeline.Pipeline([
-             ('s2', autoBOTLib.feature_constructors.text_col(key='no_stopwords')),
+             ('s2',
+              autoBOTLib.feature_constructors.text_col(key='no_stopwords')),
              ('char_tfidf_bigram', tfidf_char_bigram)
          ]))
     ]
@@ -104,4 +104,4 @@ def test_custom_features():
 
     dataframe2 = pd.read_csv("./data/insults/test.tsv", sep="\t")
     test_sequences = dataframe2['text_a'].values.tolist()
-    predictions = autoBOTLibObj.predict(test_sequences)
+    autoBOTLibObj.predict(test_sequences)

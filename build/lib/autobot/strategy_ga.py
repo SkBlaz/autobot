@@ -85,8 +85,8 @@ class GAlearner:
                  n_fold_cv=5,
                  classifier_hyperparameters=None,
                  custom_transformer_pipeline=None,
-                 combine_with_existing_representation = False,
-                 verbose = 1):
+                 combine_with_existing_representation=False,
+                 verbose=1):
         """
         The object initialization method
 
@@ -106,7 +106,7 @@ class GAlearner:
         :param classifier: custom classifier. If none, linear learners are used.
         :param classifier_hyperparameters: The space to be optimized w.r.t. the classifier param.
         """
-        
+
         logo = """
 
       MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -145,15 +145,17 @@ class GAlearner:
 
         self.verbose = verbose
         if self.verbose: print(logo)
-        
-        if self.verbose: logging.info("Instantiated the evolution-based learner.")
+
+        if self.verbose:
+            logging.info("Instantiated the evolution-based learner.")
         self.scoring_metric = scoring_metric
         self.representation_type = representation_type
         self.custom_transformer_pipeline = custom_transformer_pipeline
         self.combine_with_existing_representation = combine_with_existing_representation
 
         if not self.custom_transformer_pipeline is None:
-            if self.verbose: logging.info("Using custom feature transformations.")
+            if self.verbose:
+                logging.info("Using custom feature transformations.")
 
         self.binarize_importances = binarize_importances
         self.latent_dim = latent_dim
@@ -195,15 +197,18 @@ class GAlearner:
 
         self.memory_storage = memory_storage  ## Path to the memory storage
         self.include_concept_features = True
-        
+
         if not os.path.exists(self.memory_storage):
             if self.verbose:
-                logging.info(f"Attempting to download the knowledge graph. Folder: {self.memory_storage}")
+                logging.info(
+                    f"Attempting to download the knowledge graph. Folder: {self.memory_storage}"
+                )
             try:
 
-                if self.verbose: logging.info(
-                    "Memory (ConceptNet) not found! Downloading into ./memory folder. Please wait a few minutes (a few hundred MB is being downloaded)."
-                )
+                if self.verbose:
+                    logging.info(
+                        "Memory (ConceptNet) not found! Downloading into ./memory folder. Please wait a few minutes (a few hundred MB is being downloaded)."
+                    )
 
                 os.mkdir("./memory")
                 url = "https://s3.amazonaws.com/conceptnet/downloads/2019/edges/conceptnet-assertions-5.7.0.csv.gz"
@@ -213,27 +218,32 @@ class GAlearner:
                     os.walk("memory"))[0][2][0]  ## Get the new file name
 
                 self.memory_storage = f"memory/{fname}"
-                if self.verbose: logging.info(
-                    f"Memory storage downloaded: {self.memory_storage}")
+                if self.verbose:
+                    logging.info(
+                        f"Memory storage downloaded: {self.memory_storage}")
 
             except Exception as es:
-                if self.verbose: logging.info(
-                    f"ConceptNet could not be downloaded. Please download it and store it as memory/conceptnet.txt.gz. Omitting this feature type.{es}"
-                )
+                if self.verbose:
+                    logging.info(
+                        f"ConceptNet could not be downloaded. Please download it and store it as memory/conceptnet.txt.gz. Omitting this feature type.{es}"
+                    )
                 self.include_concept_features = False
-                
+
         else:
 
             try:
-                cnames = list(
-                    os.walk("memory"))[0][2][0]
-                self.memory_storage = self.memory_storage+"/"+cnames
-                if self.verbose: logging.info(f"Found the knowledge graph memory storage. Please do the following: \n a) Check if there is empty memory folder. \n b) Download manually into the created memory folder via: {url} \n c) Check if the file is not corrupted. \n autoBOT will now continue without the ConceptNet-based features!")
-                
+                cnames = list(os.walk("memory"))[0][2][0]
+                self.memory_storage = self.memory_storage + "/" + cnames
+                if self.verbose:
+                    logging.info(
+                        f"Found the knowledge graph memory storage. Please do the following: \n a) Check if there is empty memory folder. \n b) Download manually into the created memory folder via: {url} \n c) Check if the file is not corrupted. \n autoBOT will now continue without the ConceptNet-based features!"
+                    )
+
             except:
-                if self.verbose: logging.info("Could not find the conceptnet memory storage.")
+                if self.verbose:
+                    logging.info(
+                        "Could not find the conceptnet memory storage.")
                 self.include_concept_features = False
-            
 
         self.population = None  ## this object gets evolved
 
@@ -246,9 +256,10 @@ class GAlearner:
         self.performance_reports = []
         self.n_fold_cv = n_fold_cv
 
-        if self.verbose: logging.info(
-            "Initiating the seed vectorizer instance and initial feature space .."
-        )
+        if self.verbose:
+            logging.info(
+                "Initiating the seed vectorizer instance and initial feature space .."
+            )
 
         ## hyperparameter space. Parameters correspond to weights of subspaces, as well as subsets + regularization of LR.
 
@@ -258,9 +269,10 @@ class GAlearner:
         self.hof_size = hof_size  ## size of the hall of fame.
 
         if self.hof_size % 2 == 0:
-            if self.verbose: logging.info(
-                "HOF size must be odd, adding one member ({}).".format(
-                    self.hof_size))
+            if self.verbose:
+                logging.info(
+                    "HOF size must be odd, adding one member ({}).".format(
+                        self.hof_size))
             self.hof_size += 1
 
         self.fitness_container = []  ## store fitness across evalution
@@ -273,9 +285,10 @@ class GAlearner:
         self.feat_mean_trace = []
         self.opt_population = None
 
-        if self.verbose: logging.info(
-            "Loaded a dataset of {} texts with {} unique labels.".format(
-                self.train_seq.shape[0], len(set(train_targets))))
+        if self.verbose:
+            logging.info(
+                "Loaded a dataset of {} texts with {} unique labels.".format(
+                    self.train_seq.shape[0], len(set(train_targets))))
 
     def update_global_feature_importances(self):
         """
@@ -293,8 +306,9 @@ class GAlearner:
             assert len(subspace_features) == len(coefficients)
             sparsity_coef = np.count_nonzero(coefficients) / len(coefficients)
             self.sparsity_coef.append(sparsity_coef)
-            if self.verbose: logging.info("Importance (learner {}) sparsity of {}".format(
-                enx, sparsity_coef))
+            if self.verbose:
+                logging.info("Importance (learner {}) sparsity of {}".format(
+                    enx, sparsity_coef))
 
             for fx, coef in zip(subspace_features, coefficients):
                 space_of_the_feature = self.global_feature_name_hash[fx]
@@ -323,8 +337,9 @@ class GAlearner:
         self._feature_importances = sorted(fdict.items(),
                                            key=operator.itemgetter(1),
                                            reverse=True)
-        if self.verbose: logging.info(
-            "Feature importances can be accessed by ._feature_importances")
+        if self.verbose:
+            logging.info(
+                "Feature importances can be accessed by ._feature_importances")
 
     def compute_time_diff(self):
         """
@@ -390,9 +405,11 @@ class GAlearner:
         """
         Custom initialization employs random uniform prior. See the paper for more details.
         """
-                
-        if self.verbose: logging.info("Performing initial screening on {} subspaces.".format(
-            len(self.feature_subspaces)))
+
+        if self.verbose:
+            logging.info(
+                "Performing initial screening on {} subspaces.".format(
+                    len(self.feature_subspaces)))
 
         performances = []
         for subspace, name in zip(self.feature_subspaces, self.feature_names):
@@ -605,9 +622,10 @@ class GAlearner:
         """
 
         f1_top = self.generate_and_update_stats(fits)
-        if self.verbose: logging.info(r"{} (gen {}) F1: {}, time: {}min".format(
-            self.task, gen, np.round(f1_top, 3),
-            np.round(self.compute_time_diff(), 2) * 60))
+        if self.verbose:
+            logging.info(r"{} (gen {}) F1: {}, time: {}min".format(
+                self.task, gen, np.round(f1_top, 3),
+                np.round(self.compute_time_diff(), 2) * 60))
         return f1_top
 
     def get_feature_space(self):
@@ -626,8 +644,9 @@ class GAlearner:
         :param instances: predict labels for new instances = texts.
         """
 
-        if self.verbose: logging.info("Obtaining final predictions from {} models.".format(
-            len(self.ensemble_of_learners)))
+        if self.verbose:
+            logging.info("Obtaining final predictions from {} models.".format(
+                len(self.ensemble_of_learners)))
 
         if not self.ensemble_of_learners:
             if self.verbose: logging.info("Please, evolve the model first!")
@@ -705,9 +724,10 @@ class GAlearner:
                     itertools.product(interval, repeat=self.weight_params - 1))
 
                 random.shuffle(layer_combs)
-                if self.verbose: logging.info(
-                    "Ready to evaluate {} solutions at resolution: {}".format(
-                        len(layer_combs) * len(reg_range), k))
+                if self.verbose:
+                    logging.info(
+                        "Ready to evaluate {} solutions at resolution: {}".
+                        format(len(layer_combs) * len(reg_range), k))
 
                 for comb in layer_combs:
                     for reg_val in reg_range:
@@ -813,8 +833,10 @@ class GAlearner:
         assert len(submatrices) == len(self.feature_names)
         self.all_feature_names = fnames  ## this is the new set of features.
         output_matrix = sparse.hstack(submatrices).tocsr()
-        if self.verbose: logging.info("Space update finished. {}, {} matrices joined.".format(
-            output_matrix.shape, len(submatrices)))
+        if self.verbose:
+            logging.info(
+                "Space update finished. {}, {} matrices joined.".format(
+                    output_matrix.shape, len(submatrices)))
         assert len(self.all_feature_names) == output_matrix.shape[1]
 
         if not custom_space is None:
@@ -838,12 +860,14 @@ class GAlearner:
             targets=self.train_targets,
             memory_location=self.memory_storage,
             custom_pipeline=self.custom_transformer_pipeline,
-            concept_features = self.include_concept_features,
-            combine_with_existing_representation = self.combine_with_existing_representation)
+            concept_features=self.include_concept_features,
+            combine_with_existing_representation=self.
+            combine_with_existing_representation)
 
         self.all_feature_names = []
-        if self.verbose: logging.info("Initialized training matrix of dimension {}".format(
-            self.train_feature_space.shape))
+        if self.verbose:
+            logging.info("Initialized training matrix of dimension {}".format(
+                self.train_feature_space.shape))
 
         self.feature_space_tuples = []
         self.global_feature_name_hash = {}
@@ -943,7 +967,9 @@ class GAlearner:
         self.popsize = nind
         self.instantiate_validation_env()
 
-        if self.verbose: logging.info("Evolution will last for ~{}h ..".format(self.max_time))
+        if self.verbose:
+            logging.info("Evolution will last for ~{}h ..".format(
+                self.max_time))
 
         if self.verbose: logging.info("Selected strategy is evolution.")
 
@@ -975,16 +1001,19 @@ class GAlearner:
 
         ## Keep the best-performing individuals
         self.hof = tools.HallOfFame(self.hof_size)
-        if self.verbose: logging.info("Total number of subspace importance parameters {}".format(
-            self.weight_params))
+        if self.verbose:
+            logging.info(
+                "Total number of subspace importance parameters {}".format(
+                    self.weight_params))
 
         ## Population initialization
         if self.population == None:
 
             self.population = self.toolbox.population()
             self.custom_initialization()  ## works on self.population
-            if self.verbose: logging.info("Initialized population of size {}".format(
-                len(self.population)))
+            if self.verbose:
+                logging.info("Initialized population of size {}".format(
+                    len(self.population)))
             if self.verbose: logging.info("Computing initial fitness ..")
 
         ## Gather fitness values.
@@ -1073,9 +1102,10 @@ class GAlearner:
                 self.performance_reports.append(report)
 
             except Exception as es:
-                if self.verbose: logging.info(
-                    "Evaluation did not produce any viable learners. Increase time!",
-                    es)
+                if self.verbose:
+                    logging.info(
+                        "Evaluation did not produce any viable learners. Increase time!",
+                        es)
 
             coefficients = learner.best_estimator_.coef_
 
@@ -1083,11 +1113,13 @@ class GAlearner:
             coefficients = np.asarray(np.abs(np.max(coefficients,
                                                     axis=0))).reshape(-1)
 
-            if self.verbose: logging.info("Coefficients and indices: {}".format(
-                len(coefficients)))
-            if self.verbose: logging.info(
-                "Adding importances of shape {} for learner {} with score {}".
-                format(coefficients.shape, enx, score))
+            if self.verbose:
+                logging.info("Coefficients and indices: {}".format(
+                    len(coefficients)))
+            if self.verbose:
+                logging.info(
+                    "Adding importances of shape {} for learner {} with score {}"
+                    .format(coefficients.shape, enx, score))
 
             self.feature_importances.append((coefficients, feature_names))
 

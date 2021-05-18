@@ -3,6 +3,7 @@
 import autoBOTLib
 import pandas as pd
 
+
 def run():
     ## Load example data frame
     dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t")
@@ -12,16 +13,15 @@ def run():
     autoBOTLibObj = autoBOTLib.GAlearner(
         train_sequences,  # input sequences
         train_targets,  # target space 
-        time_constraint = 1,  # time in hoursc
+        time_constraint=1,  # time in hoursc
         num_cpu="all",  # number of CPUs to use
-        latent_dim = 512, ## latent dim for neural representations
-        sparsity = 0.05, ## latent_dim/sparsity dim for sparse representations
+        latent_dim=512,  ## latent dim for neural representations
+        sparsity=0.05,  ## latent_dim/sparsity dim for sparse representations
         task_name="example test",  # task identifier
         scoring_metric="f1",  # sklearn-compatible scoring metric as the fitness.
         hof_size=3,  # size of the hall of fame
         top_k_importances=25,  # how many top features to output as final ranking
-        memory_storage=
-        "./memory",  # tripled base for concept features
+        memory_storage="./memory",  # tripled base for concept features
         representation_type="neurosymbolic")  # or symbolic or neural
 
     autoBOTLibObj.evolve(
@@ -31,8 +31,8 @@ def run():
         mutpb=0.4)  ## mutation rate
 
     ## Persistence demonstration (how to store models for further use?)
-    autoBOTLib.store_autobot_model(autoBOTLibObj,
-                                "../stored_models/example_insults_model.pickle")
+    autoBOTLib.store_autobot_model(
+        autoBOTLibObj, "../stored_models/example_insults_model.pickle")
     autoBOTLibObj = autoBOTLib.load_autobot_model(
         "../stored_models/example_insults_model.pickle")
 
@@ -49,7 +49,8 @@ def run():
     print(performance)
 
     ## Visualize importances (global -> type, local -> individual features)
-    importances_local, importances_global = autoBOTLibObj.feature_type_importances()
+    importances_local, importances_global = autoBOTLibObj.feature_type_importances(
+    )
     print(importances_global)
     print(importances_local)
 
@@ -57,8 +58,10 @@ def run():
     print(final_learners)
 
     ## Visualize the fitness trace
-    fitness_summary = autoBOTLibObj.visualize_fitness(image_path="./fitness_new.png")
+    fitness_summary = autoBOTLibObj.visualize_fitness(
+        image_path="./fitness_new.png")
     print(fitness_summary)
+
 
 if __name__ == "__main__":
     run()

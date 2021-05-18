@@ -18,13 +18,14 @@ class relationExtractor:
     """
     The main token relation extraction class. Works for arbitrary tokens.
     """
-    def __init__(self,
-                 max_features=10000,
-                 split_char="|||",
-                 witem_separator="&&&&",
-                 num_cpu=1,
-                 neighborhood_token = 10, ## Context window size for relation mapping of words (added in >.34)
-                 min_token="bigrams"):
+    def __init__(
+        self,
+        max_features=10000,
+        split_char="|||",
+        witem_separator="&&&&",
+        num_cpu=1,
+        neighborhood_token=10,  ## Context window size for relation mapping of words (added in >.34)
+        min_token="bigrams"):
 
         self.max_features = max_features
         self.neighborhood_token = neighborhood_token
@@ -166,7 +167,7 @@ class relationExtractor:
 if __name__ == "__main__":
 
     example_text = pd.read_csv("../data/spanish/train.tsv", sep="\t")['tweet']
-    rex = relationExtractor(min_token = "word")
+    rex = relationExtractor(min_token="word")
     rex.fit(example_text)
     m = rex.transform(example_text)
     print(np.count_nonzero(m.todense()) / (5625 * 10000))
