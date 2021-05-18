@@ -116,6 +116,14 @@ autoBOTLib.strategy\_random\_search module
    :undoc-members:
    :show-inheritance:
 
+autoBOTLib.topic\_features module
+---------------------------------
+
+.. automodule:: autoBOTLib.topic_features
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 autoBOTLib.word\_relations module
 ---------------------------------
 

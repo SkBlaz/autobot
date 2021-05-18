@@ -22,6 +22,7 @@ class TopicDocs:
 
     def __init__(self, ndim = 128,
                  random_seed = 1965123,
+                 topic_tokens = 4096,
                  verbose = True):
 
         """
@@ -39,6 +40,7 @@ class TopicDocs:
         self.ndim = ndim
         self.verbose = verbose
         self.random_seed = random_seed
+        self.topic_tokens = topic_tokens
 
         
     def fit(self, text_list):
@@ -52,7 +54,7 @@ class TopicDocs:
 
         if not type(text_list) == list:
             text_list = text_list.values.tolist()            
-        self.clx = TfidfVectorizer(max_features = 1024)
+        self.clx = TfidfVectorizer(max_features = self.topic_tokens)
         docspace = self.clx.fit_transform(text_list).T
         fnames = [(x, y) for x, y in self.clx.vocabulary_.items()]
         fnames = [x[0] for x in sorted(fnames, key = lambda x: x [1])]
