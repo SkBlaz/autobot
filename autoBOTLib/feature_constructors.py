@@ -42,6 +42,7 @@ from .sentence_embeddings import *
 from .keyword_features import *
 from .conceptnet_features import *
 from .doc_similarity import *
+from .topic_features import *
 
 ## sklearn dependencies
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -365,19 +366,19 @@ def get_features(df_data,
                                                      dm = 0,
                                                      ndim = embedding_dim)
             
-            doc_sim_features = RelationalDocs(ndim = embedding_dim, targets = targets)
+            doc_sim_features = RelationalDocs(ndim = embedding_dim, targets = None)
             
             neural_features = [
                 ('neural_features_v1',
-                 pipeline.Pipeline([('s6', text_col(key = 'no_stopwords')),
+                 pipeline.Pipeline([('s7', text_col(key = 'no_stopwords')),
                                     ('sentence_embedding_mean',
                                      sentence_embedder_dm1)])) ,
                 ('neural_features_v2',
-                 pipeline.Pipeline([('s7', text_col(key = 'no_stopwords')),
+                 pipeline.Pipeline([('s8', text_col(key = 'no_stopwords')),
                                     ('sentence_embedding_mean',
                                      sentence_embedder_dm2)])),
                 ('doc_graph',
-                 pipeline.Pipeline([('s5', text_col(key = 'no_stopwords')),
+                 pipeline.Pipeline([('s9', text_col(key = 'no_stopwords')),
                                     ('doc_similarity_features', doc_sim_features)]))
             ]
             
@@ -406,6 +407,8 @@ def get_features(df_data,
             keyword_features = KeywordFeatures(max_features = max_num_feat,
                                                targets = targets)
 
+            topic_features = TopicDocs(ndim = embedding_dim)
+
             symbolic_features = [
                 ('word_features',
                  pipeline.Pipeline([('s1', text_col(key = 'no_stopwords')),
@@ -429,10 +432,17 @@ def get_features(df_data,
                 ('relational_features_token',
                  pipeline.Pipeline([('s4', text_col(key = 'no_stopwords')),
                                     ('relational_features_token',
-                                     lr_rel_features_token)]))
+                                     lr_rel_features_token)])),
+                ('topic_features',
+                 pipeline.Pipeline([('s6', text_col(key = 'no_stopwords')),
+                                    ('topic_features',
+                                     topic_features)]))
             ]
 
             if "neurosymbolic-default" in representation_type:
+
+                ## Last two feature types are new since the initial publication.
+                symbolic_features.pop()
                 symbolic_features.pop()
             
             if concept_features:
