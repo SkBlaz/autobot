@@ -12,11 +12,8 @@ from scipy.sparse import csgraph,csr_matrix
 from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import MiniBatchKMeans
-import matplotlib.pyplot as plt
 import tqdm
 from collections import OrderedDict
-import gensim
-import networkx as nx
 
 class TopicDocs:
 
