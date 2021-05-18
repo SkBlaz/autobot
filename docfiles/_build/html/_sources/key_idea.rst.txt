@@ -1,4 +1,4 @@
-Key idea behind autoBOTLib
+Key idea underlying autoBOTLib
 ===============
 
 .. image:: scheme.png
@@ -16,11 +16,16 @@ TLDR:
 
     import autoBOTLib
     import pandas as pd
-    ## Load example data frame
+	
+    ## Load example data frame - step 1
     dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t")
-    train_sequences = dataframe['text_a'].values.tolist()
-    train_targets = dataframe['label'].values
+    train_sequences = dataframe['text_a']
+    train_targets = dataframe['label']
+
+	## Run evolution - step 2
     autoBOTLibObj = autoBOTLib.GAlearner(train_sequences, train_targets, time_constraint = 1).evolve()
+
+	## Inspect or make predictions - step 3
     dataframe2 = pd.read_csv("../data/insults/test.tsv", sep="\t")
-    test_sequences = dataframe2['text_a'].values.tolist()
+    test_sequences = dataframe2['text_a']
     predictions = autoBOTLibObj.predict(test_sequences)

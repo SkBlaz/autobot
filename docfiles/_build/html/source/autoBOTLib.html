@@ -87,7 +87,7 @@
             
               <p class="caption"><span class="caption-text">About:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../key_idea.html">Key idea behind autoBOTLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_idea.html">Key idea underlying autoBOTLib</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Tutorial and first steps:</span></p>
 <ul>
@@ -183,14 +183,18 @@
 <div class="section" id="module-autoBOTLib.baselines">
 <span id="autobotlib-baselines-module"></span><h2>autoBOTLib.baselines module<a class="headerlink" href="#module-autoBOTLib.baselines" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt id="autoBOTLib.baselines.get_bert_base">
-<code class="sig-prename descclassname">autoBOTLib.baselines.</code><code class="sig-name descname">get_bert_base</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences</span></em>, <em class="sig-param"><span class="n">dev_sequences</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">dev_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">model</span><span class="o">=</span><span class="default_value">'bert-base'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.baselines.get_bert_base" title="Permalink to this definition">¶</a></dt>
-<dd><p>textlabels</p>
-</dd></dl>
+<dt id="autoBOTLib.baselines.get_svm_char_pipeline">
+<code class="sig-prename descclassname">autoBOTLib.baselines.</code><code class="sig-name descname">get_svm_char_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences</span></em>, <em class="sig-param"><span class="n">dev_sequences</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">dev_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">1000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.baselines.get_svm_char_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py function">
-<dt id="autoBOTLib.baselines.get_doc2vec">
-<code class="sig-prename descclassname">autoBOTLib.baselines.</code><code class="sig-name descname">get_doc2vec</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences</span></em>, <em class="sig-param"><span class="n">dev_sequences</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">dev_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">classifier</span><span class="o">=</span><span class="default_value">'LR'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.baselines.get_doc2vec" title="Permalink to this definition">¶</a></dt>
+<dt id="autoBOTLib.baselines.get_svm_word_pipeline">
+<code class="sig-prename descclassname">autoBOTLib.baselines.</code><code class="sig-name descname">get_svm_word_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences</span></em>, <em class="sig-param"><span class="n">dev_sequences</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">dev_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">1000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.baselines.get_svm_word_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.baselines.get_lr_word_pipeline">
+<code class="sig-prename descclassname">autoBOTLib.baselines.</code><code class="sig-name descname">get_lr_word_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences</span></em>, <em class="sig-param"><span class="n">dev_sequences</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">dev_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">1000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.baselines.get_lr_word_pipeline" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -204,8 +208,13 @@
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="autoBOTLib.baselines.get_lr_word_pipeline">
-<code class="sig-prename descclassname">autoBOTLib.baselines.</code><code class="sig-name descname">get_lr_word_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences</span></em>, <em class="sig-param"><span class="n">dev_sequences</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">dev_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">1000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.baselines.get_lr_word_pipeline" title="Permalink to this definition">¶</a></dt>
+<dt id="autoBOTLib.baselines.get_svm_word_char_pipeline">
+<code class="sig-prename descclassname">autoBOTLib.baselines.</code><code class="sig-name descname">get_svm_word_char_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences</span></em>, <em class="sig-param"><span class="n">dev_sequences</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">dev_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">1000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.baselines.get_svm_word_char_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.baselines.get_tpot_word_pipeline">
+<code class="sig-prename descclassname">autoBOTLib.baselines.</code><code class="sig-name descname">get_tpot_word_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences</span></em>, <em class="sig-param"><span class="n">dev_sequences</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">dev_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">1000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.baselines.get_tpot_word_pipeline" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -214,24 +223,15 @@
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="autoBOTLib.baselines.get_svm_char_pipeline">
-<code class="sig-prename descclassname">autoBOTLib.baselines.</code><code class="sig-name descname">get_svm_char_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences</span></em>, <em class="sig-param"><span class="n">dev_sequences</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">dev_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">1000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.baselines.get_svm_char_pipeline" title="Permalink to this definition">¶</a></dt>
+<dt id="autoBOTLib.baselines.get_doc2vec">
+<code class="sig-prename descclassname">autoBOTLib.baselines.</code><code class="sig-name descname">get_doc2vec</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences</span></em>, <em class="sig-param"><span class="n">dev_sequences</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">dev_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">classifier</span><span class="o">=</span><span class="default_value">'LR'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.baselines.get_doc2vec" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="autoBOTLib.baselines.get_svm_word_char_pipeline">
-<code class="sig-prename descclassname">autoBOTLib.baselines.</code><code class="sig-name descname">get_svm_word_char_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences</span></em>, <em class="sig-param"><span class="n">dev_sequences</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">dev_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">1000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.baselines.get_svm_word_char_pipeline" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="autoBOTLib.baselines.get_svm_word_pipeline">
-<code class="sig-prename descclassname">autoBOTLib.baselines.</code><code class="sig-name descname">get_svm_word_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences</span></em>, <em class="sig-param"><span class="n">dev_sequences</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">dev_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">1000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.baselines.get_svm_word_pipeline" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="autoBOTLib.baselines.get_tpot_word_pipeline">
-<code class="sig-prename descclassname">autoBOTLib.baselines.</code><code class="sig-name descname">get_tpot_word_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences</span></em>, <em class="sig-param"><span class="n">dev_sequences</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">dev_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">1000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.baselines.get_tpot_word_pipeline" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="autoBOTLib.baselines.get_bert_base">
+<code class="sig-prename descclassname">autoBOTLib.baselines.</code><code class="sig-name descname">get_bert_base</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences</span></em>, <em class="sig-param"><span class="n">dev_sequences</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">dev_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">model</span><span class="o">=</span><span class="default_value">'bert-base'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.baselines.get_bert_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>textlabels</p>
+</dd></dl>
 
 </div>
 <div class="section" id="module-autoBOTLib.conceptnet_features">
@@ -242,12 +242,29 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Core class describing sentence embedding methodology employed here.</p>
 <dl class="py method">
+<dt id="autoBOTLib.conceptnet_features.ConceptFeatures.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">10000</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">knowledge_graph</span><span class="o">=</span><span class="default_value">'../memory/conceptnet.txt.gz'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.conceptnet_features.ConceptFeatures.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="autoBOTLib.conceptnet_features.ConceptFeatures.concept_graph">
 <code class="sig-name descname">concept_graph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">document_space</span></em>, <em class="sig-param"><span class="n">graph_path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.conceptnet_features.ConceptFeatures.concept_graph" title="Permalink to this definition">¶</a></dt>
 <dd><p>If no prior knowledge graph is supplied, one is constructed.
 :param document_space: The list of input documents
 :param graph_path: The path of the knowledge graph used.
 :return grounded: Grounded relations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.conceptnet_features.ConceptFeatures.get_propositionalized_rep">
+<code class="sig-name descname">get_propositionalized_rep</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">documents</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.conceptnet_features.ConceptFeatures.get_propositionalized_rep" title="Permalink to this definition">¶</a></dt>
+<dd><p>The method for constructing the representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>documents</strong> – The input list of documents.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -260,6 +277,17 @@
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.conceptnet_features.ConceptFeatures.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">use_conc_docs</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.conceptnet_features.ConceptFeatures.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform the data into suitable form.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.conceptnet_features.ConceptFeatures.get_feature_names">
+<code class="sig-name descname">get_feature_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.conceptnet_features.ConceptFeatures.get_feature_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt id="autoBOTLib.conceptnet_features.ConceptFeatures.fit_transform">
@@ -275,28 +303,6 @@
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="autoBOTLib.conceptnet_features.ConceptFeatures.get_feature_names">
-<code class="sig-name descname">get_feature_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.conceptnet_features.ConceptFeatures.get_feature_names" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.conceptnet_features.ConceptFeatures.get_propositionalized_rep">
-<code class="sig-name descname">get_propositionalized_rep</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">documents</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.conceptnet_features.ConceptFeatures.get_propositionalized_rep" title="Permalink to this definition">¶</a></dt>
-<dd><p>The method for constructing the representation.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>documents</strong> – The input list of documents.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.conceptnet_features.ConceptFeatures.transform">
-<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">use_conc_docs</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.conceptnet_features.ConceptFeatures.transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform the data into suitable form.</p>
-</dd></dl>
-
 </dd></dl>
 
 </div>
@@ -308,9 +314,15 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Base class for data converters for sequence classification data sets.</p>
 <dl class="py method">
+<dt id="autoBOTLib.data_utils.DataProcessor.get_train_examples">
+<code class="sig-name descname">get_train_examples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_dir</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.data_utils.DataProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a collection of <a href="#id1"><span class="problematic" id="id2">`</span></a>InputExample`s for the train set.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="autoBOTLib.data_utils.DataProcessor.get_dev_examples">
 <code class="sig-name descname">get_dev_examples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_dir</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.data_utils.DataProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id1"><span class="problematic" id="id2">`</span></a>InputExample`s for the dev set.</p>
+<dd><p>Gets a collection of <a href="#id3"><span class="problematic" id="id4">`</span></a>InputExample`s for the dev set.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -320,32 +332,22 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="autoBOTLib.data_utils.DataProcessor.get_train_examples">
-<code class="sig-name descname">get_train_examples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_dir</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.data_utils.DataProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of <a href="#id3"><span class="problematic" id="id4">`</span></a>InputExample`s for the train set.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt id="autoBOTLib.data_utils.DataProcessor.read_pandas_tsv">
 <code class="sig-name descname">read_pandas_tsv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.data_utils.DataProcessor.read_pandas_tsv" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-<dl class="py function">
-<dt id="autoBOTLib.data_utils.acc_and_f1">
-<code class="sig-prename descclassname">autoBOTLib.data_utils.</code><code class="sig-name descname">acc_and_f1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">preds</span></em>, <em class="sig-param"><span class="n">labels</span></em>, <em class="sig-param"><span class="n">average</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.data_utils.acc_and_f1" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="autoBOTLib.data_utils.compute_metrics">
-<code class="sig-prename descclassname">autoBOTLib.data_utils.</code><code class="sig-name descname">compute_metrics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">task_name</span></em>, <em class="sig-param"><span class="n">preds</span></em>, <em class="sig-param"><span class="n">labels</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.data_utils.compute_metrics" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="py class">
 <dt id="autoBOTLib.data_utils.genericProcessor">
 <em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.data_utils.</code><code class="sig-name descname">genericProcessor</code><a class="headerlink" href="#autoBOTLib.data_utils.genericProcessor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#autoBOTLib.data_utils.DataProcessor" title="autoBOTLib.data_utils.DataProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">autoBOTLib.data_utils.DataProcessor</span></code></a></p>
+<dl class="py method">
+<dt id="autoBOTLib.data_utils.genericProcessor.get_train_examples">
+<code class="sig-name descname">get_train_examples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_dir</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.data_utils.genericProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>See base class.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt id="autoBOTLib.data_utils.genericProcessor.get_dev_examples">
 <code class="sig-name descname">get_dev_examples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_dir</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.data_utils.genericProcessor.get_dev_examples" title="Permalink to this definition">¶</a></dt>
@@ -358,13 +360,17 @@
 <dd><p>See base class.</p>
 </dd></dl>
 
-<dl class="py method">
-<dt id="autoBOTLib.data_utils.genericProcessor.get_train_examples">
-<code class="sig-name descname">get_train_examples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_dir</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.data_utils.genericProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>See base class.</p>
 </dd></dl>
 
-</dd></dl>
+<dl class="py function">
+<dt id="autoBOTLib.data_utils.simple_accuracy">
+<code class="sig-prename descclassname">autoBOTLib.data_utils.</code><code class="sig-name descname">simple_accuracy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">preds</span></em>, <em class="sig-param"><span class="n">labels</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.data_utils.simple_accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.data_utils.acc_and_f1">
+<code class="sig-prename descclassname">autoBOTLib.data_utils.</code><code class="sig-name descname">acc_and_f1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">preds</span></em>, <em class="sig-param"><span class="n">labels</span></em>, <em class="sig-param"><span class="n">average</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.data_utils.acc_and_f1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py function">
 <dt id="autoBOTLib.data_utils.pearson_and_spearman">
@@ -372,8 +378,8 @@
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="autoBOTLib.data_utils.simple_accuracy">
-<code class="sig-prename descclassname">autoBOTLib.data_utils.</code><code class="sig-name descname">simple_accuracy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">preds</span></em>, <em class="sig-param"><span class="n">labels</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.data_utils.simple_accuracy" title="Permalink to this definition">¶</a></dt>
+<dt id="autoBOTLib.data_utils.compute_metrics">
+<code class="sig-prename descclassname">autoBOTLib.data_utils.</code><code class="sig-name descname">compute_metrics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">task_name</span></em>, <em class="sig-param"><span class="n">preds</span></em>, <em class="sig-param"><span class="n">labels</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.data_utils.compute_metrics" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -384,12 +390,60 @@
 <em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.doc_similarity.</code><code class="sig-name descname">RelationalDocs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ndim</span><span class="o">=</span><span class="default_value">128</span></em>, <em class="sig-param"><span class="n">random_seed</span><span class="o">=</span><span class="default_value">1965123</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ed_cutoff</span><span class="o">=</span><span class="default_value">- 2</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">doc_limit</span><span class="o">=</span><span class="default_value">2048</span></em>, <em class="sig-param"><span class="n">percentile_threshold</span><span class="o">=</span><span class="default_value">95</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.doc_similarity.RelationalDocs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
+<dt id="autoBOTLib.doc_similarity.RelationalDocs.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ndim</span><span class="o">=</span><span class="default_value">128</span></em>, <em class="sig-param"><span class="n">random_seed</span><span class="o">=</span><span class="default_value">1965123</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ed_cutoff</span><span class="o">=</span><span class="default_value">- 2</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">doc_limit</span><span class="o">=</span><span class="default_value">2048</span></em>, <em class="sig-param"><span class="n">percentile_threshold</span><span class="o">=</span><span class="default_value">95</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.doc_similarity.RelationalDocs.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class initialization method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ndim</strong> – Number of latent dimensions</p></li>
+<li><p><strong>targets</strong> – The target vector</p></li>
+<li><p><strong>random_seed</strong> – The random seed used</p></li>
+<li><p><strong>ed_cutoff</strong> – Cutoff for fuzzy string matching when comparing documents</p></li>
+<li><p><strong>doc_limit</strong> – The max number of documents to be considered.</p></li>
+<li><p><strong>verbose</strong> – Whether to have the printouts</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.doc_similarity.RelationalDocs.jaccard_index">
+<code class="sig-name descname">jaccard_index</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">set1</span></em>, <em class="sig-param"><span class="n">set2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.doc_similarity.RelationalDocs.jaccard_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>The classic Jaccard index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>set1</strong> – First set</p></li>
+<li><p><strong>set2</strong> – Second set</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return JaccardIndex</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="autoBOTLib.doc_similarity.RelationalDocs.fit">
 <code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.doc_similarity.RelationalDocs.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>The fit method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>text_list</strong> – List of input texts</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.doc_similarity.RelationalDocs.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_documents</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.doc_similarity.RelationalDocs.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_documents</strong> – The new set of documents to be transformed.</p>
+</dd>
+<dt class="field-even">Return all_embeddings</dt>
+<dd class="field-even"><p>The final embedding matrix</p>
 </dd>
 </dl>
 </dd></dl>
@@ -422,76 +476,149 @@
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="autoBOTLib.doc_similarity.RelationalDocs.jaccard_index">
-<code class="sig-name descname">jaccard_index</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">set1</span></em>, <em class="sig-param"><span class="n">set2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.doc_similarity.RelationalDocs.jaccard_index" title="Permalink to this definition">¶</a></dt>
-<dd><p>The classic Jaccard index.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>set1</strong> – First set</p></li>
-<li><p><strong>set2</strong> – Second set</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return JaccardIndex</dt>
-<dd class="field-even"><p></p></dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.doc_similarity.RelationalDocs.transform">
-<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_documents</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.doc_similarity.RelationalDocs.transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform method.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>new_documents</strong> – The new set of documents to be transformed.</p>
-</dd>
-<dt class="field-even">Return all_embeddings</dt>
-<dd class="field-even"><p>The final embedding matrix</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 </div>
 <div class="section" id="module-autoBOTLib.feature_constructors">
 <span id="autobotlib-feature-constructors-module"></span><h2>autoBOTLib.feature_constructors module<a class="headerlink" href="#module-autoBOTLib.feature_constructors" title="Permalink to this headline">¶</a></h2>
 <p>AutoBOT. Skrlj et al. 2021</p>
-<dl class="py class">
-<dt id="autoBOTLib.feature_constructors.FeaturePrunner">
-<em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">FeaturePrunner</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_num_feat</span><span class="o">=</span><span class="default_value">2048</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.FeaturePrunner" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Core class describing sentence embedding methodology employed here.</p>
-<dl class="py method">
-<dt id="autoBOTLib.feature_constructors.FeaturePrunner.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_data</span></em>, <em class="sig-param"><span class="n">y</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.FeaturePrunner.fit" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.feature_constructors.FeaturePrunner.get_feature_names">
-<code class="sig-name descname">get_feature_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.FeaturePrunner.get_feature_names" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.feature_constructors.FeaturePrunner.transform">
-<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.FeaturePrunner.transform" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<dl class="py function">
+<dt id="autoBOTLib.feature_constructors.remove_punctuation">
+<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">remove_punctuation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.remove_punctuation" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method removes punctuation</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="autoBOTLib.feature_constructors.build_dataframe">
-<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">build_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_docs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.build_dataframe" title="Permalink to this definition">¶</a></dt>
-<dd><p>One of the core methods responsible for construction of a dataframe object.</p>
+<dt id="autoBOTLib.feature_constructors.remove_stopwords">
+<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">remove_stopwords</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.remove_stopwords" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method removes stopwords</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data_docs</strong> – The input data documents</p>
+<dd class="field-odd"><p><strong>text</strong> – Input string of text</p>
 </dd>
-<dt class="field-even">Return df_data</dt>
-<dd class="field-even"><p>A dataframe corresponding to text representations</p>
+<dt class="field-even">Return string</dt>
+<dd class="field-even"><p>Preprocessed text</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.feature_constructors.remove_mentions">
+<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">remove_mentions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">replace_token</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.remove_mentions" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method removes mentions (relevant for tweets)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – Input string of text</p></li>
+<li><p><strong>replace_token</strong> – A token to be replaced</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return string</dt>
+<dd class="field-even"><p>A new text string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.feature_constructors.remove_hashtags">
+<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">remove_hashtags</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">replace_token</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.remove_hashtags" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method removes hashtags</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – Input string of text</p></li>
+<li><p><strong>replace_token</strong> – The token to be replaced</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return string</dt>
+<dd class="field-even"><p>A new text</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.feature_constructors.remove_url">
+<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">remove_url</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">replace_token</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.remove_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removal of URLs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – Input string of text</p></li>
+<li><p><strong>replace_token</strong> – The token to be replaced</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return string</dt>
+<dd class="field-even"><p>A new text</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.feature_constructors.get_affix">
+<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">get_affix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.get_affix" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method gets the affix information</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.feature_constructors.get_pos_tags">
+<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">get_pos_tags</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.get_pos_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method yields pos tags</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text</strong> – Input string of text</p>
+</dd>
+<dt class="field-even">Return string</dt>
+<dd class="field-even"><p>space delimited pos tags.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.feature_constructors.ttr">
+<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">ttr</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.ttr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of unique tokens</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text</strong> – Input string of text</p>
+</dd>
+<dt class="field-even">Return float</dt>
+<dd class="field-even"><p>Ratio of the unique/overall tokens</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="autoBOTLib.feature_constructors.text_col">
+<em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">text_col</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.text_col" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.TransformerMixin</span></code></p>
+<p>A helper processor class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>BaseExtimator</strong> – Core estimator</p></li>
+<li><p><strong>TransformerMixin</strong> – Transformer object</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return object</dt>
+<dd class="field-even"><p>Returns particular text column</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="autoBOTLib.feature_constructors.text_col.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.text_col.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.feature_constructors.text_col.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.text_col.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.feature_constructors.text_col.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_dict</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.text_col.transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -523,52 +650,6 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="autoBOTLib.feature_constructors.fast_screening_sgd">
-<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">fast_screening_sgd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">training</span></em>, <em class="sig-param"><span class="n">targets</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.fast_screening_sgd" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="autoBOTLib.feature_constructors.get_affix">
-<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">get_affix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.get_affix" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method gets the affix information</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="autoBOTLib.feature_constructors.get_autoBOT_manual">
-<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">get_autoBOT_manual</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences</span></em>, <em class="sig-param"><span class="n">dev_sequences</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">dev_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">clf_type</span><span class="o">=</span><span class="default_value">'LR'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.get_autoBOT_manual" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="autoBOTLib.feature_constructors.get_features">
-<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df_data</span></em>, <em class="sig-param"><span class="n">representation_type</span><span class="o">=</span><span class="default_value">'neurosymbolic'</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sparsity</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">embedding_dim</span><span class="o">=</span><span class="default_value">512</span></em>, <em class="sig-param"><span class="n">memory_location</span><span class="o">=</span><span class="default_value">'memory/conceptnet.txt.gz'</span></em>, <em class="sig-param"><span class="n">custom_pipeline</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">concept_features</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">random_seed</span><span class="o">=</span><span class="default_value">54324</span></em>, <em class="sig-param"><span class="n">combine_with_existing_representation</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.get_features" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method that computes various TF-IDF-alike features.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="autoBOTLib.feature_constructors.get_pos_tags">
-<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">get_pos_tags</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.get_pos_tags" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method yields pos tags</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>text</strong> – Input string of text</p>
-</dd>
-<dt class="field-even">Return string</dt>
-<dd class="field-even"><p>space delimited pos tags.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="autoBOTLib.feature_constructors.get_simple_features">
-<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">get_simple_features</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df_data</span></em>, <em class="sig-param"><span class="n">max_num_feat</span><span class="o">=</span><span class="default_value">10000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.get_simple_features" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="autoBOTLib.feature_constructors.get_subset">
-<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">get_subset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">indice_list</span></em>, <em class="sig-param"><span class="n">data_matrix</span></em>, <em class="sig-param"><span class="n">vectorizer</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.get_subset" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
 <dt id="autoBOTLib.feature_constructors.parallelize">
 <code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">parallelize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">method</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.parallelize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper method for parallelization</p>
@@ -586,121 +667,90 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="autoBOTLib.feature_constructors.remove_hashtags">
-<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">remove_hashtags</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">replace_token</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.remove_hashtags" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method removes hashtags</p>
+<dt id="autoBOTLib.feature_constructors.build_dataframe">
+<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">build_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_docs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.build_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>One of the core methods responsible for construction of a dataframe object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>text</strong> – Input string of text</p></li>
-<li><p><strong>replace_token</strong> – The token to be replaced</p></li>
-</ul>
+<dd class="field-odd"><p><strong>data_docs</strong> – The input data documents</p>
 </dd>
-<dt class="field-even">Return string</dt>
-<dd class="field-even"><p>A new text</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="autoBOTLib.feature_constructors.remove_mentions">
-<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">remove_mentions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">replace_token</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.remove_mentions" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method removes mentions (relevant for tweets)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>text</strong> – Input string of text</p></li>
-<li><p><strong>replace_token</strong> – A token to be replaced</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return string</dt>
-<dd class="field-even"><p>A new text string</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="autoBOTLib.feature_constructors.remove_punctuation">
-<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">remove_punctuation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.remove_punctuation" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method removes punctuation</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="autoBOTLib.feature_constructors.remove_stopwords">
-<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">remove_stopwords</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.remove_stopwords" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method removes stopwords</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>text</strong> – Input string of text</p>
-</dd>
-<dt class="field-even">Return string</dt>
-<dd class="field-even"><p>Preprocessed text</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="autoBOTLib.feature_constructors.remove_url">
-<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">remove_url</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">replace_token</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.remove_url" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removal of URLs</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>text</strong> – Input string of text</p></li>
-<li><p><strong>replace_token</strong> – The token to be replaced</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return string</dt>
-<dd class="field-even"><p>A new text</p>
+<dt class="field-even">Return df_data</dt>
+<dd class="field-even"><p>A dataframe corresponding to text representations</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py class">
-<dt id="autoBOTLib.feature_constructors.text_col">
-<em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">text_col</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.text_col" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.TransformerMixin</span></code></p>
-<p>A helper processor class</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>BaseExtimator</strong> – Core estimator</p></li>
-<li><p><strong>TransformerMixin</strong> – Transformer object</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return object</dt>
-<dd class="field-even"><p>Returns particular text column</p>
-</dd>
-</dl>
+<dt id="autoBOTLib.feature_constructors.FeaturePrunner">
+<em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">FeaturePrunner</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_num_feat</span><span class="o">=</span><span class="default_value">2048</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.FeaturePrunner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Core class describing sentence embedding methodology employed here.</p>
 <dl class="py method">
-<dt id="autoBOTLib.feature_constructors.text_col.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.text_col.fit" title="Permalink to this definition">¶</a></dt>
+<dt id="autoBOTLib.feature_constructors.FeaturePrunner.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_num_feat</span><span class="o">=</span><span class="default_value">2048</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.FeaturePrunner.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.feature_constructors.FeaturePrunner.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_data</span></em>, <em class="sig-param"><span class="n">y</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.FeaturePrunner.fit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="autoBOTLib.feature_constructors.text_col.transform">
-<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_dict</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.text_col.transform" title="Permalink to this definition">¶</a></dt>
+<dt id="autoBOTLib.feature_constructors.FeaturePrunner.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.FeaturePrunner.transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.feature_constructors.FeaturePrunner.get_feature_names">
+<code class="sig-name descname">get_feature_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.FeaturePrunner.get_feature_names" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
-<dt id="autoBOTLib.feature_constructors.ttr">
-<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">ttr</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.ttr" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of unique tokens</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>text</strong> – Input string of text</p>
-</dd>
-<dt class="field-even">Return float</dt>
-<dd class="field-even"><p>Ratio of the unique/overall tokens</p>
-</dd>
-</dl>
+<dt id="autoBOTLib.feature_constructors.fast_screening_sgd">
+<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">fast_screening_sgd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">training</span></em>, <em class="sig-param"><span class="n">targets</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.fast_screening_sgd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.feature_constructors.get_subset">
+<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">get_subset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">indice_list</span></em>, <em class="sig-param"><span class="n">data_matrix</span></em>, <em class="sig-param"><span class="n">vectorizer</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.get_subset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.feature_constructors.get_simple_features">
+<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">get_simple_features</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df_data</span></em>, <em class="sig-param"><span class="n">max_num_feat</span><span class="o">=</span><span class="default_value">10000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.get_simple_features" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.feature_constructors.get_features">
+<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df_data</span></em>, <em class="sig-param"><span class="n">representation_type</span><span class="o">=</span><span class="default_value">'neurosymbolic'</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sparsity</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">embedding_dim</span><span class="o">=</span><span class="default_value">512</span></em>, <em class="sig-param"><span class="n">memory_location</span><span class="o">=</span><span class="default_value">'memory/conceptnet.txt.gz'</span></em>, <em class="sig-param"><span class="n">custom_pipeline</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">concept_features</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">random_seed</span><span class="o">=</span><span class="default_value">54324</span></em>, <em class="sig-param"><span class="n">combine_with_existing_representation</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.get_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method that computes various TF-IDF-alike features.</p>
 </dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.feature_constructors.get_autoBOT_manual">
+<code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">get_autoBOT_manual</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences</span></em>, <em class="sig-param"><span class="n">dev_sequences</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">dev_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">clf_type</span><span class="o">=</span><span class="default_value">'LR'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.get_autoBOT_manual" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="module-autoBOTLib.helpers">
 <span id="autobotlib-helpers-module"></span><h2>autoBOTLib.helpers module<a class="headerlink" href="#module-autoBOTLib.helpers" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="autoBOTLib.helpers.store_autobot_model">
+<code class="sig-prename descclassname">autoBOTLib.helpers.</code><code class="sig-name descname">store_autobot_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_class</span></em>, <em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.helpers.store_autobot_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple model storage method. It pickles a trained autoBOT object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_class</strong> – The autoBOT object</p></li>
+<li><p><strong>path</strong> – The path to the output file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt id="autoBOTLib.helpers.load_autobot_model">
 <code class="sig-prename descclassname">autoBOTLib.helpers.</code><code class="sig-name descname">load_autobot_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.helpers.load_autobot_model" title="Permalink to this definition">¶</a></dt>
@@ -718,20 +768,6 @@
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt id="autoBOTLib.helpers.store_autobot_model">
-<code class="sig-prename descclassname">autoBOTLib.helpers.</code><code class="sig-name descname">store_autobot_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_class</span></em>, <em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.helpers.store_autobot_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>A simple model storage method. It pickles a trained autoBOT object.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model_class</strong> – The autoBOT object</p></li>
-<li><p><strong>path</strong> – The path to the output file</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 </div>
 <div class="section" id="module-autoBOTLib.keyword_features">
 <span id="autobotlib-keyword-features-module"></span><h2>autoBOTLib.keyword_features module<a class="headerlink" href="#module-autoBOTLib.keyword_features" title="Permalink to this headline">¶</a></h2>
@@ -740,6 +776,12 @@
 <em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.keyword_features.</code><code class="sig-name descname">KeywordFeatures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">10000</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.keyword_features.KeywordFeatures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Core class describing sentence embedding methodology employed here.</p>
+<dl class="py method">
+<dt id="autoBOTLib.keyword_features.KeywordFeatures.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">10000</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.keyword_features.KeywordFeatures.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt id="autoBOTLib.keyword_features.KeywordFeatures.fit">
 <code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">refit</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.keyword_features.KeywordFeatures.fit" title="Permalink to this definition">¶</a></dt>
@@ -752,15 +794,15 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="autoBOTLib.keyword_features.KeywordFeatures.fit_transform">
-<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">b</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.keyword_features.KeywordFeatures.fit_transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>A classifc fit-transform method.</p>
+<dt id="autoBOTLib.keyword_features.KeywordFeatures.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.keyword_features.KeywordFeatures.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform the data into suitable form.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>text_vector</strong> – Input list of texts.</p>
+<dd class="field-odd"><p><strong>text_vector</strong> – The input list of texts.</p>
 </dd>
 <dt class="field-even">Return transformedObject</dt>
-<dd class="field-even"><p>Transformed list of texts</p>
+<dd class="field-even"><p>The transformed input texts (feature space)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -771,15 +813,15 @@
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="autoBOTLib.keyword_features.KeywordFeatures.transform">
-<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.keyword_features.KeywordFeatures.transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform the data into suitable form.</p>
+<dt id="autoBOTLib.keyword_features.KeywordFeatures.fit_transform">
+<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">b</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.keyword_features.KeywordFeatures.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>A classifc fit-transform method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>text_vector</strong> – The input list of texts.</p>
+<dd class="field-odd"><p><strong>text_vector</strong> – Input list of texts.</p>
 </dd>
 <dt class="field-even">Return transformedObject</dt>
-<dd class="field-even"><p>The transformed input texts (feature space)</p>
+<dd class="field-even"><p>Transformed list of texts</p>
 </dd>
 </dl>
 </dd></dl>
@@ -798,10 +840,26 @@
 </div>
 <div class="section" id="module-autoBOTLib.minimal_test">
 <span id="autobotlib-minimal-test-module"></span><h2>autoBOTLib.minimal_test module<a class="headerlink" href="#module-autoBOTLib.minimal_test" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="autoBOTLib.minimal_test.store_model">
+<code class="sig-prename descclassname">autoBOTLib.minimal_test.</code><code class="sig-name descname">store_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_class</span></em>, <em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.minimal_test.store_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.minimal_test.load_model">
+<code class="sig-prename descclassname">autoBOTLib.minimal_test.</code><code class="sig-name descname">load_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.minimal_test.load_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py class">
 <dt id="autoBOTLib.minimal_test.TestClass">
 <em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.minimal_test.</code><code class="sig-name descname">TestClass</code><a class="headerlink" href="#autoBOTLib.minimal_test.TestClass" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="autoBOTLib.minimal_test.TestClass.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.minimal_test.TestClass.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt id="autoBOTLib.minimal_test.TestClass.mutReg">
 <code class="sig-name descname">mutReg</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">individual</span></em>, <em class="sig-param"><span class="n">p</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.minimal_test.TestClass.mutReg" title="Permalink to this definition">¶</a></dt>
@@ -823,27 +881,17 @@
 
 </dd></dl>
 
-<dl class="py function">
-<dt id="autoBOTLib.minimal_test.load_model">
-<code class="sig-prename descclassname">autoBOTLib.minimal_test.</code><code class="sig-name descname">load_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.minimal_test.load_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="autoBOTLib.minimal_test.store_model">
-<code class="sig-prename descclassname">autoBOTLib.minimal_test.</code><code class="sig-name descname">store_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_class</span></em>, <em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.minimal_test.store_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </div>
 <div class="section" id="module-autoBOTLib.minimal_test_load">
 <span id="autobotlib-minimal-test-load-module"></span><h2>autoBOTLib.minimal_test_load module<a class="headerlink" href="#module-autoBOTLib.minimal_test_load" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt id="autoBOTLib.minimal_test_load.load_model">
-<code class="sig-prename descclassname">autoBOTLib.minimal_test_load.</code><code class="sig-name descname">load_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.minimal_test_load.load_model" title="Permalink to this definition">¶</a></dt>
+<dt id="autoBOTLib.minimal_test_load.store_model">
+<code class="sig-prename descclassname">autoBOTLib.minimal_test_load.</code><code class="sig-name descname">store_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_class</span></em>, <em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.minimal_test_load.store_model" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="autoBOTLib.minimal_test_load.store_model">
-<code class="sig-prename descclassname">autoBOTLib.minimal_test_load.</code><code class="sig-name descname">store_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_class</span></em>, <em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.minimal_test_load.store_model" title="Permalink to this definition">¶</a></dt>
+<dt id="autoBOTLib.minimal_test_load.load_model">
+<code class="sig-prename descclassname">autoBOTLib.minimal_test_load.</code><code class="sig-name descname">load_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.minimal_test_load.load_model" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -855,23 +903,14 @@
 <em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.rakun.</code><code class="sig-name descname">RakunDetector</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hyperparameters</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.rakun.RakunDetector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
-<dt id="autoBOTLib.rakun.RakunDetector.calculate_edit_distance">
-<code class="sig-name descname">calculate_edit_distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key1</span></em>, <em class="sig-param"><span class="n">key2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.rakun.RakunDetector.calculate_edit_distance" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.rakun.RakunDetector.calculate_embedding_distance">
-<code class="sig-name descname">calculate_embedding_distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key1</span></em>, <em class="sig-param"><span class="n">key2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.rakun.RakunDetector.calculate_embedding_distance" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="autoBOTLib.rakun.RakunDetector.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hyperparameters</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.rakun.RakunDetector.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="autoBOTLib.rakun.RakunDetector.corpus_graph">
 <code class="sig-name descname">corpus_graph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">language_file</span></em>, <em class="sig-param"><span class="n">limit_range</span><span class="o">=</span><span class="default_value">3000000</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">lemmatizer</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">stopwords</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">min_char</span><span class="o">=</span><span class="default_value">4</span></em>, <em class="sig-param"><span class="n">stemmer</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">input_type</span><span class="o">=</span><span class="default_value">'file'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.rakun.RakunDetector.corpus_graph" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.rakun.RakunDetector.find_keywords">
-<code class="sig-name descname">find_keywords</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">document</span></em>, <em class="sig-param"><span class="n">input_type</span><span class="o">=</span><span class="default_value">'file'</span></em>, <em class="sig-param"><span class="n">validate</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.rakun.RakunDetector.find_keywords" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -883,6 +922,21 @@
 <dl class="py method">
 <dt id="autoBOTLib.rakun.RakunDetector.hypervertex_prunning">
 <code class="sig-name descname">hypervertex_prunning</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">distance_threshold</span></em>, <em class="sig-param"><span class="n">pair_diff_max</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">distance_method</span><span class="o">=</span><span class="default_value">'editdistance'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.rakun.RakunDetector.hypervertex_prunning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.rakun.RakunDetector.find_keywords">
+<code class="sig-name descname">find_keywords</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">document</span></em>, <em class="sig-param"><span class="n">input_type</span><span class="o">=</span><span class="default_value">'file'</span></em>, <em class="sig-param"><span class="n">validate</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.rakun.RakunDetector.find_keywords" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.rakun.RakunDetector.calculate_edit_distance">
+<code class="sig-name descname">calculate_edit_distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key1</span></em>, <em class="sig-param"><span class="n">key2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.rakun.RakunDetector.calculate_edit_distance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.rakun.RakunDetector.calculate_embedding_distance">
+<code class="sig-name descname">calculate_embedding_distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key1</span></em>, <em class="sig-param"><span class="n">key2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.rakun.RakunDetector.calculate_embedding_distance" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -897,6 +951,22 @@
 <p>Core class describing sentence embedding methodology employed here.
 The class functions as a sklearn-like object.</p>
 <dl class="py method">
+<dt id="autoBOTLib.sentence_embeddings.documentEmbedder.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">10000</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">8</span></em>, <em class="sig-param"><span class="n">dm</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">pretrained_path</span><span class="o">=</span><span class="default_value">'doc2vec.bin'</span></em>, <em class="sig-param"><span class="n">ndim</span><span class="o">=</span><span class="default_value">512</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.sentence_embeddings.documentEmbedder.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>The standard sgn function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_features</strong> – integer, number of latent dimensions</p></li>
+<li><p><strong>num_cpu</strong> – integer, number of CPUs to be used</p></li>
+<li><p><strong>dm</strong> – Whether to use the “distributed memory” model</p></li>
+<li><p><strong>pretrained_path</strong> – The path where a pretrained model is located (if any)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="autoBOTLib.sentence_embeddings.documentEmbedder.fit">
 <code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">b</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">refit</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.sentence_embeddings.documentEmbedder.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit the model to a text vector.
@@ -904,10 +974,10 @@ The class functions as a sklearn-like object.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="autoBOTLib.sentence_embeddings.documentEmbedder.fit_transform">
-<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">a2</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.sentence_embeddings.documentEmbedder.fit_transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>A classifc fit-transform method.
-:param text_vector: a text vector used to build and transform a corpus.</p>
+<dt id="autoBOTLib.sentence_embeddings.documentEmbedder.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.sentence_embeddings.documentEmbedder.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform the data into suitable form.
+:param text_vector: The text vector to be transformed via a trained model</p>
 </dd></dl>
 
 <dl class="py method">
@@ -916,10 +986,10 @@ The class functions as a sklearn-like object.</p>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="autoBOTLib.sentence_embeddings.documentEmbedder.transform">
-<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.sentence_embeddings.documentEmbedder.transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform the data into suitable form.
-:param text_vector: The text vector to be transformed via a trained model</p>
+<dt id="autoBOTLib.sentence_embeddings.documentEmbedder.fit_transform">
+<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">a2</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.sentence_embeddings.documentEmbedder.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>A classifc fit-transform method.
+:param text_vector: a text vector used to build and transform a corpus.</p>
 </dd></dl>
 
 </dd></dl>
@@ -941,6 +1011,52 @@ In general, the workflow for working with this class is as follows:
 2.) Evolve
 3.) Predict</p>
 <dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences_raw</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">'all'</span></em>, <em class="sig-param"><span class="n">task_name</span><span class="o">=</span><span class="default_value">'update:'</span></em>, <em class="sig-param"><span class="n">latent_dim</span><span class="o">=</span><span class="default_value">512</span></em>, <em class="sig-param"><span class="n">sparsity</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hof_size</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">initial_separate_spaces</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">scoring_metric</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">top_k_importances</span><span class="o">=</span><span class="default_value">25</span></em>, <em class="sig-param"><span class="n">representation_type</span><span class="o">=</span><span class="default_value">'neurosymbolic-default'</span></em>, <em class="sig-param"><span class="n">binarize_importances</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">memory_storage</span><span class="o">=</span><span class="default_value">'memory'</span></em>, <em class="sig-param"><span class="n">classifier</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">n_fold_cv</span><span class="o">=</span><span class="default_value">6</span></em>, <em class="sig-param"><span class="n">random_seed</span><span class="o">=</span><span class="default_value">8954</span></em>, <em class="sig-param"><span class="n">classifier_hyperparameters</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">custom_transformer_pipeline</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">combine_with_existing_representation</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">conceptnet_url</span><span class="o">=</span><span class="default_value">'https://s3.amazonaws.com/conceptnet/downloads/2019/edges/conceptnet-assertions-5.7.0.csv.gz'</span></em>, <em class="sig-param"><span class="n">default_importance</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">classifier_preset</span><span class="o">=</span><span class="default_value">'default'</span></em>, <em class="sig-param"><span class="n">include_concept_features</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>The object initialization method; specify the core optimization parameter with this method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_sequences_raw</strong> – a list of texts</p></li>
+<li><p><strong>train_targets</strong> – a list of natural numbers (targets, multiclass)</p></li>
+<li><p><strong>time_constraint</strong> – Number of hours to evolve.</p></li>
+<li><p><strong>num_cpu</strong> – Number of threads to exploit</p></li>
+<li><p><strong>task_name</strong> – Task identifier for logging</p></li>
+<li><p><strong>latent_dim</strong> – The latent dimension of embeddings</p></li>
+<li><p><strong>sparsity</strong> – The assumed sparsity of the induced space (see paper)</p></li>
+<li><p><strong>hof_size</strong> – Hof many final models to consider?</p></li>
+<li><p><strong>initial_separate_spaces</strong> – Whether to include separate spaces as part of the initial population.</p></li>
+<li><p><strong>scoring_metric</strong> – The type of metric to optimize (sklearn-compatible)</p></li>
+<li><p><strong>top_k_importances</strong> – How many top importances to remember for explanations.</p></li>
+<li><p><strong>representation_type</strong> – symbolic, neural, neurosymbolic, neurosymbolic-default or custom. The symbolic feature space will only include feature types that we humans directly comprehend. The “neural” will include the embedding-based ones. The “neurosymbolic-default” will include the ones based on the origin MLJ paper, the “neurosymbolic” is the current alpha version with some new additions (constantly updated/developed).</p></li>
+<li><p><strong>binarize_importances</strong> – Feature selection instead of ranking as explanation</p></li>
+<li><p><strong>memory_storage</strong> – The storage of conceptnet.txt.gz-like triplet database</p></li>
+<li><p><strong>classifier</strong> – custom classifier. If none, linear learners are used.</p></li>
+<li><p><strong>classifier_hyperparameters</strong> – The space to be optimized w.r.t. the classifier param.</p></li>
+<li><p><strong>conceptnet_url</strong> – URL of the conceptnet used.</p></li>
+<li><p><strong>classifier_preset</strong> – Type of classification to be considered (default = paper), mini -&gt; very lightweight regression, emphasis on space exploration.</p></li>
+<li><p><strong>include_concept_features</strong> – Whether to include external background knowledge if possible</p></li>
+<li><p><strong>default_importance</strong> – Minimum possible initial weight.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.get_label_map">
+<code class="sig-name descname">get_label_map</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_targets</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.get_label_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identify unique target labels and remember them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>train_targets</strong> – The training target space (or any other for that matter)</p>
+</dd>
+<dt class="field-even">Returns label_map, inverse_label_map</dt>
+<dd class="field-even"><p>Two dicts, mapping to and from encoded space suitable for autoML loopings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="autoBOTLib.strategy_ga.GAlearner.apply_label_map">
 <code class="sig-name descname">apply_label_map</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">targets</span></em>, <em class="sig-param"><span class="n">inverse</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.apply_label_map" title="Permalink to this definition">¶</a></dt>
 <dd><p>A simple mapping back from encoded target space.</p>
@@ -958,6 +1074,75 @@ In general, the workflow for working with this class is as follows:
 </dd></dl>
 
 <dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.update_global_feature_importances">
+<code class="sig-name descname">update_global_feature_importances</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.update_global_feature_importances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aggregate feature importances across top learners to obtain the final ranking.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.compute_time_diff">
+<code class="sig-name descname">compute_time_diff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.compute_time_diff" title="Permalink to this definition">¶</a></dt>
+<dd><p>A method for approximate time monitoring.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.prune_redundant_info">
+<code class="sig-name descname">prune_redundant_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.prune_redundant_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>A method for removing redundant additional info which increases the final object’s size.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.parallelize_dataframe">
+<code class="sig-name descname">parallelize_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">func</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.parallelize_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>A method for parallel traversal of a given dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – dataframe of text (Pandas object)</p></li>
+<li><p><strong>func</strong> – function to be executed (a function)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.softmax">
+<code class="sig-name descname">softmax</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.softmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute softmax values for each sets of scores in x.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>x: (vector of floats)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.return_dataframe_from_text">
+<code class="sig-name descname">return_dataframe_from_text</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.return_dataframe_from_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>A helper method that returns a given dataframe from text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text</strong> – list of texts.</p>
+</dd>
+<dt class="field-even">Return parsed df</dt>
+<dd class="field-even"><p>A parsed text (a DataFrame)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.generate_random_initial_state">
+<code class="sig-name descname">generate_random_initial_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">weights_importances</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.generate_random_initial_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>The initialization method, capable of generation of individuals.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.custom_initialization">
+<code class="sig-name descname">custom_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.custom_initialization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom initialization employs random uniform prior. See the paper for more details.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="autoBOTLib.strategy_ga.GAlearner.apply_weights">
 <code class="sig-name descname">apply_weights</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parameters</span></em>, <em class="sig-param"><span class="n">custom_feature_space</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">custom_feature_matrix</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.apply_weights" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method applies weights to individual parts of the feature space.</p>
@@ -972,12 +1157,6 @@ In general, the workflow for working with this class is as follows:
 <dd class="field-even"><p>Temporary weighted space (individual)</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.compute_time_diff">
-<code class="sig-name descname">compute_time_diff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.compute_time_diff" title="Permalink to this definition">¶</a></dt>
-<dd><p>A method for approximate time monitoring.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -999,12 +1178,6 @@ In general, the workflow for working with this class is as follows:
 </dd></dl>
 
 <dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.custom_initialization">
-<code class="sig-name descname">custom_initialization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.custom_initialization" title="Permalink to this definition">¶</a></dt>
-<dd><p>Custom initialization employs random uniform prior. See the paper for more details.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt id="autoBOTLib.strategy_ga.GAlearner.evaluate_fitness">
 <code class="sig-name descname">evaluate_fitness</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">individual</span></em>, <em class="sig-param"><span class="n">max_num_feat</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">return_clf_and_vec</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.evaluate_fitness" title="Permalink to this definition">¶</a></dt>
 <dd><p>A helper method for evaluating an individual solution. Given a real-valued vector, this constructs the representations and evaluates a given learner.</p>
@@ -1023,39 +1196,6 @@ In general, the workflow for working with this class is as follows:
 </dd></dl>
 
 <dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.evolve">
-<code class="sig-name descname">evolve</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nind</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">crossover_proba</span><span class="o">=</span><span class="default_value">0.4</span></em>, <em class="sig-param"><span class="n">mutpb</span><span class="o">=</span><span class="default_value">0.15</span></em>, <em class="sig-param"><span class="n">stopping_interval</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">strategy</span><span class="o">=</span><span class="default_value">'evolution'</span></em>, <em class="sig-param"><span class="n">validation_type</span><span class="o">=</span><span class="default_value">'cv'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.evolve" title="Permalink to this definition">¶</a></dt>
-<dd><p>The core evolution method. First constrain the maximum number of features to be taken into account by lowering the bound w.r.t performance.
-next, evolve.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>nind</strong> – number of individuals (int)</p></li>
-<li><p><strong>crossover_proba</strong> – crossover probability (float)</p></li>
-<li><p><strong>mutpb</strong> – mutation probability (float)</p></li>
-<li><p><strong>stopping_interval</strong> – stopping interval -&gt; for how long no improvement is tolerated before a hard reset (int)</p></li>
-<li><p><strong>strategy</strong> – type of evolution (str)</p></li>
-<li><p><strong>validation_type</strong> – type of validation, either train_val or cv (cross validation or train-val split)</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.feature_type_importances">
-<code class="sig-name descname">feature_type_importances</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">solution_index</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.feature_type_importances" title="Permalink to this definition">¶</a></dt>
-<dd><p>A method which prints feature type importances as a pandas df.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>solution_index</strong> – Which consequent individual to inspect.</p>
-</dd>
-<dt class="field-even">Return feature_ranking</dt>
-<dd class="field-even"><p>Final table of rankings</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt id="autoBOTLib.strategy_ga.GAlearner.generate_and_update_stats">
 <code class="sig-name descname">generate_and_update_stats</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fits</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.generate_and_update_stats" title="Permalink to this definition">¶</a></dt>
 <dd><p>A helper method for generating stats.</p>
@@ -1067,30 +1207,15 @@ next, evolve.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.generate_id_intervals">
-<code class="sig-name descname">generate_id_intervals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.generate_id_intervals" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate independent intervals.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.generate_random_initial_state">
-<code class="sig-name descname">generate_random_initial_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">weights_importances</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.generate_random_initial_state" title="Permalink to this definition">¶</a></dt>
-<dd><p>The initialization method, capable of generation of individuals.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.get_feature_importance_report">
-<code class="sig-name descname">get_feature_importance_report</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">individual</span></em>, <em class="sig-param"><span class="n">fitnesses</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.get_feature_importance_report" title="Permalink to this definition">¶</a></dt>
-<dd><p>Report feature importances.</p>
+<dt id="autoBOTLib.strategy_ga.GAlearner.report_performance">
+<code class="sig-name descname">report_performance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fits</span></em>, <em class="sig-param"><span class="n">gen</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.report_performance" title="Permalink to this definition">¶</a></dt>
+<dd><p>A helper method for performance reports.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>individual</strong> – an individual solution (a vector of floats)</p></li>
-<li><p><strong>fitnesses</strong> – fitness space (list of reals)</p></li>
+<li><p><strong>fits</strong> – fitness values (vector of floats)</p></li>
+<li><p><strong>gen</strong> – generation to be reported (int)</p></li>
 </ul>
-</dd>
-<dt class="field-even">Return report</dt>
-<dd class="field-even"><p>A prinout of current performance.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1099,82 +1224,6 @@ next, evolve.</p>
 <dt id="autoBOTLib.strategy_ga.GAlearner.get_feature_space">
 <code class="sig-name descname">get_feature_space</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.get_feature_space" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract final feature space considered for learning purposes.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.get_label_map">
-<code class="sig-name descname">get_label_map</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_targets</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.get_label_map" title="Permalink to this definition">¶</a></dt>
-<dd><p>Identify unique target labels and remember them.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>train_targets</strong> – The training target space (or any other for that matter)</p>
-</dd>
-<dt class="field-even">Returns label_map, inverse_label_map</dt>
-<dd class="field-even"><p>Two dicts, mapping to and from encoded space suitable for autoML loopings.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.instantiate_validation_env">
-<code class="sig-name descname">instantiate_validation_env</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.instantiate_validation_env" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method refreshes the feature space. This is needed to maximize efficiency.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.mode_pred">
-<code class="sig-name descname">mode_pred</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prediction_matrix</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.mode_pred" title="Permalink to this definition">¶</a></dt>
-<dd><p>Obtain most frequent elements for each row.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>prediction_matrix</strong> – Matrix of predictions.</p>
-</dd>
-<dt class="field-even">Return prediction_vector</dt>
-<dd class="field-even"><p>Vector of aggregate predictions.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.mutReg">
-<code class="sig-name descname">mutReg</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">individual</span></em>, <em class="sig-param"><span class="n">p</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.mutReg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Custom mutation operator used for regularization optimization.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>individual</strong> – individual (vector of floats)</p>
-</dd>
-<dt class="field-even">Return individual</dt>
-<dd class="field-even"><p>An individual solution.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.parallelize_dataframe">
-<code class="sig-name descname">parallelize_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">func</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.parallelize_dataframe" title="Permalink to this definition">¶</a></dt>
-<dd><p>A method for parallel traversal of a given dataframe.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>df</strong> – dataframe of text (Pandas object)</p></li>
-<li><p><strong>func</strong> – function to be executed (a function)</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.predict">
-<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">instances</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Predict on new instances. Note that the prediction is actually a maxvote across the hall-of-fame.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>instances</strong> – predict labels for new instances = texts.</p>
-</dd>
-<dt class="field-even">Returns all_predictions</dt>
-<dd class="field-even"><p>Vector of predictions (decoded)</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1203,46 +1252,29 @@ next, evolve.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.prune_redundant_info">
-<code class="sig-name descname">prune_redundant_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.prune_redundant_info" title="Permalink to this definition">¶</a></dt>
-<dd><p>A method for removing redundant additional info which increases the final object’s size.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.report_performance">
-<code class="sig-name descname">report_performance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fits</span></em>, <em class="sig-param"><span class="n">gen</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.report_performance" title="Permalink to this definition">¶</a></dt>
-<dd><p>A helper method for performance reports.</p>
+<dt id="autoBOTLib.strategy_ga.GAlearner.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">instances</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict on new instances. Note that the prediction is actually a maxvote across the hall-of-fame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fits</strong> – fitness values (vector of floats)</p></li>
-<li><p><strong>gen</strong> – generation to be reported (int)</p></li>
-</ul>
+<dd class="field-odd"><p><strong>instances</strong> – predict labels for new instances = texts.</p>
+</dd>
+<dt class="field-even">Returns all_predictions</dt>
+<dd class="field-even"><p>Vector of predictions (decoded)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.return_dataframe_from_text">
-<code class="sig-name descname">return_dataframe_from_text</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.return_dataframe_from_text" title="Permalink to this definition">¶</a></dt>
-<dd><p>A helper method that returns a given dataframe from text.</p>
+<dt id="autoBOTLib.strategy_ga.GAlearner.mode_pred">
+<code class="sig-name descname">mode_pred</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prediction_matrix</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.mode_pred" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain most frequent elements for each row.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>text</strong> – list of texts.</p>
+<dd class="field-odd"><p><strong>prediction_matrix</strong> – Matrix of predictions.</p>
 </dd>
-<dt class="field-even">Return parsed df</dt>
-<dd class="field-even"><p>A parsed text (a DataFrame)</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.softmax">
-<code class="sig-name descname">softmax</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.softmax" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute softmax values for each sets of scores in x.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Param</dt>
-<dd class="field-odd"><p>x: (vector of floats)</p>
+<dt class="field-even">Return prediction_vector</dt>
+<dd class="field-even"><p>Vector of aggregate predictions.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1253,15 +1285,66 @@ next, evolve.</p>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="autoBOTLib.strategy_ga.GAlearner.update_global_feature_importances">
-<code class="sig-name descname">update_global_feature_importances</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.update_global_feature_importances" title="Permalink to this definition">¶</a></dt>
-<dd><p>Aggregate feature importances across top learners to obtain the final ranking.</p>
+<dt id="autoBOTLib.strategy_ga.GAlearner.generate_id_intervals">
+<code class="sig-name descname">generate_id_intervals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.generate_id_intervals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate independent intervals.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.get_feature_importance_report">
+<code class="sig-name descname">get_feature_importance_report</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">individual</span></em>, <em class="sig-param"><span class="n">fitnesses</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.get_feature_importance_report" title="Permalink to this definition">¶</a></dt>
+<dd><p>Report feature importances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>individual</strong> – an individual solution (a vector of floats)</p></li>
+<li><p><strong>fitnesses</strong> – fitness space (list of reals)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return report</dt>
+<dd class="field-even"><p>A prinout of current performance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.mutReg">
+<code class="sig-name descname">mutReg</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">individual</span></em>, <em class="sig-param"><span class="n">p</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.mutReg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom mutation operator used for regularization optimization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>individual</strong> – individual (vector of floats)</p>
+</dd>
+<dt class="field-even">Return individual</dt>
+<dd class="field-even"><p>An individual solution.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="autoBOTLib.strategy_ga.GAlearner.update_intermediary_feature_space">
 <code class="sig-name descname">update_intermediary_feature_space</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">custom_space</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.update_intermediary_feature_space" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the subset of the origin feature space based on the starting_feature_numbers vector that gets evolved.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.instantiate_validation_env">
+<code class="sig-name descname">instantiate_validation_env</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.instantiate_validation_env" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method refreshes the feature space. This is needed to maximize efficiency.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.feature_type_importances">
+<code class="sig-name descname">feature_type_importances</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">solution_index</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.feature_type_importances" title="Permalink to this definition">¶</a></dt>
+<dd><p>A method which prints feature type importances as a pandas df.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>solution_index</strong> – Which consequent individual to inspect.</p>
+</dd>
+<dt class="field-even">Return feature_ranking</dt>
+<dd class="field-even"><p>Final table of rankings</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1274,6 +1357,25 @@ next, evolve.</p>
 </dd>
 <dt class="field-even">Return dfx</dt>
 <dd class="field-even"><p>DataFrame of evolution evaluations</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.evolve">
+<code class="sig-name descname">evolve</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nind</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">crossover_proba</span><span class="o">=</span><span class="default_value">0.4</span></em>, <em class="sig-param"><span class="n">mutpb</span><span class="o">=</span><span class="default_value">0.15</span></em>, <em class="sig-param"><span class="n">stopping_interval</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">strategy</span><span class="o">=</span><span class="default_value">'evolution'</span></em>, <em class="sig-param"><span class="n">validation_type</span><span class="o">=</span><span class="default_value">'cv'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.evolve" title="Permalink to this definition">¶</a></dt>
+<dd><p>The core evolution method. First constrain the maximum number of features to be taken into account by lowering the bound w.r.t performance.
+next, evolve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nind</strong> – number of individuals (int)</p></li>
+<li><p><strong>crossover_proba</strong> – crossover probability (float)</p></li>
+<li><p><strong>mutpb</strong> – mutation probability (float)</p></li>
+<li><p><strong>stopping_interval</strong> – stopping interval -&gt; for how long no improvement is tolerated before a hard reset (int)</p></li>
+<li><p><strong>strategy</strong> – type of evolution (str)</p></li>
+<li><p><strong>validation_type</strong> – type of validation, either train_val or cv (cross validation or train-val split)</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -1291,6 +1393,24 @@ next, evolve.</p>
 <em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.topic_features.</code><code class="sig-name descname">TopicDocs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ndim</span><span class="o">=</span><span class="default_value">128</span></em>, <em class="sig-param"><span class="n">random_seed</span><span class="o">=</span><span class="default_value">1965123</span></em>, <em class="sig-param"><span class="n">topic_tokens</span><span class="o">=</span><span class="default_value">4096</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.topic_features.TopicDocs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
+<dt id="autoBOTLib.topic_features.TopicDocs.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ndim</span><span class="o">=</span><span class="default_value">128</span></em>, <em class="sig-param"><span class="n">random_seed</span><span class="o">=</span><span class="default_value">1965123</span></em>, <em class="sig-param"><span class="n">topic_tokens</span><span class="o">=</span><span class="default_value">4096</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.topic_features.TopicDocs.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class initialization method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ndim</strong> – Number of latent dimensions</p></li>
+<li><p><strong>targets</strong> – The target vector</p></li>
+<li><p><strong>random_seed</strong> – The random seed used</p></li>
+<li><p><strong>ed_cutoff</strong> – Cutoff for fuzzy string matching when comparing documents</p></li>
+<li><p><strong>doc_limit</strong> – The max number of documents to be considered.</p></li>
+<li><p><strong>verbose</strong> – Whether to have the printouts</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="autoBOTLib.topic_features.TopicDocs.fit">
 <code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.topic_features.TopicDocs.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>The fit method.</p>
@@ -1300,17 +1420,6 @@ next, evolve.</p>
 </dd>
 </dl>
 </dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.topic_features.TopicDocs.fit_transform">
-<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">documents</span></em>, <em class="sig-param"><span class="n">b</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.topic_features.TopicDocs.fit_transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>The sklearn-like fit-transform method.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.topic_features.TopicDocs.get_feature_names">
-<code class="sig-name descname">get_feature_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.topic_features.TopicDocs.get_feature_names" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="py method">
 <dt id="autoBOTLib.topic_features.TopicDocs.transform">
@@ -1326,6 +1435,17 @@ next, evolve.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt id="autoBOTLib.topic_features.TopicDocs.fit_transform">
+<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">documents</span></em>, <em class="sig-param"><span class="n">b</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.topic_features.TopicDocs.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sklearn-like fit-transform method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.topic_features.TopicDocs.get_feature_names">
+<code class="sig-name descname">get_feature_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.topic_features.TopicDocs.get_feature_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </div>
@@ -1336,6 +1456,12 @@ next, evolve.</p>
 <em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.word_relations.</code><code class="sig-name descname">relationExtractor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">10000</span></em>, <em class="sig-param"><span class="n">split_char</span><span class="o">=</span><span class="default_value">'|||'</span></em>, <em class="sig-param"><span class="n">witem_separator</span><span class="o">=</span><span class="default_value">'&amp;&amp;&amp;&amp;'</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">neighborhood_token</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">min_token</span><span class="o">=</span><span class="default_value">'bigrams'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.word_relations.relationExtractor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>The main token relation extraction class. Works for arbitrary tokens.</p>
+<dl class="py method">
+<dt id="autoBOTLib.word_relations.relationExtractor.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">10000</span></em>, <em class="sig-param"><span class="n">split_char</span><span class="o">=</span><span class="default_value">'|||'</span></em>, <em class="sig-param"><span class="n">witem_separator</span><span class="o">=</span><span class="default_value">'&amp;&amp;&amp;&amp;'</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">neighborhood_token</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">min_token</span><span class="o">=</span><span class="default_value">'bigrams'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.word_relations.relationExtractor.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt id="autoBOTLib.word_relations.relationExtractor.compute_distance">
 <code class="sig-name descname">compute_distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pair</span></em>, <em class="sig-param"><span class="n">token_dict</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.word_relations.relationExtractor.compute_distance" title="Permalink to this definition">¶</a></dt>
@@ -1354,23 +1480,26 @@ next, evolve.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="autoBOTLib.word_relations.relationExtractor.witem_kernel">
+<code class="sig-name descname">witem_kernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">instance</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.word_relations.relationExtractor.witem_kernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple kernel for traversing a given document.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>instance</strong> – a piece of text</p>
+</dd>
+<dt class="field-even">Return global_distances</dt>
+<dd class="field-even"><p>Distances between tokens</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="autoBOTLib.word_relations.relationExtractor.fit">
 <code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">b</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.word_relations.relationExtractor.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit the model to a text vector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>text_vector</strong> – The input listr of texts.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.word_relations.relationExtractor.fit_transform">
-<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">a2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.word_relations.relationExtractor.fit_transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>A classifc fit-transform method.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>text_vector</strong> – Input list of texts.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1393,15 +1522,12 @@ next, evolve.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="autoBOTLib.word_relations.relationExtractor.witem_kernel">
-<code class="sig-name descname">witem_kernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">instance</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.word_relations.relationExtractor.witem_kernel" title="Permalink to this definition">¶</a></dt>
-<dd><p>A simple kernel for traversing a given document.</p>
+<dt id="autoBOTLib.word_relations.relationExtractor.fit_transform">
+<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">a2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.word_relations.relationExtractor.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>A classifc fit-transform method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>instance</strong> – a piece of text</p>
-</dd>
-<dt class="field-even">Return global_distances</dt>
-<dd class="field-even"><p>Distances between tokens</p>
+<dd class="field-odd"><p><strong>text_vector</strong> – Input list of texts.</p>
 </dd>
 </dl>
 </dd></dl>

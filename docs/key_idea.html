@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Key idea behind autoBOTLib &mdash; autoBOT  documentation</title>
+  <title>Key idea underlying autoBOTLib &mdash; autoBOT  documentation</title>
   
 
   
@@ -89,7 +89,7 @@
             
               <p class="caption"><span class="caption-text">About:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Key idea behind autoBOTLib</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Key idea underlying autoBOTLib</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Tutorial and first steps:</span></p>
 <ul>
@@ -158,7 +158,7 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Key idea behind autoBOTLib</li>
+      <li>Key idea underlying autoBOTLib</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -177,8 +177,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="key-idea-behind-autobotlib">
-<h1>Key idea behind autoBOTLib<a class="headerlink" href="#key-idea-behind-autobotlib" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="key-idea-underlying-autobotlib">
+<h1>Key idea underlying autoBOTLib<a class="headerlink" href="#key-idea-underlying-autobotlib" title="Permalink to this headline">¶</a></h1>
 <a class="reference internal image-reference" href="_images/scheme.png"><img alt="_images/scheme.png" src="_images/scheme.png" style="width: 600px;" /></a>
 <p>Learning from texts has been widely adopted throughout industry and science.
 While state-of-the-art neural language models have shown very promising results for text classification, they are expensive to (pre-)train, require large amounts of data, and require tuning of hundreds of millions or more parameters.
@@ -187,13 +187,18 @@ The key idea of autoBOTLib is that, instead of evolving on the learner level, ev
 <p>TLDR:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">autoBOTLib</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="c1">## Load example data frame</span>
+
+<span class="c1">## Load example data frame - step 1</span>
 <span class="n">dataframe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/insults/train.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">train_sequences</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;text_a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-<span class="n">train_targets</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">train_sequences</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;text_a&#39;</span><span class="p">]</span>
+<span class="n">train_targets</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
+
+    <span class="c1">## Run evolution - step 2</span>
 <span class="n">autoBOTLibObj</span> <span class="o">=</span> <span class="n">autoBOTLib</span><span class="o">.</span><span class="n">GAlearner</span><span class="p">(</span><span class="n">train_sequences</span><span class="p">,</span> <span class="n">train_targets</span><span class="p">,</span> <span class="n">time_constraint</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">evolve</span><span class="p">()</span>
+
+    <span class="c1">## Inspect or make predictions - step 3</span>
 <span class="n">dataframe2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/insults/test.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">test_sequences</span> <span class="o">=</span> <span class="n">dataframe2</span><span class="p">[</span><span class="s1">&#39;text_a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">test_sequences</span> <span class="o">=</span> <span class="n">dataframe2</span><span class="p">[</span><span class="s1">&#39;text_a&#39;</span><span class="p">]</span>
 <span class="n">predictions</span> <span class="o">=</span> <span class="n">autoBOTLibObj</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_sequences</span><span class="p">)</span>
 </pre></div>
 </div>

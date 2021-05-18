@@ -93,7 +93,8 @@ class GAlearner:
             classifier_preset="default",
             include_concept_features=False,
             verbose=1):
-        """The object initialization method
+        
+        """The object initialization method; specify the core optimization parameter with this method.
 
         :param train_sequences_raw: a list of texts
         :param train_targets: a list of natural numbers (targets, multiclass)
@@ -106,8 +107,8 @@ class GAlearner:
         :param initial_separate_spaces: Whether to include separate spaces as part of the initial population.
         :param scoring_metric: The type of metric to optimize (sklearn-compatible)
         :param top_k_importances: How many top importances to remember for explanations.
-        :param representation_type: symbolic, neurosymbolic or custom
-        :param binarize_importances: Feature selection instead of ranking as explanation
+        :param representation_type: "symbolic", "neural", "neurosymbolic", "neurosymbolic-default" or "custom". The "symbolic" feature space will only include feature types that we humans directly comprehend. The "neural" will include the embedding-based ones. The "neurosymbolic-default" will include the ones based on the origin MLJ paper, the "neurosymbolic" is the current alpha version with some new additions (constantly updated/developed).
+        :param binarize_importances: Feature selection instead of ranking as explanation (bool)
         :param memory_storage: The storage of conceptnet.txt.gz-like triplet database
         :param classifier: custom classifier. If none, linear learners are used.
         :param classifier_hyperparameters: The space to be optimized w.r.t. the classifier param.
