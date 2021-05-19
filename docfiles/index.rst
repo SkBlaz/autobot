@@ -18,6 +18,7 @@ Welcome to *autoBOT*'s documentation
    custom_classifiers.rst
    custom_features.rst
    model_persistence.rst
+   representations.rst
    cli_usage.rst
    containerization.rst
    custom_knowledge.rst

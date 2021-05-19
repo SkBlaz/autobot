@@ -97,6 +97,7 @@
 <li class="toctree-l1"><a class="reference internal" href="custom_classifiers.html">Using custom classifiers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_features.html">Using custom feature transformers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_persistence.html">Model persistence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="representations.html">Obtaining underlying representations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cli_usage.html">autoBOTLib CLI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="containerization.html">Singularity container for autoBOT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_knowledge.html">Using custom background knowledge</a></li>
@@ -1293,6 +1294,20 @@ In general, the workflow for working with this class is as follows:
 </dd>
 <dt class="field-even">Return pd.DataFrame prob_df</dt>
 <dd class="field-even"><p>A DataFrame of probabilities for each class.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.strategy_ga.GAlearner.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">instances</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate only the representations (obtain a feature matrix subject to evolution in autoBOT)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>instances</strong> (<em>list/pd.DataFrame</em>) – A collection of instances to be transformed into feature matrix.</p>
+</dd>
+<dt class="field-even">Return sparseMatrix output_representation</dt>
+<dd class="field-even"><p>Representation of the documents.</p>
 </dd>
 </dl>
 </dd></dl>

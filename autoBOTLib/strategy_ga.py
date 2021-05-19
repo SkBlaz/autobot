@@ -728,8 +728,9 @@ class GAlearner:
         """
         Extract final feature space considered for learning purposes.
         """
+
         transformed_instances, feature_indices = self.apply_weights(
-            self.hof[0][1:])
+            self.hof[0])
         assert transformed_instances.shape[0] == len(self.train_targets)
         return (transformed_instances, self.train_targets)
 
@@ -840,6 +841,23 @@ class GAlearner:
 
         return prob_df
 
+    def transform(self, instances):
+
+        """
+        Generate only the representations (obtain a feature matrix subject to evolution in autoBOT)
+        
+        :param list/pd.DataFrame instances: A collection of instances to be transformed into feature matrix.
+        :return sparseMatrix output_representation: Representation of the documents.
+
+        """
+
+        if self.vectorizer is None:
+            if self.verbose: logging.info("Please call evolution() first to learn the representation mappings.")
+            
+        instances = self.return_dataframe_from_text(instances)
+        output_representation = self.vectorizer.transform(instances)
+        return output_representation
+    
     def predict(self, instances):
         """
         Predict on new instances. Note that the prediction is actually a maxvote across the hall-of-fame.

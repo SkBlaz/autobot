@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Performance on shared tasks &mdash; autoBOTLib  documentation</title>
+  <title>Obtaining underlying representations &mdash; autoBOTLib  documentation</title>
   
 
   
@@ -38,8 +38,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="autoBOTLib" href="modules.html" />
-    <link rel="prev" title="Releases" href="updates.html" /> 
+    <link rel="next" title="autoBOTLib CLI" href="cli_usage.html" />
+    <link rel="prev" title="Model persistence" href="model_persistence.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -98,14 +98,14 @@
 <li class="toctree-l1"><a class="reference internal" href="custom_classifiers.html">Using custom classifiers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_features.html">Using custom feature transformers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_persistence.html">Model persistence</a></li>
-<li class="toctree-l1"><a class="reference internal" href="representations.html">Obtaining underlying representations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Obtaining underlying representations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cli_usage.html">autoBOTLib CLI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="containerization.html">Singularity container for autoBOT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_knowledge.html">Using custom background knowledge</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_metrics.html">Using custom metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ideas.html">Potentially interesting further work</a></li>
 <li class="toctree-l1"><a class="reference internal" href="updates.html">Releases</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Performance on shared tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shared_tasks.html">Performance on shared tasks</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
@@ -159,13 +159,13 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Performance on shared tasks</li>
+      <li>Obtaining underlying representations</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/shared_tasks.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/representations.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -178,38 +178,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="performance-on-shared-tasks">
-<h1>Performance on shared tasks<a class="headerlink" href="#performance-on-shared-tasks" title="Permalink to this headline">¶</a></h1>
-<p>This page serves as a storage of past performances on various shared tasks. If you also run autoBOT somewhere, please, feel free to open a pull request with your result!</p>
-<table class="colwidths-given docutils align-default" id="id1">
-<caption><span class="caption-text">Shared</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 15%" />
-<col style="width: 15%" />
-<col style="width: 15%" />
-<col style="width: 15%" />
-<col style="width: 15%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Task name</p></th>
-<th class="head"><p>Setting</p></th>
-<th class="head"><p>Link</p></th>
-<th class="head"><p>Task</p></th>
-<th class="head"><p>Placement</p></th>
-<th class="head"><p>Top percent</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Malavi news classification</p></td>
-<td><p>Defaults (4h) (v0.34)</p></td>
-<td><p><a class="reference external" href="https://zindi.africa/competitions/ai4d-malawi-news-classification-challenge">https://zindi.africa/competitions/ai4d-malawi-news-classification-challenge</a></p></td>
-<td><p>News classification</p></td>
-<td><p>24/323 (shared with others)</p></td>
-<td><p>top 7.4%</p></td>
-</tr>
-</tbody>
-</table>
+  <div class="section" id="obtaining-underlying-representations">
+<h1>Obtaining underlying representations<a class="headerlink" href="#obtaining-underlying-representations" title="Permalink to this headline">¶</a></h1>
+<p>Obtaining the representations of documents so you can explore potentially different learning schemes is discussed in the following example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">autoBOTLib</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">dataframe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/insults/train.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">train_sequences</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;text_a&#39;</span><span class="p">]</span>
+<span class="n">train_targets</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
+
+<span class="n">autoBOTLibObj</span> <span class="o">=</span> <span class="n">autoBOTLib</span><span class="o">.</span><span class="n">GAlearner</span><span class="p">(</span>
+    <span class="n">train_sequences</span><span class="p">,</span>
+    <span class="n">train_targets</span><span class="p">,</span>
+    <span class="n">time_constraint</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span><span class="o">.</span><span class="n">evolve</span><span class="p">()</span>
+
+<span class="n">input_instance_embedding</span> <span class="o">=</span> <span class="n">autoBOTLibObj</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">train_sequences</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">input_instance_embedding</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that as long as the <em>evolve()</em> was called, the <em>transform()</em> method is able to use the trained vectorizers to obtain sparse (Scipy) matrices.</p>
 </div>
 
 
@@ -218,8 +207,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="modules.html" class="btn btn-neutral float-right" title="autoBOTLib" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="updates.html" class="btn btn-neutral float-left" title="Releases" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cli_usage.html" class="btn btn-neutral float-right" title="autoBOTLib CLI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="model_persistence.html" class="btn btn-neutral float-left" title="Model persistence" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
