@@ -1421,18 +1421,19 @@ In general, the workflow for working with this class is as follows:
 
 <dl class="py method">
 <dt id="autoBOTLib.strategy_ga.GAlearner.evolve">
-<code class="sig-name descname">evolve</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nind</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">crossover_proba</span><span class="o">=</span><span class="default_value">0.4</span></em>, <em class="sig-param"><span class="n">mutpb</span><span class="o">=</span><span class="default_value">0.15</span></em>, <em class="sig-param"><span class="n">stopping_interval</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">strategy</span><span class="o">=</span><span class="default_value">'evolution'</span></em>, <em class="sig-param"><span class="n">validation_type</span><span class="o">=</span><span class="default_value">'cv'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.evolve" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">evolve</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nind</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">crossover_proba</span><span class="o">=</span><span class="default_value">0.4</span></em>, <em class="sig-param"><span class="n">mutpb</span><span class="o">=</span><span class="default_value">0.15</span></em>, <em class="sig-param"><span class="n">stopping_interval</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">strategy</span><span class="o">=</span><span class="default_value">'evolution'</span></em>, <em class="sig-param"><span class="n">representation_step_only</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">validation_type</span><span class="o">=</span><span class="default_value">'cv'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.evolve" title="Permalink to this definition">¶</a></dt>
 <dd><p>The core evolution method. First constrain the maximum number of features to be taken into account by lowering the bound w.r.t performance.
 next, evolve.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>nind</strong> – number of individuals (int)</p></li>
-<li><p><strong>crossover_proba</strong> – crossover probability (float)</p></li>
-<li><p><strong>mutpb</strong> – mutation probability (float)</p></li>
-<li><p><strong>stopping_interval</strong> – stopping interval -&gt; for how long no improvement is tolerated before a hard reset (int)</p></li>
-<li><p><strong>strategy</strong> – type of evolution (str)</p></li>
-<li><p><strong>validation_type</strong> – type of validation, either train_val or cv (cross validation or train-val split)</p></li>
+<li><p><strong>nind</strong> (<em>int</em>) – number of individuals (int)</p></li>
+<li><p><strong>crossover_proba</strong> (<em>float</em>) – crossover probability (float)</p></li>
+<li><p><strong>mutpb</strong> (<em>float</em>) – mutation probability (float)</p></li>
+<li><p><strong>stopping_interval</strong> (<em>int</em>) – stopping interval -&gt; for how long no improvement is tolerated before a hard reset (int)</p></li>
+<li><p><strong>strategy</strong> (<em>str</em>) – type of evolution (str)</p></li>
+<li><p><strong>representation_step_only</strong> (<em>bool</em>) – Learn only the feature transformations, skip the evolution. Suitable for custom experiments with transform()</p></li>
+<li><p><strong>validation_type</strong> (<em>str</em>) – type of validation, either train_val or cv (cross validation or train-val split)</p></li>
 </ul>
 </dd>
 </dl>

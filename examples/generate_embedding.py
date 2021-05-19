@@ -10,7 +10,7 @@ def run():
     autoBOTLibObj = autoBOTLib.GAlearner(
         train_sequences,
         train_targets,
-        time_constraint=0.1).evolve()
+        time_constraint=0.1).evolve(representation_step_only = True)
 
     input_instance_embedding = autoBOTLibObj.transform(train_sequences)
 

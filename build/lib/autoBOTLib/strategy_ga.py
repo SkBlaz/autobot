@@ -1,9 +1,3 @@
-"""
-This is the main GA underlying the autoBOT approach.
-This file contains, without warranty, the code that performs the optimization.
-Made by Blaz Skrlj, Ljubljana 2020, Jozef Stefan Institute
-"""
-
 ## some generic logging
 import logging
 import wget  # For conceptnet download if necessary
@@ -93,29 +87,29 @@ class GAlearner:
             classifier_preset="default",
             include_concept_features=False,
             verbose=1):
-        """The object initialization method
+        
+        """The object initialization method; specify the core optimization parameter with this method.
 
-        :param train_sequences_raw: a list of texts
-        :param train_targets: a list of natural numbers (targets, multiclass)
-        :param time_constraint: Number of hours to evolve.
-        :param num_cpu: Number of threads to exploit
-        :param task_name: Task identifier for logging
-        :param latent_dim: The latent dimension of embeddings
-        :param sparsity: The assumed sparsity of the induced space (see paper)
-        :param hof_size: Hof many final models to consider?
-        :param initial_separate_spaces: Whether to include separate spaces as part of the initial population.
-        :param scoring_metric: The type of metric to optimize (sklearn-compatible)
-        :param top_k_importances: How many top importances to remember for explanations.
-        :param representation_type: symbolic, neurosymbolic or custom
-        :param binarize_importances: Feature selection instead of ranking as explanation
-        :param memory_storage: The storage of conceptnet.txt.gz-like triplet database
-        :param classifier: custom classifier. If none, linear learners are used.
-        :param classifier_hyperparameters: The space to be optimized w.r.t. the classifier param.
-        :param conceptnet_url: URL of the conceptnet used.
-        :param classifier_preset: Type of classification to be considered (default = paper), mini -> very lightweight regression, emphasis on space exploration.
-        :param include_concept_features: Whether to include external background knowledge if possible
-        :param default_importance: Minimum possible initial weight.
-
+        :param list/PandasSeries train_sequences_raw: a list of texts
+        :param list/np.array train_targets: a list of natural numbers (targets, multiclass)
+        :param int time_constraint: Number of hours to evolve.
+        :param int/str num_cpu: Number of threads to exploit
+        :param str task_name: Task identifier for logging
+        :param int latent_dim: The latent dimension of embeddings
+        :param float sparsity: The assumed sparsity of the induced space (see paper)
+        :param int hof_size: Hof many final models to consider?
+        :param bool initial_separate_spaces: Whether to include separate spaces as part of the initial population.
+        :param str scoring_metric: The type of metric to optimize (sklearn-compatible)
+        :param int top_k_importances: How many top importances to remember for explanations.
+        :param str representation_type: "symbolic", "neural", "neurosymbolic", "neurosymbolic-default" or "custom". The "symbolic" feature space will only include feature types that we humans directly comprehend. The "neural" will include the embedding-based ones. The "neurosymbolic-default" will include the ones based on the origin MLJ paper, the "neurosymbolic" is the current alpha version with some new additions (constantly updated/developed).
+        :param bool binarize_importances: Feature selection instead of ranking as explanation
+        :param str memory_storage: The storage of conceptnet.txt.gz-like triplet database
+        :param obj classifier: custom classifier. If none, linear learners are used.
+        :param obj classifier_hyperparameters: The space to be optimized w.r.t. the classifier param.
+        :param str conceptnet_url: URL of the conceptnet used.
+        :param str classifier_preset: Type of classification to be considered (default = paper), ""mini-l1"" or ""mini-l2" -> very lightweight regression, emphasis on space exploration.
+        :param bool include_concept_features: Whether to include external background knowledge if possible
+        :param float default_importance: Minimum possible initial weight.
         """
 
         ## Set the random seed
@@ -165,6 +159,7 @@ class GAlearner:
 
         if self.verbose:
             logging.info("Instantiated the evolution-based learner.")
+            
         self.scoring_metric = scoring_metric
 
         self.representation_type = representation_type
@@ -187,6 +182,7 @@ class GAlearner:
         ## Encoded target space for training purposes
         train_targets = np.array(self.apply_label_map(train_targets))
         counts = np.bincount(train_targets)
+        
         self.majority_class = np.argmax(counts)
         self.classifier = classifier
         self.classifier_hyperparameters = classifier_hyperparameters
@@ -194,6 +190,7 @@ class GAlearner:
         ## parallelism settings
         if num_cpu == "all":
             self.num_cpu = mp.cpu_count()
+            
         else:
             self.num_cpu = num_cpu
 
@@ -331,7 +328,7 @@ class GAlearner:
         """
         Identify unique target labels and remember them.
         
-        :param train_targets: The training target space (or any other for that matter)
+        :param list/np.array train_targets: The training target space (or any other for that matter)
         :returns label_map, inverse_label_map: Two dicts, mapping to and from encoded space suitable for autoML loopings.
 
         """
@@ -348,9 +345,9 @@ class GAlearner:
         """
         A simple mapping back from encoded target space.
         
-        :param targets: The target space
-        :param inverse: Boolean if map to origin space or not (default encodes into continuum)
-        :returns new_targets: Encoded target space
+        :param list/np.array targets: The target space
+        :param bool inverse: Boolean if map to origin space or not (default encodes into continuum)
+        :returns list new_targets: Encoded target space
 
         """
         if inverse:
@@ -435,8 +432,8 @@ class GAlearner:
         """
         A method for parallel traversal of a given dataframe.
 
-        :param df: dataframe of text (Pandas object)
-        :param func: function to be executed (a function)
+        :param pd.DataFrame df: dataframe of text (Pandas object)
+        :param obj func: function to be executed (a function)
         """
 
         if self.verbose: logging.info("Computing the seed dataframe ..")
@@ -455,7 +452,7 @@ class GAlearner:
     def softmax(self, x):
         """Compute softmax values for each sets of scores in x.
 
-        :param: x: (vector of floats)
+        :param np.array x: (vector of floats)
         """
 
         e_x = np.exp(x - np.max(x))
@@ -465,7 +462,7 @@ class GAlearner:
         """
         A helper method that returns a given dataframe from text.
 
-        :param text: list of texts.
+        :param list/pd.Series text: list of texts.
         :return parsed df: A parsed text (a DataFrame)
         """
 
@@ -533,9 +530,9 @@ class GAlearner:
         """
         This method applies weights to individual parts of the feature space.
 
-        :param parameters: a vector of real-valued parameters - solution = an individual
-        :param custom_feature_space: Custom feature space, relevant during making of predictions.
-        :return tmp_space: Temporary weighted space (individual)
+        :param np.array parameters: a vector of real-valued parameters - solution = an individual
+        :param bool custom_feature_space: Custom feature space, relevant during making of predictions.
+        :return np.array tmp_space: Temporary weighted space (individual)
         """
 
         ## Compute cumulative sum across number of features per feature type.
@@ -568,10 +565,10 @@ class GAlearner:
         """
         Compute the learnability of the representation.
         
-        :param tmp_feature_space: An individual's solution space.
-        :param final_run: Last run is more extensive.
-        :param n_cpu: Number of CPUs to use.
-        :return f1_perf, clf: F1 performance and the learned classifier.
+        :param np.array tmp_feature_space: An individual's solution space.
+        :param bool final_run: Last run is more extensive.
+        :param int/str n_cpu: Number of CPUs to use.
+        :return float f1_perf, clf: F1 performance and the learned classifier.
         """
 
         if self.classifier_hyperparameters is None:
@@ -650,10 +647,10 @@ class GAlearner:
         """
         A helper method for evaluating an individual solution. Given a real-valued vector, this constructs the representations and evaluates a given learner.
 
-        :param individual: an individual (solution)
-        :param max_num_feat: maximum number of features that are outputted
-        :param return_clf_and_vec: return classifier and vectorizer? This is useful for deployment.
-        :return score: The fitness score.
+        :param np.array individual: an individual (solution)
+        :param int max_num_feat: maximum number of features that are outputted
+        :param bool return_clf_and_vec: return classifier and vectorizer? This is useful for deployment.
+        :return float score: The fitness score.
 
         """
         individual = np.array(individual)
@@ -699,7 +696,8 @@ class GAlearner:
         """
         A helper method for generating stats.
 
-        :param fits: fitness values of the current population
+        :param list fits: fitness values of the current population
+        :return float meanScore: The mean of the fitnesses
         """
 
         f1_scores = []
@@ -714,8 +712,8 @@ class GAlearner:
         """
         A helper method for performance reports.
 
-        :param fits: fitness values (vector of floats)
-        :param gen: generation to be reported (int)
+        :param np.array fits: fitness values (vector of floats)
+        :param int gen: generation to be reported (int)
         """
 
         f1_top = self.generate_and_update_stats(fits)
@@ -730,8 +728,9 @@ class GAlearner:
         """
         Extract final feature space considered for learning purposes.
         """
+
         transformed_instances, feature_indices = self.apply_weights(
-            self.hof[0][1:])
+            self.hof[0])
         assert transformed_instances.shape[0] == len(self.train_targets)
         return (transformed_instances, self.train_targets)
 
@@ -739,7 +738,7 @@ class GAlearner:
         """
         Predict on new instances. Note that the prediction is actually a maxvote across the hall-of-fame.
 
-        :param instances: predict labels for new instances = texts.
+        :param list/pd.Series instances: predict labels for new instances = texts.
         """
 
         if self.verbose:
@@ -798,8 +797,8 @@ class GAlearner:
         """
         Predict probabilities for individual classes. Probabilities are based as proportions of a particular label predicted with a given classifier.
         
-        :param pred_matrix: Matrix of predictions.
-        :return prob_df: A DataFrame of probabilities for each class.
+        :param np.array pred_matrix: Matrix of predictions.
+        :return pd.DataFrame prob_df: A DataFrame of probabilities for each class.
 
         """
 
@@ -842,12 +841,29 @@ class GAlearner:
 
         return prob_df
 
+    def transform(self, instances):
+
+        """
+        Generate only the representations (obtain a feature matrix subject to evolution in autoBOT)
+        
+        :param list/pd.DataFrame instances: A collection of instances to be transformed into feature matrix.
+        :return sparseMatrix output_representation: Representation of the documents.
+
+        """
+
+        if self.vectorizer is None:
+            if self.verbose: logging.info("Please call evolution() first to learn the representation mappings.")
+            
+        instances = self.return_dataframe_from_text(instances)
+        output_representation = self.vectorizer.transform(instances)
+        return output_representation
+    
     def predict(self, instances):
         """
         Predict on new instances. Note that the prediction is actually a maxvote across the hall-of-fame.
 
-        :param instances: predict labels for new instances = texts.
-        :returns all_predictions: Vector of predictions (decoded)
+        :param list/pd.Series instances: predict labels for new instances = texts.
+        :returns np.array all_predictions: Vector of predictions (decoded)
 
         """
 
@@ -911,8 +927,8 @@ class GAlearner:
         """        
         Obtain most frequent elements for each row.
         
-        :param prediction_matrix: Matrix of predictions.
-        :return prediction_vector: Vector of aggregate predictions.
+        :param np.array prediction_matrix: Matrix of predictions.
+        :return np.array prediction_vector: Vector of aggregate predictions.
 
         """
 
@@ -967,9 +983,8 @@ class GAlearner:
     def get_feature_importance_report(self, individual, fitnesses):
         """Report feature importances.
 
-        :param individual: an individual solution (a vector of floats)
-        :param fitnesses: fitness space (list of reals)
-        :return report: A prinout of current performance.
+        :param np.array individual: an individual solution (a vector of floats)
+        :param list fitnesses: fitness space (list of reals)
 
         """
 
