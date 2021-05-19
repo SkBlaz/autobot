@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>autoBOTLib package &mdash; autoBOT  documentation</title>
+  <title>autoBOTLib package &mdash; autoBOTLib  documentation</title>
   
 
   
@@ -52,7 +52,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> autoBOT
+            <a href="index.html" class="icon icon-home"> autoBOTLib
           
 
           
@@ -167,7 +167,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">autoBOT</a>
+          <a href="index.html">autoBOTLib</a>
         
       </nav>
 
@@ -387,7 +387,7 @@
 <dl class="py class">
 <dt id="autoBOTLib.data_utils.genericProcessor">
 <em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.data_utils.</code><code class="sig-name descname">genericProcessor</code><a class="headerlink" href="#autoBOTLib.data_utils.genericProcessor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="source/autoBOTLib.html#autoBOTLib.data_utils.DataProcessor" title="autoBOTLib.data_utils.DataProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">autoBOTLib.data_utils.DataProcessor</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#autoBOTLib.data_utils.DataProcessor" title="autoBOTLib.data_utils.DataProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">autoBOTLib.data_utils.DataProcessor</span></code></a></p>
 <dl class="py method">
 <dt id="autoBOTLib.data_utils.genericProcessor.get_train_examples">
 <code class="sig-name descname">get_train_examples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_dir</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.data_utils.genericProcessor.get_train_examples" title="Permalink to this definition">¶</a></dt>
@@ -1043,9 +1043,6 @@ The class functions as a sklearn-like object.</p>
 </div>
 <div class="section" id="module-autoBOTLib.strategy_ga">
 <span id="autobotlib-strategy-ga-module"></span><h2>autoBOTLib.strategy_ga module<a class="headerlink" href="#module-autoBOTLib.strategy_ga" title="Permalink to this headline">¶</a></h2>
-<p>This is the main GA underlying the autoBOT approach.
-This file contains, without warranty, the code that performs the optimization.
-Made by Blaz Skrlj, Ljubljana 2020, Jozef Stefan Institute</p>
 <dl class="py class">
 <dt id="autoBOTLib.strategy_ga.GAlearner">
 <em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.strategy_ga.</code><code class="sig-name descname">GAlearner</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_sequences_raw</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">time_constraint</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">'all'</span></em>, <em class="sig-param"><span class="n">task_name</span><span class="o">=</span><span class="default_value">'update:'</span></em>, <em class="sig-param"><span class="n">latent_dim</span><span class="o">=</span><span class="default_value">512</span></em>, <em class="sig-param"><span class="n">sparsity</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hof_size</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">initial_separate_spaces</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">scoring_metric</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">top_k_importances</span><span class="o">=</span><span class="default_value">25</span></em>, <em class="sig-param"><span class="n">representation_type</span><span class="o">=</span><span class="default_value">'neurosymbolic-default'</span></em>, <em class="sig-param"><span class="n">binarize_importances</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">memory_storage</span><span class="o">=</span><span class="default_value">'memory'</span></em>, <em class="sig-param"><span class="n">classifier</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">n_fold_cv</span><span class="o">=</span><span class="default_value">6</span></em>, <em class="sig-param"><span class="n">random_seed</span><span class="o">=</span><span class="default_value">8954</span></em>, <em class="sig-param"><span class="n">classifier_hyperparameters</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">custom_transformer_pipeline</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">combine_with_existing_representation</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">conceptnet_url</span><span class="o">=</span><span class="default_value">'https://s3.amazonaws.com/conceptnet/downloads/2019/edges/conceptnet-assertions-5.7.0.csv.gz'</span></em>, <em class="sig-param"><span class="n">default_importance</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">classifier_preset</span><span class="o">=</span><span class="default_value">'default'</span></em>, <em class="sig-param"><span class="n">include_concept_features</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner" title="Permalink to this definition">¶</a></dt>
@@ -1063,26 +1060,26 @@ In general, the workflow for working with this class is as follows:
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>train_sequences_raw</strong> – a list of texts</p></li>
-<li><p><strong>train_targets</strong> – a list of natural numbers (targets, multiclass)</p></li>
-<li><p><strong>time_constraint</strong> – Number of hours to evolve.</p></li>
-<li><p><strong>num_cpu</strong> – Number of threads to exploit</p></li>
-<li><p><strong>task_name</strong> – Task identifier for logging</p></li>
-<li><p><strong>latent_dim</strong> – The latent dimension of embeddings</p></li>
-<li><p><strong>sparsity</strong> – The assumed sparsity of the induced space (see paper)</p></li>
-<li><p><strong>hof_size</strong> – Hof many final models to consider?</p></li>
-<li><p><strong>initial_separate_spaces</strong> – Whether to include separate spaces as part of the initial population.</p></li>
-<li><p><strong>scoring_metric</strong> – The type of metric to optimize (sklearn-compatible)</p></li>
-<li><p><strong>top_k_importances</strong> – How many top importances to remember for explanations.</p></li>
-<li><p><strong>representation_type</strong> – symbolic, neural, neurosymbolic, neurosymbolic-default or custom. The symbolic feature space will only include feature types that we humans directly comprehend. The “neural” will include the embedding-based ones. The “neurosymbolic-default” will include the ones based on the origin MLJ paper, the “neurosymbolic” is the current alpha version with some new additions (constantly updated/developed).</p></li>
-<li><p><strong>binarize_importances</strong> – Feature selection instead of ranking as explanation</p></li>
-<li><p><strong>memory_storage</strong> – The storage of conceptnet.txt.gz-like triplet database</p></li>
-<li><p><strong>classifier</strong> – custom classifier. If none, linear learners are used.</p></li>
-<li><p><strong>classifier_hyperparameters</strong> – The space to be optimized w.r.t. the classifier param.</p></li>
-<li><p><strong>conceptnet_url</strong> – URL of the conceptnet used.</p></li>
-<li><p><strong>classifier_preset</strong> – Type of classification to be considered (default = paper), mini -&gt; very lightweight regression, emphasis on space exploration.</p></li>
-<li><p><strong>include_concept_features</strong> – Whether to include external background knowledge if possible</p></li>
-<li><p><strong>default_importance</strong> – Minimum possible initial weight.</p></li>
+<li><p><strong>train_sequences_raw</strong> (<em>list/PandasSeries</em>) – a list of texts</p></li>
+<li><p><strong>train_targets</strong> (<em>list/np.array</em>) – a list of natural numbers (targets, multiclass)</p></li>
+<li><p><strong>time_constraint</strong> (<em>int</em>) – Number of hours to evolve.</p></li>
+<li><p><strong>num_cpu</strong> (<em>int/str</em>) – Number of threads to exploit</p></li>
+<li><p><strong>task_name</strong> (<em>str</em>) – Task identifier for logging</p></li>
+<li><p><strong>latent_dim</strong> (<em>int</em>) – The latent dimension of embeddings</p></li>
+<li><p><strong>sparsity</strong> (<em>float</em>) – The assumed sparsity of the induced space (see paper)</p></li>
+<li><p><strong>hof_size</strong> (<em>int</em>) – Hof many final models to consider?</p></li>
+<li><p><strong>initial_separate_spaces</strong> (<em>bool</em>) – Whether to include separate spaces as part of the initial population.</p></li>
+<li><p><strong>scoring_metric</strong> (<em>str</em>) – The type of metric to optimize (sklearn-compatible)</p></li>
+<li><p><strong>top_k_importances</strong> (<em>int</em>) – How many top importances to remember for explanations.</p></li>
+<li><p><strong>representation_type</strong> (<em>str</em>) – “symbolic”, “neural”, “neurosymbolic”, “neurosymbolic-default” or “custom”. The “symbolic” feature space will only include feature types that we humans directly comprehend. The “neural” will include the embedding-based ones. The “neurosymbolic-default” will include the ones based on the origin MLJ paper, the “neurosymbolic” is the current alpha version with some new additions (constantly updated/developed).</p></li>
+<li><p><strong>binarize_importances</strong> (<em>bool</em>) – Feature selection instead of ranking as explanation</p></li>
+<li><p><strong>memory_storage</strong> (<em>str</em>) – The storage of conceptnet.txt.gz-like triplet database</p></li>
+<li><p><strong>classifier</strong> (<em>obj</em>) – custom classifier. If none, linear learners are used.</p></li>
+<li><p><strong>classifier_hyperparameters</strong> (<em>obj</em>) – The space to be optimized w.r.t. the classifier param.</p></li>
+<li><p><strong>conceptnet_url</strong> (<em>str</em>) – URL of the conceptnet used.</p></li>
+<li><p><strong>classifier_preset</strong> (<em>str</em>) – Type of classification to be considered (default = paper), “”mini-l1”” or “”mini-l2” -&gt; very lightweight regression, emphasis on space exploration.</p></li>
+<li><p><strong>include_concept_features</strong> (<em>bool</em>) – Whether to include external background knowledge if possible</p></li>
+<li><p><strong>default_importance</strong> (<em>float</em>) – Minimum possible initial weight.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1094,7 +1091,7 @@ In general, the workflow for working with this class is as follows:
 <dd><p>Identify unique target labels and remember them.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>train_targets</strong> – The training target space (or any other for that matter)</p>
+<dd class="field-odd"><p><strong>train_targets</strong> (<em>list/np.array</em>) – The training target space (or any other for that matter)</p>
 </dd>
 <dt class="field-even">Returns label_map, inverse_label_map</dt>
 <dd class="field-even"><p>Two dicts, mapping to and from encoded space suitable for autoML loopings.</p>
@@ -1109,11 +1106,11 @@ In general, the workflow for working with this class is as follows:
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>targets</strong> – The target space</p></li>
-<li><p><strong>inverse</strong> – Boolean if map to origin space or not (default encodes into continuum)</p></li>
+<li><p><strong>targets</strong> (<em>list/np.array</em>) – The target space</p></li>
+<li><p><strong>inverse</strong> (<em>bool</em>) – Boolean if map to origin space or not (default encodes into continuum)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns new_targets</dt>
+<dt class="field-even">Returns list new_targets</dt>
 <dd class="field-even"><p>Encoded target space</p>
 </dd>
 </dl>
@@ -1144,8 +1141,8 @@ In general, the workflow for working with this class is as follows:
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>df</strong> – dataframe of text (Pandas object)</p></li>
-<li><p><strong>func</strong> – function to be executed (a function)</p></li>
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – dataframe of text (Pandas object)</p></li>
+<li><p><strong>func</strong> (<em>obj</em>) – function to be executed (a function)</p></li>
 </ul>
 </dd>
 </dl>
@@ -1156,8 +1153,8 @@ In general, the workflow for working with this class is as follows:
 <code class="sig-name descname">softmax</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.softmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute softmax values for each sets of scores in x.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Param</dt>
-<dd class="field-odd"><p>x: (vector of floats)</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>np.array</em>) – (vector of floats)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1168,7 +1165,7 @@ In general, the workflow for working with this class is as follows:
 <dd><p>A helper method that returns a given dataframe from text.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>text</strong> – list of texts.</p>
+<dd class="field-odd"><p><strong>text</strong> (<em>list/pd.Series</em>) – list of texts.</p>
 </dd>
 <dt class="field-even">Return parsed df</dt>
 <dd class="field-even"><p>A parsed text (a DataFrame)</p>
@@ -1195,11 +1192,11 @@ In general, the workflow for working with this class is as follows:
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>parameters</strong> – a vector of real-valued parameters - solution = an individual</p></li>
-<li><p><strong>custom_feature_space</strong> – Custom feature space, relevant during making of predictions.</p></li>
+<li><p><strong>parameters</strong> (<em>np.array</em>) – a vector of real-valued parameters - solution = an individual</p></li>
+<li><p><strong>custom_feature_space</strong> (<em>bool</em>) – Custom feature space, relevant during making of predictions.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return tmp_space</dt>
+<dt class="field-even">Return np.array tmp_space</dt>
 <dd class="field-even"><p>Temporary weighted space (individual)</p>
 </dd>
 </dl>
@@ -1212,12 +1209,12 @@ In general, the workflow for working with this class is as follows:
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tmp_feature_space</strong> – An individual’s solution space.</p></li>
-<li><p><strong>final_run</strong> – Last run is more extensive.</p></li>
-<li><p><strong>n_cpu</strong> – Number of CPUs to use.</p></li>
+<li><p><strong>tmp_feature_space</strong> (<em>np.array</em>) – An individual’s solution space.</p></li>
+<li><p><strong>final_run</strong> (<em>bool</em>) – Last run is more extensive.</p></li>
+<li><p><strong>n_cpu</strong> (<em>int/str</em>) – Number of CPUs to use.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return f1_perf, clf</dt>
+<dt class="field-even">Return float f1_perf, clf</dt>
 <dd class="field-even"><p>F1 performance and the learned classifier.</p>
 </dd>
 </dl>
@@ -1230,12 +1227,12 @@ In general, the workflow for working with this class is as follows:
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>individual</strong> – an individual (solution)</p></li>
-<li><p><strong>max_num_feat</strong> – maximum number of features that are outputted</p></li>
-<li><p><strong>return_clf_and_vec</strong> – return classifier and vectorizer? This is useful for deployment.</p></li>
+<li><p><strong>individual</strong> (<em>np.array</em>) – an individual (solution)</p></li>
+<li><p><strong>max_num_feat</strong> (<em>int</em>) – maximum number of features that are outputted</p></li>
+<li><p><strong>return_clf_and_vec</strong> (<em>bool</em>) – return classifier and vectorizer? This is useful for deployment.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return score</dt>
+<dt class="field-even">Return float score</dt>
 <dd class="field-even"><p>The fitness score.</p>
 </dd>
 </dl>
@@ -1247,7 +1244,10 @@ In general, the workflow for working with this class is as follows:
 <dd><p>A helper method for generating stats.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>fits</strong> – fitness values of the current population</p>
+<dd class="field-odd"><p><strong>fits</strong> (<em>list</em>) – fitness values of the current population</p>
+</dd>
+<dt class="field-even">Return float meanScore</dt>
+<dd class="field-even"><p>The mean of the fitnesses</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1259,8 +1259,8 @@ In general, the workflow for working with this class is as follows:
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fits</strong> – fitness values (vector of floats)</p></li>
-<li><p><strong>gen</strong> – generation to be reported (int)</p></li>
+<li><p><strong>fits</strong> (<em>np.array</em>) – fitness values (vector of floats)</p></li>
+<li><p><strong>gen</strong> (<em>int</em>) – generation to be reported (int)</p></li>
 </ul>
 </dd>
 </dl>
@@ -1278,7 +1278,7 @@ In general, the workflow for working with this class is as follows:
 <dd><p>Predict on new instances. Note that the prediction is actually a maxvote across the hall-of-fame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>instances</strong> – predict labels for new instances = texts.</p>
+<dd class="field-odd"><p><strong>instances</strong> (<em>list/pd.Series</em>) – predict labels for new instances = texts.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1289,9 +1289,9 @@ In general, the workflow for working with this class is as follows:
 <dd><p>Predict probabilities for individual classes. Probabilities are based as proportions of a particular label predicted with a given classifier.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>pred_matrix</strong> – Matrix of predictions.</p>
+<dd class="field-odd"><p><strong>pred_matrix</strong> (<em>np.array</em>) – Matrix of predictions.</p>
 </dd>
-<dt class="field-even">Return prob_df</dt>
+<dt class="field-even">Return pd.DataFrame prob_df</dt>
 <dd class="field-even"><p>A DataFrame of probabilities for each class.</p>
 </dd>
 </dl>
@@ -1303,9 +1303,9 @@ In general, the workflow for working with this class is as follows:
 <dd><p>Predict on new instances. Note that the prediction is actually a maxvote across the hall-of-fame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>instances</strong> – predict labels for new instances = texts.</p>
+<dd class="field-odd"><p><strong>instances</strong> (<em>list/pd.Series</em>) – predict labels for new instances = texts.</p>
 </dd>
-<dt class="field-even">Returns all_predictions</dt>
+<dt class="field-even">Returns np.array all_predictions</dt>
 <dd class="field-even"><p>Vector of predictions (decoded)</p>
 </dd>
 </dl>
@@ -1317,9 +1317,9 @@ In general, the workflow for working with this class is as follows:
 <dd><p>Obtain most frequent elements for each row.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>prediction_matrix</strong> – Matrix of predictions.</p>
+<dd class="field-odd"><p><strong>prediction_matrix</strong> (<em>np.array</em>) – Matrix of predictions.</p>
 </dd>
-<dt class="field-even">Return prediction_vector</dt>
+<dt class="field-even">Return np.array prediction_vector</dt>
 <dd class="field-even"><p>Vector of aggregate predictions.</p>
 </dd>
 </dl>
@@ -1343,12 +1343,9 @@ In general, the workflow for working with this class is as follows:
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>individual</strong> – an individual solution (a vector of floats)</p></li>
-<li><p><strong>fitnesses</strong> – fitness space (list of reals)</p></li>
+<li><p><strong>individual</strong> (<em>np.array</em>) – an individual solution (a vector of floats)</p></li>
+<li><p><strong>fitnesses</strong> (<em>list</em>) – fitness space (list of reals)</p></li>
 </ul>
-</dd>
-<dt class="field-even">Return report</dt>
-<dd class="field-even"><p>A prinout of current performance.</p>
 </dd>
 </dl>
 </dd></dl>

@@ -12,11 +12,11 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../autoBOTLib'))
+#sys.path.insert(0, os.path.abspath('./autoBOTLib'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'autoBOT'
+project = 'autoBOTLib'
 copyright = '2021, Blaz Skrlj'
 author = 'Blaz Skrlj'
 

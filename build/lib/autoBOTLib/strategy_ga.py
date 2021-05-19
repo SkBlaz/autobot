@@ -13,6 +13,7 @@ logging.getLogger().setLevel(logging.INFO)
 
 ## evolution helpers -> this needs to be global for proper persistence handling. If there is as better way, please open a pull request!
 from deap import base, creator, tools
+import copy
 global gcreator
 gcreator = creator
 gcreator.create("FitnessMulti", base.Fitness, weights=(1.0, ))
@@ -517,12 +518,13 @@ class GAlearner:
             ind[:] = np.abs(generic_individual)
 
         ## Separate spaces -- each subspace massively amplified
+        self.separate_individual_spaces = []
         if self.initial_separate_spaces:
             for k in range(self.weight_params):
-                individual = self.population[0]
+                individual = copy.deepcopy(self.population[0])
                 individual[:] = np.zeros(self.weight_params)
                 individual[k] = 1  ## amplify particular subspace.
-                self.population.append(individual)
+                self.separate_individual_spaces.append(individual)
 
     def apply_weights(self,
                       parameters,
@@ -575,6 +577,7 @@ class GAlearner:
         if self.classifier_hyperparameters is None:
 
             if final_run:
+                
                 ## we can afford this final round to be more rigorous.
                 parameters = {
                     "loss": ["hinge", "log"],
@@ -584,8 +587,8 @@ class GAlearner:
                 }
 
             else:
+                
                 ## this is for screening purposes.
-
                 if self.classifier_preset == "default":
                     parameters = {
                         "loss": ["hinge", "log"],
@@ -615,27 +618,26 @@ class GAlearner:
         if final_run:
             clf = GridSearchCV(svc,
                                parameters,
-                               verbose=self.verbose,
-                               n_jobs=self.num_cpu,
-                               cv=self.n_fold_cv,
-                               scoring=performance_score,
-                               refit=True)
+                               verbose = self.verbose,
+                               n_jobs = self.num_cpu,
+                               cv = self.n_fold_cv,
+                               scoring = performance_score,
+                               refit = True)
 
         else:
             clf = GridSearchCV(svc,
                                parameters,
-                               verbose=self.verbose,
-                               n_jobs=self.num_cpu,
-                               cv=self.n_fold_cv,
-                               scoring=performance_score,
-                               refit=False)
+                               verbose = self.verbose,
+                               n_jobs = self.num_cpu,
+                               cv = self.n_fold_cv,
+                               scoring = performance_score,
+                               refit = False)
 
         clf.fit(tmp_feature_space, self.train_targets)
         f1_perf = max(clf.cv_results_['mean_test_score'])
 
         if final_run:
             report = clf.cv_results_
-            #clf = clf.best_estimator_
             return f1_perf, clf, report
 
         return f1_perf, clf
@@ -644,6 +646,7 @@ class GAlearner:
                          individual,
                          max_num_feat=1000,
                          return_clf_and_vec=False):
+        
         """
         A helper method for evaluating an individual solution. Given a real-valued vector, this constructs the representations and evaluates a given learner.
 
@@ -651,6 +654,7 @@ class GAlearner:
         :param max_num_feat: maximum number of features that are outputted
         :param return_clf_and_vec: return classifier and vectorizer? This is useful for deployment.
         :return score: The fitness score.
+
         """
         individual = np.array(individual)
         if np.sum(individual[:]) > self.weight_params:
@@ -679,6 +683,7 @@ class GAlearner:
                 if self.verbose: logging.info("Final round of optimization.")
                 f1_perf, clf, report = self.cross_val_scores(tmp_feature_space,
                                                              final_run=True)
+                
                 return clf, individual[:], f1_perf, feature_names, report
 
             f1_perf, _ = self.cross_val_scores(tmp_feature_space)
@@ -718,6 +723,7 @@ class GAlearner:
             logging.info(r"{} (gen {}) {}: {}, time: {}min".format(
                 self.task, gen, self.scoring_metric, np.round(f1_top, 3),
                 np.round(self.compute_time_diff(), 2) * 60))
+            
         return f1_top
 
     def get_feature_space(self):
@@ -1283,6 +1289,10 @@ class GAlearner:
                     self.toolbox.mutate(mutant)
                     del mutant.fitness.values
 
+            ## In the first population, include isolated spaces
+            if gen == 1:
+                offspring = offspring + self.separate_individual_spaces
+            
             fits = list(map(self.toolbox.evaluate, offspring))
             for ind, fit in zip(offspring, fits):
                 if isinstance(fit, int) and not isinstance(fit, tuple):
