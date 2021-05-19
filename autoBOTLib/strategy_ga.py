@@ -329,7 +329,7 @@ class GAlearner:
         Identify unique target labels and remember them.
         
         :param list/np.array train_targets: The training target space (or any other for that matter)
-        :returns label_map, inverse_label_map: Two dicts, mapping to and from encoded space suitable for autoML loopings.
+        :return label_map, inverse_label_map: Two dicts, mapping to and from encoded space suitable for autoML loopings.
 
         """
 
@@ -347,7 +347,7 @@ class GAlearner:
         
         :param list/np.array targets: The target space
         :param bool inverse: Boolean if map to origin space or not (default encodes into continuum)
-        :returns list new_targets: Encoded target space
+        :return list new_targets: Encoded target space
 
         """
         if inverse:
@@ -460,7 +460,7 @@ class GAlearner:
 
     def return_dataframe_from_text(self, text):
         """
-        A helper method that returns a given dataframe from text.
+        A helper method that return a given dataframe from text.
 
         :param list/pd.Series text: list of texts.
         :return parsed df: A parsed text (a DataFrame)
@@ -863,7 +863,7 @@ class GAlearner:
         Predict on new instances. Note that the prediction is actually a maxvote across the hall-of-fame.
 
         :param list/pd.Series instances: predict labels for new instances = texts.
-        :returns np.array all_predictions: Vector of predictions (decoded)
+        :return np.array all_predictions: Vector of predictions (decoded)
 
         """
 
