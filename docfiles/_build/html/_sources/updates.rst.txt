@@ -4,3 +4,4 @@ Please see the tagged versions of the code to inspect different releases of the 
 
 1. 8.5.21 -> Changed the defaults so that multilingual settings work fine.
 2. 11.5.21 -> Added document graph-based features (default configuration accessible as representation_type = "neurosymbolic-default")
+3. 20.5.21 -> Added a fully language-agnostic version accessible as representation_type = "neurosymbolic". This representation includes topic-level features and document graph-based information.
