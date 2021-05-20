@@ -386,15 +386,15 @@ def get_features(df_data,
                 ('neural_features_dm',
                  pipeline.Pipeline([('s7', text_col(key='no_stopwords')),
                                     ('sentence_embedding_mean',
-                                     sentence_embedder_dm1)])),
+                                     sentence_embedder_dm1), ('normalize', Normalizer(norm = "max"))])),
                 ('neural_features_dbow',
                  pipeline.Pipeline([('s8', text_col(key='no_stopwords')),
                                     ('sentence_embedding_mean',
-                                     sentence_embedder_dm2)])),
+                                     sentence_embedder_dm2), ('normalize', Normalizer(norm = "max"))])),
                 ('document_graph',
                  pipeline.Pipeline([('s9', text_col(key='no_stopwords')),
                                     ('doc_similarity_features',
-                                     doc_sim_features)]))
+                                     doc_sim_features), ('normalize', Normalizer(norm = "max"))]))
             ]
 
             if "neurosymbolic-default" in representation_type or "neurosymbolic-lite" in representation_type:
@@ -427,30 +427,37 @@ def get_features(df_data,
             symbolic_features = [
                 ('pos_features',
                  pipeline.Pipeline([('s3', text_col(key='pos_tag_seq')),
-                                    ('pos_tfidf_unigram', tfidf_pos_unigram)
+                                    ('pos_tfidf_unigram', tfidf_pos_unigram),
+                                    ('normalize', Normalizer(norm = "max"))
                                     ])),
                 ('word_features',
                  pipeline.Pipeline([('s1', text_col(key='no_stopwords')),
-                                    ('word_tfidf_unigram', tfidf_word_unigram)
+                                    ('word_tfidf_unigram', tfidf_word_unigram),
+                                    ('normalize', Normalizer(norm = "max"))
                                     ])),
                 ('char_features',
                  pipeline.Pipeline([('s2', text_col(key='no_stopwords')),
-                                    ('char_tfidf_bigram', tfidf_char_bigram)
+                                    ('char_tfidf_bigram', tfidf_char_bigram),
+                                    ('normalize', Normalizer(norm = "max"))
                                     ])),
                 ('relational_features_char',
                  pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
                                     ('relational_features_unigram',
-                                     lr_rel_features_unigram)])),
+                                     lr_rel_features_unigram),
+                                    ('normalize', Normalizer(norm = "max"))])),
                 ('keyword_features',
                  pipeline.Pipeline([('s5', text_col(key='no_stopwords')),
-                                    ('keyword_features', keyword_features)])),
+                                    ('keyword_features', keyword_features),
+                                    ('normalize', Normalizer(norm = "max"))])),
                 ('topic_features',
                  pipeline.Pipeline([('s6', text_col(key='no_stopwords')),
-                                    ('topic_features', topic_features)])),
+                                    ('topic_features', topic_features),
+                                    ('normalize', Normalizer(norm = "max"))])),
                 ('relational_features_token',
                  pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
                                     ('relational_features_token',
-                                     lr_rel_features_token)])),
+                                     lr_rel_features_token),
+                                    ('normalize', Normalizer(norm = "max"))])),
             ]
 
             if "neurosymbolic-default" in representation_type:
@@ -477,7 +484,8 @@ def get_features(df_data,
                 cfx = ('concept_features',
                        pipeline.Pipeline([('s6', text_col(key='no_stopwords')),
                                           ('concept_features',
-                                           concept_features)]))
+                                           concept_features),
+                                          ('normalize', Normalizer(norm = "max"))]))
 
                 symbolic_features.append(cfx)
 

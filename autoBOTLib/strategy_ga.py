@@ -1129,15 +1129,15 @@ class GAlearner:
 
         self.vectorizer, self.feature_names, self.train_feature_space = get_features(
             self.train_seq,
-            representation_type=self.representation_type,
-            sparsity=self.sparsity,
-            embedding_dim=self.latent_dim,
-            targets=self.train_targets,
-            random_seed=self.random_seed,
-            memory_location=self.memory_storage,
-            custom_pipeline=self.custom_transformer_pipeline,
-            concept_features=self.include_concept_features,
-            combine_with_existing_representation=self.
+            representation_type = self.representation_type,
+            sparsity = self.sparsity,
+            embedding_dim = self.latent_dim,
+            targets = self.train_targets,
+            random_seed = self.random_seed,
+            memory_location = self.memory_storage,
+            custom_pipeline = self.custom_transformer_pipeline,
+            concept_features = self.include_concept_features,
+            combine_with_existing_representation = self.
             combine_with_existing_representation)
 
         self.all_feature_names = []
