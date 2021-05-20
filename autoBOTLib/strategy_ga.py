@@ -73,7 +73,7 @@ class GAlearner:
             initial_separate_spaces=True,
             scoring_metric=None,
             top_k_importances=25,
-            representation_type="neurosymbolic-default",
+            representation_type="neurosymbolic-lite",
             binarize_importances=False,
             memory_storage="memory",
             classifier=None,
@@ -101,7 +101,7 @@ class GAlearner:
         :param bool initial_separate_spaces: Whether to include separate spaces as part of the initial population.
         :param str scoring_metric: The type of metric to optimize (sklearn-compatible)
         :param int top_k_importances: How many top importances to remember for explanations.
-        :param str representation_type: "symbolic", "neural", "neurosymbolic", "neurosymbolic-default" or "custom". The "symbolic" feature space will only include feature types that we humans directly comprehend. The "neural" will include the embedding-based ones. The "neurosymbolic-default" will include the ones based on the origin MLJ paper, the "neurosymbolic" is the current alpha version with some new additions (constantly updated/developed).
+        :param str representation_type: "symbolic", "neural", "neurosymbolic", "neurosymbolic-default", "neurosymbolic-lite" or "custom". The "symbolic" feature space will only include feature types that we humans directly comprehend. The "neural" will include the embedding-based ones. The "neurosymbolic-default" will include the ones based on the origin MLJ paper, the "neurosymbolic" is the current alpha version with some new additions (constantly updated/developed). The "neurosymbolic-lite" version includes language-agnostic features but does not consider document graphs (due to space constraints)
         :param bool binarize_importances: Feature selection instead of ranking as explanation
         :param str memory_storage: The storage of conceptnet.txt.gz-like triplet database
         :param obj classifier: custom classifier. If none, linear learners are used.
