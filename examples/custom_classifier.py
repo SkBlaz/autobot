@@ -31,8 +31,8 @@ def run():
         top_k_importances=25,  # how many top features to output as final ranking
         memory_storage="./memory",
         representation_type="symbolic",
-        classifier=custom_classifier,
-        classifier_hyperparameters=classifier_hyperparameters
+        learner=custom_classifier,
+        learner_hyperparameters=classifier_hyperparameters
     )  # or neurosymbolic or neural
 
     autoBOTLibObj.evolve(

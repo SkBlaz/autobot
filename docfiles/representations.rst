@@ -14,7 +14,7 @@ Obtaining the representations of documents so you can explore potentially differ
     autoBOTLibObj = autoBOTLib.GAlearner(
         train_sequences,
         train_targets,
-        time_constraint=0.1).evolve(representation_step_only = True) ## Only
+        time_constraint=0.1).evolve(representation_step_only = True) ## Construct features only, omit evolution (should be fast).
 
     input_instance_embedding = autoBOTLibObj.transform(train_sequences)
 

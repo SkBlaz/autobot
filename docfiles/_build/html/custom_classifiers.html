@@ -213,8 +213,8 @@
         <span class="n">top_k_importances</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>  <span class="c1"># how many top features to output as final ranking</span>
         <span class="n">memory_storage</span><span class="o">=</span><span class="s2">&quot;../memory&quot;</span><span class="p">,</span>
         <span class="n">representation_type</span><span class="o">=</span><span class="s2">&quot;symbolic&quot;</span><span class="p">,</span>
-        <span class="n">classifier</span> <span class="o">=</span> <span class="n">custom_classifier</span><span class="p">,</span>
-        <span class="n">classifier_hyperparameters</span> <span class="o">=</span> <span class="n">classifier_hyperparameters</span><span class="p">)</span>  <span class="c1"># or neurosymbolic or neural</span>
+        <span class="n">learner</span> <span class="o">=</span> <span class="n">custom_classifier</span><span class="p">,</span>
+        <span class="n">learner_hyperparameters</span> <span class="o">=</span> <span class="n">classifier_hyperparameters</span><span class="p">)</span>  <span class="c1"># or neurosymbolic or neural</span>
 
 <span class="n">autoBOTLibObj</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span>
         <span class="n">nind</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>  <span class="c1">## population size</span>

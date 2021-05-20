@@ -24,6 +24,7 @@ import requests  ## for downloading the KG
 
 ## modeling
 from sklearn.linear_model import SGDClassifier
+from sklearn.linear_model import SGDRegressor
 from sklearn.model_selection import GridSearchCV
 
 ## monitoring
@@ -65,28 +66,29 @@ class GAlearner:
             train_sequences_raw,
             train_targets,
             time_constraint,
-            num_cpu="all",
-            task_name="update:",
-            latent_dim=512,
-            sparsity=0.1,
-            hof_size=3,
-            initial_separate_spaces=True,
-            scoring_metric=None,
-            top_k_importances=25,
-            representation_type="neurosymbolic-lite",
-            binarize_importances=False,
-            memory_storage="memory",
-            classifier=None,
-            n_fold_cv=6,
-            random_seed=8954,
-            classifier_hyperparameters=None,
-            custom_transformer_pipeline=None,
-            combine_with_existing_representation=False,
-            conceptnet_url="https://s3.amazonaws.com/conceptnet/downloads/2019/edges/conceptnet-assertions-5.7.0.csv.gz",
-            default_importance=0.05,
-            classifier_preset="default",
-            include_concept_features=False,
-            verbose=1):
+            num_cpu = "all",
+            task_name = "update:",
+            latent_dim = 512,
+            sparsity = 0.1,
+            hof_size = 3,
+            initial_separate_spaces = True,
+            scoring_metric = None,
+            top_k_importances = 25,
+            representation_type = "neurosymbolic-lite",
+            binarize_importances = False,
+            memory_storage = "memory",
+            learner = None,
+            n_fold_cv = 6,
+            random_seed = 8954,
+            learner_hyperparameters = None,
+            custom_transformer_pipeline = None,
+            combine_with_existing_representation = False,
+            conceptnet_url = "https://s3.amazonaws.com/conceptnet/downloads/2019/edges/conceptnet-assertions-5.7.0.csv.gz",
+            default_importance = 0.05,
+            learner_preset = "default",
+            task = "classification",
+            include_concept_features = False,
+            verbose = 1):
         
         """The object initialization method; specify the core optimization parameter with this method.
 
@@ -104,18 +106,20 @@ class GAlearner:
         :param str representation_type: "symbolic", "neural", "neurosymbolic", "neurosymbolic-default", "neurosymbolic-lite" or "custom". The "symbolic" feature space will only include feature types that we humans directly comprehend. The "neural" will include the embedding-based ones. The "neurosymbolic-default" will include the ones based on the origin MLJ paper, the "neurosymbolic" is the current alpha version with some new additions (constantly updated/developed). The "neurosymbolic-lite" version includes language-agnostic features but does not consider document graphs (due to space constraints)
         :param bool binarize_importances: Feature selection instead of ranking as explanation
         :param str memory_storage: The storage of conceptnet.txt.gz-like triplet database
-        :param obj classifier: custom classifier. If none, linear learners are used.
-        :param obj classifier_hyperparameters: The space to be optimized w.r.t. the classifier param.
+        :param obj learner: custom learner. If none, linear learners are used.
+        :param obj learner_hyperparameters: The space to be optimized w.r.t. the learner param.
         :param str conceptnet_url: URL of the conceptnet used.
         :param int random_seed: The random seed used.
+        :param str task: Either "classification" - SGDClassifier, or "regression" - SGDRegressor
         :param int n_fold_cv: The number of folds to be used for model evaluation.
-        :param str classifier_preset: Type of classification to be considered (default = paper), ""mini-l1"" or ""mini-l2" -> very lightweight regression, emphasis on space exploration.
+        :param str learner_preset: Type of classification to be considered (default = paper), ""mini-l1"" or ""mini-l2" -> very lightweight regression, emphasis on space exploration.
         :param bool include_concept_features: Whether to include external background knowledge if possible
         :param float default_importance: Minimum possible initial weight.
         """
 
         ## Set the random seed
         self.random_seed = random_seed
+        self.task = task
         np.random.seed(random_seed)
 
         logo = """
@@ -157,7 +161,7 @@ class GAlearner:
         self.verbose = verbose
         if self.verbose: print(logo)
         self.default_importance = default_importance
-        self.classifier_preset = classifier_preset
+        self.learner_preset = learner_preset
 
         if self.verbose:
             logging.info("Instantiated the evolution-based learner.")
@@ -186,8 +190,8 @@ class GAlearner:
         counts = np.bincount(train_targets)
         
         self.majority_class = np.argmax(counts)
-        self.classifier = classifier
-        self.classifier_hyperparameters = classifier_hyperparameters
+        self.learner = learner
+        self.learner_hyperparameters = learner_hyperparameters
 
         ## parallelism settings
         if num_cpu == "all":
@@ -198,7 +202,7 @@ class GAlearner:
 
         if self.verbose: logging.info(f"Using {self.num_cpu} cores.")
 
-        self.task = task_name
+        self.task_name = task_name
         self.topk = top_k_importances
 
         train_sequences = []
@@ -570,10 +574,10 @@ class GAlearner:
         :param np.array tmp_feature_space: An individual's solution space.
         :param bool final_run: Last run is more extensive.
         :param int/str n_cpu: Number of CPUs to use.
-        :return float f1_perf, clf: F1 performance and the learned classifier.
+        :return float f1_perf, clf: F1 performance and the learned learner.
         """
 
-        if self.classifier_hyperparameters is None:
+        if self.learner_hyperparameters is None:
 
             if final_run:
                 
@@ -588,7 +592,7 @@ class GAlearner:
             else:
                 
                 ## this is for screening purposes.
-                if self.classifier_preset == "default":
+                if self.learner_preset == "default":
                     parameters = {
                         "loss": ["hinge", "log"],
                         "penalty": ["elasticnet"],
@@ -596,21 +600,27 @@ class GAlearner:
                         "l1_ratio": [0, 0.1, 0.5, 0.9]
                     }
 
-                elif self.classifier_preset == "mini-l1":
+                elif self.learner_preset == "mini-l1":
                     parameters = {"loss": ["log"], "penalty": ["l1"]}
 
-                elif self.classifier_preset == "mini-l2":
+                elif self.learner_preset == "mini-l2":
                     parameters = {"loss": ["log"], "penalty": ["l2"]}
 
         else:
 
-            parameters = self.classifier_hyperparameters
+            parameters = self.learner_hyperparameters
 
-        if self.classifier is None:
-            svc = SGDClassifier()
+        if self.learner is None:
+            
+            if self.task == "classification":
+                svc = SGDClassifier(max_iter = 1000000)
+                
+            else:
+                svc = SGDRegressor(max_iter = 1000000)
+                parameters['loss'] = ['squared_loss']
 
         else:
-            svc = self.classifier
+            svc = self.learner
 
         performance_score = self.scoring_metric
 
@@ -651,7 +661,7 @@ class GAlearner:
 
         :param np.array individual: an individual (solution)
         :param int max_num_feat: maximum number of features that are outputted
-        :param bool return_clf_and_vec: return classifier and vectorizer? This is useful for deployment.
+        :param bool return_clf_and_vec: return learner and vectorizer? This is useful for deployment.
         :return float score: The fitness score.
 
         """
@@ -675,7 +685,7 @@ class GAlearner:
             tmp_feature_space = self.apply_weights(individual[:])
             feature_names = self.all_feature_names
 
-            ## Return the trained classifier.
+            ## Return the trained learner.
             if return_clf_and_vec:
 
                 ## fine tune final learner
@@ -721,7 +731,7 @@ class GAlearner:
         f1_top = self.generate_and_update_stats(fits)
         if self.verbose:
             logging.info(r"{} (gen {}) {}: {}, time: {}min".format(
-                self.task, gen, self.scoring_metric, np.round(f1_top, 3),
+                self.task_name, gen, self.scoring_metric, np.round(f1_top, 3),
                 np.round(self.compute_time_diff(), 2) * 60))
             
         return f1_top
@@ -797,7 +807,7 @@ class GAlearner:
 
     def probability_extraction(self, pred_matrix):
         """
-        Predict probabilities for individual classes. Probabilities are based as proportions of a particular label predicted with a given classifier.
+        Predict probabilities for individual classes. Probabilities are based as proportions of a particular label predicted with a given learner.
         
         :param np.array pred_matrix: Matrix of predictions.
         :return pd.DataFrame prob_df: A DataFrame of probabilities for each class.
@@ -916,8 +926,13 @@ class GAlearner:
             ## generate the prediction matrix by maximum voting scheme.
             pspace = np.matrix(prediction_space).T
             np.nan_to_num(pspace, copy=False, nan=self.majority_class)
-            all_predictions = self.mode_pred(
-                pspace)  ## Most common prediction is chosen.
+            if self.task == "classification":
+                all_predictions = self.mode_pred(
+                    pspace)  ## Most common prediction is chosen.
+                
+            else:
+                all_predictions = np.mean(pspace, axis = 1).reshape(-1).tolist()
+                
             if self.verbose: logging.info("Predictions obtained")
 
             ## Transform back to origin space

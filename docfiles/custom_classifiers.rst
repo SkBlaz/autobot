@@ -38,8 +38,8 @@ The *vanilla* implementation of autoBOTLib uses the *SGDClassifier* class, suita
 		top_k_importances=25,  # how many top features to output as final ranking
 		memory_storage="../memory",
 		representation_type="symbolic",
-		classifier = custom_classifier,
-		classifier_hyperparameters = classifier_hyperparameters)  # or neurosymbolic or neural
+		learner = custom_classifier,
+		learner_hyperparameters = classifier_hyperparameters)  # or neurosymbolic or neural
 
 	autoBOTLibObj.evolve(
 		nind=10,  ## population size
