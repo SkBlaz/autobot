@@ -24,7 +24,7 @@ class relationExtractor:
         split_char="|||",
         witem_separator="&&&&",
         num_cpu=1,
-        neighborhood_token=10,  ## Context window size for relation mapping of words (added in >.34)
+        neighborhood_token=6,  ## Context window size for relation mapping of words (added in >.34)
         min_token="bigrams"):
 
         self.max_features = max_features

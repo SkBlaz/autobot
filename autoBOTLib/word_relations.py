@@ -8,6 +8,7 @@ logging.getLogger().setLevel(logging.INFO)
 from itertools import combinations
 import operator
 import pandas as pd
+from collections import defaultdict
 import numpy as np
 import tqdm
 import multiprocessing as mp
@@ -102,19 +103,17 @@ class relationExtractor:
         """
 
         logging.info("Extracting global {} relations".format(self.min_token))
-        self.global_distances = {}
+        self.global_distances = defaultdict(list)
         pbar = tqdm.tqdm(total=len(text_vector))
         for enx, result in enumerate(map(self.witem_kernel, text_vector)):
             pbar.update(1)
             for k, v in result.items():
-                if k not in self.global_distances:
-                    self.global_distances[k] = 0
-                self.global_distances[k] = v
-            if enx % 5 == 0:  ## sorting is not needed always
-                self.global_distances = dict(
-                    sorted(self.global_distances.items(),
-                           key=operator.itemgetter(1),
-                           reverse=True)[0:self.max_features])
+                self.global_distances[k].append(v) ## TODO: Streaming mean. This will save some memory.
+
+        for k, v in self.global_distances.items():
+            v = np.mean(v) # average distance
+
+        ## This is the key part -> select the top k features within the context
         self.wit_vec = sorted(self.global_distances.items(),
                               key=operator.itemgetter(1),
                               reverse=True)[0:self.max_features]
@@ -141,8 +140,8 @@ class relationExtractor:
                 map(self.witem_kernel, text_vector)),
                                                total=len(text_vector)):
             for enx, el in enumerate(wit_vec):
-                if el in local_distances and el in self.global_distances:
-                    fv = 1
+                if el in local_distances:
+                    fv = local_distances[el]
                     if not np.isnan(fv):
                         rs.append(enin)
                         cs.append(enx)
