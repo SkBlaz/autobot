@@ -383,15 +383,15 @@ def get_features(df_data,
             doc_sim_features = RelationalDocs(ndim=embedding_dim, targets=None)
 
             neural_features = [
-                ('neural_features_v1',
+                ('neural_features_dm',
                  pipeline.Pipeline([('s7', text_col(key='no_stopwords')),
                                     ('sentence_embedding_mean',
                                      sentence_embedder_dm1)])),
-                ('neural_features_v2',
+                ('neural_features_dbow',
                  pipeline.Pipeline([('s8', text_col(key='no_stopwords')),
                                     ('sentence_embedding_mean',
                                      sentence_embedder_dm2)])),
-                ('doc_graph',
+                ('document_graph',
                  pipeline.Pipeline([('s9', text_col(key='no_stopwords')),
                                     ('doc_similarity_features',
                                      doc_sim_features)]))
@@ -425,6 +425,10 @@ def get_features(df_data,
             topic_features = TopicDocs(ndim=embedding_dim)
 
             symbolic_features = [
+                ('pos_features',
+                 pipeline.Pipeline([('s3', text_col(key='pos_tag_seq')),
+                                    ('pos_tfidf_unigram', tfidf_pos_unigram)
+                                    ])),
                 ('word_features',
                  pipeline.Pipeline([('s1', text_col(key='no_stopwords')),
                                     ('word_tfidf_unigram', tfidf_word_unigram)
@@ -432,10 +436,6 @@ def get_features(df_data,
                 ('char_features',
                  pipeline.Pipeline([('s2', text_col(key='no_stopwords')),
                                     ('char_tfidf_bigram', tfidf_char_bigram)
-                                    ])),
-                ('pos_features',
-                 pipeline.Pipeline([('s3', text_col(key='pos_tag_seq')),
-                                    ('pos_tfidf_unigram', tfidf_pos_unigram)
                                     ])),
                 ('relational_features_char',
                  pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
@@ -458,6 +458,11 @@ def get_features(df_data,
                 ## Last two feature types are new since the initial publication.
                 symbolic_features.pop()
                 symbolic_features.pop()
+
+            elif representation_type == "neurosymbolic":
+
+                ## Remove POS tags (not multilingual)
+                symbolic_features = symbolic_features[1:]
 
             if concept_features:
                 concept_features = ConceptFeatures(
