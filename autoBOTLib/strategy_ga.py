@@ -185,11 +185,23 @@ class GAlearner:
         self.label_mapping, self.inverse_label_mapping = self.get_label_map(
             train_targets)
 
-        ## Encoded target space for training purposes
-        train_targets = np.array(self.apply_label_map(train_targets))
-        counts = np.bincount(train_targets)
+        if not isinstance(train_targets, list):
+            
+            try:
+                train_targets = train_targets.tolist()
+                
+            except Exception as es:
+                logging.info("Please make the targets either a list or a np.array!", es)
         
-        self.majority_class = np.argmax(counts)
+        ## Encoded target space for training purposes
+        if self.task == "classification":
+            train_targets = np.array(self.apply_label_map(train_targets))
+            counts = np.bincount(train_targets)        
+            self.majority_class = np.argmax(counts)
+            
+        else:
+            train_targets = np.array(train_targets, dtype = np.float64)
+            
         self.learner = learner
         self.learner_hyperparameters = learner_hyperparameters
 
@@ -929,15 +941,16 @@ class GAlearner:
             if self.task == "classification":
                 all_predictions = self.mode_pred(
                     pspace)  ## Most common prediction is chosen.
+
+                ## Transform back to the origin space
+                all_predictions = self.apply_label_map(all_predictions,
+                                                    inverse=True)
                 
             else:
                 all_predictions = np.mean(pspace, axis = 1).reshape(-1).tolist()
                 
             if self.verbose: logging.info("Predictions obtained")
 
-            ## Transform back to origin space
-            all_predictions = self.apply_label_map(all_predictions,
-                                                   inverse=True)
             return all_predictions
 
     def mode_pred(self, prediction_matrix):
