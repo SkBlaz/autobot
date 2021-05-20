@@ -1191,21 +1191,23 @@ class GAlearner:
         return dfx
 
     def evolve(self,
-               nind=10,
-               crossover_proba=0.4,
-               mutpb=0.15,
-               stopping_interval=20,
-               strategy="evolution",
-               validation_type="cv"):
+               nind = 10,
+               crossover_proba = 0.4,
+               mutpb = 0.15,
+               stopping_interval = 20,
+               strategy = "evolution",
+               representation_step_only = False,
+               validation_type = "cv"):
         """The core evolution method. First constrain the maximum number of features to be taken into account by lowering the bound w.r.t performance.
         next, evolve.
 
-        :param nind: number of individuals (int)
-        :param crossover_proba: crossover probability (float)
-        :param mutpb: mutation probability (float)
-        :param stopping_interval: stopping interval -> for how long no improvement is tolerated before a hard reset (int)
-        :param strategy: type of evolution (str)
-        :param validation_type: type of validation, either train_val or cv (cross validation or train-val split)
+        :param int nind: number of individuals (int)
+        :param float crossover_proba: crossover probability (float)
+        :param float mutpb: mutation probability (float)
+        :param int stopping_interval: stopping interval -> for how long no improvement is tolerated before a hard reset (int)
+        :param str strategy: type of evolution (str)
+        :param bool representation_step_only: Learn only the feature transformations, skip the evolution. Suitable for custom experiments with transform()
+        :param str validation_type: type of validation, either train_val or cv (cross validation or train-val split)
         """
 
         self.validation_type = validation_type
@@ -1213,6 +1215,9 @@ class GAlearner:
         self.popsize = nind
         self.instantiate_validation_env()
 
+        if representation_step_only: ## Skip the remainder
+            return self
+        
         if self.verbose:
             logging.info("Evolution will last for ~{}h ..".format(
                 self.max_time))
@@ -1276,7 +1281,7 @@ class GAlearner:
 
         stopping = 1
         cf1 = 0
-
+        
         ## Start the evolution.
         while True:
 

@@ -67,8 +67,8 @@ def remove_stopwords(text):
     """
     This method removes stopwords
 
-    :param text: Input string of text
-    :return string: Preprocessed text
+    :param list/pd.Series text: Input string of text
+    :return str string: Preprocessed text
     """
 
     stops = set(stopwords.words("english"))
@@ -81,9 +81,9 @@ def remove_mentions(text, replace_token):
     """
     This method removes mentions (relevant for tweets)
     
-    :param text: Input string of text
-    :param replace_token: A token to be replaced
-    :return string: A new text string
+    :param str text: Input string of text
+    :param str replace_token: A token to be replaced
+    :return str string: A new text string
     """
 
     return re.sub(r'(?:@[\w_]+)', replace_token, text)
@@ -93,9 +93,9 @@ def remove_hashtags(text, replace_token):
     """
     This method removes hashtags
 
-    :param text: Input string of text
-    :param replace_token: The token to be replaced
-    :return string: A new text
+    :param str text: Input string of text
+    :param str replace_token: The token to be replaced
+    :return str string: A new text
     """
 
     return re.sub(r"(?:\#+[\w_]+[\w\'_\-]*[\w_]+)", replace_token, text)
@@ -105,9 +105,9 @@ def remove_url(text, replace_token):
     """
     Removal of URLs
 
-    :param text: Input string of text
-    :param replace_token: The token to be replaced
-    :return string: A new text
+    :param str text: Input string of text
+    :param str replace_token: The token to be replaced
+    :return str string: A new text
     """
 
     regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
@@ -117,6 +117,8 @@ def remove_url(text, replace_token):
 def get_affix(text):
     """
     This method gets the affix information
+    
+    :param str text: Input text.
     """
 
     return " ".join(
@@ -127,8 +129,8 @@ def get_pos_tags(text):
     """
     This method yields pos tags
 
-    :param text: Input string of text
-    :return string: space delimited pos tags.
+    :param str text: Input string of text
+    :return str string: space delimited pos tags.
     """
 
     tokens = word_tokenize(text)
@@ -140,8 +142,8 @@ def ttr(text):
     """
     Number of unique tokens
     
-    :param text: Input string of text
-    :return float: Ratio of the unique/overall tokens
+    :param str text: Input string of text
+    :return float floatValue: Ratio of the unique/overall tokens
     """
 
     if len(text.split(" ")) > 1 and len(text.split()) > 0:
@@ -154,9 +156,9 @@ class text_col(BaseEstimator, TransformerMixin):
     """
     A helper processor class
 
-    :param BaseExtimator: Core estimator
-    :param TransformerMixin: Transformer object
-    :return object: Returns particular text column
+    :param obj BaseExtimator: Core estimator
+    :param obj TransformerMixin: Transformer object
+    :return obj object: Returns particular text column
     """
     def __init__(self, key):
         self.key = key
@@ -173,9 +175,9 @@ class digit_col(BaseEstimator, TransformerMixin):
     """
     Dealing with numeric features
     
-    :param BaseExtimator: Core estimator
-    :param TransformerMixin: Transformer object
-    :return object: Returns transformed (scaled) space
+    :param obj BaseExtimator: Core estimator
+    :param obj TransformerMixin: Transformer object
+    :return obj object: Returns transformed (scaled) space
     """
     def fit(self, x, y=None):
         return self
@@ -194,9 +196,9 @@ def parallelize(data, method):
     """
     Helper method for parallelization
 
-    :param data: Input data to be transformed
-    :param method: The method to parallelize
-    :return data: Returns the transformed data
+    :param pd.DataFrame data: Input data to be transformed
+    :param obj method: The method to parallelize
+    :return pd.DataFrame data: Returns the transformed data
     """
 
     cores = mp.cpu_count()
@@ -212,8 +214,8 @@ def build_dataframe(data_docs):
     """
     One of the core methods responsible for construction of a dataframe object.
 
-    :param data_docs: The input data documents
-    :return df_data: A dataframe corresponding to text representations
+    :param list/pd.Series data_docs: The input data documents
+    :return pd.DataFrame df_data: A dataframe corresponding to text representations
     """
 
     df_data = pd.DataFrame({'text': data_docs})
@@ -337,6 +339,18 @@ def get_features(df_data,
                  combine_with_existing_representation=False):
     """
     Method that computes various TF-IDF-alike features.
+
+    :param list/pd.Series df_data: The input collection of texts
+    :param str representation_type: Type of representation to be used.
+    :param list/np.array targets: The target space (optional)
+    :param float sparsity: The hyperparameter determining the dimensionalities of separate subspaces
+    :param int embedding_dim: The latent dimension for doc. embeddings
+    :param str memory_location: Location of the gzipped ConceptNet-like memory.
+    :param obj custom_pipeline: Custom pipeline to be used for features if needed.
+    :param bool concept_features: Whether to use ConceptNet features -- needs the internet connection.
+    :param int random_seed: The seed for the pseudo-random parts.
+    :param bool combine_with_existing_representation: Whether to use existing representations + user-specified ones.
+    :return obj/list/matrix: Transformer pipeline, feature names and the feature matrix.
     """
 
     ## Seeds and np for np
