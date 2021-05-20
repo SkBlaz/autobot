@@ -32,7 +32,6 @@ Welcome to *autoBOT*'s documentation
    :caption: Contents:
 
    modules.rst
-   autoBOTLib.rst
    
 ..
    Method index
