@@ -541,9 +541,9 @@
 <dd><p>This method removes stopwords</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>text</strong> – Input string of text</p>
+<dd class="field-odd"><p><strong>text</strong> (<em>list/pd.Series</em>) – Input string of text</p>
 </dd>
-<dt class="field-even">Return string</dt>
+<dt class="field-even">Return str string</dt>
 <dd class="field-even"><p>Preprocessed text</p>
 </dd>
 </dl>
@@ -556,11 +556,11 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>text</strong> – Input string of text</p></li>
-<li><p><strong>replace_token</strong> – A token to be replaced</p></li>
+<li><p><strong>text</strong> (<em>str</em>) – Input string of text</p></li>
+<li><p><strong>replace_token</strong> (<em>str</em>) – A token to be replaced</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return string</dt>
+<dt class="field-even">Return str string</dt>
 <dd class="field-even"><p>A new text string</p>
 </dd>
 </dl>
@@ -573,11 +573,11 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>text</strong> – Input string of text</p></li>
-<li><p><strong>replace_token</strong> – The token to be replaced</p></li>
+<li><p><strong>text</strong> (<em>str</em>) – Input string of text</p></li>
+<li><p><strong>replace_token</strong> (<em>str</em>) – The token to be replaced</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return string</dt>
+<dt class="field-even">Return str string</dt>
 <dd class="field-even"><p>A new text</p>
 </dd>
 </dl>
@@ -590,11 +590,11 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>text</strong> – Input string of text</p></li>
-<li><p><strong>replace_token</strong> – The token to be replaced</p></li>
+<li><p><strong>text</strong> (<em>str</em>) – Input string of text</p></li>
+<li><p><strong>replace_token</strong> (<em>str</em>) – The token to be replaced</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return string</dt>
+<dt class="field-even">Return str string</dt>
 <dd class="field-even"><p>A new text</p>
 </dd>
 </dl>
@@ -604,6 +604,11 @@
 <dt id="autoBOTLib.feature_constructors.get_affix">
 <code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">get_affix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.get_affix" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets the affix information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Input text.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -612,9 +617,9 @@
 <dd><p>This method yields pos tags</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>text</strong> – Input string of text</p>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Input string of text</p>
 </dd>
-<dt class="field-even">Return string</dt>
+<dt class="field-even">Return str string</dt>
 <dd class="field-even"><p>space delimited pos tags.</p>
 </dd>
 </dl>
@@ -626,9 +631,9 @@
 <dd><p>Number of unique tokens</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>text</strong> – Input string of text</p>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Input string of text</p>
 </dd>
-<dt class="field-even">Return float</dt>
+<dt class="field-even">Return float floatValue</dt>
 <dd class="field-even"><p>Ratio of the unique/overall tokens</p>
 </dd>
 </dl>
@@ -642,11 +647,11 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>BaseExtimator</strong> – Core estimator</p></li>
-<li><p><strong>TransformerMixin</strong> – Transformer object</p></li>
+<li><p><strong>BaseExtimator</strong> (<em>obj</em>) – Core estimator</p></li>
+<li><p><strong>TransformerMixin</strong> (<em>obj</em>) – Transformer object</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return object</dt>
+<dt class="field-even">Return obj object</dt>
 <dd class="field-even"><p>Returns particular text column</p>
 </dd>
 </dl>
@@ -676,11 +681,11 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>BaseExtimator</strong> – Core estimator</p></li>
-<li><p><strong>TransformerMixin</strong> – Transformer object</p></li>
+<li><p><strong>BaseExtimator</strong> (<em>obj</em>) – Core estimator</p></li>
+<li><p><strong>TransformerMixin</strong> (<em>obj</em>) – Transformer object</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return object</dt>
+<dt class="field-even">Return obj object</dt>
 <dd class="field-even"><p>Returns transformed (scaled) space</p>
 </dd>
 </dl>
@@ -703,11 +708,11 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> – Input data to be transformed</p></li>
-<li><p><strong>method</strong> – The method to parallelize</p></li>
+<li><p><strong>data</strong> (<em>pd.DataFrame</em>) – Input data to be transformed</p></li>
+<li><p><strong>method</strong> (<em>obj</em>) – The method to parallelize</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return data</dt>
+<dt class="field-even">Return pd.DataFrame data</dt>
 <dd class="field-even"><p>Returns the transformed data</p>
 </dd>
 </dl>
@@ -719,9 +724,9 @@
 <dd><p>One of the core methods responsible for construction of a dataframe object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data_docs</strong> – The input data documents</p>
+<dd class="field-odd"><p><strong>data_docs</strong> (<em>list/pd.Series</em>) – The input data documents</p>
 </dd>
-<dt class="field-even">Return df_data</dt>
+<dt class="field-even">Return pd.DataFrame df_data</dt>
 <dd class="field-even"><p>A dataframe corresponding to text representations</p>
 </dd>
 </dl>
@@ -774,6 +779,25 @@
 <dt id="autoBOTLib.feature_constructors.get_features">
 <code class="sig-prename descclassname">autoBOTLib.feature_constructors.</code><code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df_data</span></em>, <em class="sig-param"><span class="n">representation_type</span><span class="o">=</span><span class="default_value">'neurosymbolic'</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sparsity</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">embedding_dim</span><span class="o">=</span><span class="default_value">512</span></em>, <em class="sig-param"><span class="n">memory_location</span><span class="o">=</span><span class="default_value">'memory/conceptnet.txt.gz'</span></em>, <em class="sig-param"><span class="n">custom_pipeline</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">concept_features</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">random_seed</span><span class="o">=</span><span class="default_value">54324</span></em>, <em class="sig-param"><span class="n">combine_with_existing_representation</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.feature_constructors.get_features" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method that computes various TF-IDF-alike features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df_data</strong> (<em>list/pd.Series</em>) – The input collection of texts</p></li>
+<li><p><strong>representation_type</strong> (<em>str</em>) – Type of representation to be used.</p></li>
+<li><p><strong>targets</strong> (<em>list/np.array</em>) – The target space (optional)</p></li>
+<li><p><strong>sparsity</strong> (<em>float</em>) – The hyperparameter determining the dimensionalities of separate subspaces</p></li>
+<li><p><strong>embedding_dim</strong> (<em>int</em>) – The latent dimension for doc. embeddings</p></li>
+<li><p><strong>memory_location</strong> (<em>str</em>) – Location of the gzipped ConceptNet-like memory.</p></li>
+<li><p><strong>custom_pipeline</strong> (<em>obj</em>) – Custom pipeline to be used for features if needed.</p></li>
+<li><p><strong>concept_features</strong> (<em>bool</em>) – Whether to use ConceptNet features – needs the internet connection.</p></li>
+<li><p><strong>random_seed</strong> (<em>int</em>) – The seed for the pseudo-random parts.</p></li>
+<li><p><strong>combine_with_existing_representation</strong> (<em>bool</em>) – Whether to use existing representations + user-specified ones.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return obj/list/matrix</dt>
+<dd class="field-even"><p>Transformer pipeline, feature names and the feature matrix.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -1094,7 +1118,7 @@ In general, the workflow for working with this class is as follows:
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>train_targets</strong> (<em>list/np.array</em>) – The training target space (or any other for that matter)</p>
 </dd>
-<dt class="field-even">Returns label_map, inverse_label_map</dt>
+<dt class="field-even">Return label_map, inverse_label_map</dt>
 <dd class="field-even"><p>Two dicts, mapping to and from encoded space suitable for autoML loopings.</p>
 </dd>
 </dl>
@@ -1111,7 +1135,7 @@ In general, the workflow for working with this class is as follows:
 <li><p><strong>inverse</strong> (<em>bool</em>) – Boolean if map to origin space or not (default encodes into continuum)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns list new_targets</dt>
+<dt class="field-even">Return list new_targets</dt>
 <dd class="field-even"><p>Encoded target space</p>
 </dd>
 </dl>
@@ -1163,7 +1187,7 @@ In general, the workflow for working with this class is as follows:
 <dl class="py method">
 <dt id="autoBOTLib.strategy_ga.GAlearner.return_dataframe_from_text">
 <code class="sig-name descname">return_dataframe_from_text</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.strategy_ga.GAlearner.return_dataframe_from_text" title="Permalink to this definition">¶</a></dt>
-<dd><p>A helper method that returns a given dataframe from text.</p>
+<dd><p>A helper method that return a given dataframe from text.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>text</strong> (<em>list/pd.Series</em>) – list of texts.</p>
@@ -1320,7 +1344,7 @@ In general, the workflow for working with this class is as follows:
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>instances</strong> (<em>list/pd.Series</em>) – predict labels for new instances = texts.</p>
 </dd>
-<dt class="field-even">Returns np.array all_predictions</dt>
+<dt class="field-even">Return np.array all_predictions</dt>
 <dd class="field-even"><p>Vector of predictions (decoded)</p>
 </dd>
 </dl>
