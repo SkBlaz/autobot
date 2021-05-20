@@ -107,6 +107,8 @@ class GAlearner:
         :param obj classifier: custom classifier. If none, linear learners are used.
         :param obj classifier_hyperparameters: The space to be optimized w.r.t. the classifier param.
         :param str conceptnet_url: URL of the conceptnet used.
+        :param int random_seed: The random seed used.
+        :param int n_fold_cv: The number of folds to be used for model evaluation.
         :param str classifier_preset: Type of classification to be considered (default = paper), ""mini-l1"" or ""mini-l2" -> very lightweight regression, emphasis on space exploration.
         :param bool include_concept_features: Whether to include external background knowledge if possible
         :param float default_importance: Minimum possible initial weight.

@@ -397,7 +397,7 @@ def get_features(df_data,
                                      doc_sim_features)]))
             ]
 
-            if "neurosymbolic-default" in representation_type:
+            if "neurosymbolic-default" in representation_type or "neurosymbolic-lite" in representation_type:
                 neural_features.pop()
 
         if representation_type == "symbolic" or "neurosymbolic" in representation_type:
@@ -444,13 +444,13 @@ def get_features(df_data,
                 ('keyword_features',
                  pipeline.Pipeline([('s5', text_col(key='no_stopwords')),
                                     ('keyword_features', keyword_features)])),
+                ('topic_features',
+                 pipeline.Pipeline([('s6', text_col(key='no_stopwords')),
+                                    ('topic_features', topic_features)])),
                 ('relational_features_token',
                  pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
                                     ('relational_features_token',
                                      lr_rel_features_token)])),
-                ('topic_features',
-                 pipeline.Pipeline([('s6', text_col(key='no_stopwords')),
-                                    ('topic_features', topic_features)]))
             ]
 
             if "neurosymbolic-default" in representation_type:
@@ -458,6 +458,12 @@ def get_features(df_data,
                 ## Last two feature types are new since the initial publication.
                 symbolic_features.pop()
                 symbolic_features.pop()
+
+            elif representation_type == "neurosymbolic-lite":
+
+                ## Remove the document graph-based features (beta)
+                symbolic_features.pop()
+                symbolic_features = symbolic_features[1:] ## Remove POS-tags
 
             elif representation_type == "neurosymbolic":
 
