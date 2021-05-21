@@ -519,8 +519,12 @@ class GAlearner:
             for x in list(zip(self.feature_names, performances))
         ]
 
-        print("Initial screening report:")
-        print("\n".join(pairs))
+        if self.verbose:
+            logging.info("Initial screening report follows.")
+            
+        for pair in pairs:
+            if self.verbose:
+                logging.info(pair)
 
         weights = np.array(performances) / max(performances)
         generic_individual = self.generate_random_initial_state(weights)
@@ -534,6 +538,13 @@ class GAlearner:
 
         ## Separate spaces -- each subspace massively amplified
         self.separate_individual_spaces = []
+
+        ## All weights set to one (this is the naive learning setting)
+        unweighted = copy.deepcopy(self.population[0])
+        unweighted[:] = np.ones(self.weight_params)
+        self.separate_individual_spaces.append(unweighted)
+
+        ## Add separate spaces as solutions too
         if self.initial_separate_spaces:
             for k in range(self.weight_params):
                 individual = copy.deepcopy(self.population[0])
@@ -1248,170 +1259,187 @@ class GAlearner:
         if representation_step_only: ## Skip the remainder
             return self
         
-        if self.verbose:
-            logging.info("Evolution will last for ~{}h ..".format(
-                self.max_time))
-
-        if self.verbose: logging.info("Selected strategy is evolution.")
-
-        self.toolbox = base.Toolbox()
         self.weight_params = len(self.feature_names)
-        self.toolbox.register("attr_float", np.random.uniform, 0.00001,
-                              0.999999)
-        self.toolbox.register("individual",
-                              tools.initRepeat,
-                              gcreator.Individual,
-                              self.toolbox.attr_float,
-                              n=self.weight_params)
-
-        self.toolbox.register("population",
-                              tools.initRepeat,
-                              list,
-                              self.toolbox.individual,
-                              n=nind)
-
-        self.toolbox.register("evaluate", self.evaluate_fitness)
-        self.toolbox.register("mate", tools.cxUniform, indpb=0.5)
-        self.toolbox.register("mutate",
-                              tools.mutGaussian,
-                              mu=0,
-                              sigma=0.2,
-                              indpb=0.2)
-
-        self.toolbox.register("mutReg", self.mutReg)
-        self.toolbox.register("select", tools.selTournament)
-
-        ## Keep the best-performing individuals
-        self.hof = tools.HallOfFame(self.hof_size)
-        if self.verbose:
-            logging.info(
-                "Total number of subspace importance parameters {}".format(
-                    self.weight_params))
-
-        ## Population initialization
-        if self.population == None:
-
-            self.population = self.toolbox.population()
-            self.custom_initialization()  ## works on self.population
-            if self.verbose:
-                logging.info("Initialized population of size {}".format(
-                    len(self.population)))
-            if self.verbose: logging.info("Computing initial fitness ..")
-
-        ## Gather fitness values.
-        fits = list(map(self.toolbox.evaluate, self.population))
-
-        for fit, ind in zip(fits, self.population):
-            ind.fitness.values = fit
-
-        self.report_performance(fits)
-        self.hof.update(self.population)
-        gen = 0
-        if self.verbose: logging.info("Initiating evaluation ..")
-
-        stopping = 1
-        cf1 = 0
         
-        ## Start the evolution.
-        while True:
-
-            gen += 1
-            tdiff = self.compute_time_diff()
-
-            if tdiff >= self.max_time:
-                break
-
-            offspring = list(map(self.toolbox.clone, self.population))
-
-            ## Perform crossover
-            for child1, child2 in zip(offspring[::2], offspring[1::2]):
-
-                if np.random.random() < crossover_proba:
-
-                    self.toolbox.mate(child1, child2)
-                    del child1.fitness.values
-                    del child2.fitness.values
-
-            ## Perform mutation
-            for mutant in offspring:
-
-                if np.random.random() < mutpb:
-                    self.toolbox.mutate(mutant)
-                    del mutant.fitness.values
-
-            ## In the first population, include isolated spaces
-            if gen == 1:
-                offspring = offspring + self.separate_individual_spaces
-            
-            fits = list(map(self.toolbox.evaluate, offspring))
-            for ind, fit in zip(offspring, fits):
-                if isinstance(fit, int) and not isinstance(fit, tuple):
-                    fit = (fit, )
-                ind.fitness.values = fit
-
-            self.hof.update(offspring)
-
-            ## append to overall fitness container.
-            self.fitness_container.append(fits)
-
-            self.get_feature_importance_report(self.hof[0], fits)
-
-            f1 = self.report_performance(fits, gen=gen)
-
-            if f1 == cf1:
-                stopping += 1
-
-            else:
-                cf1 = f1
-
-            self.population = self.toolbox.select(self.population + offspring,
-                                                  k=nind,
-                                                  tournsize=int(nind / 3))
-
-        try:
-            selections = self.hof
-
-        except:
-            selections = self.population
-
-        self.selections = [np.array(x).tolist() for x in selections]
-
-        ## Ensemble of learners is finally filled and used for prediction.
-        for enx, top_individual in enumerate(selections):
-
-            if len(top_individual) == 1:
-                top_individual = top_individual[0]
-
-            try:
-                learner, individual, score, feature_names, report = self.evaluate_fitness(
-                    top_individual, return_clf_and_vec=True)
-                self.performance_reports.append(report)
-
-            except Exception:
-                if self.verbose:
-                    logging.info(
-                        f"Evaluation of individual {top_individual} did not produce a viable learner. Increase time!"
-                    )
-
+        if strategy == "direct-learning":
+            if self.verbose:
+                logging.info("Training a learner without evolution.")                
+            top_individual = np.ones(self.weight_params)
+            learner, individual, score, feature_names, report = self.evaluate_fitness(
+                top_individual, return_clf_and_vec=True)
             coefficients = learner.best_estimator_.coef_
-
-            ## coefficients are given for each class. We take maximum one (abs val)
-            coefficients = np.asarray(np.abs(np.max(coefficients,
-                                                    axis=0))).reshape(-1)
-
-            if self.verbose:
-                logging.info("Coefficients and indices: {}".format(
-                    len(coefficients)))
-            if self.verbose:
-                logging.info(
-                    "Adding importances of shape {} for learner {} with score {}"
-                    .format(coefficients.shape, enx, score))
-
+            coefficients = np.asarray(np.abs(np.max(coefficients, axis=0))).reshape(-1)
             self.feature_importances.append((coefficients, feature_names))
-
             single_learner = (learner, individual, score)
             self.ensemble_of_learners.append(single_learner)
+            self.hof = [top_individual]
+            self.update_global_feature_importances()
+        
+        if strategy == "evolution":
+            if self.verbose:
+                logging.info("Evolution will last for ~{}h ..".format(
+                    self.max_time))
 
-        ## Update the final importance space.
-        self.update_global_feature_importances()
+            if self.verbose: logging.info("Selected strategy is evolution.")
+
+            self.toolbox = base.Toolbox()
+            self.toolbox.register("attr_float", np.random.uniform, 0.00001,
+                                  0.999999)
+            self.toolbox.register("individual",
+                                  tools.initRepeat,
+                                  gcreator.Individual,
+                                  self.toolbox.attr_float,
+                                  n=self.weight_params)
+
+            self.toolbox.register("population",
+                                  tools.initRepeat,
+                                  list,
+                                  self.toolbox.individual,
+                                  n=nind)
+
+            self.toolbox.register("evaluate", self.evaluate_fitness)
+            self.toolbox.register("mate", tools.cxUniform, indpb=0.5)
+            self.toolbox.register("mutate",
+                                  tools.mutGaussian,
+                                  mu=0,
+                                  sigma=0.2,
+                                  indpb=0.2)
+
+            self.toolbox.register("mutReg", self.mutReg)
+            self.toolbox.register("select", tools.selTournament)
+
+            ## Keep the best-performing individuals
+            self.hof = tools.HallOfFame(self.hof_size)
+            if self.verbose:
+                logging.info(
+                    "Total number of subspace importance parameters {}".format(
+                        self.weight_params))
+
+            ## Population initialization
+            if self.population == None:
+
+                self.population = self.toolbox.population()
+                self.custom_initialization()  ## works on self.population
+                if self.verbose:
+                    logging.info("Initialized population of size {}".format(
+                        len(self.population)))
+                if self.verbose: logging.info("Computing initial fitness ..")
+
+            ## Gather fitness values.
+            fits = list(map(self.toolbox.evaluate, self.population))
+
+            for fit, ind in zip(fits, self.population):
+                ind.fitness.values = fit
+
+            self.report_performance(fits)
+            self.hof.update(self.population)
+            gen = 0
+            if self.verbose: logging.info("Initiating evaluation ..")
+
+            stopping = 1
+            cf1 = 0
+
+            ## Start the evolution.
+            while True:
+
+                gen += 1
+                tdiff = self.compute_time_diff()
+
+                if tdiff >= self.max_time:
+                    break
+
+                offspring = list(map(self.toolbox.clone, self.population))
+
+                ## Perform crossover
+                for child1, child2 in zip(offspring[::2], offspring[1::2]):
+
+                    if np.random.random() < crossover_proba:
+
+                        self.toolbox.mate(child1, child2)
+                        del child1.fitness.values
+                        del child2.fitness.values
+
+                ## Perform mutation
+                for mutant in offspring:
+
+                    if np.random.random() < mutpb:
+                        self.toolbox.mutate(mutant)
+                        del mutant.fitness.values
+
+                ## In the first population, include isolated spaces
+                if gen == 1:
+                    offspring = offspring + self.separate_individual_spaces
+
+                fits = list(map(self.toolbox.evaluate, offspring))
+                for ind, fit in zip(offspring, fits):
+                    if isinstance(fit, int) and not isinstance(fit, tuple):
+                        fit = (fit, )
+                    ind.fitness.values = fit
+
+                self.hof.update(offspring)
+
+                ## append to overall fitness container.
+                self.fitness_container.append(fits)
+
+                self.get_feature_importance_report(self.hof[0], fits)
+
+                f1 = self.report_performance(fits, gen=gen)
+
+                if f1 == cf1:
+                    stopping += 1
+
+                else:
+                    cf1 = f1
+
+                self.population = self.toolbox.select(self.population + offspring,
+                                                      k=nind,
+                                                      tournsize=int(nind / 3))
+
+            try:
+                selections = self.hof
+
+            except:
+                selections = self.population
+
+            self.selections = [np.array(x).tolist() for x in selections]
+
+            ## Ensemble of learners is finally filled and used for prediction.
+            for enx, top_individual in enumerate(selections):
+
+                if len(top_individual) == 1:
+                    top_individual = top_individual[0]
+
+                try:
+                    learner, individual, score, feature_names, report = self.evaluate_fitness(
+                        top_individual, return_clf_and_vec=True)
+                    self.performance_reports.append(report)
+
+                except Exception:
+                    if self.verbose:
+                        logging.info(
+                            f"Evaluation of individual {top_individual} did not produce a viable learner. Increase time!"
+                        )
+
+                coefficients = learner.best_estimator_.coef_
+
+                ## coefficients are given for each class. We take maximum one (abs val)
+                coefficients = np.asarray(np.abs(np.max(coefficients,
+                                                        axis=0))).reshape(-1)
+
+                if self.verbose:
+                    logging.info("Coefficients and indices: {}".format(
+                        len(coefficients)))
+                if self.verbose:
+                    logging.info(
+                        "Adding importances of shape {} for learner {} with score {}"
+                        .format(coefficients.shape, enx, score))
+
+                self.feature_importances.append((coefficients, feature_names))
+
+                single_learner = (learner, individual, score)
+                self.ensemble_of_learners.append(single_learner)
+
+            ## Update the final importance space.
+            self.update_global_feature_importances()
+            
         return self

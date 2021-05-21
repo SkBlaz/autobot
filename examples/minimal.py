@@ -3,7 +3,6 @@
 import autoBOTLib
 import pandas as pd
 
-
 def run():
     ## Load example data frame
     dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t")
@@ -14,7 +13,7 @@ def run():
         train_sequences,
         train_targets,
         n_fold_cv=3,
-        time_constraint=0.1).evolve()
+        time_constraint=0.1).evolve(strategy = "evolution") ## strategy = "direct-learning" trains a single learner.
 
     dataframe2 = pd.read_csv("../data/insults/test.tsv", sep="\t")
     test_sequences = dataframe2['text_a']
