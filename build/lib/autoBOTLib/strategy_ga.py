@@ -67,13 +67,13 @@ class GAlearner:
             train_targets,
             time_constraint,
             num_cpu = "all",
-            task_name = "update:",
-            latent_dim = 512,
+            task_name = "Super cool task.",
+            latent_dim = 768,
             sparsity = 0.1,
-            hof_size = 1,
+            hof_size = 3,
             initial_separate_spaces = True,
             scoring_metric = None,
-            top_k_importances = 25,
+            top_k_importances = 15,
             representation_type = "neurosymbolic-lite",
             binarize_importances = False,
             memory_storage = "memory",
@@ -1197,9 +1197,40 @@ class GAlearner:
             struct.append((str(a), str(b)))
         dfx = pd.DataFrame(struct)  # Create a Pandas dataframe
         dfx.columns = ['Importance', 'Feature subspace']
+        
         ## store global top features
         feature_ranking = self.global_feature_map  ## all features
         return feature_ranking, dfx
+
+
+    def get_topic_explanation(self):
+
+        """
+        A method for extracting the key topics.
+        :return pd.DataFrame topicList: A list of topic-id tuples.
+        """
+
+        feature_ranking = self.global_feature_map
+        topic_transformer_trained = [x for x in self.vectorizer.named_steps[
+            'union'].transformer_list if x[0] == "topic_features"][0][1]
+        
+        topic_feature_space = topic_transformer_trained['topic_features'].topic_features
+        
+        top_topics = [int(x.split(":")[0].replace(" ","").split("_")[1]) for x in feature_ranking['topic_features'].values.tolist()]
+        
+        importances = [float(x.split(":")[1].replace(" ","")) for x in feature_ranking['topic_features'].values.tolist()]
+        
+        ordered_topics = []
+        
+        for top_topic in top_topics:
+            topic = " AND ".join(topic_feature_space[top_topic])
+            ordered_topics.append(topic)
+            
+        out_df = pd.DataFrame()
+        out_df['topic cluster'] = ordered_topics
+        out_df['importances'] = importances
+        
+        return out_df            
 
     def visualize_fitness(self, image_path="fitnessExample.png"):
         """

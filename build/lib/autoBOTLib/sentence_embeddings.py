@@ -60,7 +60,7 @@ class documentEmbedder:
                 for i, doc in enumerate(text_vector.values.tolist())
             ]
             self.model = Doc2Vec(vector_size=self.ndim,
-                                 window=3,
+                                 window=5,
                                  min_count=1,
                                  workers=self.num_cpu,
                                  dm=self.dm)
