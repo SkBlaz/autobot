@@ -94,6 +94,13 @@ class TopicDocs:
         return self.transform(documents)
 
     def get_feature_names(self):
+
+        # overall_list = []
+        # for j in range(self.ndim):
+        #     keywords = self.topic_features[j]
+        #     topic = ";".join(keywords)
+        #     overall_list.append(topic)
+        # return overall_list
         return list(["topic_" + str(x) for x in range(self.ndim)])
 
 
@@ -105,9 +112,10 @@ if __name__ == "__main__":
     clx = TopicDocs(ndim=512)
     sim_features = clx.fit_transform(example_text)
 
-    from sklearn.linear_model import SGDClassifier
-    from sklearn.model_selection import cross_val_score
+    print(clx.get_feature_names())
+    # from sklearn.linear_model import SGDClassifier
+    # from sklearn.model_selection import cross_val_score
 
-    clf = SGDClassifier()
-    score = cross_val_score(clf, sim_features, labels, cv=10)
-    print(np.mean(score))
+    # clf = SGDClassifier()
+    # score = cross_val_score(clf, sim_features, labels, cv=10)
+    # print(np.mean(score))

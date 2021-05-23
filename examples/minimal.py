@@ -13,7 +13,7 @@ def run():
         train_sequences,
         train_targets,
         n_fold_cv=5,
-        time_constraint=0.2).evolve(strategy = "evolution") ## strategy = "direct-learning" trains a single learner.
+        time_constraint=0.05).evolve(strategy = "evolution") ## strategy = "direct-learning" trains a single learner.
 
     dataframe2 = pd.read_csv("../data/insults/test.tsv", sep="\t")
     test_sequences = dataframe2['text_a']
@@ -28,6 +28,8 @@ def run():
     print(importances_local)
     importances_local.to_csv("local_insults.tsv", sep="\t")
 
-
+    topic_df = autoBOTLibObj.get_topic_explanation()
+    print(topic_df)
+    
 if __name__ == "__main__":
     run()
