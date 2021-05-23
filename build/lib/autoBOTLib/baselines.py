@@ -11,7 +11,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn import pipeline
 from sklearn.dummy import DummyClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import f1_score
 from gensim.utils import simple_preprocess
 try:

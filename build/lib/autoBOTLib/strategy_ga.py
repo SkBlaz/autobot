@@ -70,7 +70,7 @@ class GAlearner:
             task_name = "update:",
             latent_dim = 512,
             sparsity = 0.1,
-            hof_size = 3,
+            hof_size = 1,
             initial_separate_spaces = True,
             scoring_metric = None,
             top_k_importances = 25,
@@ -689,12 +689,16 @@ class GAlearner:
 
         """
         individual = np.array(individual)
-        if np.sum(individual[:]) > self.weight_params:
-            return (0, )
+        if self.task == "classification":
+            if np.sum(individual[:]) > self.weight_params:
+                return (0, )
+            
+            if (np.array(individual) <= 0).any():
+                individual[(individual < 0)] = 0
 
-        if (np.array(individual) <= 0).any():
-            individual[(individual < 0)] = 0
-
+        else:
+            individual = np.abs(individual)
+                
         if self.binarize_importances:
             for k in range(len(self.feature_names)):
                 weight = individual[k]
@@ -948,8 +952,8 @@ class GAlearner:
 
             ## generate the prediction matrix by maximum voting scheme.
             pspace = np.matrix(prediction_space).T
-            np.nan_to_num(pspace, copy=False, nan=self.majority_class)
             if self.task == "classification":
+                np.nan_to_num(pspace, copy=False, nan=self.majority_class)
                 all_predictions = self.mode_pred(
                     pspace)  ## Most common prediction is chosen.
 
@@ -1331,8 +1335,12 @@ class GAlearner:
             for fit, ind in zip(fits, self.population):
                 ind.fitness.values = fit
 
-            self.report_performance(fits)
+            ## Update HOF
             self.hof.update(self.population)
+
+            ## Report performance
+            self.report_performance(fits)
+            
             gen = 0
             if self.verbose: logging.info("Initiating evaluation ..")
 
@@ -1376,7 +1384,7 @@ class GAlearner:
                         fit = (fit, )
                     ind.fitness.values = fit
 
-                self.hof.update(offspring)
+                self.hof.update(offspring) # Update HOF
 
                 ## append to overall fitness container.
                 self.fitness_container.append(fits)
@@ -1440,6 +1448,7 @@ class GAlearner:
                 self.ensemble_of_learners.append(single_learner)
 
             ## Update the final importance space.
-            self.update_global_feature_importances()
+            if self.task == "classification":
+                self.update_global_feature_importances()
             
         return self
