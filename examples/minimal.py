@@ -12,9 +12,9 @@ def run():
     autoBOTLibObj = autoBOTLib.GAlearner(
         train_sequences,
         train_targets,
-        representation_type = "neurosymbolic-default",
+        representation_type = "neurosymbolic",
         n_fold_cv=5,
-        time_constraint=0.05).evolve(strategy = "evolution") ## strategy = "direct-learning" trains a single learner.
+        time_constraint=1).evolve(strategy = "evolution") ## strategy = "direct-learning" trains a single learner.
 
     dataframe2 = pd.read_csv("../data/insults/test.tsv", sep="\t")
     test_sequences = dataframe2['text_a']
