@@ -13,10 +13,10 @@ def run():
     autoBOTLibObj = autoBOTLib.GAlearner(
         train_sequences,  # input sequences
         train_targets,  # target space 
-        time_constraint=1,  # time in hoursc
+        time_constraint=3,  # time in hoursc
         num_cpu="all",  # number of CPUs to use
-        latent_dim=512,  ## latent dim for neural representations
-        sparsity=0.05,  ## latent_dim/sparsity dim for sparse representations
+        latent_dim=768,  ## latent dim for neural representations
+        sparsity=0.1,  ## latent_dim/sparsity dim for sparse representations
         task_name="example test",  # task identifier
         scoring_metric="f1",  # sklearn-compatible scoring metric as the fitness.
         hof_size=3,  # size of the hall of fame
