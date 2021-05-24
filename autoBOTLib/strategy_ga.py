@@ -510,8 +510,10 @@ class GAlearner:
                     len(self.feature_subspaces)))
 
         performances = []
+        self.subspace_performance = {}
         for subspace, name in zip(self.feature_subspaces, self.feature_names):
             f1, _ = self.cross_val_scores(subspace, n_cpu=self.num_cpu)
+            self.subspace_performance[name] = f1
             performances.append(f1)
 
         pairs = [
