@@ -5,12 +5,13 @@
 
 import autoBOTLib
 import pandas as pd
+import matplotlib.pyplot as plt
 
 def run():
     ## Load example data frame
     dataframe = pd.read_csv("../data/regression/regression.csv")
     train_sequences = dataframe['text']
-    train_targets = dataframe['humor_rating']
+    train_targets = dataframe['humor_rating'].values
 
     autoBOTLibObj = autoBOTLib.GAlearner(
         train_sequences,
@@ -21,9 +22,8 @@ def run():
         time_constraint=0.1).evolve(strategy = "evolution")
 
     predictions = autoBOTLibObj.predict(train_sequences)
-    print(predictions)
-
+    plt.plot(predictions)
+    plt.show()
 
 if __name__ == "__main__":
     run()
-
