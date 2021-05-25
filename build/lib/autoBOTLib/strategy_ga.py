@@ -70,7 +70,7 @@ class GAlearner:
             task_name = "Super cool task.",
             latent_dim = 768,
             sparsity = 0.1,
-            hof_size = 3,
+            hof_size = 1,
             initial_separate_spaces = True,
             scoring_metric = None,
             top_k_importances = 15,
@@ -78,7 +78,7 @@ class GAlearner:
             binarize_importances = False,
             memory_storage = "memory",
             learner = None,
-            n_fold_cv = 6,
+            n_fold_cv = 5,
             random_seed = 8954,
             learner_hyperparameters = None,
             custom_transformer_pipeline = None,
@@ -461,7 +461,6 @@ class GAlearner:
         pool = mp.Pool(self.num_cpu)
         df = pd.concat(
             tqdm.tqdm(pool.imap(func, df_split), total=len(df_split)))
-
         pool.close()
         pool.join()
 
@@ -510,8 +509,10 @@ class GAlearner:
                     len(self.feature_subspaces)))
 
         performances = []
+        self.subspace_performance = {}
         for subspace, name in zip(self.feature_subspaces, self.feature_names):
             f1, _ = self.cross_val_scores(subspace, n_cpu=self.num_cpu)
+            self.subspace_performance[name] = f1
             performances.append(f1)
 
         pairs = [
@@ -570,6 +571,7 @@ class GAlearner:
         ## Copy the space as it will be subsetted.
         if not custom_feature_space:
             tmp_space = sparse.csr_matrix(self.train_feature_space.copy())
+            
         else:
             tmp_space = sparse.csr_matrix(custom_feature_matrix)
 
@@ -609,7 +611,7 @@ class GAlearner:
                     "loss": ["hinge", "log"],
                     "penalty": ["elasticnet"],
                     "alpha": [0.01, 0.001, 0.0001, 0.0005],
-                    "l1_ratio": [0, 0.05, 0.25, 0.3, 0.6, 0.8, 0.95]
+                    "l1_ratio": [0, 0.05, 0.25, 0.3, 0.6, 0.8, 0.95, 1]
                 }
 
             else:
@@ -676,8 +678,8 @@ class GAlearner:
 
     def evaluate_fitness(self,
                          individual,
-                         max_num_feat=1000,
-                         return_clf_and_vec=False):
+                         max_num_feat = 1000,
+                         return_clf_and_vec = False):
         
         """
         A helper method for evaluating an individual solution. Given a real-valued vector, this constructs the representations and evaluates a given learner.
@@ -700,10 +702,14 @@ class GAlearner:
             individual = np.abs(individual)
                 
         if self.binarize_importances:
+            
             for k in range(len(self.feature_names)):
+                
                 weight = individual[k]
+                
                 if weight > 0.5:
                     individual[k] = 1
+                    
                 else:
                     individual[k] = 0
 
@@ -723,9 +729,11 @@ class GAlearner:
                 return clf, individual[:], f1_perf, feature_names, report
 
             f1_perf, _ = self.cross_val_scores(tmp_feature_space)
+            
             return (f1_perf, )
 
         elif return_clf_and_vec:
+            
             return (0, )
 
         else:
@@ -845,20 +853,28 @@ class GAlearner:
         pred_matrix = np.asarray(pred_matrix)
         unique_values = np.unique(pred_matrix).tolist()
         prediction_matrix_final = []
+        
         for k in range(pred_matrix.shape[0]):
+            
             pred_row = np.asarray(pred_matrix[k, :])
             assert len(pred_row) == pred_matrix.shape[1]
             counts = np.bincount(pred_row)
             probability_vector = []
+            
             for p in range(len(unique_values)):
+                
                 if p + 1 <= len(counts):
                     prob = counts[p]
+                    
                 else:
                     prob = 0
+                    
                 probability_vector.append(prob)
+                
             assert len(probability_vector) == len(unique_values)
 
             prediction_matrix_final.append(probability_vector)
+            
         final_matrix = np.array(prediction_matrix_final)
         prob_df = pd.DataFrame(final_matrix)
         prob_df.columns = self.apply_label_map(unique_values, inverse=True)
@@ -873,8 +889,10 @@ class GAlearner:
         prob_df = prob_df.div(prob_df.sum(axis=1), axis=0)
         csum = prob_df.sum(axis=1).values
         zero_index = np.where(csum == 0)[0]
+        
         for j in zero_index:
             prob_df.iloc[j, self.majority_class] = 1
+            
         prob_df = prob_df.fillna(0)
         assert len(np.where(prob_df.sum(axis=1) < 1)[0]) == 0
 
@@ -933,8 +951,8 @@ class GAlearner:
                     ## Subset the matrix.
                     subsetted_space = self.apply_weights(
                         individual,
-                        custom_feature_space=True,
-                        custom_feature_matrix=transformed_instances)
+                        custom_feature_space = True,
+                        custom_feature_matrix = transformed_instances)
 
                     ## obtain the predictions.
                     if not prediction_space is None:
@@ -953,7 +971,8 @@ class GAlearner:
             ## generate the prediction matrix by maximum voting scheme.
             pspace = np.matrix(prediction_space).T
             if self.task == "classification":
-                np.nan_to_num(pspace, copy=False, nan=self.majority_class)
+                pspace = pspace[:, ~np.isnan(pspace).any(axis=0)]
+#                np.nan_to_num(pspace, copy=False, nan=self.majority_class)
                 all_predictions = self.mode_pred(
                     pspace)  ## Most common prediction is chosen.
 
@@ -1060,7 +1079,7 @@ class GAlearner:
             importances = list(
                 zip(self.feature_names, individual[0:self.weight_params]))
 
-        report = ["-" * 60, "|| Feature type   Importance ||", "-" * 60]
+        report = ["-" * 60, "|| Feature type   Importance || (top individual)", "-" * 60]
         cnt = -1
 
         for fn, imp in importances:
@@ -1070,7 +1089,7 @@ class GAlearner:
             report.append(str(fn) + "  " + str(np.round(imp, 2)))
 
         report.append("-" * 60)
-        report.append("Max {}: {}".format(self.scoring_metric, max_f1))
+        report.append("Max {} in generation: {}".format(self.scoring_metric, max_f1))
 
         print("\n".join(report))
 
@@ -1152,8 +1171,7 @@ class GAlearner:
             memory_location = self.memory_storage,
             custom_pipeline = self.custom_transformer_pipeline,
             concept_features = self.include_concept_features,
-            combine_with_existing_representation = self.
-            combine_with_existing_representation)
+            combine_with_existing_representation = self.combine_with_existing_representation)
 
         self.all_feature_names = []
         if self.verbose:
@@ -1324,7 +1342,7 @@ class GAlearner:
                                   tools.initRepeat,
                                   gcreator.Individual,
                                   self.toolbox.attr_float,
-                                  n=self.weight_params)
+                                  n = self.weight_params)
 
             self.toolbox.register("population",
                                   tools.initRepeat,
@@ -1333,12 +1351,12 @@ class GAlearner:
                                   n=nind)
 
             self.toolbox.register("evaluate", self.evaluate_fitness)
-            self.toolbox.register("mate", tools.cxUniform, indpb=0.5)
+            self.toolbox.register("mate", tools.cxUniform, indpb = 0.5)
             self.toolbox.register("mutate",
                                   tools.mutGaussian,
-                                  mu=0,
-                                  sigma=0.2,
-                                  indpb=0.2)
+                                  mu = 0,
+                                  sigma = 0.2,
+                                  indpb = 0.2)
 
             self.toolbox.register("mutReg", self.mutReg)
             self.toolbox.register("select", tools.selTournament)
@@ -1431,8 +1449,8 @@ class GAlearner:
                     cf1 = f1
 
                 self.population = self.toolbox.select(self.population + offspring,
-                                                      k=nind,
-                                                      tournsize=int(nind / 3))
+                                                      k = nind,
+                                                      tournsize = int(nind / 3))
 
             try:
                 selections = self.hof
@@ -1450,7 +1468,7 @@ class GAlearner:
 
                 try:
                     learner, individual, score, feature_names, report = self.evaluate_fitness(
-                        top_individual, return_clf_and_vec=True)
+                        top_individual, return_clf_and_vec = True)
                     self.performance_reports.append(report)
 
                 except Exception:
@@ -1463,11 +1481,12 @@ class GAlearner:
 
                 ## coefficients are given for each class. We take maximum one (abs val)
                 coefficients = np.asarray(np.abs(np.max(coefficients,
-                                                        axis=0))).reshape(-1)
+                                                        axis = 0))).reshape(-1)
 
                 if self.verbose:
                     logging.info("Coefficients and indices: {}".format(
                         len(coefficients)))
+                    
                 if self.verbose:
                     logging.info(
                         "Adding importances of shape {} for learner {} with score {}"
