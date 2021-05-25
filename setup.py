@@ -11,7 +11,7 @@ def parse_requirements(file):
 packages = [x for x in find_packages() if x != "test"]
 setup(
     name='autoBOTLib',
-    version='0.53',
+    version='0.54',
     description="AutoBOT: Explainable AutoML for texts",
     url='https://github.com/skblaz/autobot',
     author='Blaž Škrlj',

@@ -13,10 +13,10 @@ import tqdm
 
 class TopicDocs:
     def __init__(self,
-                 ndim=128,
-                 random_seed=1965123,
-                 topic_tokens=4096,
-                 verbose=True):
+                 ndim = 128,
+                 random_seed = 1965123,
+                 topic_tokens = 8196,
+                 verbose = True):
         """
         Class initialization method.
 
@@ -113,6 +113,8 @@ if __name__ == "__main__":
     sim_features = clx.fit_transform(example_text)
 
     print(clx.get_feature_names())
+    print(clx.topic_features)
+    
     # from sklearn.linear_model import SGDClassifier
     # from sklearn.model_selection import cross_val_score
 
