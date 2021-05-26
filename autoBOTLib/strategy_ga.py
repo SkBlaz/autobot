@@ -165,9 +165,9 @@ class GAlearner:
 
         if self.verbose:
             logging.info("Instantiated the evolution-based learner.")
+            self.summarise_dataset(train_sequences_raw, train_targets)
             
         self.scoring_metric = scoring_metric
-
         self.representation_type = representation_type
         self.custom_transformer_pipeline = custom_transformer_pipeline
         self.combine_with_existing_representation = combine_with_existing_representation
@@ -497,6 +497,29 @@ class GAlearner:
 
         assert len(generic_individual) == self.weight_params
         return generic_individual
+
+
+    def summarise_dataset(self, list_of_texts, targets):
+
+        if not isinstance(targets, list):
+            targets = targets.tolist()
+            
+        lengths = []
+        unique_tokens = set()
+        
+        for x in list_of_texts:
+            lengths.append(len(x))
+            parts = x.strip().split()
+            
+            for part in parts:
+                unique_tokens.add(part)
+                
+        logging.info(f"Number of documents: {len(list_of_texts)}")
+        logging.info(f"Average document length: {np.mean(lengths)}")
+        logging.info(f"Number of unique tokens: {len(unique_tokens)}")
+        
+        if len(set(targets)) < 200:
+            logging.info(f"Unique target values: {set(targets)}")
 
     def custom_initialization(self):
         """

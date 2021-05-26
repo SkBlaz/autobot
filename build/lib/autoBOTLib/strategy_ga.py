@@ -971,8 +971,9 @@ class GAlearner:
             ## generate the prediction matrix by maximum voting scheme.
             pspace = np.matrix(prediction_space).T
             if self.task == "classification":
-                pspace = pspace[:, ~np.isnan(pspace).any(axis=0)]
-#                np.nan_to_num(pspace, copy=False, nan=self.majority_class)
+                
+                converged_predictions = np.where(~np.isnan(pspace).any(axis=0) == True)[0]
+                pspace = pspace[:, converged_predictions]
                 all_predictions = self.mode_pred(
                     pspace)  ## Most common prediction is chosen.
 

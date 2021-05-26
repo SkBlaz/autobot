@@ -29,7 +29,7 @@ class TopicDocs:
         
         """
 
-        self.ndim = ndim
+        self.ndim = int(np.sqrt(ndim))
         self.verbose = verbose
         self.random_seed = random_seed
         self.topic_tokens = topic_tokens
