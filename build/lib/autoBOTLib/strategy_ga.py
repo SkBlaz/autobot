@@ -76,7 +76,7 @@ class GAlearner:
             top_k_importances = 15,
             representation_type = "neurosymbolic-lite",
             binarize_importances = False,
-            memory_storage = "memory",
+            memory_storage = "memory/conceptnet.gz",
             learner = None,
             n_fold_cv = 5,
             random_seed = 8954,
@@ -87,6 +87,7 @@ class GAlearner:
             default_importance = 0.05,
             learner_preset = "default",
             task = "classification",
+            contextual_model = "paraphrase-xlm-r-multilingual-v1",
             include_concept_features = False,
             verbose = 1):
         
@@ -110,6 +111,7 @@ class GAlearner:
         :param obj learner_hyperparameters: The space to be optimized w.r.t. the learner param.
         :param str conceptnet_url: URL of the conceptnet used.
         :param int random_seed: The random seed used.
+        :param str contextual_model: The language model string compatible with sentence-transformers library (this is in beta)
         :param str task: Either "classification" - SGDClassifier, or "regression" - SGDRegressor
         :param int n_fold_cv: The number of folds to be used for model evaluation.
         :param str learner_preset: Type of classification to be considered (default = paper), ""mini-l1"" or ""mini-l2" -> very lightweight regression, emphasis on space exploration.
@@ -120,6 +122,7 @@ class GAlearner:
         ## Set the random seed
         self.random_seed = random_seed
         self.task = task
+        self.contextual_model = contextual_model
         np.random.seed(random_seed)
 
         logo = """
@@ -1194,6 +1197,7 @@ class GAlearner:
             random_seed = self.random_seed,
             memory_location = self.memory_storage,
             custom_pipeline = self.custom_transformer_pipeline,
+            contextual_model = self.contextual_model,
             concept_features = self.include_concept_features,
             combine_with_existing_representation = self.combine_with_existing_representation)
 
@@ -1253,24 +1257,30 @@ class GAlearner:
         """
 
         feature_ranking = self.global_feature_map
-        topic_transformer_trained = [x for x in self.vectorizer.named_steps[
-            'union'].transformer_list if x[0] == "topic_features"][0][1]
+        out_df = None
         
-        topic_feature_space = topic_transformer_trained['topic_features'].topic_features
+        try:
+            topic_transformer_trained = [x for x in self.vectorizer.named_steps[
+                'union'].transformer_list if x[0] == "topic_features"][0][1]            
         
-        top_topics = [int(x.split(":")[0].replace(" ","").split("_")[1]) for x in feature_ranking['topic_features'].values.tolist()]
-        
-        importances = [float(x.split(":")[1].replace(" ","")) for x in feature_ranking['topic_features'].values.tolist()]
-        
-        ordered_topics = []
-        
-        for top_topic in top_topics:
-            topic = " AND ".join(topic_feature_space[top_topic])
-            ordered_topics.append(topic)
-            
-        out_df = pd.DataFrame()
-        out_df['topic cluster'] = ordered_topics
-        out_df['importances'] = importances
+            topic_feature_space = topic_transformer_trained['topic_features'].topic_features
+
+            top_topics = [int(x.split(":")[0].replace(" ","").split("_")[1]) for x in feature_ranking['topic_features'].values.tolist()]
+
+            importances = [float(x.split(":")[1].replace(" ","")) for x in feature_ranking['topic_features'].values.tolist()]
+
+            ordered_topics = []
+
+            for top_topic in top_topics:
+                topic = " AND ".join(topic_feature_space[top_topic])
+                ordered_topics.append(topic)
+
+            out_df = pd.DataFrame()
+            out_df['topic cluster'] = ordered_topics
+            out_df['importances'] = importances
+
+        except Exception as es:            
+            logging.info("Topics were not computed.")
         
         return out_df            
 
