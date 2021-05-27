@@ -12,7 +12,7 @@ def run():
     autoBOTLibObj = autoBOTLib.GAlearner(
         train_sequences,
         train_targets,
-        representation_type = "neurosymbolic",
+        representation_type = "neurosymbolic", ## full representation space
         n_fold_cv=5,
         time_constraint=0.1).evolve(strategy = "evolution") ## strategy = "direct-learning" trains a single learner.
 
