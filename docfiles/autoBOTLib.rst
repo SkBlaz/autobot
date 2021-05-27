@@ -20,6 +20,14 @@ autoBOTLib.conceptnet\_features module
    :undoc-members:
    :show-inheritance:
 
+autoBOTLib.contextual\_embeddings module
+----------------------------------------
+
+.. automodule:: autoBOTLib.contextual_embeddings
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 autoBOTLib.data\_utils module
 -----------------------------
 
