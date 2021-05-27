@@ -26,8 +26,8 @@ class ContextualDocs:
         try:
             self.model = SentenceTransformer(model)
             
-        except:
-            pass ## handled outside this class ..
+        except Exception as es:
+            logging.info(es)
 
     def fit(self, documents):
         """
@@ -50,6 +50,7 @@ class ContextualDocs:
                 documents = documents.tolist()
         try:
             sentence_embeddings = self.model.encode(documents)
+            
         except Exception as es:
             print(es, "error in encoding documents", sentence_embeddings)
             
