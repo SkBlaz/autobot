@@ -455,11 +455,15 @@ def get_features(df_data,
 
         concept_features_transformer = ConceptFeatures(max_features=max_num_feat,
                                                        knowledge_graph=memory_location)
-
+        contextual_features = None
+        
         if contextual_feature_library:
-            contextual_features = ContextualDocs(model=contextual_model)
-        else:
-            contextual_features = None
+            
+            if representation_type == "neurosymbolic":
+                contextual_features = ContextualDocs(model=contextual_model)
+                
+            elif isinstance(representation_type, list) and "neurosymbolic" in representation_type:
+                contextual_features = ContextualDocs(model=contextual_model)            
 
         feature_transformer_vault = {
             "pos_features":

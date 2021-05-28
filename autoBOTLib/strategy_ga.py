@@ -26,6 +26,7 @@ import requests  ## for downloading the KG
 from sklearn.linear_model import SGDClassifier
 from sklearn.linear_model import SGDRegressor
 from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import ShuffleSplit
 
 ## monitoring
 import tqdm
@@ -68,7 +69,7 @@ class GAlearner:
             time_constraint,
             num_cpu = "all",
             task_name = "Super cool task.",
-            latent_dim = 768,
+            latent_dim = 512,
             sparsity = 0.1,
             hof_size = 1,
             initial_separate_spaces = True,
@@ -89,7 +90,9 @@ class GAlearner:
             task = "classification",
             contextual_model = "paraphrase-xlm-r-multilingual-v1",
             include_concept_features = False,
-            verbose = 1):
+            verbose = 1,
+            validation_percentage = 0.2,
+            validation_type = "cv"):
         
         """The object initialization method; specify the core optimization parameter with this method.
 
@@ -117,10 +120,14 @@ class GAlearner:
         :param str learner_preset: Type of classification to be considered (default = paper), ""mini-l1"" or ""mini-l2" -> very lightweight regression, emphasis on space exploration.
         :param bool include_concept_features: Whether to include external background knowledge if possible
         :param float default_importance: Minimum possible initial weight.
+        :param float validation_percentage: The percentage of data to used as test set if validation_type = "train_test"
+        :param str validation_type: type of validation, either train_val or cv (cross validation or train-val split)
         """
 
         ## Set the random seed
         self.random_seed = random_seed
+        self.validation_type = validation_type
+        self.validation_percentage = validation_percentage
         self.task = task
         self.contextual_model = contextual_model
         np.random.seed(random_seed)
@@ -675,12 +682,20 @@ class GAlearner:
 
         performance_score = self.scoring_metric
 
+        if self.validation_type == "train_test":
+            cv = ShuffleSplit(n_splits = 1, test_size = self.validation_percentage, random_state = self.random_seed)
+            num_cpu = 1
+            
+        else:
+            cv = self.n_fold_cv
+            num_cpu = self.num_cpu
+            
         if final_run:
             clf = GridSearchCV(svc,
                                parameters,
                                verbose = self.verbose,
-                               n_jobs = self.num_cpu,
-                               cv = self.n_fold_cv,
+                               n_jobs = num_cpu,
+                               cv = cv,
                                scoring = performance_score,
                                refit = True)
 
@@ -688,8 +703,8 @@ class GAlearner:
             clf = GridSearchCV(svc,
                                parameters,
                                verbose = self.verbose,
-                               n_jobs = self.num_cpu,
-                               cv = self.n_fold_cv,
+                               n_jobs = num_cpu,
+                               cv = cv,
                                scoring = performance_score,
                                refit = False)
 
@@ -1324,8 +1339,7 @@ class GAlearner:
                mutpb = 0.15,
                stopping_interval = 20,
                strategy = "evolution",
-               representation_step_only = False,
-               validation_type = "cv"):
+               representation_step_only = False):
         """The core evolution method. First constrain the maximum number of features to be taken into account by lowering the bound w.r.t performance.
         next, evolve.
 
@@ -1335,10 +1349,8 @@ class GAlearner:
         :param int stopping_interval: stopping interval -> for how long no improvement is tolerated before a hard reset (int)
         :param str strategy: type of evolution (str)
         :param bool representation_step_only: Learn only the feature transformations, skip the evolution. Suitable for custom experiments with transform()
-        :param str validation_type: type of validation, either train_val or cv (cross validation or train-val split)
         """
 
-        self.validation_type = validation_type
         self.initial_time = time.time()
         self.popsize = nind
         self.instantiate_validation_env()
@@ -1369,31 +1381,40 @@ class GAlearner:
 
             if self.verbose: logging.info("Selected strategy is evolution.")
 
-            self.toolbox = base.Toolbox()
-            self.toolbox.register("attr_float", np.random.uniform, 0.00001,
+            toolbox = base.Toolbox()
+            toolbox.register("attr_float", np.random.uniform, 0.00001,
                                   0.999999)
-            self.toolbox.register("individual",
+            toolbox.register("individual",
                                   tools.initRepeat,
                                   gcreator.Individual,
-                                  self.toolbox.attr_float,
+                                  toolbox.attr_float,
                                   n = self.weight_params)
 
-            self.toolbox.register("population",
+            toolbox.register("population",
                                   tools.initRepeat,
                                   list,
-                                  self.toolbox.individual,
+                                  toolbox.individual,
                                   n=nind)
 
-            self.toolbox.register("evaluate", self.evaluate_fitness)
-            self.toolbox.register("mate", tools.cxUniform, indpb = 0.5)
-            self.toolbox.register("mutate",
+            toolbox.register("evaluate", self.evaluate_fitness)
+            toolbox.register("mate", tools.cxUniform, indpb = 0.5)
+            toolbox.register("mutate",
                                   tools.mutGaussian,
                                   mu = 0,
                                   sigma = 0.2,
                                   indpb = 0.2)
 
-            self.toolbox.register("mutReg", self.mutReg)
-            self.toolbox.register("select", tools.selTournament)
+            toolbox.register("mutReg", self.mutReg)
+            toolbox.register("select", tools.selTournament)
+
+            if self.validation_type == "train_test":
+
+                pool_tmp = mp.Pool(self.num_cpu)
+                if self.verbose: logging.info(f"Instantiating parallel pool of individuals. Parallelization at the population level ({self.num_cpu} jobs).")
+                toolbox.register("map", pool_tmp.map)
+                
+            else:
+                toolbox.register("map", map)
 
             ## Keep the best-performing individuals
             self.hof = tools.HallOfFame(self.hof_size)
@@ -1404,8 +1425,7 @@ class GAlearner:
 
             ## Population initialization
             if self.population == None:
-
-                self.population = self.toolbox.population()
+                self.population = toolbox.population()
                 self.custom_initialization()  ## works on self.population
                 if self.verbose:
                     logging.info("Initialized population of size {}".format(
@@ -1413,7 +1433,7 @@ class GAlearner:
                 if self.verbose: logging.info("Computing initial fitness ..")
 
             ## Gather fitness values.
-            fits = list(map(self.toolbox.evaluate, self.population))
+            fits = list(toolbox.map(toolbox.evaluate, self.population))
 
             for fit, ind in zip(fits, self.population):
                 ind.fitness.values = fit
@@ -1439,14 +1459,14 @@ class GAlearner:
                 if tdiff >= self.max_time:
                     break
 
-                offspring = list(map(self.toolbox.clone, self.population))
+                offspring = list(toolbox.map(toolbox.clone, self.population))
 
                 ## Perform crossover
                 for child1, child2 in zip(offspring[::2], offspring[1::2]):
 
                     if np.random.random() < crossover_proba:
 
-                        self.toolbox.mate(child1, child2)
+                        toolbox.mate(child1, child2)
                         del child1.fitness.values
                         del child2.fitness.values
 
@@ -1454,14 +1474,14 @@ class GAlearner:
                 for mutant in offspring:
 
                     if np.random.random() < mutpb:
-                        self.toolbox.mutate(mutant)
+                        toolbox.mutate(mutant)
                         del mutant.fitness.values
 
                 ## In the first population, include isolated spaces
                 if gen == 1:
                     offspring = offspring + self.separate_individual_spaces
 
-                fits = list(map(self.toolbox.evaluate, offspring))
+                fits = list(toolbox.map(toolbox.evaluate, offspring))
                 for ind, fit in zip(offspring, fits):
                     if isinstance(fit, int) and not isinstance(fit, tuple):
                         fit = (fit, )
@@ -1482,7 +1502,7 @@ class GAlearner:
                 else:
                     cf1 = f1
 
-                self.population = self.toolbox.select(self.population + offspring,
+                self.population = toolbox.select(self.population + offspring,
                                                       k = nind,
                                                       tournsize = int(nind / 3))
 
