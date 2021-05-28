@@ -14,6 +14,7 @@ def run():
         train_targets,
         representation_type = "neurosymbolic-lite", ## full representation space -- note that this includes sentence-transformers. For a lightweight version, consider neurosymbolic-lite
         n_fold_cv=5,
+        sparsity = 0.1,
         time_constraint=0.1).evolve(strategy = "evolution") ## strategy = "direct-learning" trains a single learner.
 
     dataframe2 = pd.read_csv("../data/insults/test.tsv", sep="\t")
