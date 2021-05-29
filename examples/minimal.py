@@ -12,10 +12,10 @@ def run():
     autoBOTLibObj = autoBOTLib.GAlearner(
         train_sequences,
         train_targets,
-        representation_type = "neurosymbolic-lite", ## full representation space -- note that this includes sentence-transformers. For a lightweight version, consider neurosymbolic-lite
-        n_fold_cv=5,
-        sparsity = 0.1,
-        time_constraint=0.1).evolve(strategy = "evolution") ## strategy = "direct-learning" trains a single learner.
+        representation_type = "symbolic", ## See the documentation for all possible representation types.
+        n_fold_cv=3,
+        sparsity = 0.2,
+        time_constraint=0.2).evolve(strategy = "evolution") ## strategy = "direct-learning" trains a single learner.
 
     dataframe2 = pd.read_csv("../data/insults/test.tsv", sep="\t")
     test_sequences = dataframe2['text_a']
@@ -24,14 +24,7 @@ def run():
     print(predictions)
     print(prob_predictions)
 
-    importances_local, importances_global = autoBOTLibObj.feature_type_importances(
-    )
-    print(importances_global)
-    print(importances_local)
-    importances_local.to_csv("local_insults.tsv", sep="\t")
-
-    topic_df = autoBOTLibObj.get_topic_explanation()
-    print(topic_df)
+    autoBOTLibObj.generate_report(output_folder = "./report/")
     
 if __name__ == "__main__":
     run()

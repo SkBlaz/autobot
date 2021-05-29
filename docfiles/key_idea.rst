@@ -22,10 +22,13 @@ TLDR:
     train_sequences = dataframe['text_a']
     train_targets = dataframe['label']
 
-	## Run evolution - step 2
+    ## Run evolution - step 2
     autoBOTLibObj = autoBOTLib.GAlearner(train_sequences, train_targets, time_constraint = 1).evolve()
 
-	## Inspect or make predictions - step 3
+    ## Inspect or make predictions - step 3
     dataframe2 = pd.read_csv("../data/insults/test.tsv", sep="\t")
     test_sequences = dataframe2['text_a']
     predictions = autoBOTLibObj.predict(test_sequences)
+
+    ## Generate a training report with importances (and other metrics)
+    autoBOTLibObj.generate_report(output_folder = "./")

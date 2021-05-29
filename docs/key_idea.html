@@ -193,13 +193,16 @@ The key idea of autoBOTLib is that, instead of evolving on the learner level, ev
 <span class="n">train_sequences</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;text_a&#39;</span><span class="p">]</span>
 <span class="n">train_targets</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
 
-    <span class="c1">## Run evolution - step 2</span>
+<span class="c1">## Run evolution - step 2</span>
 <span class="n">autoBOTLibObj</span> <span class="o">=</span> <span class="n">autoBOTLib</span><span class="o">.</span><span class="n">GAlearner</span><span class="p">(</span><span class="n">train_sequences</span><span class="p">,</span> <span class="n">train_targets</span><span class="p">,</span> <span class="n">time_constraint</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">evolve</span><span class="p">()</span>
 
-    <span class="c1">## Inspect or make predictions - step 3</span>
+<span class="c1">## Inspect or make predictions - step 3</span>
 <span class="n">dataframe2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/insults/test.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">test_sequences</span> <span class="o">=</span> <span class="n">dataframe2</span><span class="p">[</span><span class="s1">&#39;text_a&#39;</span><span class="p">]</span>
 <span class="n">predictions</span> <span class="o">=</span> <span class="n">autoBOTLibObj</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_sequences</span><span class="p">)</span>
+
+<span class="c1">## Generate a training report with importances (and other metrics)</span>
+<span class="n">autoBOTLibObj</span><span class="o">.</span><span class="n">generate_report</span><span class="p">(</span><span class="n">output_folder</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
