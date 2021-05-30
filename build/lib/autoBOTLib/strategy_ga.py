@@ -18,7 +18,7 @@ import operator
 ## feature space construction
 from .feature_constructors import *
 from .metrics import *
-from collections import defaultdict
+from collections import defaultdict, Counter
 from scipy import sparse
 import requests  ## for downloading the KG
 
@@ -90,6 +90,7 @@ class GAlearner:
             task = "classification",
             contextual_model = "paraphrase-xlm-r-multilingual-v1",
             include_concept_features = False,
+            upsample = False,
             verbose = 1,
             validation_percentage = 0.2,
             validation_type = "cv"):
@@ -120,12 +121,14 @@ class GAlearner:
         :param str learner_preset: Type of classification to be considered (default = paper), ""mini-l1"" or ""mini-l2" -> very lightweight regression, emphasis on space exploration.
         :param bool include_concept_features: Whether to include external background knowledge if possible
         :param float default_importance: Minimum possible initial weight.
+        :param bool upsample: Whether to equalize the number of instances by upsampling.
         :param float validation_percentage: The percentage of data to used as test set if validation_type = "train_test"
         :param str validation_type: type of validation, either train_val or cv (cross validation or train-val split)
         """
 
         ## Set the random seed
         self.random_seed = random_seed
+        self.upsample = upsample
         self.validation_type = validation_type
         self.validation_percentage = validation_percentage
         self.task = task
@@ -170,6 +173,10 @@ class GAlearner:
 
         self.verbose = verbose
         if self.verbose: print(logo)
+
+        if self.upsample:
+            train_sequences_raw, train_targets = self.upsample_dataset(train_sequences_raw,
+                                                                       train_targets)
         self.default_importance = default_importance
         self.learner_preset = learner_preset
 
@@ -473,18 +480,43 @@ class GAlearner:
             tqdm.tqdm(pool.imap(func, df_split), total=len(df_split)))
         pool.close()
         pool.join()
-
         return df
+    
+    def upsample_dataset(self, X, Y):
+        """
+        Perform very basic upsampling of less-present classes.
 
-    def softmax(self, x):
-        """Compute softmax values for each sets of scores in x.
-
-        :param np.array x: (vector of floats)
+        :param list X: Input list of documents
+        :param np.array/list Y: Targets
+        :return X,Y: Return upsampled data.
         """
 
-        e_x = np.exp(x - np.max(x))
-        return e_x / e_x.sum()
-
+        if self.verbose: logging.info("Performing upsampling ..")
+        
+        if not isinstance(X, list):
+            X = X.values.tolist()
+            
+        if not isinstance(Y, list):
+            Y = Y.values.tolist()
+            
+        extra_targets = []; extra_instances = []
+        class_counts = OrderedDict(Counter(Y))
+        classes = list(class_counts.keys())
+        most_frequent = classes[0]
+        most_frequent_count = class_counts[most_frequent]
+        for cname in classes[1:]:
+            difference = most_frequent_count - class_counts[cname]
+            if self.verbose: logging.info(f"Upsampling for: {cname}; samples: {difference}")
+            indices = [enx for enx, x in enumerate(Y) if x == cname]
+            random_subspace = np.random.choice(indices, difference)
+            for sample in random_subspace:
+                extra_targets.append(Y[sample])
+                extra_instances.append(X[sample])
+        if self.verbose: logging.info(f"Generated {len(extra_instances)} new instances to balance the data.")
+        X = X + extra_instances
+        Y = Y + extra_targets
+        return X, Y
+        
     def return_dataframe_from_text(self, text):
         """
         A helper method that return a given dataframe from text.

@@ -500,12 +500,15 @@ class GAlearner:
             Y = Y.values.tolist()
             
         extra_targets = []; extra_instances = []
-        class_counts = OrderedDict(Counter(Y))
-        classes = list(class_counts.keys())
+        class_counts = {k: v for k, v in sorted(dict(Counter(Y)).items(),
+                                                key=lambda item: item[1])}
+        classes = list(class_counts.keys())[::-1]
         most_frequent = classes[0]
         most_frequent_count = class_counts[most_frequent]
         for cname in classes[1:]:
             difference = most_frequent_count - class_counts[cname]
+            if difference == 0:
+                continue
             if self.verbose: logging.info(f"Upsampling for: {cname}; samples: {difference}")
             indices = [enx for enx, x in enumerate(Y) if x == cname]
             random_subspace = np.random.choice(indices, difference)
