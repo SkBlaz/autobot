@@ -14,7 +14,8 @@ def run():
         train_targets,
         representation_type = "symbolic", ## See the documentation for all possible representation types.
         n_fold_cv=3,
-        sparsity = 0.2,
+        sparsity = 0.1,
+        upsample = True, ## Suitable for imbalanced data - randomized upsampling tends to help.
         time_constraint=0.2).evolve(strategy = "evolution") ## strategy = "direct-learning" trains a single learner.
 
     dataframe2 = pd.read_csv("../data/insults/test.tsv", sep="\t")

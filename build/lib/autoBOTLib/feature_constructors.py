@@ -75,8 +75,7 @@ feature_presets['neurosymbolic'] = [
 # This one is ~language agnostic
 feature_presets['neurosymbolic-lite'] = [
     'document_graph', 'neural_features_dbow', 'neural_features_dm',
-    'topic_features', 'keyword_features', 'relational_features_char',
-    'char_features', 'word_features'
+    'topic_features', 'keyword_features', 'relational_features_char', 'relational_features_token','char_features', 'word_features'
 ]
 
 # MLJ paper versions

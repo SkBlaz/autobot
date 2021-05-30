@@ -1198,6 +1198,26 @@ class GAlearner:
 
         del submatrices
 
+    def generate_report(self, output_folder = "./"):
+
+        importances_local, importances_global = self.feature_type_importances()
+        
+        importances_local.to_csv(output_folder+"local.tsv",sep = "\t", index = False)
+        importances_global.to_csv(output_folder+"global.tsv",sep = "\t", index = False)
+        
+        learners = self.summarise_final_learners()
+        learners.to_csv(output_folder+"learners.tsv",sep = "\t", index = False)
+        
+        fitness = self.visualize_fitness(image_path = output_folder+"fitness.png")
+        fitness.to_csv(output_folder+"fitness.tsv",sep = "\t", index = False)
+        
+        topics = self.get_topic_explanation()
+        
+        if not topics is None:
+            topics.to_csv(output_folder+"topics.tsv",sep = "\t", index = False)
+
+        if self.verbose: logging.info(f"Report generated! Check: {output_folder} folder.")
+
     def instantiate_validation_env(self):
         """
         This method refreshes the feature space. This is needed to maximize efficiency.
@@ -1296,6 +1316,7 @@ class GAlearner:
 
         except Exception as es:            
             logging.info("Topics were not computed.")
+            return None
         
         return out_df            
 
@@ -1321,10 +1342,10 @@ class GAlearner:
             if image_path is None:
                 return dfx
 
-            mean_fitness = dfx.mean(axis=1).values.tolist()
-            sns.lineplot(list(range(len(mean_fitness))), mean_fitness)
+            fitness_df = dfx.melt()
+            sns.lineplot(fitness_df.variable.astype(str), fitness_df.value, color = "black")
             plt.xlabel("Generation")
-            plt.ylabel(f"Mean fitness ({self.scoring_metric})")
+            plt.ylabel(f"Fitness ({self.scoring_metric})")
             plt.tight_layout()
             plt.savefig(image_path, dpi=300)
 

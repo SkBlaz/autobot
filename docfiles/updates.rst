@@ -6,3 +6,4 @@ Please see the tagged versions of the code to inspect different releases of the 
 2. 11.5.21 -> Added document graph-based features (default configuration accessible as representation_type = "neurosymbolic-default")
 3. 20.5.21 -> Added a fully language-agnostic version accessible as representation_type = "neurosymbolic". This representation includes topic-level features and document graph-based information. Also added the "neurosymbolic-lite", a less memory-intensive version suitable for larger datasets. In the future, the selection of the mode of operation will be automated based on metadata.
 4. 17.5.21 -> Added the contextual learner via `sentence-transformers` to the `neurosymbolic` representation (beta)
+5. 30.5.21 -> Refactored the parallelism and upsampling parts, changed default to be suitable for the multilingual setting.
