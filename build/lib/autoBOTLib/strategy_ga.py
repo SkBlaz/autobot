@@ -134,7 +134,7 @@ class GAlearner:
         self.task = task
         self.contextual_model = contextual_model
         np.random.seed(random_seed)
-
+        
         logo = """
 
       MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -500,7 +500,12 @@ class GAlearner:
             Y = Y.values.tolist()
             
         extra_targets = []; extra_instances = []
-        class_counts = {k: v for k, v in sorted(dict(Counter(Y)).items(),
+        counter_for_classes = Counter(Y)
+        if self.verbose:
+            for k, v in counter_for_classes.items():
+                logging.info(f"Presence of class {k}; {v/len(Y)}")
+                
+        class_counts = {k: v for k, v in sorted(dict(counter_for_classes).items(),
                                                 key=lambda item: item[1])}
         classes = list(class_counts.keys())[::-1]
         most_frequent = classes[0]
