@@ -1,0 +1,16 @@
+relational_features_token	relational_features_char	topic_features	word_features	keyword_features	char_features	pos_features
+one--4--like : 0.0	e--3--c : 4.76	topic_0 : 0.0	0bama : 0.0	10000 : 0.0	 u  : 6.06	prp vbp : 4.64
+know--3--like : 0.0	p--6--w : 4.67	topic_1 : 0.0	aamir : 0.0	100000 : 0.0	oro : 6.03	prp vbp dt : 4.26
+dont--3--like : 0.0	p--4--l : 4.54	topic_2 : 0.0	abilities : 0.0	100nthey : 0.0	 cra : 5.97	vbp : 3.48
+people--2--like : 0.0	c--3--h : 4.5	topic_3 : 0.0	ability : 0.0	10nnwhat : 0.0	go  : 5.91	nn prp vbp : 3.43
+people--4--like : 0.0	m--5--t : 4.48	topic_4 : 0.0	abortion : 0.0	10xa0ncountries : 0.0	ser : 5.42	vbp dt : 2.51
+dont--2--get : 0.0	t--3--y : 4.24	topic_5 : 0.0	abortions : 0.0	12080 : 0.0	u  : 5.22	dt : 1.6
+dont--2--like : 0.0	s--2--y : 4.04	topic_6 : 0.0	abs0lutely : 0.0	12xa0thought : 0.0	s w : 5.12	vbd : 1.58
+people--4--us : 0.0	u--1--  : 3.93	topic_7 : 0.0	absolutely : 0.0	159th : 0.0	moro : 5.09	prp : 1.2
+dont--3--people : 0.0	r--4--f : 3.77	topic_8 : 0.0	abuse : 0.0	160110 : 0.0	h a : 5.08	in : 1.08
+would--2--get : 0.0	c--2--u : 3.58	topic_9 : 0.0	abusing : 0.0	168cm : 0.0	oron : 5.01	in dt : 1.04
+good--4--like : 0.0	a--4--v : 3.57	topic_10 : 0.0	accept : 0.0	16nnpar : 0.0	ck : 5.0	nn prp : 0.96
+one--2--like : 0.0	f--5--y : 3.56	topic_11 : 0.0	accepted : 0.0	16when : 0.0	foo : 4.73	prp jj : 0.65
+dont--5--like : 0.0	b--4--y : 3.47	topic_12 : 0.0	accepting : 0.0	176mgdl : 0.0	ist : 4.65	md : 0.63
+think--2--like : 0.0	r--3--k : 3.42	topic_13 : 0.0	access : 0.0	180lbs : 0.0	your : 4.6	rb : 0.6
+get--2--like : 0.0	f--4--l : 3.19	topic_14 : 0.0	accident : 0.0	18135 : 0.0	ster : 4.56	vbp dt jj : 0.59

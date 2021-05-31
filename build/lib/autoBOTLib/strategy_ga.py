@@ -1382,10 +1382,16 @@ class GAlearner:
             if image_path is None:
                 return dfx
 
-            fitness_df = dfx.melt()
-            sns.lineplot(fitness_df.variable.astype(str), fitness_df.value, color = "black")
+            mean_fitness = dfx.mean(axis = 1)
+            max_fitness = dfx.max(axis = 1)
+            min_fitness = dfx.min(axis = 1)
+            generations = list(range(dfx.shape[0]))
+            sns.lineplot(generations, mean_fitness, color = "black", label = "mean")
+            sns.lineplot(generations, max_fitness, color = "green", label = "max")
+            sns.lineplot(generations, min_fitness, color = "red", label = "min")
             plt.xlabel("Generation")
             plt.ylabel(f"Fitness ({self.scoring_metric})")
+            plt.legend()
             plt.tight_layout()
             plt.savefig(image_path, dpi=300)
 
