@@ -71,8 +71,8 @@ Which results in subspace feature importances (`importances_global`):
   1.0036820174140975	relational_features
   0.5351954677290582	keyword_features
   0.0	                concept_features
-  0.4983623274641806	neural_features_v1
-  0.2565542438450016	neural_features_v2
+  0.4983623274641806	neural_features_dm
+  0.2565542438450016	neural_features_dbow
 
   
 and the subspace-level rankings (`importances_local`):
@@ -80,7 +80,7 @@ and the subspace-level rankings (`importances_local`):
   
 .. code-block:: text
 
-		 keyword_features	char_features	word_features	pos_features	relational_features	concept_features	neural_features_v1	neural_features_v2
+		 keyword_features	char_features	word_features	pos_features	relational_features	concept_features	neural_features_dm	neural_features_dbow
  0	moron : 2.76	ck : 1.06	fake : 1.26	prp vbp dt : 3.42	o--3--d : 3.31	antonym(act,nothing) : 0.0	13_1 : 1.41	183_0 : 0.55
  1	idiot : 2.62	fuc : 0.8	pig : 1.14	vbp dt : 2.99	n--15--s : 2.96	antonym(act,real) : 0.0	323_1 : 1.41	321_0 : 0.54
  2	loser : 2.04	uck : 0.79	go back : 0.87	nn : 2.56	 --3--c : 2.96	antonym(around,far) : 0.0	217_1 : 1.37	126_0 : 0.53
