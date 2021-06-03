@@ -15,6 +15,7 @@ Welcome to *autoBOT*'s documentation
 
    installation.rst
    core_idea.rst
+   features.rst
    custom_classifiers.rst
    custom_features.rst
    model_persistence.rst

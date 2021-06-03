@@ -1,9 +1,4 @@
 ## baseline learners
-#from RMDL import RMDL_Text
-try:
-    pass
-except:
-    pass
 
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 from sklearn.svm import LinearSVC

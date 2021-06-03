@@ -1356,7 +1356,7 @@ class GAlearner:
 
         except Exception as es:            
             logging.info("Topics were not computed.")
-            return None
+            pass
         
         return out_df            
 
