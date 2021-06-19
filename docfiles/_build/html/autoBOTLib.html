@@ -114,7 +114,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-autoBOTLib.baselines">autoBOTLib.baselines module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-autoBOTLib.conceptnet_features">autoBOTLib.conceptnet_features module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-autoBOTLib.contextual_embeddings">autoBOTLib.contextual_embeddings module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#autobotlib-contextual-embeddings-module">autoBOTLib.contextual_embeddings module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-autoBOTLib.data_utils">autoBOTLib.data_utils module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-autoBOTLib.doc_similarity">autoBOTLib.doc_similarity module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-autoBOTLib.feature_constructors">autoBOTLib.feature_constructors module</a></li>
@@ -334,68 +334,8 @@
 </dd></dl>
 
 </div>
-<div class="section" id="module-autoBOTLib.contextual_embeddings">
-<span id="autobotlib-contextual-embeddings-module"></span><h2>autoBOTLib.contextual_embeddings module<a class="headerlink" href="#module-autoBOTLib.contextual_embeddings" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
-<dt id="autoBOTLib.contextual_embeddings.ContextualDocs">
-<em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.contextual_embeddings.</code><code class="sig-name descname">ContextualDocs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="o">=</span><span class="default_value">'paraphrase-xlm-r-multilingual-v1'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.contextual_embeddings.ContextualDocs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt id="autoBOTLib.contextual_embeddings.ContextualDocs.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="o">=</span><span class="default_value">'paraphrase-xlm-r-multilingual-v1'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.contextual_embeddings.ContextualDocs.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class initialization method.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>ndim</strong> – Number of latent dimensions</p></li>
-<li><p><strong>model</strong> – The sentence-transformer model</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.contextual_embeddings.ContextualDocs.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">documents</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.contextual_embeddings.ContextualDocs.fit" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>documents</strong> – The input set of documents.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.contextual_embeddings.ContextualDocs.transform">
-<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">documents</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.contextual_embeddings.ContextualDocs.transform" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>documents</strong> – The input set of documents.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.contextual_embeddings.ContextualDocs.fit_transform">
-<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">documents</span></em>, <em class="sig-param"><span class="n">b</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.contextual_embeddings.ContextualDocs.fit_transform" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>documents</strong> – The input set of documents.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="autoBOTLib.contextual_embeddings.ContextualDocs.get_feature_names">
-<code class="sig-name descname">get_feature_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.contextual_embeddings.ContextualDocs.get_feature_names" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>fnames</strong> – Feature names (custom api artefact)</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="autobotlib-contextual-embeddings-module">
+<h2>autoBOTLib.contextual_embeddings module<a class="headerlink" href="#autobotlib-contextual-embeddings-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-autoBOTLib.data_utils">
 <span id="autobotlib-data-utils-module"></span><h2>autoBOTLib.data_utils module<a class="headerlink" href="#module-autoBOTLib.data_utils" title="Permalink to this headline">¶</a></h2>

@@ -18,3 +18,9 @@ This page serves as a storage of past performances on various shared tasks. If y
      - News classification
      - 24/323 (shared with others)
      - top 7.4%
+   * - Spanish humor classification
+     - neurosymbolic (8h) (v0.64)
+     - https://competitions.codalab.org/competitions/30090
+     - Humor classification
+     - 9/16;  6/16; 4/16; 7/16 - consistently better than baselines
+     - 4th place on third task (top ranking)
