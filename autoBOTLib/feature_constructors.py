@@ -6,6 +6,7 @@ from sklearn import preprocessing
 from sklearn.preprocessing import Normalizer
 from sklearn import pipeline
 from sklearn.pipeline import FeatureUnion
+from sklearn.decomposition import TruncatedSVD
 from sklearn.base import BaseEstimator, TransformerMixin
 from .topic_features import *
 from .doc_similarity import *
@@ -385,6 +386,7 @@ def get_features(df_data,
                  concept_features=False,
                  random_seed=54324,
                  contextual_model="paraphrase-xlm-r-multilingual-v1",
+                 compress_outputs = False,
                  combine_with_existing_representation=False):
     """
     Method that computes various TF-IDF-alike features.
@@ -400,6 +402,7 @@ def get_features(df_data,
     :param str contextual_model: The language model string compatible with sentence-transformers library (this is in beta)
     :param int random_seed: The seed for the pseudo-random parts.
     :param bool combine_with_existing_representation: Whether to use existing representations + user-specified ones.
+    :param bool compress_outputs: Whether to compress the constructed sparse representations to embedding_dim via sparse SVD (faster evolution)
     :return obj/list/matrix: Transformer pipeline, feature names and the feature matrix.
     """
 
@@ -567,10 +570,18 @@ def get_features(df_data,
         features = features + custom_pipeline
 
     feature_names = [x[0] for x in features]
-    matrix = pipeline.Pipeline([('union',
-                                 FeatureUnion(transformer_list=features,
-                                              n_jobs=1)),
-                                ('normalize', Normalizer())])
+
+    if compress_outputs:
+        matrix = pipeline.Pipeline([('union',
+                                     FeatureUnion(transformer_list=features,
+                                                  n_jobs=1)),
+                                    ('compression', TruncatedSVD(n_components = embedding_dim)),
+                                    ('normalize', Normalizer())])
+    else:
+        matrix = pipeline.Pipeline([('union',
+                                     FeatureUnion(transformer_list=features,
+                                                  n_jobs=1)),
+                                    ('normalize', Normalizer())])
 
     try:
         data_matrix = matrix.fit_transform(df_data)

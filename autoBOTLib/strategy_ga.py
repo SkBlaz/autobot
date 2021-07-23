@@ -93,6 +93,7 @@ class GAlearner:
             upsample = False,
             verbose = 1,
             validation_percentage = 0.2,
+            compress_sparse_representation = False,
             validation_type = "cv"):
         
         """The object initialization method; specify the core optimization parameter with this method.
@@ -123,11 +124,13 @@ class GAlearner:
         :param float default_importance: Minimum possible initial weight.
         :param bool upsample: Whether to equalize the number of instances by upsampling.
         :param float validation_percentage: The percentage of data to used as test set if validation_type = "train_test"
+        :param bool compress_sparse_representation: Should the final representation be compressed?
         :param str validation_type: type of validation, either train_val or cv (cross validation or train-val split)
         """
 
         ## Set the random seed
         self.random_seed = random_seed
+        self.compress_sparse_representation = compress_sparse_representation
         self.upsample = upsample
         self.validation_type = validation_type
         self.validation_percentage = validation_percentage
@@ -1274,6 +1277,7 @@ class GAlearner:
             custom_pipeline = self.custom_transformer_pipeline,
             contextual_model = self.contextual_model,
             concept_features = self.include_concept_features,
+            compress_outputs = self.compress_sparse_representation,
             combine_with_existing_representation = self.combine_with_existing_representation)
 
         self.all_feature_names = []
