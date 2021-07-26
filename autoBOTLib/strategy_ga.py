@@ -1277,7 +1277,6 @@ class GAlearner:
             custom_pipeline = self.custom_transformer_pipeline,
             contextual_model = self.contextual_model,
             concept_features = self.include_concept_features,
-            compress_outputs = self.compress_sparse_representation,
             combine_with_existing_representation = self.combine_with_existing_representation)
 
         self.all_feature_names = []
