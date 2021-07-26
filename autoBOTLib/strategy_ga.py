@@ -27,6 +27,7 @@ from sklearn.linear_model import SGDClassifier
 from sklearn.linear_model import SGDRegressor
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import ShuffleSplit
+from sklearn.neighbors import KNeighborsClassifier
 
 ## monitoring
 import tqdm
@@ -93,7 +94,6 @@ class GAlearner:
             upsample = False,
             verbose = 1,
             validation_percentage = 0.2,
-            compress_sparse_representation = False,
             validation_type = "cv"):
         
         """The object initialization method; specify the core optimization parameter with this method.
@@ -124,13 +124,11 @@ class GAlearner:
         :param float default_importance: Minimum possible initial weight.
         :param bool upsample: Whether to equalize the number of instances by upsampling.
         :param float validation_percentage: The percentage of data to used as test set if validation_type = "train_test"
-        :param bool compress_sparse_representation: Should the final representation be compressed?
         :param str validation_type: type of validation, either train_val or cv (cross validation or train-val split)
         """
 
         ## Set the random seed
         self.random_seed = random_seed
-        self.compress_sparse_representation = compress_sparse_representation
         self.upsample = upsample
         self.validation_type = validation_type
         self.validation_percentage = validation_percentage
@@ -680,9 +678,16 @@ class GAlearner:
 
         if self.learner_hyperparameters is None:
 
-            if final_run:
-                
-                ## we can afford this final round to be more rigorous.
+            if self.learner_preset == "mini-l1":
+                parameters = {"loss": ["log"], "penalty": ["l1"]}
+
+            elif self.learner_preset == "mini-l2":
+                parameters = {"loss": ["log"], "penalty": ["l2"]}
+
+            elif self.learner_preset == "knn":
+                parameters = {"n_neighbors":[2, 4, 8, 16, 32]}
+
+            if self.learner_preset == "default":
                 parameters = {
                     "loss": ["hinge", "log"],
                     "penalty": ["elasticnet"],
@@ -690,35 +695,34 @@ class GAlearner:
                     "l1_ratio": [0, 0.05, 0.25, 0.3, 0.6, 0.8, 0.95, 1]
                 }
 
-            else:
+            if final_run:
                 
-                ## this is for screening purposes.
+                ## we can afford this final round to be more rigorous.
                 if self.learner_preset == "default":
                     parameters = {
                         "loss": ["hinge", "log"],
                         "penalty": ["elasticnet"],
                         "alpha": [0.01, 0.001, 0.0001],
                         "l1_ratio": [0, 0.1, 0.5, 0.9]
-                    }
-
-                elif self.learner_preset == "mini-l1":
-                    parameters = {"loss": ["log"], "penalty": ["l1"]}
-
-                elif self.learner_preset == "mini-l2":
-                    parameters = {"loss": ["log"], "penalty": ["l2"]}
-
+                    }                
+                
         else:
 
             parameters = self.learner_hyperparameters
 
         if self.learner is None:
-            
-            if self.task == "classification":
-                svc = SGDClassifier(max_iter = 1000000)
+
+            if self.learner_preset == "knn":
+                svc = KNeighborsClassifier()
                 
             else:
-                svc = SGDRegressor(max_iter = 1000000)
-                parameters['loss'] = ['squared_loss']
+            
+                if self.task == "classification":
+                    svc = SGDClassifier(max_iter = 1000000)
+                
+                else:
+                    svc = SGDRegressor(max_iter = 1000000)
+                    parameters['loss'] = ['squared_loss']
 
         else:
             svc = self.learner
@@ -1601,22 +1605,25 @@ class GAlearner:
                             f"Evaluation of individual {top_individual} did not produce a viable learner. Increase time!"
                         )
 
-                coefficients = learner.best_estimator_.coef_
+                try:
+                    coefficients = learner.best_estimator_.coef_
 
-                ## coefficients are given for each class. We take maximum one (abs val)
-                coefficients = np.asarray(np.abs(np.max(coefficients,
-                                                        axis = 0))).reshape(-1)
+                    ## coefficients are given for each class. We take maximum one (abs val)
+                    coefficients = np.asarray(np.abs(np.max(coefficients,
+                                                            axis = 0))).reshape(-1)
 
-                if self.verbose:
-                    logging.info("Coefficients and indices: {}".format(
-                        len(coefficients)))
-                    
-                if self.verbose:
-                    logging.info(
-                        "Adding importances of shape {} for learner {} with score {}"
-                        .format(coefficients.shape, enx, score))
+                    if self.verbose:
+                        logging.info("Coefficients and indices: {}".format(
+                            len(coefficients)))
 
-                self.feature_importances.append((coefficients, feature_names))
+                    if self.verbose:
+                        logging.info(
+                            "Adding importances of shape {} for learner {} with score {}"
+                            .format(coefficients.shape, enx, score))
+
+                    self.feature_importances.append((coefficients, feature_names))
+                except:
+                    logging.info("The considered learner cannot produce importances (.coef_ property is missing).")
 
                 single_learner = (learner, individual, score)
                 self.ensemble_of_learners.append(single_learner)
