@@ -1,8 +1,0 @@
-Importance	Feature subspace
-0.10158490027309336	relational_features_token
-0.12588227450652506	topic_features
-0.3417384475332953	keyword_features
-0.6822918781904052	relational_features_char
-1.5863541534031331	char_features
-0.5557760781263176	word_features
-0.5886882361054484	pos_features

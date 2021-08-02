@@ -1,0 +1,16 @@
+relational_features_token	relational_features_char	topic_features	word_features	keyword_features	char_features	pos_features
+one--4--like : 0.0	l--2--h : 4.9	topic_16 : 1.69	fool : 1.03	absolute : 0.0	 u  : 6.69	nn prp vbp : 5.42
+know--3--like : 0.0	h--3--c : 4.82	topic_5 : 0.07	bitch : 0.92	abused : 0.0	go  : 6.32	prp vbp dt : 4.54
+get--2--like : 0.0	p--6--w : 4.81	topic_0 : 0.0	loser : 0.91	accusing : 0.0	oro : 5.56	prp vbp : 4.46
+get--3--like : 0.0	y--5--f : 4.67	topic_1 : 0.0	dumb : 0.38	acknowledge : 0.0	u  : 5.11	nn prp : 3.9
+us--4--people : 0.0	w--4--u : 3.88	topic_2 : 0.0	idiot : 0.24	activities : 0.0	 cra : 4.92	dt : 3.53
+dont--3--like : 0.0	n--4--f : 3.56	topic_3 : 0.0	moron : 0.05	added : 0.0	moro : 4.87	vbp : 3.04
+people--2--like : 0.0	k--5--h : 3.54	topic_4 : 0.0	shut : 0.03	admittedly : 0.0	oron : 4.79	vbd : 2.91
+get--2--would : 0.0	k--2--e : 3.54	topic_6 : 0.0	0bama : 0.0	admitting : 0.0	ist : 4.71	vbp dt : 2.81
+think--4--like : 0.0	r--3--i : 3.45	topic_7 : 0.0	ability : 0.0	adopt : 0.0	h a : 4.7	vbp in : 2.47
+want--4--one : 0.0	p--4--l : 3.43	topic_8 : 0.0	abortion : 0.0	affairs : 0.0	hu : 4.33	prp vb : 2.3
+think--2--like : 0.0	t--5--m : 3.36	topic_9 : 0.0	abortions : 0.0	afrika : 0.0	b  : 4.26	cc prp : 2.26
+get--3--think : 0.0	v--4--a : 3.33	topic_10 : 0.0	abs0lutely : 0.0	afucking : 0.0	ser : 4.03	jj nn prp : 2.25
+people--3--like : 0.0	k--2--i : 3.31	topic_11 : 0.0	absolutely : 0.0	again1 : 0.0	 li : 4.0	in dt : 2.04
+dont--3--people : 0.0	o--3--i : 3.29	topic_12 : 0.0	abuse : 0.0	agent : 0.0	tard : 3.91	prp md vb : 1.98
+people--4--like : 0.0	k--3--u : 3.25	topic_13 : 0.0	abusing : 0.0	airwaves : 0.0	ster : 3.89	cd : 1.88
