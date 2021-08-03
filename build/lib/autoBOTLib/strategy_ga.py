@@ -836,7 +836,7 @@ class GAlearner:
 
         return np.mean(f1_scores)
 
-    def report_performance(self, fits, gen=0):
+    def report_performance(self, fits, gen = 0):
         """
         A helper method for performance reports.
 
@@ -1238,23 +1238,23 @@ class GAlearner:
 
         del submatrices
 
-    def generate_report(self, output_folder = "./"):
+    def generate_report(self, output_folder = "./", job_id = "genericJobId"):
 
         importances_local, importances_global = self.feature_type_importances()
         
-        importances_local.to_csv(output_folder+"local.tsv",sep = "\t", index = False)
-        importances_global.to_csv(output_folder+"global.tsv",sep = "\t", index = False)
+        importances_local.to_csv(output_folder+f"{job_id}_local.tsv",sep = "\t", index = False)
+        importances_global.to_csv(output_folder+f"{job_id}_global.tsv",sep = "\t", index = False)
         
         learners = self.summarise_final_learners()
-        learners.to_csv(output_folder+"learners.tsv",sep = "\t", index = False)
+        learners.to_csv(output_folder+f"{job_id}_learners.tsv",sep = "\t", index = False)
         
-        fitness = self.visualize_fitness(image_path = output_folder+"fitness.png")
-        fitness.to_csv(output_folder+"fitness.tsv",sep = "\t", index = False)
+        fitness = self.visualize_fitness(image_path = output_folder+f"{job_id}_fitness.png")
+        fitness.to_csv(output_folder+f"{job_id}_fitness.tsv",sep = "\t", index = False)
         
         topics = self.get_topic_explanation()
         
         if not topics is None:
-            topics.to_csv(output_folder+"topics.tsv",sep = "\t", index = False)
+            topics.to_csv(output_folder+f"{job_id}_topics.tsv",sep = "\t", index = False)
 
         if self.verbose: logging.info(f"Report generated! Check: {output_folder} folder.")
 
@@ -1356,7 +1356,7 @@ class GAlearner:
 
         except Exception as es:            
             logging.info("Topics were not computed.")
-            return None
+            pass
         
         return out_df            
 
