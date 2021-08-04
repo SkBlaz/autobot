@@ -20,6 +20,9 @@ Feature types
    * - Relational features - char
      - Features based on longer distances between characters
      - relational_features_char
+   * - Relational features - bigram
+     - Features based on longer distances between character pairs
+     - relational_features_bigram
    * - Topic features
      - KMeans clusters of TF-IDF into `d` dimensions, presences are feature values
      - topic_features
@@ -62,13 +65,13 @@ Representation types are defined as follows (within autoBOT); the keys of these 
 	'concept_features', 'document_graph', 'neural_features_dbow',
 	'neural_features_dm', 'relational_features_token', 'topic_features',
 	'keyword_features', 'relational_features_char', 'char_features',
-	'word_features', 'pos_features', 'contextual_features'
+	'word_features', 'pos_features', 'contextual_features', 'relational_features_bigram'
     ]
 
     # This one is ~language agnostic
     feature_presets['neurosymbolic-lite'] = [
 	'document_graph', 'neural_features_dbow', 'neural_features_dm',
-	'topic_features', 'keyword_features', 'relational_features_char', 'relational_features_token','char_features', 'word_features'
+	'topic_features', 'keyword_features', 'relational_features_char', 'relational_features_token','char_features', 'word_features', 'relational_features_bigram'
     ]
 
     # MLJ paper versions
@@ -85,7 +88,7 @@ Representation types are defined as follows (within autoBOT); the keys of these 
     feature_presets['symbolic'] = [
 	'concept_features', 'relational_features_token', 'topic_features',
 	'keyword_features', 'relational_features_char', 'char_features',
-	'word_features', 'pos_features'
+	'word_features', 'pos_features', 'relational_features_bigram'
     ]
 
 

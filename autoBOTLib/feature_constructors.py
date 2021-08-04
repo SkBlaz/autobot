@@ -69,13 +69,13 @@ feature_presets['neurosymbolic'] = [
     'concept_features', 'document_graph', 'neural_features_dbow',
     'neural_features_dm', 'relational_features_token', 'topic_features',
     'keyword_features', 'relational_features_char', 'char_features',
-    'word_features', 'pos_features', 'contextual_features'
+    'word_features', 'pos_features', 'contextual_features', 'relational_features_bigram'
 ]
 
 # This one is ~language agnostic
 feature_presets['neurosymbolic-lite'] = [
     'document_graph', 'neural_features_dbow', 'neural_features_dm',
-    'topic_features', 'keyword_features', 'relational_features_char', 'relational_features_token','char_features', 'word_features'
+    'topic_features', 'keyword_features', 'relational_features_char', 'relational_features_token','char_features', 'word_features','relational_features_bigram'
 ]
 
 # MLJ paper versions
@@ -92,7 +92,7 @@ feature_presets['neural'] = [
 feature_presets['symbolic'] = [
     'concept_features', 'relational_features_token', 'topic_features',
     'keyword_features', 'relational_features_char', 'char_features',
-    'word_features', 'pos_features'
+    'word_features', 'pos_features','relational_features_bigram'
 ]
 
 if not contextual_feature_library:
@@ -444,6 +444,9 @@ def get_features(df_data,
         lr_rel_features_unigram = relationExtractor(max_features=max_num_feat,
                                                     min_token="unigrams")
 
+        lr_rel_features_bigram = relationExtractor(max_features=max_num_feat,
+                                                    min_token="bigrams")
+
         lr_rel_features_token = relationExtractor(max_features=max_num_feat,
                                                   min_token="word")
 
@@ -464,7 +467,7 @@ def get_features(df_data,
             elif isinstance(representation_type, list) and "neurosymbolic" in representation_type:
                 contextual_features = ContextualDocs(model=contextual_model)            
 
-        feature_transformer_vault = {
+        feature_transformer_vault = {            
             "pos_features":
             ('pos_features',
              pipeline.Pipeline([('s3', text_col(key='pos_tag_seq')),
@@ -485,6 +488,12 @@ def get_features(df_data,
              pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
                                 ('relational_features_unigram',
                                  lr_rel_features_unigram),
+                                ('normalize', Normalizer(norm="max"))])),
+            "relational_features_bigram":
+            ('relational_features_bigram',
+             pipeline.Pipeline([('s10', text_col(key='no_stopwords')),
+                                ('relational_features_bigram',
+                                 lr_rel_features_bigram),
                                 ('normalize', Normalizer(norm="max"))])),
             "keyword_features": ('keyword_features',
                                  pipeline.Pipeline([
