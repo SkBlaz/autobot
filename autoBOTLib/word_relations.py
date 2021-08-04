@@ -101,7 +101,7 @@ class relationExtractor:
             
             for pair in pairs:
                 w1, w2, distance = self.compute_distance(pair, token_dict)
-                if self.min_token == "word":
+                if self.min_token == "word" or self.min_token == "bigrams":
                     if distance > self.neighborhood_token:
                         continue
                     
