@@ -83,6 +83,12 @@ class relationExtractor:
             
             if self.min_token == "word":
                 tokens = [x for x in instance.strip().split()]
+
+            elif self.min_token == "threegrams":
+                tokens = []
+                sstring = instance.strip()
+                for enx in range(len(sstring) - 1):
+                    tokens.append(sstring[enx:(enx+3)].lower())
                 
             elif self.min_token == "bigrams":
                 tokens = []
@@ -214,13 +220,13 @@ class relationExtractor:
 
 if __name__ == "__main__":
     
-    tfile = pd.read_csv("../data/spanish/train.tsv", sep="\t")
-    example_text = tfile['tweet']
-    targets = tfile['offensive']
-    rex = relationExtractor(min_token="bigrams")
+    tfile = pd.read_csv("../data/insults/train.tsv", sep="\t")
+    example_text = tfile['text_a']
+    targets = tfile['label']
+    rex = relationExtractor(min_token="threegrams")
     rex.fit(example_text)
     m = rex.transform(example_text)
     print(np.count_nonzero(m.todense()) / (5625 * 10000))
     print(np.isnan(m.todense()).any())
     print(m.shape)
-    print(rex.get_feature_names()[0:10])
+    print(rex.get_feature_names()[0:30])
