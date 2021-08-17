@@ -26,6 +26,7 @@ Welcome to *autoBOT*'s documentation
    custom_metrics.rst
    ideas.rst
    updates.rst
+   api.rst
    shared_tasks.rst
 
 .. toctree::
