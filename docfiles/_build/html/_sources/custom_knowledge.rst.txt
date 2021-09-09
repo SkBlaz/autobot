@@ -14,14 +14,17 @@ One of the key novelties of *autoBOT* is the use of triplet-based graph database
 	    "./memory",  # tripled base for concept features
 	    representation_type="neurosymbolic")  # or symbolic or neural
 
-There is a dedicated parameter called *memory_storage*, which is a **path** that links to a file that contains the triplets like the following few examples:
+There is a dedicated parameter called *memory_storage*, which is a **path** that links to a list of files that contain triplets. You can use one or more gzipped tsv files! Example below.
 
 
  .. code-block:: text
 
-    /a/[/r/CapableOf/,/c/en/context/,/c/en/matter_lot/]	/r/CapableOf	/c/en/context	/c/en/matter_lot	{"dataset": "/d/conceptnet/4/en", "license": "cc:by/4.0", "sources": [{"activity": "/s/activity/omcs/omcs1_possibly_free_text", "contributor": "/s/contributor/omcs/comdotatdotcom"}], "surfaceEnd": "matter a lot", "surfaceStart": "context", "surfaceText": "[[context]] can [[matter a lot]]", "weight": 1.0}
-    /a/[/r/DerivedFrom/,/c/de/context/,/c/de/tex/n/]	/r/DerivedFrom	/c/de/context	/c/de/tex/n	{"dataset": "/d/wiktionary/de", "license": "cc:by-sa/4.0", "sources": [{"contributor": "/s/resource/wiktionary/de", "process": "/s/process/wikiparsec/2"}], "weight": 1.0}
-    /a/[/r/DerivedFrom/,/c/en/acontextual/,/c/en/contextual/]	/r/DerivedFrom	/c/en/acontextual	/c/en/contextual	{"dataset": "/d/wiktionary/en", "license": "cc:by-sa/4.0", "sources": [{"contributor": "/s/resource/wiktionary/en", "process": "/s/process/wikiparsec/2"}], "weight": 1.0}
+	schlau	antonym	dumm
+	schlau	antonym	naiv
+	schlau	antonym	trottelig
+	schlau	antonym	unwissend
+	schlauerweise	antonym	blöderweise
+	schlauerweise	antonym	dum
 
 
-The database is formatted according to the `conceptnet <https://github.com/commonsense/conceptnet5/wiki/Downloads>`_. Note that you only need the first few columns of this file (subject-predicate-object). To use your own knowledge, simply provide a custom triplet database.
+The databases are simple tab-separated subject-predicate-object triplets. The files need to be Gzipped (there can be more in the *memory* folder!).

@@ -191,15 +191,18 @@
         <span class="n">representation_type</span><span class="o">=</span><span class="s2">&quot;neurosymbolic&quot;</span><span class="p">)</span>  <span class="c1"># or symbolic or neural</span>
 </pre></div>
 </div>
-<p>There is a dedicated parameter called <em>memory_storage</em>, which is a <strong>path</strong> that links to a file that contains the triplets like the following few examples:</p>
+<p>There is a dedicated parameter called <em>memory_storage</em>, which is a <strong>path</strong> that links to a list of files that contain triplets. You can use one or more gzipped tsv files! Example below.</p>
 <blockquote>
-<div><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/a/[/r/CapableOf/,/c/en/context/,/c/en/matter_lot/] /r/CapableOf    /c/en/context   /c/en/matter_lot        {&quot;dataset&quot;: &quot;/d/conceptnet/4/en&quot;, &quot;license&quot;: &quot;cc:by/4.0&quot;, &quot;sources&quot;: [{&quot;activity&quot;: &quot;/s/activity/omcs/omcs1_possibly_free_text&quot;, &quot;contributor&quot;: &quot;/s/contributor/omcs/comdotatdotcom&quot;}], &quot;surfaceEnd&quot;: &quot;matter a lot&quot;, &quot;surfaceStart&quot;: &quot;context&quot;, &quot;surfaceText&quot;: &quot;[[context]] can [[matter a lot]]&quot;, &quot;weight&quot;: 1.0}
-/a/[/r/DerivedFrom/,/c/de/context/,/c/de/tex/n/]    /r/DerivedFrom  /c/de/context   /c/de/tex/n     {&quot;dataset&quot;: &quot;/d/wiktionary/de&quot;, &quot;license&quot;: &quot;cc:by-sa/4.0&quot;, &quot;sources&quot;: [{&quot;contributor&quot;: &quot;/s/resource/wiktionary/de&quot;, &quot;process&quot;: &quot;/s/process/wikiparsec/2&quot;}], &quot;weight&quot;: 1.0}
-/a/[/r/DerivedFrom/,/c/en/acontextual/,/c/en/contextual/]   /r/DerivedFrom  /c/en/acontextual       /c/en/contextual        {&quot;dataset&quot;: &quot;/d/wiktionary/en&quot;, &quot;license&quot;: &quot;cc:by-sa/4.0&quot;, &quot;sources&quot;: [{&quot;contributor&quot;: &quot;/s/resource/wiktionary/en&quot;, &quot;process&quot;: &quot;/s/process/wikiparsec/2&quot;}], &quot;weight&quot;: 1.0}
+<div><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>schlau  antonym dumm
+schlau  antonym naiv
+schlau  antonym trottelig
+schlau  antonym unwissend
+schlauerweise   antonym blöderweise
+schlauerweise   antonym dum
 </pre></div>
 </div>
 </div></blockquote>
-<p>The database is formatted according to the <a class="reference external" href="https://github.com/commonsense/conceptnet5/wiki/Downloads">conceptnet</a>. Note that you only need the first few columns of this file (subject-predicate-object). To use your own knowledge, simply provide a custom triplet database.</p>
+<p>The databases are simple tab-separated subject-predicate-object triplets. The files need to be Gzipped (there can be more in the <em>memory</em> folder!).</p>
 </div>
 
 
