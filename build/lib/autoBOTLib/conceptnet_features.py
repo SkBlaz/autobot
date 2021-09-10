@@ -13,6 +13,7 @@ logging.basicConfig(format='%(asctime)s - %(message)s',
 logging.getLogger().setLevel(logging.INFO)
 
 import gzip
+import os
 import pandas as pd
 import networkx as nx
 import tqdm
@@ -29,7 +30,7 @@ class ConceptFeatures:
     def __init__(self,
                  max_features=10000,
                  targets=None,
-                 knowledge_graph="../memory/conceptnet.txt.gz"):
+                 knowledge_graph="../memory"):
 
         self.max_features = max_features
         self.targets = targets
@@ -38,6 +39,21 @@ class ConceptFeatures:
         self.knowledge_graph = knowledge_graph
         self.feature_names = None
 
+
+    def get_grounded_from_path(self, present_tokens, graph_path):
+        """
+        Method which performs a very simple term grounding. This simply evaluates if both terms are present in the corpus.
+        :param list present_tokens: The present tokens
+        :param str graph_path: Path to the triplet base (compressed)
+        """
+        
+        with gzip.open(graph_path, "rt", encoding="utf-8") as gp:
+            for line in gp:
+                subject, predicate, obj = line.strip().split("\t")
+                if subject.lower() in present_tokens and obj.lower() in present_tokens:
+                    if subject != obj:
+                        yield (subject, predicate, obj)
+        
     def concept_graph(self, document_space, graph_path):
         """
         If no prior knowledge graph is supplied, one is constructed.
@@ -46,30 +62,53 @@ class ConceptFeatures:
         :return grounded: Grounded relations.
         """
 
+        generic_triplets = []
         present_tokens = set()
+        
         for document in document_space:
             tokens = nltk.word_tokenize(document)
             tokens = [word.lower() for word in tokens]
+            for i, token in enumerate(tokens):
+                if i > 0 and i < len(tokens)-1:
+                    if token == "is" and tokens[i+1] == "a":
+                        if len(tokens[i-1]) > 1 and len(tokens[i+2]) > 1:
+                            triplet_adhoc = (tokens[i-1],"is_a",tokens[i+2])
+                            generic_triplets.append(triplet_adhoc)
+                            
             for token in tokens:
                 present_tokens.add(token)
 
         grounded = []
-        with gzip.open(graph_path, "rt", encoding="utf-8") as gp:
-            for line in tqdm.tqdm(
-                    gp, total=34074917):  ## this is hardcoded for conceptnet.
-                parts = line.strip().split("\t")
 
-                if len(parts) != 5:
-                    # invalid triplet for the purpose of this work.
-                    continue
+        if len(generic_triplets) == 0:
+            logging.info("Generating the knowledge graph (ad hoc)")
+            for document in document_space:
+                tokens = nltk.word_tokenize(document)
+                tokens = [str(x) for x in tokens]
+                for enx, token in enumerate(tokens):
+                    if enx > 1 and enx < len(tokens)-2:
+                        if len(tokens[enx-1]) >= 2 and len(tokens[enx+1]) >= 2:
+                            triplet_adhoc = (tokens[enx-2], token, tokens[enx+2])
+                            if triplet_adhoc[0] != triplet_adhoc[2]:
+                                generic_triplets.append(triplet_adhoc)
+        try:
+            
+            kg_sources = os.listdir(graph_path)
+            full_paths = [os.path.join(graph_path, x) for x in kg_sources]
 
-                r, c1, c2 = parts[1:4]
-                r = r.split("/")[-1].lower()
-                c1 = c1.split("/")[3].lower()
-                c2 = c2.split("/")[3].lower()
-                if c1 in present_tokens and c2 in present_tokens:
-                    if c1 != c2:
-                        grounded.append((c1, r, c2))
+            for path in full_paths:
+                logging.info(f"Processing: {path}")
+                triplet_generator = self.get_grounded_from_path(present_tokens, path)
+                
+                for triplet in triplet_generator:
+                    grounded.append(triplet)
+                logging.info(f"Grounded: {len(grounded)} triplets.")
+                
+        except:
+            logging.info(f"No knowledge graphs found in the default path: {graph_path}. Reverting to generic triplet extraction from the corpus alone. To use a knowledge graph, place a Gzipped triplet (tsv) database in {graph_path} folder.")
+            grounded = generic_triplets
+            del generic_triplets
+                
         logging.info(
             "The number of grounded relations in the input corpus is: {}".
             format(len(grounded)))
@@ -186,12 +225,12 @@ class ConceptFeatures:
 
 if __name__ == "__main__":
 
-    example_text = pd.read_csv("../data/spanish/train.tsv", sep="\t")
+    example_text = pd.read_csv("../data/insults/train.tsv", sep="\t")
     text = example_text['text_a']
     labels = example_text['label']
 
     rex = ConceptFeatures(
-        knowledge_graph="../examples/memory/conceptnet-assertions-5.7.0.csv.gz"
+        knowledge_graph="./memory"
     )
     m = rex.fit_transform(text)
     print(m.shape)

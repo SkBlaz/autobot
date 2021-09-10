@@ -75,14 +75,14 @@ feature_presets['neurosymbolic'] = [
 # This one is ~language agnostic
 feature_presets['neurosymbolic-lite'] = [
     'document_graph', 'neural_features_dbow', 'neural_features_dm',
-    'topic_features', 'keyword_features', 'relational_features_char', 'relational_features_token','char_features', 'word_features','relational_features_bigram'
+    'topic_features', 'keyword_features', 'relational_features_char', 'relational_features_token','char_features', 'word_features','relational_features_bigram','concept_features'
 ]
 
 # MLJ paper versions
 feature_presets['neurosymbolic-default'] = [
     'neural_features_dbow', 'neural_features_dm', 'keyword_features',
     'relational_features_char', 'char_features', 'word_features', "pos_features",
-    'concept_features'
+    'concept_features','concept_features'
 ]
 
 feature_presets['neural'] = [
@@ -380,9 +380,8 @@ def get_features(df_data,
                  targets=None,
                  sparsity=0.1,
                  embedding_dim=512,
-                 memory_location="memory/conceptnet.txt.gz",
+                 memory_location="memory",
                  custom_pipeline=None,
-                 concept_features=False,
                  random_seed=54324,
                  contextual_model="paraphrase-xlm-r-multilingual-v1",
                  combine_with_existing_representation=False):
@@ -396,7 +395,6 @@ def get_features(df_data,
     :param int embedding_dim: The latent dimension for doc. embeddings
     :param str memory_location: Location of the gzipped ConceptNet-like memory.
     :param obj custom_pipeline: Custom pipeline to be used for features if needed.
-    :param bool concept_features: Whether to use ConceptNet features -- needs the internet connection.
     :param str contextual_model: The language model string compatible with sentence-transformers library (this is in beta)
     :param int random_seed: The seed for the pseudo-random parts.
     :param bool combine_with_existing_representation: Whether to use existing representations + user-specified ones.
@@ -556,10 +554,6 @@ def get_features(df_data,
                     "Please, specify a valid preset! (see the documentation for the up-to-date namings)")
 
             preset_features = feature_presets[representation_type]
-            if not concept_features:
-                preset_features = [
-                    x for x in preset_features if x != "concept_features"]
-
             features = [
                 feature_transformer_vault[x]
                 for x in preset_features

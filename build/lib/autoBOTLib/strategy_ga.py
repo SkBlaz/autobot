@@ -76,19 +76,17 @@ class GAlearner:
             top_k_importances = 15,
             representation_type = "neurosymbolic-lite",
             binarize_importances = False,
-            memory_storage = "memory/conceptnet.gz",
+            memory_storage = "memory",
             learner = None,
             n_fold_cv = 5,
             random_seed = 8954,
             learner_hyperparameters = None,
             custom_transformer_pipeline = None,
             combine_with_existing_representation = False,
-            conceptnet_url = "https://s3.amazonaws.com/conceptnet/downloads/2019/edges/conceptnet-assertions-5.7.0.csv.gz",
             default_importance = 0.05,
             learner_preset = "default",
             task = "classification",
             contextual_model = "paraphrase-xlm-r-multilingual-v1",
-            include_concept_features = False,
             upsample = False,
             verbose = 1,
             validation_percentage = 0.2,
@@ -109,16 +107,14 @@ class GAlearner:
         :param int top_k_importances: How many top importances to remember for explanations.
         :param str representation_type: "symbolic", "neural", "neurosymbolic", "neurosymbolic-default", "neurosymbolic-lite" or "custom". The "symbolic" feature space will only include feature types that we humans directly comprehend. The "neural" will include the embedding-based ones. The "neurosymbolic-default" will include the ones based on the origin MLJ paper, the "neurosymbolic" is the current alpha version with some new additions (constantly updated/developed). The "neurosymbolic-lite" version includes language-agnostic features but does not consider document graphs (due to space constraints)
         :param bool binarize_importances: Feature selection instead of ranking as explanation
-        :param str memory_storage: The storage of conceptnet.txt.gz-like triplet database
+        :param str memory_storage: The storage of the gzipped (TSV) triplets (SPO).
         :param obj learner: custom learner. If none, linear learners are used.
         :param obj learner_hyperparameters: The space to be optimized w.r.t. the learner param.
-        :param str conceptnet_url: URL of the conceptnet used.
         :param int random_seed: The random seed used.
         :param str contextual_model: The language model string compatible with sentence-transformers library (this is in beta)
         :param str task: Either "classification" - SGDClassifier, or "regression" - SGDRegressor
         :param int n_fold_cv: The number of folds to be used for model evaluation.
         :param str learner_preset: Type of classification to be considered (default = paper), ""mini-l1"" or ""mini-l2" -> very lightweight regression, emphasis on space exploration.
-        :param bool include_concept_features: Whether to include external background knowledge if possible
         :param float default_importance: Minimum possible initial weight.
         :param bool upsample: Whether to equalize the number of instances by upsampling.
         :param float validation_percentage: The percentage of data to used as test set if validation_type = "train_test"
@@ -252,59 +248,6 @@ class GAlearner:
         self.hof = []  ## The hall of fame
 
         self.memory_storage = memory_storage  ## Path to the memory storage
-        self.include_concept_features = include_concept_features
-
-        if self.include_concept_features:
-
-            if not os.path.exists(self.memory_storage):
-
-                if self.verbose:
-                    logging.info(
-                        f"Attempting to download the knowledge graph. Folder: {self.memory_storage}"
-                    )
-
-                try:
-
-                    if self.verbose:
-                        logging.info(
-                            "Memory (ConceptNet) not found! Downloading into ./memory folder. Please wait a few minutes (a few hundred MB is being downloaded)."
-                        )
-
-                    os.mkdir("./memory")
-
-                    wget.download(conceptnet_url, out="memory")
-                    fname = list(
-                        os.walk("memory"))[0][2][0]  ## Get the new file name
-
-                    self.memory_storage = f"memory/{fname}"
-
-                    if self.verbose:
-                        logging.info(
-                            f"Memory storage downloaded: {self.memory_storage}"
-                        )
-
-                except Exception as es:
-                    if self.verbose:
-                        logging.info(
-                            f"ConceptNet could not be downloaded. Please download it and store it as memory/conceptnet.txt.gz. Omitting this feature type.{es}"
-                        )
-                    self.include_concept_features = False
-
-            else:
-
-                try:
-                    cnames = list(os.walk(self.memory_storage))[0][2][0]
-
-                    self.memory_storage = self.memory_storage + "/" + cnames
-
-                except Exception:
-
-                    if self.verbose:
-                        logging.info(
-                            f"Could not find the knowledge graph memory storage. Please do the following: \n a) Check if there is empty memory folder. \n b) Download manually into the created memory folder via: {conceptnet_url} \n c) Check if the file is not corrupted. \n autoBOT will now continue without the ConceptNet-based features!"
-                        )
-
-                    self.include_concept_features = False
 
         self.population = None  ## this object gets evolved
 
@@ -323,9 +266,6 @@ class GAlearner:
             )
 
         ## hyperparameter space. Parameters correspond to weights of subspaces, as well as subsets + regularization of LR.
-
-        #self.weight_params = self.weight_params
-
         ## other hyperparameters
         self.hof_size = hof_size  ## size of the hall of fame.
 
@@ -1285,7 +1225,6 @@ class GAlearner:
             memory_location = self.memory_storage,
             custom_pipeline = self.custom_transformer_pipeline,
             contextual_model = self.contextual_model,
-            concept_features = self.include_concept_features,
             combine_with_existing_representation = self.combine_with_existing_representation)
 
         self.all_feature_names = []

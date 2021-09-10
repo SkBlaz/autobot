@@ -19,12 +19,12 @@ There is a dedicated parameter called *memory_storage*, which is a **path** that
 
  .. code-block:: text
 
-	schlau	antonym	dumm
-	schlau	antonym	naiv
-	schlau	antonym	trottelig
-	schlau	antonym	unwissend
-	schlauerweise	antonym	blöderweise
-	schlauerweise	antonym	dum
+	schlau\tantonym\tdumm
+	schlau\tantonym\tnaiv
+	schlau\tantonym\ttrottelig
+	schlau\tantonym\tunwissend
+	schlauerweise\tantonym\tblöderweise
+	schlauerweise\tantonym\tdum
 
 
 The databases are simple tab-separated subject-predicate-object triplets. The files need to be Gzipped (there can be more in the *memory* folder!).
