@@ -1198,6 +1198,7 @@ class GAlearner:
         importances_global.to_csv(output_folder+f"{job_id}_global.tsv",sep = "\t", index = False)
         
         learners = self.summarise_final_learners()
+        learners = learners.sort_values(by = ["mean_test_score"])
         learners.to_csv(output_folder+f"{job_id}_learners.tsv",sep = "\t", index = False)
         
         fitness = self.visualize_fitness(image_path = output_folder+f"{job_id}_fitness.png")

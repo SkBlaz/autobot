@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Using custom metrics &mdash; autoBOTLib  documentation</title>
+  <title>Scaling up (SLING) &mdash; autoBOTLib  documentation</title>
   
 
   
@@ -38,8 +38,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Potentially interesting further work" href="ideas.html" />
-    <link rel="prev" title="Using custom background knowledge" href="custom_knowledge.html" /> 
+    <link rel="next" title="Performance on shared tasks" href="shared_tasks.html" />
+    <link rel="prev" title="autoBOT API" href="api.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -103,11 +103,11 @@
 <li class="toctree-l1"><a class="reference internal" href="cli_usage.html">autoBOTLib CLI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="containerization.html">Singularity container for autoBOT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_knowledge.html">Using custom background knowledge</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Using custom metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_metrics.html">Using custom metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ideas.html">Potentially interesting further work</a></li>
 <li class="toctree-l1"><a class="reference internal" href="updates.html">Releases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">autoBOT API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cluster.html">Scaling up (SLING)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Scaling up (SLING)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="shared_tasks.html">Performance on shared tasks</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contents:</span></p>
@@ -161,13 +161,13 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Using custom metrics</li>
+      <li>Scaling up (SLING)</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/custom_metrics.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/cluster.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -180,20 +180,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="using-custom-metrics">
-<h1>Using custom metrics<a class="headerlink" href="#using-custom-metrics" title="Permalink to this headline">¶</a></h1>
-<p>You can use any sklearn-compatible metrics, found as follows</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">SCORERS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-</pre></div>
-</div>
-<p>Yielding:</p>
-<blockquote>
-<div><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;explained_variance&#39;, &#39;r2&#39;, &#39;max_error&#39;, &#39;neg_median_absolute_error&#39;, &#39;neg_mean_absolute_error&#39;, &#39;neg_mean_absolute_percentage_error&#39;, &#39;neg_mean_squared_error&#39;, &#39;neg_mean_squared_log_error&#39;, &#39;neg_root_mean_squared_error&#39;, &#39;neg_mean_poisson_deviance&#39;, &#39;neg_mean_gamma_deviance&#39;, &#39;accuracy&#39;, &#39;top_k_accuracy&#39;, &#39;roc_auc&#39;, &#39;roc_auc_ovr&#39;, &#39;roc_auc_ovo&#39;, &#39;roc_auc_ovr_weighted&#39;, &#39;roc_auc_ovo_weighted&#39;, &#39;balanced_accuracy&#39;, &#39;average_precision&#39;, &#39;neg_log_loss&#39;, &#39;neg_brier_score&#39;, &#39;adjusted_rand_score&#39;, &#39;rand_score&#39;, &#39;homogeneity_score&#39;, &#39;completeness_score&#39;, &#39;v_measure_score&#39;, &#39;mutual_info_score&#39;, &#39;adjusted_mutual_info_score&#39;, &#39;normalized_mutual_info_score&#39;, &#39;fowlkes_mallows_score&#39;, &#39;precision&#39;, &#39;precision_macro&#39;, &#39;precision_micro&#39;, &#39;precision_samples&#39;, &#39;precision_weighted&#39;, &#39;recall&#39;, &#39;recall_macro&#39;, &#39;recall_micro&#39;, &#39;recall_samples&#39;, &#39;recall_weighted&#39;, &#39;f1&#39;, &#39;f1_macro&#39;, &#39;f1_micro&#39;, &#39;f1_samples&#39;, &#39;f1_weighted&#39;, &#39;jaccard&#39;, &#39;jaccard_macro&#39;, &#39;jaccard_micro&#39;, &#39;jaccard_samples&#39;, &#39;jaccard_weighted&#39;])
-</pre></div>
-</div>
-</div></blockquote>
-<p>Use the metric name as “scoring_metric” argument when initializing autoBOT.</p>
+  <div class="section" id="scaling-up-sling">
+<h1>Scaling up (SLING)<a class="headerlink" href="#scaling-up-sling" title="Permalink to this headline">¶</a></h1>
+<p>Being embarassingly parallel, individual evolutions can be sent to as many available machines as needed. To simplify this process, we constructed <cite>autobot-cluster</cite> a framework for generation and monitoring grid-scale meta learning, targeted at autoBOT. The project is available as <a class="reference external" href="https://gitlab.com/skblaz/autobot-cluster/">autoBOT-cluster</a>.</p>
 </div>
 
 
@@ -202,8 +191,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="ideas.html" class="btn btn-neutral float-right" title="Potentially interesting further work" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="custom_knowledge.html" class="btn btn-neutral float-left" title="Using custom background knowledge" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="shared_tasks.html" class="btn btn-neutral float-right" title="Performance on shared tasks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="api.html" class="btn btn-neutral float-left" title="autoBOT API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

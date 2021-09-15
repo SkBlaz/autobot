@@ -27,6 +27,7 @@ Welcome to *autoBOT*'s documentation
    ideas.rst
    updates.rst
    api.rst
+   cluster.rst
    shared_tasks.rst
 
 .. toctree::
