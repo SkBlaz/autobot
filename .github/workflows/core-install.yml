@@ -33,5 +33,6 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-	  	ls
-        pytest tests/*
+        python -m nltk.downloader stopwords;python -m nltk.downloader punkt;
+        python -m nltk.downloader averaged_perceptron_tagger;
+        cd tests; py.test;
