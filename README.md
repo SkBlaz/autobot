@@ -1,6 +1,7 @@
 # autoBOT - an AutoML for neuro-symbolic text classification
 Welcome to *autoBOT*'s documentation and source pages. Here, you can find simple examples to get you started,
 but also delve deeper into autoBOT's capabilities.
+![example workflow](https://github.com/skblaz/autobot/actions/workflows/core-install.yml/badge.svg)
 <pre>
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWM
