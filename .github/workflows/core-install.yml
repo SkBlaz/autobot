@@ -33,5 +33,5 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        python -m nltk.downloader stopwords;
+        python -m nltk.downloader stopwords;python -m nltk.downloader punkt;
         cd tests; py.test;
