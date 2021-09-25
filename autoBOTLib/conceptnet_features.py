@@ -165,7 +165,7 @@ class ConceptFeatures:
         logging.info(f"Average bag size: {np.mean(all_doc_sizes)}")
         return rbags
 
-    def fit(self, text_vector, refit=False):
+    def fit(self, text_vector, refit=False, knowledge_graph = None):
         """
         Fit the model to a text vector.
         

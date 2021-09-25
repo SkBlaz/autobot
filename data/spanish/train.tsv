@@ -1,4 +1,4 @@
-id	event	tweet	offensive	emotion
+id	event	text_a	offensive	label
 a0c1a858-a9b8-4cb1-8a81-1602736ff5b8	GameOfThrones	La Gran Guerra de #JuegoDeTronos nos ha dejado muchos momentos para el recuerdo y unas cuantas dudas https://t.co/UE7lCgLSez https://t.co/OO3tjUR34c	NO	others
 9b272817-a231-4f68-bdf4-3350d4919330	Venezuela	El golpe de Estado en #Venezuela está más lejos que el final de Elif. #VenezuelaEnBatallaYVictoria #VenezuelaNoSeRinde #VenezuelaHoy	NO	others
 4bd5b1e5-4b74-440a-82f4-c2567a241011	NotreDame	No tengo una foto en la catedral de #NotreDame pero tengo esta secuencia hermosa... https://t.co/cwcdHASGIu	NO	sadness
