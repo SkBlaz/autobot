@@ -17,7 +17,8 @@ def run():
 
     print(len(train_sequences))
     print(len(train_targets))
-
+    classx = "genericTargetName"
+    
     autoBOTObj = autoBOTLib.GAlearner(
         train_sequences,  # input sequences
         train_targets,  # target space
@@ -42,11 +43,10 @@ def run():
     autoBOTLib.store_autobot_model(
         autoBOTObj, f"./models/{jid}_{classx}_model.pickle")
 
-    for classx in possible_classes:
 
-        autoBOTObj = autoBOTLib.load_autobot_model(
-            f"./models/{jid}_{classx}_model.pickle")
-        autoBOTObj.predict(test_sequences)
+    autoBOTObj = autoBOTLib.load_autobot_model(
+        f"./models/{jid}_{classx}_model.pickle")
+    autoBOTObj.predict(test_sequences)
 
 
 if __name__ == "__main__":
