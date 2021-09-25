@@ -4,7 +4,6 @@ import autoBOTLib
 import pandas as pd
 import secrets
 
-
 def run():
     jid = secrets.token_hex(nbytes=16)
     df_path = None
@@ -43,7 +42,7 @@ def run():
     autoBOTLib.store_autobot_model(
         autoBOTObj, f"./models/{jid}_{classx}_model.pickle")
 
-
+    test_sequences = None
     autoBOTObj = autoBOTLib.load_autobot_model(
         f"./models/{jid}_{classx}_model.pickle")
     autoBOTObj.predict(test_sequences)
