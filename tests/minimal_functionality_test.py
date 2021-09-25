@@ -32,5 +32,3 @@ def test_minimal():
     print(prob_predictions)
 
     autoBOTLibObj.generate_report(output_folder = "./report/", job_id = "as9y0gb98s")
-
-

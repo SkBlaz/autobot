@@ -1190,8 +1190,16 @@ class GAlearner:
 
         del submatrices
 
-    def generate_report(self, output_folder = "./", job_id = "genericJobId"):
+    def generate_report(self, output_folder = "./report", job_id = "genericJobId"):
+        """An auxilliary method for creating a report
 
+        :param string output_folder: The folder containing the report
+        :param string job_id: The identifier of a given job
+        :return: None
+
+        """
+        os.makedirs(output_folder, exist_ok=True)
+        
         importances_local, importances_global = self.feature_type_importances()
         
         importances_local.to_csv(output_folder+f"{job_id}_local.tsv",sep = "\t", index = False)
