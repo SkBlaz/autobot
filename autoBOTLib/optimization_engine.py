@@ -16,8 +16,8 @@ gcreator.create("Individual", list, fitness=creator.FitnessMulti)
 import operator
 
 ## feature space construction
-from .feature_constructors import *
-from .metrics import *
+from .optimization_feature_constructors import *
+from .optimization_metrics import *
 from collections import defaultdict, Counter
 from scipy import sparse
 import requests  ## for downloading the KG
@@ -61,37 +61,35 @@ class GAlearner:
     2.) Evolve
     3.) Predict
     """
-    def __init__(
-            self,
-            train_sequences_raw,
-            train_targets,
-            time_constraint,
-            num_cpu = "all",
-            task_name = "Super cool task.",
-            latent_dim = 512,
-            sparsity = 0.1,
-            hof_size = 1,
-            initial_separate_spaces = True,
-            scoring_metric = None,
-            top_k_importances = 15,
-            representation_type = "neurosymbolic-lite",
-            binarize_importances = False,
-            memory_storage = "memory",
-            learner = None,
-            n_fold_cv = 5,
-            random_seed = 8954,
-            learner_hyperparameters = None,
-            custom_transformer_pipeline = None,
-            combine_with_existing_representation = False,
-            default_importance = 0.05,
-            learner_preset = "default",
-            task = "classification",
-            contextual_model = "paraphrase-xlm-r-multilingual-v1",
-            upsample = False,
-            verbose = 1,
-            validation_percentage = 0.2,
-            validation_type = "cv"):
-        
+    def __init__(self,
+                 train_sequences_raw,
+                 train_targets,
+                 time_constraint,
+                 num_cpu="all",
+                 task_name="Super cool task.",
+                 latent_dim=512,
+                 sparsity=0.1,
+                 hof_size=1,
+                 initial_separate_spaces=True,
+                 scoring_metric=None,
+                 top_k_importances=15,
+                 representation_type="neurosymbolic-lite",
+                 binarize_importances=False,
+                 memory_storage="memory",
+                 learner=None,
+                 n_fold_cv=5,
+                 random_seed=8954,
+                 learner_hyperparameters=None,
+                 custom_transformer_pipeline=None,
+                 combine_with_existing_representation=False,
+                 default_importance=0.05,
+                 learner_preset="default",
+                 task="classification",
+                 contextual_model="paraphrase-xlm-r-multilingual-v1",
+                 upsample=False,
+                 verbose=1,
+                 validation_percentage=0.2,
+                 validation_type="cv"):
         """The object initialization method; specify the core optimization parameter with this method.
 
         :param list/PandasSeries train_sequences_raw: a list of texts
@@ -129,7 +127,7 @@ class GAlearner:
         self.task = task
         self.contextual_model = contextual_model
         np.random.seed(random_seed)
-        
+
         logo = """
 
       MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -170,15 +168,15 @@ class GAlearner:
         if self.verbose: print(logo)
 
         if self.upsample:
-            train_sequences_raw, train_targets = self.upsample_dataset(train_sequences_raw,
-                                                                       train_targets)
+            train_sequences_raw, train_targets = self.upsample_dataset(
+                train_sequences_raw, train_targets)
         self.default_importance = default_importance
         self.learner_preset = learner_preset
 
         if self.verbose:
             logging.info("Instantiated the evolution-based learner.")
             self.summarise_dataset(train_sequences_raw, train_targets)
-            
+
         self.scoring_metric = scoring_metric
         self.representation_type = representation_type
         self.custom_transformer_pipeline = custom_transformer_pipeline
@@ -198,29 +196,30 @@ class GAlearner:
             train_targets)
 
         if not isinstance(train_targets, list):
-            
+
             try:
                 train_targets = train_targets.tolist()
-                
+
             except Exception as es:
-                logging.info("Please make the targets either a list or a np.array!", es)
-        
+                logging.info(
+                    "Please make the targets either a list or a np.array!", es)
+
         ## Encoded target space for training purposes
         if self.task == "classification":
             train_targets = np.array(self.apply_label_map(train_targets))
-            counts = np.bincount(train_targets)        
+            counts = np.bincount(train_targets)
             self.majority_class = np.argmax(counts)
-            
+
         else:
-            train_targets = np.array(train_targets, dtype = np.float64)
-            
+            train_targets = np.array(train_targets, dtype=np.float64)
+
         self.learner = learner
         self.learner_hyperparameters = learner_hyperparameters
 
         ## parallelism settings
         if num_cpu == "all":
             self.num_cpu = mp.cpu_count()
-            
+
         else:
             self.num_cpu = num_cpu
 
@@ -420,7 +419,7 @@ class GAlearner:
         pool.close()
         pool.join()
         return df
-    
+
     def upsample_dataset(self, X, Y):
         """
         Perform very basic upsampling of less-present classes.
@@ -431,21 +430,25 @@ class GAlearner:
         """
 
         if self.verbose: logging.info("Performing upsampling ..")
-        
+
         if not isinstance(X, list):
             X = X.values.tolist()
-            
+
         if not isinstance(Y, list):
             Y = Y.values.tolist()
-            
-        extra_targets = []; extra_instances = []
+
+        extra_targets = []
+        extra_instances = []
         counter_for_classes = Counter(Y)
         if self.verbose:
             for k, v in counter_for_classes.items():
                 logging.info(f"Presence of class {k}; {v/len(Y)}")
-                
-        class_counts = {k: v for k, v in sorted(dict(counter_for_classes).items(),
-                                                key=lambda item: item[1])}
+
+        class_counts = {
+            k: v
+            for k, v in sorted(dict(counter_for_classes).items(),
+                               key=lambda item: item[1])
+        }
         classes = list(class_counts.keys())[::-1]
         most_frequent = classes[0]
         most_frequent_count = class_counts[most_frequent]
@@ -453,17 +456,21 @@ class GAlearner:
             difference = most_frequent_count - class_counts[cname]
             if difference == 0:
                 continue
-            if self.verbose: logging.info(f"Upsampling for: {cname}; samples: {difference}")
+            if self.verbose:
+                logging.info(f"Upsampling for: {cname}; samples: {difference}")
             indices = [enx for enx, x in enumerate(Y) if x == cname]
             random_subspace = np.random.choice(indices, difference)
             for sample in random_subspace:
                 extra_targets.append(Y[sample])
                 extra_instances.append(X[sample])
-        if self.verbose: logging.info(f"Generated {len(extra_instances)} new instances to balance the data.")
+        if self.verbose:
+            logging.info(
+                f"Generated {len(extra_instances)} new instances to balance the data."
+            )
         X = X + extra_instances
         Y = Y + extra_targets
         return X, Y
-        
+
     def return_dataframe_from_text(self, text):
         """
         A helper method that return a given dataframe from text.
@@ -487,26 +494,25 @@ class GAlearner:
         assert len(generic_individual) == self.weight_params
         return generic_individual
 
-
     def summarise_dataset(self, list_of_texts, targets):
 
         if not isinstance(targets, list):
             targets = targets.tolist()
-            
+
         lengths = []
         unique_tokens = set()
-        
+
         for x in list_of_texts:
             lengths.append(len(x))
             parts = x.strip().split()
-            
+
             for part in parts:
                 unique_tokens.add(part)
-                
+
         logging.info(f"Number of documents: {len(list_of_texts)}")
         logging.info(f"Average document length: {np.mean(lengths)}")
         logging.info(f"Number of unique tokens: {len(unique_tokens)}")
-        
+
         if len(set(targets)) < 200:
             logging.info(f"Unique target values: {set(targets)}")
 
@@ -534,7 +540,7 @@ class GAlearner:
 
         if self.verbose:
             logging.info("Initial screening report follows.")
-            
+
         for pair in pairs:
             if self.verbose:
                 logging.info(pair)
@@ -583,7 +589,7 @@ class GAlearner:
         ## Copy the space as it will be subsetted.
         if not custom_feature_space:
             tmp_space = sparse.csr_matrix(self.train_feature_space.copy())
-            
+
         else:
             tmp_space = sparse.csr_matrix(custom_feature_matrix)
 
@@ -616,7 +622,6 @@ class GAlearner:
 
         if self.learner_hyperparameters is None:
 
-
             ## this is for screening purposes.
             if self.learner_preset == "default":
                 parameters = {
@@ -633,40 +638,40 @@ class GAlearner:
                 parameters = {"loss": ["log"], "penalty": ["l2"]}
 
             elif self.learner_preset == "knn":
-                parameters = {"n_neighbors":list(range(1, 64, 1)),
-                              "weights":['uniform','distance'],
-                              "metric":["euclidean",
-                                        "manhattan",
-                                        "minkowski"]}
+                parameters = {
+                    "n_neighbors": list(range(1, 64, 1)),
+                    "weights": ['uniform', 'distance'],
+                    "metric": ["euclidean", "manhattan", "minkowski"]
+                }
 
             if final_run and self.learner_preset != "knn":
-                
+
                 ## we can afford this final round to be more rigorous.
                 parameters = {
                     "loss": ["hinge", "log"],
                     "penalty": ["elasticnet"],
                     "alpha": [0.01, 0.001, 0.0001, 0.0005],
                     "l1_ratio": [0, 0.05, 0.25, 0.3, 0.6, 0.8, 0.95, 1]
-                }                
+                }
 
         else:
 
             parameters = self.learner_hyperparameters
 
         if self.learner is None:
-            
+
             if self.task == "classification":
 
                 if self.learner_preset == "knn":
                     svc = KNeighborsClassifier()
                 else:
-                    svc = SGDClassifier(max_iter = 1000000)
-                
+                    svc = SGDClassifier(max_iter=1000000)
+
             else:
                 if self.learner_preset == "knn":
                     svc = KNeighborsClassifier()
                 else:
-                    svc = SGDRegressor(max_iter = 1000000)
+                    svc = SGDRegressor(max_iter=1000000)
                     parameters['loss'] = ['squared_loss']
 
         else:
@@ -675,30 +680,32 @@ class GAlearner:
         performance_score = self.scoring_metric
 
         if self.validation_type == "train_test":
-            cv = ShuffleSplit(n_splits = 1, test_size = self.validation_percentage, random_state = self.random_seed)
+            cv = ShuffleSplit(n_splits=1,
+                              test_size=self.validation_percentage,
+                              random_state=self.random_seed)
             num_cpu = 1
-            
+
         else:
             cv = self.n_fold_cv
             num_cpu = self.num_cpu
-            
+
         if final_run:
             clf = GridSearchCV(svc,
                                parameters,
-                               verbose = self.verbose,
-                               n_jobs = num_cpu,
-                               cv = cv,
-                               scoring = performance_score,
-                               refit = True)
+                               verbose=self.verbose,
+                               n_jobs=num_cpu,
+                               cv=cv,
+                               scoring=performance_score,
+                               refit=True)
 
         else:
             clf = GridSearchCV(svc,
                                parameters,
-                               verbose = self.verbose,
-                               n_jobs = num_cpu,
-                               cv = cv,
-                               scoring = performance_score,
-                               refit = False)
+                               verbose=self.verbose,
+                               n_jobs=num_cpu,
+                               cv=cv,
+                               scoring=performance_score,
+                               refit=False)
 
         clf.fit(tmp_feature_space, self.train_targets)
         f1_perf = max(clf.cv_results_['mean_test_score'])
@@ -711,9 +718,8 @@ class GAlearner:
 
     def evaluate_fitness(self,
                          individual,
-                         max_num_feat = 1000,
-                         return_clf_and_vec = False):
-        
+                         max_num_feat=1000,
+                         return_clf_and_vec=False):
         """
         A helper method for evaluating an individual solution. Given a real-valued vector, this constructs the representations and evaluates a given learner.
 
@@ -727,22 +733,22 @@ class GAlearner:
         if self.task == "classification":
             if np.sum(individual[:]) > self.weight_params:
                 return (0, )
-            
+
             if (np.array(individual) <= 0).any():
                 individual[(individual < 0)] = 0
 
         else:
             individual = np.abs(individual)
-                
+
         if self.binarize_importances:
-            
+
             for k in range(len(self.feature_names)):
-                
+
                 weight = individual[k]
-                
+
                 if weight > 0.5:
                     individual[k] = 1
-                    
+
                 else:
                     individual[k] = 0
 
@@ -758,15 +764,15 @@ class GAlearner:
                 if self.verbose: logging.info("Final round of optimization.")
                 f1_perf, clf, report = self.cross_val_scores(tmp_feature_space,
                                                              final_run=True)
-                
+
                 return clf, individual[:], f1_perf, feature_names, report
 
             f1_perf, _ = self.cross_val_scores(tmp_feature_space)
-            
+
             return (f1_perf, )
 
         elif return_clf_and_vec:
-            
+
             return (0, )
 
         else:
@@ -788,7 +794,7 @@ class GAlearner:
 
         return np.mean(f1_scores)
 
-    def report_performance(self, fits, gen = 0):
+    def report_performance(self, fits, gen=0):
         """
         A helper method for performance reports.
 
@@ -801,7 +807,7 @@ class GAlearner:
             logging.info(r"{} (gen {}) {}: {}, time: {}min".format(
                 self.task_name, gen, self.scoring_metric, np.round(f1_top, 3),
                 np.round(self.compute_time_diff(), 2) * 60))
-            
+
         return f1_top
 
     def get_feature_space(self):
@@ -886,28 +892,28 @@ class GAlearner:
         pred_matrix = np.asarray(pred_matrix)
         unique_values = np.unique(pred_matrix).tolist()
         prediction_matrix_final = []
-        
+
         for k in range(pred_matrix.shape[0]):
-            
+
             pred_row = np.asarray(pred_matrix[k, :])
             assert len(pred_row) == pred_matrix.shape[1]
             counts = np.bincount(pred_row)
             probability_vector = []
-            
+
             for p in range(len(unique_values)):
-                
+
                 if p + 1 <= len(counts):
                     prob = counts[p]
-                    
+
                 else:
                     prob = 0
-                    
+
                 probability_vector.append(prob)
-                
+
             assert len(probability_vector) == len(unique_values)
 
             prediction_matrix_final.append(probability_vector)
-            
+
         final_matrix = np.array(prediction_matrix_final)
         prob_df = pd.DataFrame(final_matrix)
         prob_df.columns = self.apply_label_map(unique_values, inverse=True)
@@ -922,17 +928,16 @@ class GAlearner:
         prob_df = prob_df.div(prob_df.sum(axis=1), axis=0)
         csum = prob_df.sum(axis=1).values
         zero_index = np.where(csum == 0)[0]
-        
+
         for j in zero_index:
             prob_df.iloc[j, self.majority_class] = 1
-            
+
         prob_df = prob_df.fillna(0)
         assert len(np.where(prob_df.sum(axis=1) < 1)[0]) == 0
 
         return prob_df
 
     def transform(self, instances):
-
         """
         Generate only the representations (obtain a feature matrix subject to evolution in autoBOT)
         
@@ -942,12 +947,15 @@ class GAlearner:
         """
 
         if self.vectorizer is None:
-            if self.verbose: logging.info("Please call evolution() first to learn the representation mappings.")
-            
+            if self.verbose:
+                logging.info(
+                    "Please call evolution() first to learn the representation mappings."
+                )
+
         instances = self.return_dataframe_from_text(instances)
         output_representation = self.vectorizer.transform(instances)
         return output_representation
-    
+
     def predict(self, instances):
         """
         Predict on new instances. Note that the prediction is actually a maxvote across the hall-of-fame.
@@ -984,8 +992,8 @@ class GAlearner:
                     ## Subset the matrix.
                     subsetted_space = self.apply_weights(
                         individual,
-                        custom_feature_space = True,
-                        custom_feature_matrix = transformed_instances)
+                        custom_feature_space=True,
+                        custom_feature_matrix=transformed_instances)
 
                     ## obtain the predictions.
                     if not prediction_space is None:
@@ -1004,19 +1012,20 @@ class GAlearner:
             ## generate the prediction matrix by maximum voting scheme.
             pspace = np.matrix(prediction_space).T
             if self.task == "classification":
-                
-                converged_predictions = np.where(~np.isnan(pspace).any(axis=0) == True)[0]
+
+                converged_predictions = np.where(
+                    ~np.isnan(pspace).any(axis=0) == True)[0]
                 pspace = pspace[:, converged_predictions]
                 all_predictions = self.mode_pred(
                     pspace)  ## Most common prediction is chosen.
 
                 ## Transform back to the origin space
                 all_predictions = self.apply_label_map(all_predictions,
-                                                    inverse=True)
-                
+                                                       inverse=True)
+
             else:
-                all_predictions = np.mean(pspace, axis = 1).reshape(-1).tolist()
-                
+                all_predictions = np.mean(pspace, axis=1).reshape(-1).tolist()
+
             if self.verbose: logging.info("Predictions obtained")
 
             return all_predictions
@@ -1113,7 +1122,10 @@ class GAlearner:
             importances = list(
                 zip(self.feature_names, individual[0:self.weight_params]))
 
-        report = ["-" * 60, "|| Feature type   Importance || (top individual)", "-" * 60]
+        report = [
+            "-" * 60, "|| Feature type   Importance || (top individual)",
+            "-" * 60
+        ]
         cnt = -1
 
         for fn, imp in importances:
@@ -1123,7 +1135,8 @@ class GAlearner:
             report.append(str(fn) + "  " + str(np.round(imp, 2)))
 
         report.append("-" * 60)
-        report.append("Max {} in generation: {}".format(self.scoring_metric, max_f1))
+        report.append("Max {} in generation: {}".format(
+            self.scoring_metric, max_f1))
 
         print("\n".join(report))
 
@@ -1190,7 +1203,7 @@ class GAlearner:
 
         del submatrices
 
-    def generate_report(self, output_folder = "./report", job_id = "genericJobId"):
+    def generate_report(self, output_folder="./report", job_id="genericJobId"):
         """An auxilliary method for creating a report
 
         :param string output_folder: The folder containing the report
@@ -1199,25 +1212,37 @@ class GAlearner:
 
         """
         os.makedirs(output_folder, exist_ok=True)
-        
-        importances_local, importances_global = self.feature_type_importances()
-        
-        importances_local.to_csv(output_folder+f"{job_id}_local.tsv",sep = "\t", index = False)
-        importances_global.to_csv(output_folder+f"{job_id}_global.tsv",sep = "\t", index = False)
-        
-        learners = self.summarise_final_learners()
-        learners = learners.sort_values(by = ["mean_test_score"])
-        learners.to_csv(output_folder+f"{job_id}_learners.tsv",sep = "\t", index = False)
-        
-        fitness = self.visualize_fitness(image_path = output_folder+f"{job_id}_fitness.png")
-        fitness.to_csv(output_folder+f"{job_id}_fitness.tsv",sep = "\t", index = False)
-        
-        topics = self.get_topic_explanation()
-        
-        if not topics is None:
-            topics.to_csv(output_folder+f"{job_id}_topics.tsv",sep = "\t", index = False)
 
-        if self.verbose: logging.info(f"Report generated! Check: {output_folder} folder.")
+        importances_local, importances_global = self.feature_type_importances()
+
+        importances_local.to_csv(output_folder + f"{job_id}_local.tsv",
+                                 sep="\t",
+                                 index=False)
+        importances_global.to_csv(output_folder + f"{job_id}_global.tsv",
+                                  sep="\t",
+                                  index=False)
+
+        learners = self.summarise_final_learners()
+        learners = learners.sort_values(by=["mean_test_score"])
+        learners.to_csv(output_folder + f"{job_id}_learners.tsv",
+                        sep="\t",
+                        index=False)
+
+        fitness = self.visualize_fitness(image_path=output_folder +
+                                         f"{job_id}_fitness.png")
+        fitness.to_csv(output_folder + f"{job_id}_fitness.tsv",
+                       sep="\t",
+                       index=False)
+
+        topics = self.get_topic_explanation()
+
+        if not topics is None:
+            topics.to_csv(output_folder + f"{job_id}_topics.tsv",
+                          sep="\t",
+                          index=False)
+
+        if self.verbose:
+            logging.info(f"Report generated! Check: {output_folder} folder.")
 
     def instantiate_validation_env(self):
         """
@@ -1226,15 +1251,16 @@ class GAlearner:
 
         self.vectorizer, self.feature_names, self.train_feature_space = get_features(
             self.train_seq,
-            representation_type = self.representation_type,
-            sparsity = self.sparsity,
-            embedding_dim = self.latent_dim,
-            targets = self.train_targets,
-            random_seed = self.random_seed,
-            memory_location = self.memory_storage,
-            custom_pipeline = self.custom_transformer_pipeline,
-            contextual_model = self.contextual_model,
-            combine_with_existing_representation = self.combine_with_existing_representation)
+            representation_type=self.representation_type,
+            sparsity=self.sparsity,
+            embedding_dim=self.latent_dim,
+            targets=self.train_targets,
+            random_seed=self.random_seed,
+            memory_location=self.memory_storage,
+            custom_pipeline=self.custom_transformer_pipeline,
+            contextual_model=self.contextual_model,
+            combine_with_existing_representation=self.
+            combine_with_existing_representation)
 
         self.all_feature_names = []
         if self.verbose:
@@ -1278,18 +1304,17 @@ class GAlearner:
             struct.append((str(a), str(b)))
         dfx = pd.DataFrame(struct)  # Create a Pandas dataframe
         dfx.columns = ['Importance', 'Feature subspace']
-        
+
         ## store global top features
         try:
             feature_ranking = self.global_feature_map  ## all features
-            
+
         except:
-            feature_ranking = pd.DataFrame({k:1 for k in self.feature_names})
-            
+            feature_ranking = pd.DataFrame({k: 1 for k in self.feature_names})
+
         return feature_ranking, dfx
 
     def get_topic_explanation(self):
-
         """
         A method for extracting the key topics.
         :return pd.DataFrame topicList: A list of topic-id tuples.
@@ -1297,16 +1322,26 @@ class GAlearner:
 
         feature_ranking = self.global_feature_map
         out_df = None
-        
+
         try:
-            topic_transformer_trained = [x for x in self.vectorizer.named_steps[
-                'union'].transformer_list if x[0] == "topic_features"][0][1]            
-        
-            topic_feature_space = topic_transformer_trained['topic_features'].topic_features
+            topic_transformer_trained = [
+                x
+                for x in self.vectorizer.named_steps['union'].transformer_list
+                if x[0] == "topic_features"
+            ][0][1]
 
-            top_topics = [int(x.split(":")[0].replace(" ","").split("_")[1]) for x in feature_ranking['topic_features'].values.tolist()]
+            topic_feature_space = topic_transformer_trained[
+                'topic_features'].topic_features
 
-            importances = [float(x.split(":")[1].replace(" ","")) for x in feature_ranking['topic_features'].values.tolist()]
+            top_topics = [
+                int(x.split(":")[0].replace(" ", "").split("_")[1])
+                for x in feature_ranking['topic_features'].values.tolist()
+            ]
+
+            importances = [
+                float(x.split(":")[1].replace(" ", ""))
+                for x in feature_ranking['topic_features'].values.tolist()
+            ]
 
             ordered_topics = []
 
@@ -1318,11 +1353,11 @@ class GAlearner:
             out_df['topic cluster'] = ordered_topics
             out_df['importances'] = importances
 
-        except Exception as es:            
+        except Exception as es:
             logging.info("Topics were not computed.")
             pass
-        
-        return out_df            
+
+        return out_df
 
     def visualize_fitness(self, image_path="fitnessExample.png"):
         """
@@ -1346,13 +1381,16 @@ class GAlearner:
             if image_path is None:
                 return dfx
 
-            mean_fitness = dfx.mean(axis = 1)
-            max_fitness = dfx.max(axis = 1)
-            min_fitness = dfx.min(axis = 1)
+            mean_fitness = dfx.mean(axis=1)
+            max_fitness = dfx.max(axis=1)
+            min_fitness = dfx.min(axis=1)
             generations = list(range(dfx.shape[0]))
-            sns.lineplot(generations, mean_fitness, color = "black", label = "mean")
-            sns.lineplot(generations, max_fitness, color = "green", label = "max")
-            sns.lineplot(generations, min_fitness, color = "red", label = "min")
+            sns.lineplot(generations,
+                         mean_fitness,
+                         color="black",
+                         label="mean")
+            sns.lineplot(generations, max_fitness, color="green", label="max")
+            sns.lineplot(generations, min_fitness, color="red", label="min")
             plt.xlabel("Generation")
             plt.ylabel(f"Fitness ({self.scoring_metric})")
             plt.legend()
@@ -1365,12 +1403,12 @@ class GAlearner:
         return dfx
 
     def evolve(self,
-               nind = 10,
-               crossover_proba = 0.4,
-               mutpb = 0.15,
-               stopping_interval = 20,
-               strategy = "evolution",
-               representation_step_only = False):
+               nind=10,
+               crossover_proba=0.4,
+               mutpb=0.15,
+               stopping_interval=20,
+               strategy="evolution",
+               representation_step_only=False):
         """The core evolution method. First constrain the maximum number of features to be taken into account by lowering the bound w.r.t performance.
         next, evolve.
 
@@ -1386,25 +1424,26 @@ class GAlearner:
         self.popsize = nind
         self.instantiate_validation_env()
 
-        if representation_step_only: ## Skip the remainder
+        if representation_step_only:  ## Skip the remainder
             return self
-        
+
         self.weight_params = len(self.feature_names)
-        
+
         if strategy == "direct-learning":
             if self.verbose:
-                logging.info("Training a learner without evolution.")                
+                logging.info("Training a learner without evolution.")
             top_individual = np.ones(self.weight_params)
             learner, individual, score, feature_names, report = self.evaluate_fitness(
                 top_individual, return_clf_and_vec=True)
             coefficients = learner.best_estimator_.coef_
-            coefficients = np.asarray(np.abs(np.max(coefficients, axis=0))).reshape(-1)
+            coefficients = np.asarray(np.abs(np.max(coefficients,
+                                                    axis=0))).reshape(-1)
             self.feature_importances.append((coefficients, feature_names))
             single_learner = (learner, individual, score)
             self.ensemble_of_learners.append(single_learner)
             self.hof = [top_individual]
             self.update_global_feature_importances()
-        
+
         if strategy == "evolution":
             if self.verbose:
                 logging.info("Evolution will last for ~{}h ..".format(
@@ -1414,26 +1453,26 @@ class GAlearner:
 
             toolbox = base.Toolbox()
             toolbox.register("attr_float", np.random.uniform, 0.00001,
-                                  0.999999)
+                             0.999999)
             toolbox.register("individual",
-                                  tools.initRepeat,
-                                  gcreator.Individual,
-                                  toolbox.attr_float,
-                                  n = self.weight_params)
+                             tools.initRepeat,
+                             gcreator.Individual,
+                             toolbox.attr_float,
+                             n=self.weight_params)
 
             toolbox.register("population",
-                                  tools.initRepeat,
-                                  list,
-                                  toolbox.individual,
-                                  n=nind)
+                             tools.initRepeat,
+                             list,
+                             toolbox.individual,
+                             n=nind)
 
             toolbox.register("evaluate", self.evaluate_fitness)
-            toolbox.register("mate", tools.cxUniform, indpb = 0.5)
+            toolbox.register("mate", tools.cxUniform, indpb=0.5)
             toolbox.register("mutate",
-                                  tools.mutGaussian,
-                                  mu = 0,
-                                  sigma = 0.2,
-                                  indpb = 0.2)
+                             tools.mutGaussian,
+                             mu=0,
+                             sigma=0.2,
+                             indpb=0.2)
 
             toolbox.register("mutReg", self.mutReg)
             toolbox.register("select", tools.selTournament)
@@ -1441,9 +1480,12 @@ class GAlearner:
             if self.validation_type == "train_test":
 
                 pool_tmp = mp.Pool(self.num_cpu)
-                if self.verbose: logging.info(f"Instantiating parallel pool of individuals. Parallelization at the population level ({self.num_cpu} jobs).")
+                if self.verbose:
+                    logging.info(
+                        f"Instantiating parallel pool of individuals. Parallelization at the population level ({self.num_cpu} jobs)."
+                    )
                 toolbox.register("map", pool_tmp.map)
-                
+
             else:
                 toolbox.register("map", map)
 
@@ -1474,7 +1516,7 @@ class GAlearner:
 
             ## Report performance
             self.report_performance(fits)
-            
+
             gen = 0
             if self.verbose: logging.info("Initiating evaluation ..")
 
@@ -1518,7 +1560,7 @@ class GAlearner:
                         fit = (fit, )
                     ind.fitness.values = fit
 
-                self.hof.update(offspring) # Update HOF
+                self.hof.update(offspring)  # Update HOF
 
                 ## append to overall fitness container.
                 self.fitness_container.append(fits)
@@ -1534,8 +1576,8 @@ class GAlearner:
                     cf1 = f1
 
                 self.population = toolbox.select(self.population + offspring,
-                                                      k = nind,
-                                                      tournsize = int(nind / 3))
+                                                 k=nind,
+                                                 tournsize=int(nind / 3))
 
             try:
                 selections = self.hof
@@ -1553,7 +1595,7 @@ class GAlearner:
 
                 try:
                     learner, individual, score, feature_names, report = self.evaluate_fitness(
-                        top_individual, return_clf_and_vec = True)
+                        top_individual, return_clf_and_vec=True)
                     self.performance_reports.append(report)
 
                 except Exception:
@@ -1566,8 +1608,8 @@ class GAlearner:
                     coefficients = learner.best_estimator_.coef_
 
                     ## coefficients are given for each class. We take maximum one (abs val)
-                    coefficients = np.asarray(np.abs(np.max(coefficients,
-                                                            axis = 0))).reshape(-1)
+                    coefficients = np.asarray(
+                        np.abs(np.max(coefficients, axis=0))).reshape(-1)
 
                     if self.verbose:
                         logging.info("Coefficients and indices: {}".format(
@@ -1578,18 +1620,20 @@ class GAlearner:
                             "Adding importances of shape {} for learner {} with score {}"
                             .format(coefficients.shape, enx, score))
 
-                    self.feature_importances.append((coefficients, feature_names))
-                    
+                    self.feature_importances.append(
+                        (coefficients, feature_names))
+
                     ## Update the final importance space.
                     if self.task == "classification":
                         self.update_global_feature_importances()
-                    
+
                 except:
-                    logging.info("The considered classifier cannot produce feature importances.")
+                    logging.info(
+                        "The considered classifier cannot produce feature importances."
+                    )
                     pass
 
                 single_learner = (learner, individual, score)
                 self.ensemble_of_learners.append(single_learner)
 
-            
         return self

@@ -4,6 +4,7 @@ import autoBOTLib
 import pandas as pd
 import secrets
 
+
 def run():
     jid = secrets.token_hex(nbytes=16)
     df_path = None
@@ -17,7 +18,7 @@ def run():
     print(len(train_sequences))
     print(len(train_targets))
     classx = "genericTargetName"
-    
+
     autoBOTObj = autoBOTLib.GAlearner(
         train_sequences,  # input sequences
         train_targets,  # target space
@@ -25,11 +26,9 @@ def run():
         num_cpu=32,  # number of CPUs to use
         sparsity=0.1,
         task_name="example test",  # task identifier
-        scoring_metric=
-        "f1",  # sklearn-compatible scoring metric as the fitness.
+        scoring_metric="f1",  # sklearn-compatible scoring metric as the fitness.
         hof_size=3,  # size of the hall of fame
-        top_k_importances=
-        25,  # how many top features to output as final ranking
+        top_k_importances=25,  # how many top features to output as final ranking
         memory_storage="./memory",  # tripled base for concept features
         representation_type="neurosymbolic")  # or symbolic or neural
 
@@ -39,8 +38,8 @@ def run():
         crossover_proba=0.6,  ## crossover rate
         mutpb=0.4)  ## mutation rate
 
-    autoBOTLib.store_autobot_model(
-        autoBOTObj, f"./models/{jid}_{classx}_model.pickle")
+    autoBOTLib.store_autobot_model(autoBOTObj,
+                                   f"./models/{jid}_{classx}_model.pickle")
 
     test_sequences = None
     autoBOTObj = autoBOTLib.load_autobot_model(

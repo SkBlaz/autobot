@@ -17,20 +17,21 @@ import scipy.sparse as sps
 from sklearn.preprocessing import LabelEncoder
 from scipy.stats.stats import pearsonr
 
+
 class relationExtractor:
     """
     The main token relation extraction class. Works for arbitrary tokens.
     """
     def __init__(
-        self,
+            self,
             max_features=10000,
             split_char="|||",
             witem_separator="&&&&",
             num_cpu=8,
             neighborhood_token=64,  ## Context window size for relation mapping of words (added in >.34)
             min_token="bigrams",
-            targets = None,
-            verbose = True):
+            targets=None,
+            verbose=True):
 
         self.max_features = max_features
         self.neighborhood_token = neighborhood_token
@@ -72,15 +73,15 @@ class relationExtractor:
         """
 
         global_distances = {}
-        
+
         if self.split_char in instance:
             instances = instance.split(self.split_char)
-            
+
         else:
             instances = [instance]
-            
+
         for instance in instances:
-            
+
             if self.min_token == "word":
                 tokens = [x for x in instance.strip().split()]
 
@@ -88,36 +89,36 @@ class relationExtractor:
                 tokens = []
                 sstring = instance.strip()
                 for enx in range(len(sstring) - 1):
-                    tokens.append(sstring[enx:(enx+3)].lower())
-                
+                    tokens.append(sstring[enx:(enx + 3)].lower())
+
             elif self.min_token == "bigrams":
                 tokens = []
                 sstring = instance.strip()
                 for enx in range(len(sstring) - 1):
-                    tokens.append(sstring[enx:(enx+2)].lower())
-                    
+                    tokens.append(sstring[enx:(enx + 2)].lower())
+
             elif self.min_token == "unigrams":
                 tokens = []
                 sstring = instance.strip()
                 for enx in range(len(sstring) - 1):
                     tokens.append(sstring[enx])
-                    
+
             token_dict = {token: enx for enx, token in enumerate(tokens)}
             pairs = list(combinations(set(tokens), 2))
-            
+
             for pair in pairs:
                 w1, w2, distance = self.compute_distance(pair, token_dict)
                 if self.min_token == "word" or self.min_token == "bigrams":
                     if distance > self.neighborhood_token:
                         continue
-                    
+
                 if distance > 2:
                     context_size = int(np.log2(distance))
                     encoded_witem = w1 + "--" + str(context_size) + "--" + w2
                     if not encoded_witem in global_distances:
                         global_distances[encoded_witem] = 0
                     global_distances[encoded_witem] += 1
-                    
+
         return global_distances
 
     def fit(self, text_vector, b=None):
@@ -133,31 +134,37 @@ class relationExtractor:
         for enx, result in enumerate(map(self.witem_kernel, text_vector)):
             pbar.update(1)
             for k, v in result.items():
-                self.global_distances[k].append(v) ## TODO: Streaming mean. This will save some memory.
+                self.global_distances[k].append(
+                    v)  ## TODO: Streaming mean. This will save some memory.
 
         for k, v in self.global_distances.items():
-            v = np.mean(v) # average distance
+            v = np.mean(v)  # average distance
 
         ## This is the key part -> select the top k features within the context
 
         if self.targets is None:
             self.wit_vec = sorted(self.global_distances.items(),
                                   key=operator.itemgetter(1),
-                                  reverse=True)[0:self.max_features]            
+                                  reverse=True)[0:self.max_features]
         else:
             self.wit_vec = sorted(self.global_distances.items(),
                                   key=operator.itemgetter(1),
-                                  reverse=True)[0:(self.max_features*3)]  
+                                  reverse=True)[0:(self.max_features * 3)]
 
-            feature_matrix_whole = self.transform(text_vector, custom_shape = len(self.wit_vec))
+            feature_matrix_whole = self.transform(text_vector,
+                                                  custom_shape=len(
+                                                      self.wit_vec))
             if self.verbose:
-                logging.info(f"Feature ranking of {len(self.wit_vec)} token pairs in progress.")
-                
+                logging.info(
+                    f"Feature ranking of {len(self.wit_vec)} token pairs in progress."
+                )
+
             encoder = LabelEncoder()
             self.targets = encoder.fit_transform(self.targets)
             correlations = np.zeros(len(self.wit_vec))
-            for el in tqdm.tqdm(range(len(self.wit_vec)), total = len(self.wit_vec)):
-                vec1 = feature_matrix_whole[:,el].todense().A1
+            for el in tqdm.tqdm(range(len(self.wit_vec)),
+                                total=len(self.wit_vec)):
+                vec1 = feature_matrix_whole[:, el].todense().A1
                 assert len(self.targets) == len(vec1)
                 correlation = pearsonr(vec1, self.targets)[0]
                 correlations[el] = correlation
@@ -165,11 +172,14 @@ class relationExtractor:
             if self.verbose:
                 most_correlated = np.sort(correlations)[::-1][0:10]
                 logging.info("Highest correlations: {most_correlated}")
-                
-            sorted_correlations = set(np.argsort(correlations)[::-1][0:self.max_features].tolist())            
-            self.wit_vec = [x for enx, x in enumerate(self.wit_vec) if enx in sorted_correlations]
 
-            
+            sorted_correlations = set(
+                np.argsort(correlations)[::-1][0:self.max_features].tolist())
+            self.wit_vec = [
+                x for enx, x in enumerate(self.wit_vec)
+                if enx in sorted_correlations
+            ]
+
     def get_feature_names(self):
         """
         Return exact feature names.
@@ -177,7 +187,7 @@ class relationExtractor:
 
         return [x[0] for x in self.wit_vec]
 
-    def transform(self, text_vector, custom_shape = None):
+    def transform(self, text_vector, custom_shape=None):
         """
         Transform the data into suitable form.
 
@@ -219,7 +229,7 @@ class relationExtractor:
 
 
 if __name__ == "__main__":
-    
+
     tfile = pd.read_csv("../data/insults/train.tsv", sep="\t")
     example_text = tfile['text_a']
     targets = tfile['label']

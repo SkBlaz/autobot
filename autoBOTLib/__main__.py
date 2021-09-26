@@ -1,7 +1,7 @@
-from autoBOTLib.data_utils import *
-from autoBOTLib.feature_constructors import *
-from autoBOTLib.strategy_ga import *
-from autoBOTLib.helpers import *
+from autoBOTLib.optimization_utils import *
+from autoBOTLib.optimization_feature_constructors import *
+from autoBOTLib.optimization_engine import *
+from autoBOTLib.misc_helpers import *
 
 import logging
 logging.basicConfig(format='%(asctime)s - %(message)s',

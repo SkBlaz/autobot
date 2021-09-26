@@ -7,30 +7,33 @@ from sklearn.preprocessing import Normalizer
 from sklearn import pipeline
 from sklearn.pipeline import FeatureUnion
 from sklearn.base import BaseEstimator, TransformerMixin
-from .topic_features import *
-from .doc_similarity import *
-from .conceptnet_features import *
-from .keyword_features import *
-from .sentence_embeddings import *
-from .word_relations import *
-import string
-import re
-from nltk import pos_tag
-import multiprocessing as mp
-from nltk.corpus import stopwords
-from nltk import word_tokenize
-import pandas as pd
 from sklearn.model_selection import GridSearchCV
 from sklearn.svm import LinearSVC
 from sklearn.linear_model import LogisticRegression, SGDClassifier
-from scipy.sparse import hstack
 from sklearn.feature_extraction.text import TfidfVectorizer
+
+from .features_topic import *
+from .features_document_graph import *
+from .features_concepts import *
+from .features_keyword import *
+from .features_sentence_embeddings import *
+from .features_token_relations import *
+
+import string
+import re
+import multiprocessing as mp
+from scipy.sparse import hstack
+
+from nltk import pos_tag
+from nltk.corpus import stopwords
+from nltk import word_tokenize
+
+import pandas as pd
 import numpy as np
 import logging
 logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
 logging.getLogger().setLevel(logging.INFO)
-
 
 try:
     import nltk
@@ -46,6 +49,7 @@ except:
 
     def PerceptronTagger():
         return 0
+
 
 # Feature constructors
 
@@ -69,20 +73,23 @@ feature_presets['neurosymbolic'] = [
     'concept_features', 'document_graph', 'neural_features_dbow',
     'neural_features_dm', 'relational_features_token', 'topic_features',
     'keyword_features', 'relational_features_char', 'char_features',
-    'word_features', 'pos_features', 'contextual_features', 'relational_features_bigram'
+    'word_features', 'pos_features', 'contextual_features',
+    'relational_features_bigram'
 ]
 
 # This one is ~language agnostic
 feature_presets['neurosymbolic-lite'] = [
     'document_graph', 'neural_features_dbow', 'neural_features_dm',
-    'topic_features', 'keyword_features', 'relational_features_char', 'relational_features_token','char_features', 'word_features','relational_features_bigram','concept_features'
+    'topic_features', 'keyword_features', 'relational_features_char',
+    'relational_features_token', 'char_features', 'word_features',
+    'relational_features_bigram', 'concept_features'
 ]
 
 # MLJ paper versions
 feature_presets['neurosymbolic-default'] = [
     'neural_features_dbow', 'neural_features_dm', 'keyword_features',
-    'relational_features_char', 'char_features', 'word_features', "pos_features",
-    'concept_features','concept_features'
+    'relational_features_char', 'char_features', 'word_features',
+    "pos_features", 'concept_features', 'concept_features'
 ]
 
 feature_presets['neural'] = [
@@ -92,11 +99,12 @@ feature_presets['neural'] = [
 feature_presets['symbolic'] = [
     'concept_features', 'relational_features_token', 'topic_features',
     'keyword_features', 'relational_features_char', 'char_features',
-    'word_features', 'pos_features','relational_features_bigram'
+    'word_features', 'pos_features', 'relational_features_bigram'
 ]
 
 if not contextual_feature_library:
     feature_presets['neurosymbolic'].pop()
+
 
 def remove_punctuation(text):
     """
@@ -205,7 +213,6 @@ class text_col(BaseEstimator, TransformerMixin):
     :param obj TransformerMixin: Transformer object
     :return obj object: Returns particular text column
     """
-
     def __init__(self, key):
         self.key = key
 
@@ -225,7 +232,6 @@ class digit_col(BaseEstimator, TransformerMixin):
     :param obj TransformerMixin: Transformer object
     :return obj object: Returns transformed (scaled) space
     """
-
     def fit(self, x, y=None):
         return self
 
@@ -280,7 +286,6 @@ class FeaturePrunner:
     """
     Core class describing sentence embedding methodology employed here.
     """
-
     def __init__(self, max_num_feat=2048):
 
         self.max_num_feat = max_num_feat
@@ -443,7 +448,7 @@ def get_features(df_data,
                                                     min_token="unigrams")
 
         lr_rel_features_bigram = relationExtractor(max_features=max_num_feat,
-                                                    min_token="bigrams")
+                                                   min_token="bigrams")
 
         lr_rel_features_token = relationExtractor(max_features=max_num_feat,
                                                   min_token="word")
@@ -453,19 +458,20 @@ def get_features(df_data,
 
         topic_features = TopicDocs(ndim=embedding_dim)
 
-        concept_features_transformer = ConceptFeatures(max_features=max_num_feat,
-                                                       knowledge_graph=memory_location)
+        concept_features_transformer = ConceptFeatures(
+            max_features=max_num_feat, knowledge_graph=memory_location)
         contextual_features = None
-        
+
         if contextual_feature_library:
-            
+
             if representation_type == "neurosymbolic":
                 contextual_features = ContextualDocs(model=contextual_model)
-                
-            elif isinstance(representation_type, list) and "neurosymbolic" in representation_type:
-                contextual_features = ContextualDocs(model=contextual_model)            
 
-        feature_transformer_vault = {            
+            elif isinstance(representation_type,
+                            list) and "neurosymbolic" in representation_type:
+                contextual_features = ContextualDocs(model=contextual_model)
+
+        feature_transformer_vault = {
             "pos_features":
             ('pos_features',
              pipeline.Pipeline([('s3', text_col(key='pos_tag_seq')),
@@ -476,11 +482,12 @@ def get_features(df_data,
              pipeline.Pipeline([('s1', text_col(key='no_stopwords')),
                                 ('word_tfidf_unigram', tfidf_word_unigram),
                                 ('normalize', Normalizer(norm="max"))])),
-            "char_features":
-            ('char_features',
-             pipeline.Pipeline([('s2', text_col(key='no_stopwords')),
-                                ('char_tfidf_bigram', tfidf_char_bigram),
-                                ('normalize', Normalizer(norm="max"))])),
+            "char_features": ('char_features',
+                              pipeline.Pipeline([
+                                  ('s2', text_col(key='no_stopwords')),
+                                  ('char_tfidf_bigram', tfidf_char_bigram),
+                                  ('normalize', Normalizer(norm="max"))
+                              ])),
             "relational_features_char":
             ('relational_features_char',
              pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
@@ -537,12 +544,11 @@ def get_features(df_data,
                                       concept_features_transformer),
                                      ('normalize', Normalizer(norm="max"))
                                  ])),
-            "contextual_features": ('contextual_features',
-                                    pipeline.Pipeline([
-                                        ('s6', text_col(key='text')),
-                                        ('concept_features', contextual_features),
-                                        ('normalize', Normalizer(norm="max"))
-                                    ]))
+            "contextual_features":
+            ('contextual_features',
+             pipeline.Pipeline([('s6', text_col(key='text')),
+                                ('concept_features', contextual_features),
+                                ('normalize', Normalizer(norm="max"))]))
         }
 
         if isinstance(representation_type, str):
@@ -551,13 +557,11 @@ def get_features(df_data,
 
             if not representation_type in feature_presets:
                 logging.info(
-                    "Please, specify a valid preset! (see the documentation for the up-to-date namings)")
+                    "Please, specify a valid preset! (see the documentation for the up-to-date namings)"
+                )
 
             preset_features = feature_presets[representation_type]
-            features = [
-                feature_transformer_vault[x]
-                for x in preset_features
-            ]
+            features = [feature_transformer_vault[x] for x in preset_features]
 
         else:
 
@@ -657,7 +661,8 @@ def get_autoBOT_manual(train_sequences,
                                 ('keyword_features', keyword_features)])),
             ('concept_features',
              pipeline.Pipeline([('s6', text_col(key='no_stopwords')),
-                                ('concept_features', concept_features_transformer)]))
+                                ('concept_features',
+                                 concept_features_transformer)]))
         ]
 
     features = symbolic_features + neural_features

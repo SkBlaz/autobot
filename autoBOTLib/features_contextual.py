@@ -11,10 +11,9 @@ logging.getLogger().setLevel(logging.INFO)
 
 from sentence_transformers import SentenceTransformer
 
+
 class ContextualDocs:
-    
-    def __init__(self,
-                 model = "paraphrase-xlm-r-multilingual-v1"):
+    def __init__(self, model="paraphrase-xlm-r-multilingual-v1"):
         """
         Class initialization method.
 
@@ -25,7 +24,7 @@ class ContextualDocs:
 
         try:
             self.model = SentenceTransformer(model)
-            
+
         except Exception as es:
             logging.info(es)
 
@@ -33,7 +32,7 @@ class ContextualDocs:
         """
         :param documents: The input set of documents.
         """
-        
+
         pass
 
     def transform(self, documents):
@@ -42,41 +41,40 @@ class ContextualDocs:
         """
 
         if not isinstance(documents, list):
-            
-            try: # Pandas
+
+            try:  # Pandas
                 documents = documents.values.tolist()
-                
-            except: # numpy
+
+            except:  # numpy
                 documents = documents.tolist()
         try:
             sentence_embeddings = self.model.encode(documents)
-            
+
         except Exception as es:
             print(es, "error in encoding documents", sentence_embeddings)
-            
+
         encoded_documents = np.array(sentence_embeddings)
         self.ndim = encoded_documents.shape[1]
         return encoded_documents
 
-    def fit_transform(self, documents, b = None):
-
+    def fit_transform(self, documents, b=None):
         """
         :param documents: The input set of documents.
         """
         return self.transform(documents)
 
     def get_feature_names(self):
-
         """
         :param fnames: Feature names (custom api artefact)
         """
-        
+
         return [f"dim_{x}" for x in range(self.ndim)]
 
+
 if __name__ == "__main__":
-    
+
     import pandas as pd
-    
+
     example_text = pd.read_csv("../data/insults/train.tsv", sep="\t")['text_a']
     labels = pd.read_csv("../data/insults/train.tsv",
                          sep="\t")['label'].values.tolist()
