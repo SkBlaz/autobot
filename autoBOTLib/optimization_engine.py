@@ -1353,9 +1353,8 @@ class GAlearner:
             out_df['topic cluster'] = ordered_topics
             out_df['importances'] = importances
 
-        except Exception as es:
+        except Exception:
             logging.info("Topics were not computed.")
-            pass
 
         return out_df
 
@@ -1631,7 +1630,6 @@ class GAlearner:
                     logging.info(
                         "The considered classifier cannot produce feature importances."
                     )
-                    pass
 
                 single_learner = (learner, individual, score)
                 self.ensemble_of_learners.append(single_learner)

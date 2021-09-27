@@ -2,7 +2,6 @@
 
 import logging
 import numpy as np
-from collections import defaultdict
 import tqdm
 
 logging.basicConfig(format='%(asctime)s - %(message)s',
@@ -32,8 +31,6 @@ class ContextualDocs:
         """
         :param documents: The input set of documents.
         """
-
-        pass
 
     def transform(self, documents):
         """

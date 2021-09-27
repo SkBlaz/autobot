@@ -1,4 +1,3 @@
-
 import autoBOTLib
 from autoBOTLib.optimization_utils import *
 from autoBOTLib.optimization_feature_constructors import *
@@ -30,7 +29,7 @@ if __name__ == "__main__":
     parser.add_argument("--load_model", default=None, type=str)
     parser.add_argument("--num_cpu", default=8, type=int)
     parser.add_argument("--mode", default="learning", type=str)
-    
+
     args = parser.parse_args()
     time_constraint = args.time
 
@@ -56,12 +55,12 @@ if __name__ == "__main__":
             of.write("\n".join(all_predictions))
 
     elif args.mode == "learning":
-        
+
         data_name = args.datafolder
         dataframe = pd.read_csv(f"{args.datafolder}", sep="\t")
         train_sequences = dataframe['text_a']
         train_targets = dataframe['label']
-        
+
         autobotlibObj = autoBOTLib.GAlearner(
             train_sequences,
             train_targets,
@@ -76,11 +75,10 @@ if __name__ == "__main__":
                 nind=args.popsize,
                 mutpb=args.mutation_rate,
                 crossover_proba=args.crossover_rate,
-                strategy="evolution"
-            )
+                strategy="evolution")
 
         autobotlibObj.generate_report(output_folder=f"{args.output_folder}",
                                       job_id="as9y0gb98s")
-        
-        autoBOTLib.store_autobot_model(autoBOTObj,
-                                       f"{args.output_folder}/autoBOTmodel.pickle")
+
+        autoBOTLib.store_autobot_model(
+            autoBOTObj, f"{args.output_folder}/autoBOTmodel.pickle")
