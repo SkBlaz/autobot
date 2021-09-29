@@ -93,7 +93,7 @@ class GAlearner:
         """The object initialization method; specify the core optimization parameter with this method.
 
         :param list/PandasSeries train_sequences_raw: a list of texts
-        :param list/np.array train_targets: a list of natural numbers (targets, multiclass)
+        :param list/np.array train_targets: a list of natural numbers (targets, multiclass), a list of lists (multilabel)
         :param int time_constraint: Number of hours to evolve.
         :param int/str num_cpu: Number of threads to exploit
         :param str task_name: Task identifier for logging
@@ -173,10 +173,6 @@ class GAlearner:
         self.default_importance = default_importance
         self.learner_preset = learner_preset
 
-        if self.verbose:
-            logging.info("Instantiated the evolution-based learner.")
-            self.summarise_dataset(train_sequences_raw, train_targets)
-
         self.scoring_metric = scoring_metric
         self.representation_type = representation_type
         self.custom_transformer_pipeline = custom_transformer_pipeline
@@ -194,7 +190,11 @@ class GAlearner:
         ## Dict of labels to int
         self.label_mapping, self.inverse_label_mapping = self.get_label_map(
             train_targets)
-
+        
+        if self.verbose:
+            logging.info("Instantiated the evolution-based learner.")
+            self.summarise_dataset(train_sequences_raw, train_targets)
+        
         if not isinstance(train_targets, list):
 
             try:
@@ -306,6 +306,10 @@ class GAlearner:
 
         """
 
+        ## Primitive MLC -> each subset is a possible label
+        if isinstance(train_targets[0], list):
+            train_targets = [str(x) for x in train_targets]
+        
         unique_train_target_labels = set(train_targets)
         label_map = {}
         for enx, j in enumerate(unique_train_target_labels):
@@ -323,10 +327,12 @@ class GAlearner:
         :return list new_targets: Encoded target space
 
         """
+        
         if inverse:
             new_targets = [self.inverse_label_mapping[x] for x in targets]
 
-        else:
+        else:            
+            targets = [str(x) for x in targets]
             new_targets = [self.label_mapping[x] for x in targets]
 
         return new_targets
@@ -501,6 +507,7 @@ class GAlearner:
 
         lengths = []
         unique_tokens = set()
+        targets = [str(x) for x in targets]
 
         for x in list_of_texts:
             lengths.append(len(x))
