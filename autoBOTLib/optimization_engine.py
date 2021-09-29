@@ -165,6 +165,7 @@ class GAlearner:
         """
 
         self.verbose = verbose
+        self.mlc_flag = False
         if self.verbose: print(logo)
 
         if self.upsample:
@@ -308,6 +309,8 @@ class GAlearner:
 
         ## Primitive MLC -> each subset is a possible label
         if isinstance(train_targets[0], list):
+
+            self.mlc_flag = True
             train_targets = [str(x) for x in train_targets]
         
         unique_train_target_labels = set(train_targets)
@@ -331,8 +334,11 @@ class GAlearner:
         if inverse:
             new_targets = [self.inverse_label_mapping[x] for x in targets]
 
-        else:            
-            targets = [str(x) for x in targets]
+        else:
+            
+            if self.mlc_flag:
+                targets = [str(x) for x in targets]
+                
             new_targets = [self.label_mapping[x] for x in targets]
 
         return new_targets
