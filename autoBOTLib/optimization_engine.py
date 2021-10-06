@@ -692,21 +692,19 @@ class GAlearner:
                 if self.learner_preset == "knn":
                     svc=KNeighborsClassifier()
                 else:
-                    svc=SGDClassifier()
+                    svc=SGDClassifier(max_iter=1000000)
 
             else:
                 if self.learner_preset == "knn":
                     svc=KNeighborsClassifier()
                 else:
-                    svc=SGDRegressor()
+                    svc=SGDRegressor(max_iter=1000000)
                     parameters['loss']=['squared_loss']
 
         else:
             svc=self.learner
         
         performance_score=self.scoring_metric
-        iteration_number=100000
-        parameters["max_iter"]=[iteration_number]
         
         if self.validation_type == "train_test":
             cv = ShuffleSplit(n_splits=1,
