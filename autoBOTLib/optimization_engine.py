@@ -644,6 +644,17 @@ class GAlearner:
                     "l1_ratio": [0, 0.1, 0.5, 0.9]
                 }
 
+            elif self.learner_preset == "intense":
+                parameters = {
+                    "loss": ["hinge", "log"],
+                    "penalty": ["elasticnet"],
+                    "power_t" : [0.1, 0.2, 0.3, 0.4, 0.5],
+                    "class_weight" : ["balanced", None],
+                    "n_iter_no_change" : [8, 32],
+                    "alpha": [0.05, 0.01, 0.005, 0.001, 0.0001, 0.0005],
+                    "l1_ratio": [0, 0.05, 0.25, 0.3, 0.6, 0.8, 0.95, 1]
+                }
+
             elif self.learner_preset == "mini-l1":
                 parameters = {"loss": ["log"], "penalty": ["l1"]}
 
@@ -659,11 +670,14 @@ class GAlearner:
 
             if final_run and self.learner_preset != "knn":
 
-                ## we can afford this final round to be more rigorous.
+                ## we can afford this final round to be more extensive.
                 parameters = {
                     "loss": ["hinge", "log"],
                     "penalty": ["elasticnet"],
-                    "alpha": [0.01, 0.001, 0.0001, 0.0005],
+                    "power_t" : [0.1, 0.2, 0.3, 0.4, 0.5],
+                    "class_weight" : ["balanced", None],
+                    "n_iter_no_change" : [8, 32],
+                    "alpha": [0.05, 0.01, 0.005, 0.001, 0.0001, 0.0005],
                     "l1_ratio": [0, 0.05, 0.25, 0.3, 0.6, 0.8, 0.95, 1]
                 }
 
@@ -676,22 +690,23 @@ class GAlearner:
             if self.task == "classification":
 
                 if self.learner_preset == "knn":
-                    svc = KNeighborsClassifier()
+                    svc=KNeighborsClassifier()
                 else:
-                    svc = SGDClassifier(max_iter=1000000)
+                    svc=SGDClassifier()
 
             else:
                 if self.learner_preset == "knn":
-                    svc = KNeighborsClassifier()
+                    svc=KNeighborsClassifier()
                 else:
-                    svc = SGDRegressor(max_iter=1000000)
-                    parameters['loss'] = ['squared_loss']
+                    svc=SGDRegressor()
+                    parameters['loss']=['squared_loss']
 
         else:
             svc = self.learner
-
+        
         performance_score = self.scoring_metric
-
+        parameters["max_iter"] = [10**6 % tmp_feature_space.shape[0]]
+        
         if self.validation_type == "train_test":
             cv = ShuffleSplit(n_splits=1,
                               test_size=self.validation_percentage,
@@ -720,11 +735,12 @@ class GAlearner:
                                scoring=performance_score,
                                refit=False)
 
+
         clf.fit(tmp_feature_space, self.train_targets)
-        f1_perf = max(clf.cv_results_['mean_test_score'])
+        f1_perf=max(clf.cv_results_['mean_test_score'])
 
         if final_run:
-            report = clf.cv_results_
+            report=clf.cv_results_
             return f1_perf, clf, report
 
         return f1_perf, clf
