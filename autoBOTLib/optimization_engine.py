@@ -702,10 +702,11 @@ class GAlearner:
                     parameters['loss']=['squared_loss']
 
         else:
-            svc = self.learner
+            svc=self.learner
         
-        performance_score = self.scoring_metric
-        parameters["max_iter"] = [10**6 % tmp_feature_space.shape[0]]
+        performance_score=self.scoring_metric
+        iteration_number=100000
+        parameters["max_iter"]=[iteration_number]
         
         if self.validation_type == "train_test":
             cv = ShuffleSplit(n_splits=1,
