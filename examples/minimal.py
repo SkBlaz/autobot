@@ -32,7 +32,7 @@ def run():
     print(prob_predictions)
 
     autoBOTLibObj.generate_report(output_folder="./report/",
-                                  job_id="as9y0gb98s")
+                                  job_id="FULLNEW")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,16 @@
+concept_features	relational_features_token	relational_features_char	topic_features	word_features	keyword_features	char_features	pos_features	relational_features_bigram
+antonym(alive,dead) : 0.0	like--3--know : 0.0	f--4--r : 5.37	topic_0 : 0.0	dumb : 0.38	absolute : 0.0	ck : 10.71	prp vbp dt : 8.36	ot--1--id : 6.81
+antonym(already,yet) : 0.0	get--2--dont : 0.0	i--3--l : 5.24	topic_1 : 0.0	loser : 0.13	abused : 0.0	u  : 10.06	nn prp vbp : 7.18	 l--5-- b : 6.48
+antonym(always,never) : 0.0	like--3--dont : 0.0	n--2--s : 4.2	topic_2 : 0.0	0bama : 0.0	accusing : 0.0	go  : 9.46	in dt : 6.21	s --5--it : 5.92
+antonym(always,never) relatedto(always,way) : 0.0	like--4--one : 0.0	p--4--l : 3.88	topic_3 : 0.0	ability : 0.0	acknowledge : 0.0	 u  : 8.38	dt : 5.83	ng--5--ck : 5.85
+antonym(another,one) : 0.0	like--2--get : 0.0	n--2--e : 3.83	topic_4 : 0.0	abortion : 0.0	activities : 0.0	oro : 7.78	prp vbp : 5.56	 d--4--er : 5.27
+antonym(another,one) distinctfrom(another,like) : 0.0	like--3--get : 0.0	 --3--h : 3.52	topic_5 : 0.0	abortions : 0.0	added : 0.0	 li : 7.49	in : 5.26	e --2--d  : 4.79
+antonym(around,far) : 0.0	like--2--people : 0.0	c--2--u : 3.4	topic_6 : 0.0	abs0lutely : 0.0	admittedly : 0.0	moro : 7.48	vbp dt : 4.77	 c--5--th : 4.69
+antonym(ask,tell) : 0.0	like--4--people : 0.0	c--3--k : 3.37	topic_7 : 0.0	absolutely : 0.0	admitting : 0.0	oron : 7.35	cd : 4.75	e --4--nt : 4.46
+antonym(attempt,trying) : 0.0	people--3--dont : 0.0	u--3--k : 3.32	topic_8 : 0.0	abuse : 0.0	adopt : 0.0	dum : 6.61	md : 4.34	s --5--ll : 4.36
+antonym(away,back) : 0.0	like--4--think : 0.0	 --4--n : 3.23	topic_9 : 0.0	abusing : 0.0	affairs : 0.0	hu : 6.55	nn prp : 4.14	 s--4--er : 4.24
+antonym(away,come) : 0.0	get--2--would : 0.0	a--2--l : 2.91	topic_10 : 0.0	accept : 0.0	afrika : 0.0	 f : 6.13	prp md vb : 4.04	ti--3--e  : 4.23
+antonym(away,hear) : 0.0	like--2--dont : 0.0	c--3--t : 2.8	topic_11 : 0.0	accepted : 0.0	afucking : 0.0	tard : 6.09	prp jj : 3.99	ne--5--ck : 4.19
+antonym(away,stay) : 0.0	see--4--people : 0.0	e--3--s : 2.7	topic_12 : 0.0	accepting : 0.0	again1 : 0.0	oser : 6.08	vbp dt jj : 3.95	r --5-- s : 3.89
+antonym(away,stay) relatedto(away,far) : 0.0	like--2--one : 0.0	n--2--b : 2.66	topic_13 : 0.0	access : 0.0	agent : 0.0	you : 6.08	vbp : 3.92	e --3--re : 3.79
+antonym(away,stay) relatedto(away,way) : 0.0	like--2--think : 0.0	a--2--c : 2.64	topic_14 : 0.0	accident : 0.0	airwaves : 0.0	diot : 5.99	vbd : 3.61	on--4--en : 3.78
