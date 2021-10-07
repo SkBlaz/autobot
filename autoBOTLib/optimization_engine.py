@@ -1502,7 +1502,7 @@ class GAlearner:
             if self.verbose:
                 logging.info("Training a learner without evolution.")
             top_individual = np.ones(self.weight_params)
-            learner, individual, score, feature_names, report = self.evaluate_fitness(
+            learner, individual, score, feature_names = self.evaluate_fitness(
                 top_individual, return_clf_and_vec=True)
             coefficients = learner.best_estimator_.coef_
             coefficients = np.asarray(np.abs(np.max(coefficients,
