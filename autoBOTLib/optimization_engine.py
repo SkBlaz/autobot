@@ -1698,9 +1698,9 @@ class GAlearner:
                     if self.task == "classification":
                         self.update_global_feature_importances()
 
-                except:
+                except Exception as es:
                     logging.info(
-                        "The considered classifier cannot produce feature importances."
+                        f"The considered classifier cannot produce feature importances. {es}"
                     )
 
                 single_learner = (learner, individual, score)

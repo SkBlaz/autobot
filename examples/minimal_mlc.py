@@ -18,14 +18,14 @@ def run():
         train_sequences,
         joint_target_space,
         representation_type=
-        "symbolic",  ## See the documentation for all possible representation types.
+        "neurosymbolic-lite",  ## See the documentation for all possible representation types.
         n_fold_cv=3,
-        memory_storage="memory",
+        memory_storage="memory2",
         sparsity=0.1,
         upsample=
         False,  ## Suitable for imbalanced data - randomized upsampling tends to help.
-        time_constraint=0.2).evolve(
-            strategy="direct-learning"
+        time_constraint=0.5).evolve(
+            strategy="evolution"
         )  ## strategy = "direct-learning" trains a single learner.
 
     dataframe2 = pd.read_csv("../data/insults/test.tsv", sep="\t")
@@ -36,7 +36,7 @@ def run():
     print(prob_predictions)
 
     autoBOTLibObj.generate_report(output_folder="./report/",
-                                  job_id="as9y0gb98s")
+                                  job_id="MLC")
 
 
 if __name__ == "__main__":
