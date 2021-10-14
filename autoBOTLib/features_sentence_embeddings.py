@@ -47,6 +47,7 @@ class documentEmbedder:
         else:
             self.num_cpu = num_cpu
 
+            
     def fit(self, text_vector, b=None, refit=False):
         """
         Fit the model to a text vector.
@@ -71,6 +72,7 @@ class documentEmbedder:
             self.model.delete_temporary_training_data(
                 keep_doctags_vectors=True, keep_inference=True)
 
+            
     def transform(self, text_vector):
         """
         Transform the data into suitable form.
@@ -93,10 +95,12 @@ class documentEmbedder:
 
         return sparse.csr_matrix(final_matrix)
 
+    
     def get_feature_names(self):
 
         return [str(x) + "_" + str(self.dm) for x in list(range(self.ndim))]
 
+    
     def fit_transform(self, text_vector, a2=None):
         """
         A classifc fit-transform method.
@@ -120,7 +124,3 @@ if __name__ == "__main__":
     print("+" * 100)
     m = rex.fit_transform(example_text)
     print(m)
-
-#    rex2 = entityDetector()
-#    X = rex2.fit_transform(example_text[0:30])
-#    print(X)

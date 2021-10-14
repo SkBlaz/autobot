@@ -12,6 +12,7 @@ from sentence_transformers import SentenceTransformer
 
 
 class ContextualDocs:
+    
     def __init__(self, model="paraphrase-xlm-r-multilingual-v1"):
         """
         Class initialization method.
@@ -27,11 +28,14 @@ class ContextualDocs:
         except Exception as es:
             logging.info(es)
 
+            
     def fit(self, documents):
         """
         :param documents: The input set of documents.
         """
+        pass
 
+    
     def transform(self, documents):
         """
         :param documents: The input set of documents.
@@ -54,19 +58,20 @@ class ContextualDocs:
         self.ndim = encoded_documents.shape[1]
         return encoded_documents
 
+    
     def fit_transform(self, documents, b=None):
         """
         :param documents: The input set of documents.
         """
         return self.transform(documents)
 
+    
     def get_feature_names(self):
         """
         :param fnames: Feature names (custom api artefact)
         """
 
         return [f"dim_{x}" for x in range(self.ndim)]
-
 
 if __name__ == "__main__":
 

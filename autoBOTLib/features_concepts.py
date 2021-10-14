@@ -39,6 +39,7 @@ class ConceptFeatures:
         self.knowledge_graph = knowledge_graph
         self.feature_names = None
 
+        
     def get_grounded_from_path(self, present_tokens, graph_path):
         """
         Method which performs a very simple term grounding. This simply evaluates if both terms are present in the corpus.
@@ -54,6 +55,7 @@ class ConceptFeatures:
                     if subject != obj:
                         yield (subject, predicate, obj)
 
+                        
     def concept_graph(self, document_space, graph_path):
         """
         If no prior knowledge graph is supplied, one is constructed.
@@ -126,6 +128,7 @@ class ConceptFeatures:
 
         return grounded
 
+    
     def get_propositionalized_rep(self, documents):
         """
         The method for constructing the representation.
@@ -171,6 +174,7 @@ class ConceptFeatures:
         logging.info(f"Average bag size: {np.mean(all_doc_sizes)}")
         return rbags
 
+    
     def fit(self, text_vector, refit=False, knowledge_graph=None):
         """
         Fit the model to a text vector.
@@ -201,6 +205,7 @@ class ConceptFeatures:
             max_features=self.max_features,
             token_pattern=r'\S+').fit(self.conc_docs)
 
+        
     def transform(self, text_vector, use_conc_docs=False):
         """
         Transform the data into suitable form.
@@ -212,10 +217,12 @@ class ConceptFeatures:
             text_vector = self.get_propositionalized_rep(text_vector)
         return self.concept_vectorizer.transform(text_vector)
 
+    
     def get_feature_names(self):
 
         return self.concept_vectorizer.get_feature_names()
 
+    
     def fit_transform(self, text_vector, b=None):
         """
         A classifc fit-transform method.

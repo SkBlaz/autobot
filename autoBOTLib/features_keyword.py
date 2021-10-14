@@ -29,6 +29,7 @@ class KeywordFeatures:
         self.max_features = max_features
         self.targets = targets
 
+        
     def fit(self, text_vector, refit=False):
         """
         Fit the model to a text vector.
@@ -110,6 +111,7 @@ class KeywordFeatures:
         self.keyword_vectorizer = TfidfVectorizer(
             ngram_range=(1, 1), max_features=self.max_features).fit(key_docs)
 
+        
     def transform(self, text_vector):
         """
         Transform the data into suitable form.
@@ -120,10 +122,12 @@ class KeywordFeatures:
 
         return self.keyword_vectorizer.transform(text_vector)
 
+    
     def get_feature_names(self):
 
         return self.keyword_vectorizer.get_feature_names()
 
+    
     def fit_transform(self, text_vector, b=None):
         """
         A classifc fit-transform method.

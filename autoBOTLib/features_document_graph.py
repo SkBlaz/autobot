@@ -44,6 +44,7 @@ class RelationalDocs:
         self.ed_cutoff = ed_cutoff
         self.subsample_classes = []
 
+        
     def jaccard_index(self, set1, set2):
         """
         The classic Jaccard index.
@@ -57,6 +58,7 @@ class RelationalDocs:
         common_space = set.union(set1, set2)
         return len(intersection) / (len(common_space) + 1)
 
+    
     def fit(self, text_list):
         """
         The fit method.
@@ -125,6 +127,7 @@ class RelationalDocs:
         self.node_embeddings = svd.fit_transform(laplacian)
         self.neigh_size = int(np.cbrt(self.node_embeddings.shape[0]))
 
+        
     def transform(self, new_documents):
         """
         Transform method.
@@ -161,6 +164,7 @@ class RelationalDocs:
         assert len(new_documents) == all_embeddings.shape[0]
         return all_embeddings
 
+    
     def fit_transform(self, documents, b=None):
         """
         The sklearn-like fit-transform method.
@@ -170,9 +174,11 @@ class RelationalDocs:
         self.fit(documents)
         return self.transform(documents)
 
+    
     def get_feature_names(self):
         return list(["dim_" + str(x) for x in range(self.ndim)])
 
+    
     def get_graph(self, wspace, ltl):
         """
         A method to obtain a graph from a weighted space of documents.

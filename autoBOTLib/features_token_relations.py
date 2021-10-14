@@ -50,6 +50,7 @@ class relationExtractor:
         else:
             self.num_cpu = num_cpu
 
+            
     def compute_distance(self, pair, token_dict):
         """
         A core distance for computing index-based differences.
@@ -64,6 +65,7 @@ class relationExtractor:
         dist = np.abs(i1 - i2)
         return pair[0], pair[1], dist
 
+    
     def witem_kernel(self, instance):
         """
         A simple kernel for traversing a given document.
@@ -121,6 +123,7 @@ class relationExtractor:
 
         return global_distances
 
+    
     def fit(self, text_vector, b=None):
         """
         Fit the model to a text vector.
@@ -180,6 +183,7 @@ class relationExtractor:
                 if enx in sorted_correlations
             ]
 
+            
     def get_feature_names(self):
         """
         Return exact feature names.
@@ -187,6 +191,7 @@ class relationExtractor:
 
         return [x[0] for x in self.wit_vec]
 
+    
     def transform(self, text_vector, custom_shape=None):
         """
         Transform the data into suitable form.
@@ -217,6 +222,7 @@ class relationExtractor:
                            shape=(len(text_vector), custom_shape))
         return m
 
+    
     def fit_transform(self, text_vector, a2):
         """
         A classifc fit-transform method.

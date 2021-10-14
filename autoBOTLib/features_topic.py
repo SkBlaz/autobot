@@ -12,6 +12,7 @@ import tqdm
 
 
 class TopicDocs:
+    
     def __init__(self,
                  ndim=128,
                  random_seed=1965123,
@@ -34,6 +35,7 @@ class TopicDocs:
         self.random_seed = random_seed
         self.topic_tokens = topic_tokens
 
+        
     def fit(self, text_list):
         """
         The fit method.
@@ -57,6 +59,7 @@ class TopicDocs:
         for k, v in zip(fnames, cluster_assignments):
             self.topic_features[v].add(k)
 
+            
     def transform(self, new_documents):
         """
         Transform method.
@@ -84,6 +87,7 @@ class TopicDocs:
 
         return new_features
 
+    
     def fit_transform(self, documents, b=None):
         """
         The sklearn-like fit-transform method.
@@ -93,14 +97,12 @@ class TopicDocs:
         self.fit(documents)
         return self.transform(documents)
 
+    
     def get_feature_names(self):
+        """
+        Get feature names.
+        """
 
-        # overall_list = []
-        # for j in range(self.ndim):
-        #     keywords = self.topic_features[j]
-        #     topic = ";".join(keywords)
-        #     overall_list.append(topic)
-        # return overall_list
         return list(["topic_" + str(x) for x in range(self.ndim)])
 
 
@@ -114,10 +116,3 @@ if __name__ == "__main__":
 
     print(clx.get_feature_names())
     print(clx.topic_features)
-
-    # from sklearn.linear_model import SGDClassifier
-    # from sklearn.model_selection import cross_val_score
-
-    # clf = SGDClassifier()
-    # score = cross_val_score(clf, sim_features, labels, cv=10)
-    # print(np.mean(score))
