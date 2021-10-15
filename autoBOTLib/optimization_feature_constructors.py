@@ -388,6 +388,7 @@ def get_features(df_data,
                  memory_location="memory",
                  custom_pipeline=None,
                  random_seed=54324,
+                 normalization_norm="l2",
                  contextual_model="paraphrase-xlm-r-multilingual-v1",
                  combine_with_existing_representation=False):
     """
@@ -397,6 +398,7 @@ def get_features(df_data,
     :param str representation_type: Type of representation to be used.
     :param list/np.array targets: The target space (optional)
     :param float sparsity: The hyperparameter determining the dimensionalities of separate subspaces
+    :param str normalization_norm: The normalization of each subspace
     :param int embedding_dim: The latent dimension for doc. embeddings
     :param str memory_location: Location of the gzipped ConceptNet-like memory.
     :param obj custom_pipeline: Custom pipeline to be used for features if needed.
@@ -476,79 +478,79 @@ def get_features(df_data,
             ('pos_features',
              pipeline.Pipeline([('s3', text_col(key='pos_tag_seq')),
                                 ('pos_tfidf_unigram', tfidf_pos_unigram),
-                                ('normalize', Normalizer(norm="max"))])),
+                                ('normalize', Normalizer(norm=normalization_norm))])),
             "word_features":
             ('word_features',
              pipeline.Pipeline([('s1', text_col(key='no_stopwords')),
                                 ('word_tfidf_unigram', tfidf_word_unigram),
-                                ('normalize', Normalizer(norm="max"))])),
+                                ('normalize', Normalizer(norm=normalization_norm))])),
             "char_features": ('char_features',
                               pipeline.Pipeline([
                                   ('s2', text_col(key='no_stopwords')),
                                   ('char_tfidf_bigram', tfidf_char_bigram),
-                                  ('normalize', Normalizer(norm="max"))
+                                  ('normalize', Normalizer(norm=normalization_norm))
                               ])),
             "relational_features_char":
             ('relational_features_char',
              pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
                                 ('relational_features_unigram',
                                  lr_rel_features_unigram),
-                                ('normalize', Normalizer(norm="max"))])),
+                                ('normalize', Normalizer(norm=normalization_norm))])),
             "relational_features_bigram":
             ('relational_features_bigram',
              pipeline.Pipeline([('s10', text_col(key='no_stopwords')),
                                 ('relational_features_bigram',
                                  lr_rel_features_bigram),
-                                ('normalize', Normalizer(norm="max"))])),
+                                ('normalize', Normalizer(norm=normalization_norm))])),
             "keyword_features": ('keyword_features',
                                  pipeline.Pipeline([
                                      ('s5', text_col(key='no_stopwords')),
                                      ('keyword_features', keyword_features),
-                                     ('normalize', Normalizer(norm="max"))
+                                     ('normalize', Normalizer(norm=normalization_norm))
                                  ])),
             "topic_features": ('topic_features',
                                pipeline.Pipeline([
                                    ('s6', text_col(key='no_stopwords')),
                                    ('topic_features', topic_features),
-                                   ('normalize', Normalizer(norm="max"))
+                                   ('normalize', Normalizer(norm=normalization_norm))
                                ])),
             "relational_features_token":
             ('relational_features_token',
              pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
                                 ('relational_features_token',
                                  lr_rel_features_token),
-                                ('normalize', Normalizer(norm="max"))])),
+                                ('normalize', Normalizer(norm=normalization_norm))])),
             "neural_features_dm": ('neural_features_dm',
                                    pipeline.Pipeline([
                                        ('s7', text_col(key='no_stopwords')),
                                        ('sentence_embedding_mean',
                                         sentence_embedder_dm1),
-                                       ('normalize', Normalizer(norm="max"))
+                                       ('normalize', Normalizer(norm=normalization_norm))
                                    ])),
             "neural_features_dbow": ('neural_features_dbow',
                                      pipeline.Pipeline([
                                          ('s8', text_col(key='no_stopwords')),
                                          ('sentence_embedding_mean',
                                           sentence_embedder_dm2),
-                                         ('normalize', Normalizer(norm="max"))
+                                         ('normalize', Normalizer(norm=normalization_norm))
                                      ])),
             "document_graph":
             ('document_graph',
              pipeline.Pipeline([('s9', text_col(key='no_stopwords')),
                                 ('doc_similarity_features', doc_sim_features),
-                                ('normalize', Normalizer(norm="max"))])),
+                                ('normalize', Normalizer(norm=normalization_norm))])),
             "concept_features": ('concept_features',
                                  pipeline.Pipeline([
                                      ('s6', text_col(key='no_stopwords')),
                                      ('concept_features',
                                       concept_features_transformer),
-                                     ('normalize', Normalizer(norm="max"))
+                                     ('normalize', Normalizer(norm=normalization_norm))
                                  ])),
             "contextual_features":
             ('contextual_features',
              pipeline.Pipeline([('s6', text_col(key='text')),
                                 ('concept_features', contextual_features),
-                                ('normalize', Normalizer(norm="max"))]))
+                                ('normalize', Normalizer(norm=normalization_norm))]))
         }
 
         if isinstance(representation_type, str):

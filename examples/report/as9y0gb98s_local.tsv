@@ -1,0 +1,16 @@
+relational_features_token	relational_features_char	topic_features	word_features	keyword_features	char_features	pos_features	relational_features_bigram
+like--2--get : 0.05	h--4--i : 2.15	topic_5 : 0.62	dumb : 0.64	postal : 0.13	 u  : 3.16	prp vbp dt : 1.76	ot--1--id : 2.54
+like--2--make : 0.04	c--3--t : 2.05	topic_16 : 0.44	moron : 0.53	rational : 0.09	u  : 3.15	prp vbp : 1.69	er--4-- s : 2.18
+life--2--like : 0.03	s--2--y : 2.03	topic_18 : 0.35	bitch : 0.49	yeahi : 0.09	oro : 2.57	vbp : 1.52	s --5--it : 1.91
+like--3--even : 0.03	o--2--  : 1.93	topic_13 : 0.17	loser : 0.47	waist : 0.07	moro : 2.54	vbp dt : 1.48	ck--5--ng : 1.9
+nia--2--u : 0.03	i--2--p : 1.89	topic_14 : 0.17	fool : 0.42	whatsoever : 0.07	oron : 2.51	nn prp vbp : 1.3	e --2--d  : 1.88
+us--3--people : 0.02	a--2--l : 1.87	topic_19 : 0.16	shut : 0.36	xa0get : 0.07	diot : 2.15	vbp dt jj : 1.17	e --3--re : 1.88
+ass--4--fucking : 0.02	i--3--u : 1.79	topic_8 : 0.14	die : 0.31	leftist : 0.06	dum : 2.13	prp : 1.13	ll--3--e  : 1.8
+like--2--still : 0.02	o--3--c : 1.74	topic_1 : 0.11	hell : 0.31	lynched : 0.06	 cra : 2.11	in dt : 0.93	d --4--te : 1.79
+head--2--little : 0.02	s--1--p : 1.73	topic_2 : 0.1	mother : 0.3	orrible : 0.06	ck : 2.05	nn prp : 0.91	 d--4--er : 1.75
+fuck--2--got : 0.02	k--3--h : 1.69	topic_7 : 0.07	bet : 0.3	dance : 0.05	go  : 2.05	in : 0.85	s --5--re : 1.72
+like--4--going : 0.01	r--3--t : 1.62	topic_17 : 0.05	idiot : 0.29	messiah : 0.05	 dum : 1.98	dt : 0.85	s --3--in : 1.71
+see--3--like : 0.01	r--4--f : 1.6	topic_4 : 0.02	ignorant : 0.29	noynoy : 0.05	ser : 1.98	vbd : 0.84	e --3--ti : 1.71
+know--2--dont : 0.01	e--2--b : 1.56	topic_0 : 0.0	fuck : 0.29	rephrasennin : 0.05	idi : 1.91	md : 0.82	g --2--ck : 1.71
+like--3--really : 0.01	e--3--s : 1.55	topic_3 : 0.0	stupid : 0.28	riddance : 0.05	b  : 1.86	prp md vb : 0.8	ea--4--l  : 1.71
+us--5--even : 0.01	w--4--u : 1.55	topic_6 : 0.0	lot : 0.28	shabihah : 0.05	fag : 1.86	vbp dt nn : 0.75	d --4--or : 1.7
