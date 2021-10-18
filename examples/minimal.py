@@ -6,7 +6,7 @@ import pandas as pd
 
 def run():
     ## Load example data frame
-    dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t")
+    dataframe = pd.read_csv("../data/dontpatronize/train.tsv", sep="\t")
     train_sequences = dataframe['text_a']
     train_targets = dataframe['label']
 
@@ -14,7 +14,7 @@ def run():
         train_sequences,
         train_targets,
         representation_type=
-        "symbolic",  ## See the documentation for all possible representation types.
+        "neurosymbolic",  ## See the documentation for all possible representation types.
         n_fold_cv=3,
         memory_storage="memory",
         sparsity=0.1,

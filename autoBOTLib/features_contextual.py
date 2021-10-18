@@ -13,7 +13,7 @@ from sentence_transformers import SentenceTransformer
 
 class ContextualDocs:
     
-    def __init__(self, model="paraphrase-xlm-r-multilingual-v1"):
+    def __init__(self, model="all-mpnet-base-v2"):
         """
         Class initialization method.
 
@@ -77,8 +77,8 @@ if __name__ == "__main__":
 
     import pandas as pd
 
-    example_text = pd.read_csv("../data/insults/train.tsv", sep="\t")['text_a']
-    labels = pd.read_csv("../data/insults/train.tsv",
+    example_text = pd.read_csv("../data/dontpatronize/train.tsv", sep="\t")['text_a']
+    labels = pd.read_csv("../data/dontpatronize/train.tsv",
                          sep="\t")['label'].values.tolist()
     clx = ContextualDocs()
     sim_features = clx.fit_transform(example_text)

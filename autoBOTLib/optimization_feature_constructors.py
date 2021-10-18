@@ -73,7 +73,7 @@ feature_presets['neurosymbolic'] = [
     'concept_features', 'document_graph', 'neural_features_dbow',
     'neural_features_dm', 'relational_features_token', 'topic_features',
     'keyword_features', 'relational_features_char', 'char_features',
-    'word_features', 'pos_features', 'contextual_features',
+    'word_features', 'contextual_features',
     'relational_features_bigram'
 ]
 
@@ -389,7 +389,7 @@ def get_features(df_data,
                  custom_pipeline=None,
                  random_seed=54324,
                  normalization_norm="l2",
-                 contextual_model="paraphrase-xlm-r-multilingual-v1",
+                 contextual_model="all-mpnet-base-v2",
                  combine_with_existing_representation=False):
     """
     Method that computes various TF-IDF-alike features.

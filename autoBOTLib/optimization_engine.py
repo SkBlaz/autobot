@@ -77,7 +77,7 @@ class GAlearner:
                  default_importance=0.05,
                  learner_preset="default",
                  task="classification",
-                 contextual_model="paraphrase-xlm-r-multilingual-v1",
+                 contextual_model="all-mpnet-base-v2",
                  upsample=False,
                  verbose=1,
                  normalization_norm="l2",

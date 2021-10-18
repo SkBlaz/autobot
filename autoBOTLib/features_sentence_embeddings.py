@@ -113,7 +113,7 @@ class documentEmbedder:
 
 if __name__ == "__main__":
 
-    example_text = pd.read_csv("../data/counterfactuals/train.tsv",
+    example_text = pd.read_csv("../data/dontpatronize/train.tsv",
                                sep="\t")['text_a']
 
     rex = documentEmbedder(dm=1)
