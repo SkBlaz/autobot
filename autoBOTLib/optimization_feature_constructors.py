@@ -51,15 +51,10 @@ except:
         return 0
 
 
-# Feature constructors
-
-# sklearn dependencies
-
-# Import screening for contextual features
 global contextual_feature_library
 
 try:
-    from .contextual_embeddings import *
+    from .features_contextual import *
     contextual_feature_library = True
 
 except:
