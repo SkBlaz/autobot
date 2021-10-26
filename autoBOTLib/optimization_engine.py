@@ -1260,6 +1260,21 @@ class GAlearner:
                 except Exception as es:
                     logging.info(es)
 
+    def visualize_global_importances(self, importances_object, job_id, output_folder):
+
+        try:
+            
+            importances_object = importances_object.sort_values(by=['Importance'])
+            sns.barplot(importances_object.Importance, importances_object['Feature subspace'], palette="coolwarm")
+            plt.tight_layout()
+            plt.savefig(os.path.join(output_folder,f"{job_id}_barplot_global.pdf"), dpi=300)
+            plt.clf()
+            
+        except Exception as es:
+            
+            logging.info(es)
+            
+                    
     def generate_report(self, output_folder="./report", job_id="genericJobId"):
         """An auxilliary method for creating a report
 
@@ -1276,6 +1291,7 @@ class GAlearner:
                                  sep="\t",
                                  index=False)
 
+        visualize_global_importances(importances_global, job_id, output_folder)
         importances_global.to_csv(output_folder + f"{job_id}_global.tsv",
                                   sep="\t",
                                   index=False)

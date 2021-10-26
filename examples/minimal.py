@@ -14,7 +14,7 @@ def run():
         train_sequences,
         train_targets,
         representation_type=
-        "neurosymbolic",  ## See the documentation for all possible representation types.
+        "neurosymbolic-lite",  ## See the documentation for all possible representation types.
         n_fold_cv=3,
         memory_storage="memory",
         sparsity=0.1,
@@ -32,7 +32,7 @@ def run():
     print(prob_predictions)
 
     autoBOTLibObj.generate_report(output_folder="./report/",
-                                  job_id="FULLNEW")
+                                  job_id="REPORTNEW")
 
 
 if __name__ == "__main__":
