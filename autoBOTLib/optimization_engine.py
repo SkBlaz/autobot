@@ -646,7 +646,7 @@ class GAlearner:
                     "loss": ["hinge", "log"],
                     "penalty": ["elasticnet"],
                     "power_t": [0.1, 0.2, 0.3, 0.4, 0.5],
-                    "class_weight": ["balanced", None],
+                    "class_weight": ["balanced"],
                     "n_iter_no_change": [8, 32],
                     "alpha": [0.05, 0.01, 0.005, 0.001, 0.0001, 0.0005],
                     "l1_ratio": [0, 0.05, 0.25, 0.3, 0.6, 0.8, 0.95, 1]
@@ -669,10 +669,10 @@ class GAlearner:
 
                 # we can afford this final round to be more extensive.
                 parameters={
-                    "loss": ["hinge", "log"],
+                    "loss": ["hinge", "log", "modified_huber"],
                     "penalty": ["elasticnet"],
                     "power_t": [0.1, 0.2, 0.3, 0.4, 0.5],
-                    "class_weight": ["balanced", None],
+                    "class_weight": ["balanced"],
                     "n_iter_no_change": [8, 32],
                     "alpha": [0.01, 0.005, 0.001, 0.0005, 0.0001, 0.00005],
                     "l1_ratio": [0, 0.2, 0.4, 0.5, 0.6, 0.8, 1]
@@ -1263,7 +1263,8 @@ class GAlearner:
     def visualize_global_importances(self, importances_object, job_id, output_folder):
 
         try:
-            
+
+            importances_object['Importance'] = importances_object['Importance'].astype(float)
             importances_object = importances_object.sort_values(by=['Importance'])
             sns.barplot(importances_object.Importance, importances_object['Feature subspace'], palette="coolwarm")
             plt.tight_layout()
@@ -1291,7 +1292,7 @@ class GAlearner:
                                  sep="\t",
                                  index=False)
 
-        visualize_global_importances(importances_global, job_id, output_folder)
+        self.visualize_global_importances(importances_global, job_id, output_folder)
         importances_global.to_csv(output_folder + f"{job_id}_global.tsv",
                                   sep="\t",
                                   index=False)
@@ -1303,10 +1304,10 @@ class GAlearner:
                         index=False)
 
         self.visualize_learners(learners, image_path=os.path.join(output_folder,
-                                f"{job_id}_learners_PARAM.png"))
+                                f"{job_id}_learners_PARAM.pdf"))
 
         fitness=self.visualize_fitness(image_path=os.path.join(output_folder,
-                                         f"{job_id}_fitness.png"))
+                                         f"{job_id}_fitness.pdf"))
 
         fitness.to_csv(output_folder + f"{job_id}_fitness.tsv",
                        sep="\t",
