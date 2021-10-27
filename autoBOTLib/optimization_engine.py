@@ -668,15 +668,30 @@ class GAlearner:
             if final_run and self.learner_preset != "knn":
 
                 # we can afford this final round to be more extensive.
-                parameters={
-                    "loss": ["hinge", "log", "modified_huber"],
-                    "penalty": ["elasticnet"],
-                    "power_t": [0.1, 0.2, 0.3, 0.4, 0.5],
-                    "class_weight": ["balanced"],
-                    "n_iter_no_change": [8, 32],
-                    "alpha": [0.01, 0.005, 0.001, 0.0005, 0.0001, 0.00005],
-                    "l1_ratio": [0, 0.2, 0.4, 0.5, 0.6, 0.8, 1]
-                }
+
+                if self.learner_preset == "intense":
+
+                    parameters={
+                        "loss": ["hinge", "log", "modified_huber"],
+                        "penalty": ["elasticnet"],
+                        "power_t": np.arange(0.05, 0.5, 0.05).tolist(),
+                        "class_weight": ["balanced"],
+                        "n_iter_no_change": [8, 32],
+                        "alpha": [0.01, 0.005, 0.001, 0.0005, 0.0003, 0.0001, 0.00005],
+                        "l1_ratio": np.arange(0, 1, 0.02).tolist()
+                    }                    
+
+                else:
+                
+                    parameters={
+                        "loss": ["hinge", "log", "modified_huber"],
+                        "penalty": ["elasticnet"],
+                        "power_t": [0.1, 0.2, 0.3, 0.4, 0.5],
+                        "class_weight": ["balanced"],
+                        "n_iter_no_change": [8, 32],
+                        "alpha": [0.01, 0.005, 0.001, 0.0005, 0.0001, 0.00005],
+                        "l1_ratio": [0, 0.2, 0.4, 0.5, 0.6, 0.8, 1]
+                    }
 
         else:
 
