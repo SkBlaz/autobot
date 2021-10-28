@@ -1,6 +1,7 @@
 # some generic logging
 import requests  # for downloading the KG
 from warnings import simplefilter
+import pickle
 import multiprocessing as mp
 import os
 import time
@@ -72,6 +73,7 @@ class GAlearner:
                  n_fold_cv=5,
                  random_seed=8954,
                  learner_hyperparameters=None,
+                 use_checkpoints=True,
                  custom_transformer_pipeline=None,
                  combine_with_existing_representation=False,
                  default_importance=0.05,
@@ -118,6 +120,7 @@ class GAlearner:
         self.validation_type=validation_type
         self.validation_percentage=validation_percentage
         self.task=task
+        self.use_checkpoints=use_checkpoints
         self.contextual_model=contextual_model
         np.random.seed(random_seed)
 
@@ -1497,6 +1500,31 @@ class GAlearner:
 
         return dfx
 
+    def store_top_solutions(self):
+        """A method for storing the HOF"""
+
+        try:
+            file_to_store = open("hof_checkpoint.pickle", "wb")
+            pickle.dump(self.hof, file_to_store)
+            file_to_store.close()
+        except:
+            if self.verbose:
+                logging.info("Could not store the hall of fame as a pickle")
+
+    def load_top_solutions(self):
+        """Load the top solutions as HOF"""
+
+        if os.path.isfile("hof_checkpoint.pickle"):
+            try:
+                file_to_store = open("hof_checkpoint.pickle", "rb")
+                self.hof = pickle.load(file_to_store)
+                if self.verbose:
+                    logging.info("Loaded the checkpoint file (hof_checkpoint.pickle)!")
+                file_to_store.close()
+            except:                
+                if self.verbose:
+                    logging.info("Could not load the checkpoint.")
+    
     def evolve(self,
                nind=10,
                crossover_proba=0.4,
@@ -1524,6 +1552,9 @@ class GAlearner:
 
         self.weight_params=len(self.feature_names)
 
+        if self.use_checkpoints:
+            self.load_top_solutions()
+        
         if strategy == "direct-learning":
             if self.verbose:
                 logging.info("Training a learner without evolution.")
@@ -1682,6 +1713,9 @@ class GAlearner:
 
             except:
                 selections=self.population
+
+            if self.use_checkpoints:
+                self.store_top_solutions()
 
             self.selections=[np.array(x).tolist() for x in selections]
 
