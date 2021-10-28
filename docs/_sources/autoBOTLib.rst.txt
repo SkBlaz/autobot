@@ -4,138 +4,114 @@ autoBOTLib package
 Submodules
 ----------
 
-autoBOTLib.baselines module
----------------------------
+autoBOTLib.features\_concepts module
+------------------------------------
 
-.. automodule:: autoBOTLib.baselines
+.. automodule:: autoBOTLib.features_concepts
    :members:
    :undoc-members:
    :show-inheritance:
 
-autoBOTLib.conceptnet\_features module
+autoBOTLib.features\_contextual module
 --------------------------------------
 
-.. automodule:: autoBOTLib.conceptnet_features
+.. automodule:: autoBOTLib.features_contextual
    :members:
    :undoc-members:
    :show-inheritance:
 
-autoBOTLib.contextual\_embeddings module
-----------------------------------------
+autoBOTLib.features\_document\_graph module
+-------------------------------------------
 
-.. automodule:: autoBOTLib.contextual_embeddings
+.. automodule:: autoBOTLib.features_document_graph
    :members:
    :undoc-members:
    :show-inheritance:
 
-autoBOTLib.data\_utils module
------------------------------
-
-.. automodule:: autoBOTLib.data_utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-autoBOTLib.doc\_similarity module
----------------------------------
-
-.. automodule:: autoBOTLib.doc_similarity
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-autoBOTLib.feature\_constructors module
----------------------------------------
-
-.. automodule:: autoBOTLib.feature_constructors
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-autoBOTLib.helpers module
--------------------------
-
-.. automodule:: autoBOTLib.helpers
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-autoBOTLib.keyword\_features module
+autoBOTLib.features\_keyword module
 -----------------------------------
 
-.. automodule:: autoBOTLib.keyword_features
+.. automodule:: autoBOTLib.features_keyword
    :members:
    :undoc-members:
    :show-inheritance:
 
-autoBOTLib.metrics module
--------------------------
+autoBOTLib.features\_sentence\_embeddings module
+------------------------------------------------
 
-.. automodule:: autoBOTLib.metrics
+.. automodule:: autoBOTLib.features_sentence_embeddings
    :members:
    :undoc-members:
    :show-inheritance:
 
-autoBOTLib.minimal\_test module
+autoBOTLib.features\_token\_relations module
+--------------------------------------------
+
+.. automodule:: autoBOTLib.features_token_relations
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+autoBOTLib.features\_topic module
+---------------------------------
+
+.. automodule:: autoBOTLib.features_topic
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+autoBOTLib.misc\_helpers module
 -------------------------------
 
-.. automodule:: autoBOTLib.minimal_test
+.. automodule:: autoBOTLib.misc_helpers
    :members:
    :undoc-members:
    :show-inheritance:
 
-autoBOTLib.minimal\_test\_load module
--------------------------------------
-
-.. automodule:: autoBOTLib.minimal_test_load
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-autoBOTLib.rakun module
------------------------
-
-.. automodule:: autoBOTLib.rakun
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-autoBOTLib.sentence\_embeddings module
---------------------------------------
-
-.. automodule:: autoBOTLib.sentence_embeddings
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-autoBOTLib.strategy\_ga module
-------------------------------
-
-.. automodule:: autoBOTLib.strategy_ga
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-autoBOTLib.strategy\_random\_search module
+autoBOTLib.misc\_keyword\_detection module
 ------------------------------------------
 
-.. automodule:: autoBOTLib.strategy_random_search
+.. automodule:: autoBOTLib.misc_keyword_detection
    :members:
    :undoc-members:
    :show-inheritance:
 
-autoBOTLib.topic\_features module
----------------------------------
+autoBOTLib.optimization\_engine module
+--------------------------------------
 
-.. automodule:: autoBOTLib.topic_features
+.. automodule:: autoBOTLib.optimization_engine
    :members:
    :undoc-members:
    :show-inheritance:
 
-autoBOTLib.word\_relations module
----------------------------------
+autoBOTLib.optimization\_feature\_constructors module
+-----------------------------------------------------
 
-.. automodule:: autoBOTLib.word_relations
+.. automodule:: autoBOTLib.optimization_feature_constructors
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+autoBOTLib.optimization\_metrics module
+---------------------------------------
+
+.. automodule:: autoBOTLib.optimization_metrics
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+autoBOTLib.optimization\_random module
+--------------------------------------
+
+.. automodule:: autoBOTLib.optimization_random
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+autoBOTLib.optimization\_utils module
+-------------------------------------
+
+.. automodule:: autoBOTLib.optimization_utils
    :members:
    :undoc-members:
    :show-inheritance:

@@ -65,7 +65,7 @@ Representation types are defined as follows (within autoBOT); the keys of these 
 	'concept_features', 'document_graph', 'neural_features_dbow',
 	'neural_features_dm', 'relational_features_token', 'topic_features',
 	'keyword_features', 'relational_features_char', 'char_features',
-	'word_features', 'pos_features', 'contextual_features', 'relational_features_bigram'
+	'word_features', 'contextual_features', 'relational_features_bigram'
     ]
 
     # This one is ~language agnostic

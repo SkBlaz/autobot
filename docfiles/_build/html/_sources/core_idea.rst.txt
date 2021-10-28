@@ -27,10 +27,9 @@ The minimal example is given next. Let's first inspect how a model is trained.
 		scoring_metric = "f1", # sklearn-compatible scoring metric as the fitness.
 		hof_size=3,  # size of the hall of fame
 		top_k_importances=25,  # how many top features to output as final ranking
-		include_concept_features = True, # Download ConceptNet and use relational features
 		memory_storage=
-		"./memory",  # tripled base for concept features
-		representation_type="neurosymbolic-default")  # or symbolic or neural or neurosymbolic (neurosymbolic includes doc2graph transformation which is in beta)
+		"./memory",  # tripled base for concept features (see ./examples folder)
+		representation_type="neurosymbolic-lite")  # or symbolic or neural or neurosymbolic (neurosymbolic includes doc2graph transformation which is in beta)
 		
 	autoBOTLibObj.evolve(
 			nind=10,  ## population size
@@ -102,4 +101,10 @@ Finally, to explore the properties of individual classifiers in the final ensemb
     final_learners = autoBOTLibObj.summarise_final_learners()
     print(final_learners)
 
+Putting it all together - an automated report can be obtained as follows.
+    
+ .. code-block:: text
+
+    autoBOTLibObj.generate_report("report_folder")
+    
 For more examples and usecases, please inspect the `examples` folder!
