@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 def run():
-    dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t")
+    dataframe = pd.read_csv("../data/test/train.tsv", sep="\t")
     train_sequences = dataframe['text_a'][0:1000]
     train_targets = dataframe['label'][0:1000]
 
