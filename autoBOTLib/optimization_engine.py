@@ -1288,6 +1288,7 @@ class GAlearner:
             plt.tight_layout()
             plt.savefig(os.path.join(output_folder,f"{job_id}_barplot_global.pdf"), dpi=300)
             plt.clf()
+            plt.cla()
             
         except Exception as es:
             
@@ -1493,6 +1494,8 @@ class GAlearner:
             plt.legend()
             plt.tight_layout()
             plt.savefig(image_path, dpi=300)
+            plt.clf()
+            plt.cla()
 
         except Exception as es:
             if self.verbose:
