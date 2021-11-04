@@ -1,9 +1,5 @@
-## generate supervised features via keywords.
-## idea:
-## group docs by classes
-## for each class, find keywords,
-## score w.r.t., class presence, sort, take topn
-### relation extractor
+
+## relation extractor
 ## https://conceptnet.io/
 ## https://github.com/commonsense/conceptnet5/wiki/Downloads
 
@@ -22,6 +18,7 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 import nltk
 
+POSSIBLE_RELATIONS = ["is_a","part_of","subset_of","represents_a","serves_for","lives_in","works_for","represents_the","looks_like","synonym_for","similar_to","context_of","related_to","knows_of","knowledge_of","serves_to","serves_for","lives_near","parent_of","child_of","superior_to"]
 
 class ConceptFeatures:
     """
@@ -39,7 +36,6 @@ class ConceptFeatures:
         self.knowledge_graph = knowledge_graph
         self.feature_names = None
 
-        
     def get_grounded_from_path(self, present_tokens, graph_path):
         """
         Method which performs a very simple term grounding. This simply evaluates if both terms are present in the corpus.
@@ -55,6 +51,20 @@ class ConceptFeatures:
                     if subject != obj:
                         yield (subject, predicate, obj)
 
+
+    def add_triplet(self, tokens, index, relations=["is_a"]):
+
+        token = tokens[index]        
+        for relation in relations:
+            p1, p2 = relation.split("_")
+            if token.lower() == p1 and tokens[index + 1].lower() == p2:
+                if len(tokens[index - 1]) > 1 and len(tokens[index + 2]) > 1:
+                    triplet_adhoc = (tokens[index - 1], relation,
+                                     tokens[index + 2])
+                    if triplet_adhoc[0] != triplet_adhoc[2]:
+                        if len(triplet_adhoc[0]) > 3 and len(triplet_adhoc[2]) > 3:
+                            yield triplet_adhoc
+        
                         
     def concept_graph(self, document_space, graph_path):
         """
@@ -72,11 +82,9 @@ class ConceptFeatures:
             tokens = [word.lower() for word in tokens]
             for i, token in enumerate(tokens):
                 if i > 0 and i < len(tokens) - 1:
-                    if token == "is" and tokens[i + 1] == "a":
-                        if len(tokens[i - 1]) > 1 and len(tokens[i + 2]) > 1:
-                            triplet_adhoc = (tokens[i - 1], "is_a",
-                                             tokens[i + 2])
-                            generic_triplets.append(triplet_adhoc)
+                    found_triplets = self.add_triplet(tokens, i, relations=POSSIBLE_RELATIONS)
+                    for triplet in found_triplets:
+                        generic_triplets.append(triplet)
 
             for token in tokens:
                 present_tokens.add(token)
@@ -96,23 +104,24 @@ class ConceptFeatures:
                                              tokens[enx + 2])
                             if triplet_adhoc[0] != triplet_adhoc[2]:
                                 generic_triplets.append(triplet_adhoc)
+
+        logging.info(f"Found the following relations: {set([x[1] for x in generic_triplets])}")
         try:
 
             kg_sources = os.listdir(graph_path)
             full_paths = [os.path.join(graph_path, x) for x in kg_sources]
 
             for path in full_paths:
-                logging.info(f"Processing: {path}")
                 triplet_generator = self.get_grounded_from_path(
                     present_tokens, path)
 
                 for triplet in triplet_generator:
                     grounded.append(triplet)
-                logging.info(f"Grounded: {len(grounded)} triplets.")
+                logging.info(f"Grounded in total: {len(grounded)} triplets (last added from {path}).")
 
-        except:
+        except Exception as es:
             logging.info(
-                f"No knowledge graphs found in the default path: {graph_path}. Reverting to generic triplet extraction from the corpus alone. To use a knowledge graph, place a Gzipped triplet (tsv) database in {graph_path} folder."
+                f"No knowledge graphs found in the default path: {graph_path}. Reverting to generic triplet extraction from the corpus alone. To use a knowledge graph, place a Gzipped triplet (tsv) database in {graph_path} folder. ({es})"
             )
             grounded = generic_triplets
             del generic_triplets
@@ -128,7 +137,6 @@ class ConceptFeatures:
 
         return grounded
 
-    
     def get_propositionalized_rep(self, documents):
         """
         The method for constructing the representation.
@@ -174,7 +182,6 @@ class ConceptFeatures:
         logging.info(f"Average bag size: {np.mean(all_doc_sizes)}")
         return rbags
 
-    
     def fit(self, text_vector, refit=False, knowledge_graph=None):
         """
         Fit the model to a text vector.
@@ -200,12 +207,11 @@ class ConceptFeatures:
         logging.info("Concept-based features extracted.")
 
         self.concept_vectorizer = TfidfVectorizer(
-            ngram_range=(1, 2),
+            ngram_range=(1, 1),
             sublinear_tf=True,  ## for very sparse spaces
             max_features=self.max_features,
             token_pattern=r'\S+').fit(self.conc_docs)
 
-        
     def transform(self, text_vector, use_conc_docs=False):
         """
         Transform the data into suitable form.
@@ -217,12 +223,10 @@ class ConceptFeatures:
             text_vector = self.get_propositionalized_rep(text_vector)
         return self.concept_vectorizer.transform(text_vector)
 
-    
     def get_feature_names(self):
 
         return self.concept_vectorizer.get_feature_names()
 
-    
     def fit_transform(self, text_vector, b=None):
         """
         A classifc fit-transform method.
@@ -241,7 +245,6 @@ if __name__ == "__main__":
     example_text = pd.read_csv("../data/dontpatronize/train.tsv", sep="\t")
     text = example_text['text_a']
     labels = example_text['label']
-
     rex = ConceptFeatures(knowledge_graph="./memory")
     m = rex.fit_transform(text)
     print(m.shape)
