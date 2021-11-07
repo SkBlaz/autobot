@@ -68,8 +68,7 @@ feature_presets['neurosymbolic'] = [
     'concept_features', 'document_graph', 'neural_features_dbow',
     'neural_features_dm', 'relational_features_token', 'topic_features',
     'keyword_features', 'relational_features_char', 'char_features',
-    'word_features', 'contextual_features',
-    'relational_features_bigram'
+    'word_features', 'relational_features_bigram', 'contextual_features'
 ]
 
 # This one is ~language agnostic
