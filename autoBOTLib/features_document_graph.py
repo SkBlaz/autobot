@@ -21,7 +21,8 @@ class RelationalDocs:
                  targets=None,
                  ed_cutoff=-2,
                  verbose=True,
-                 doc_limit=2048,
+                 neigh_size=None,
+                 doc_limit=4096,
                  percentile_threshold=95):
         """
         Class initialization method.
@@ -37,13 +38,13 @@ class RelationalDocs:
 
         self.ndim = ndim
         self.targets = targets
+        self.neigh_size = neigh_size
         self.percentile_threshold = percentile_threshold
         self.verbose = verbose
         self.random_seed = random_seed
         self.doc_limit = doc_limit
         self.ed_cutoff = ed_cutoff
         self.subsample_classes = []
-
         
     def jaccard_index(self, set1, set2):
         """
@@ -57,7 +58,6 @@ class RelationalDocs:
         intersection = set1.intersection(set2)
         common_space = set.union(set1, set2)
         return len(intersection) / (len(common_space) + 1)
-
     
     def fit(self, text_list):
         """
@@ -66,21 +66,23 @@ class RelationalDocs:
         :param text_list: List of input texts
         
         """
-
+        
         if not type(text_list) == list:
             text_list = text_list.values.tolist()
 
-        ## Subsample the document space to reduce graph size.
+        # Subsample the document space to reduce graph size.
         if len(text_list) > self.doc_limit:
             if self.targets is None:
                 if not self.doc_limit is None:
                     text_list = text_list[:self.doc_limit]
+                    
             else:
                 unique_targets = np.unique(self.targets)
                 utx = defaultdict(list)
                 for utarget in unique_targets:
                     indices = np.where(self.targets == utarget)[0]
                     utx[utarget] = indices.tolist()
+                    
                 sampled_docs = []
                 while len(sampled_docs) < self.doc_limit:
                     for k, v in utx.items():
@@ -88,15 +90,16 @@ class RelationalDocs:
                             relevant_index = v.pop()
                             sampled_docs.append(text_list[relevant_index])
                             self.subsample_classes.append(k)
+                            
                 assert len(sampled_docs) == self.doc_limit
                 text_list = sampled_docs
                 del sampled_docs
 
-        t_tokens = {
-            a: set([x.lower()[:self.ed_cutoff] for x in a.strip().split(" ")])
-            for a in text_list
-        }
-        t_tokens = OrderedDict(t_tokens)
+        t_tokens = OrderedDict()
+
+        for a in text_list:
+            t_tokens[a] = set([x.lower()[:self.ed_cutoff] for x in a.strip().split(" ")])
+        
         nlist = {}
 
         for a in tqdm.tqdm(range(len(text_list))):
@@ -125,7 +128,8 @@ class RelationalDocs:
                            random_state=self.random_seed)
 
         self.node_embeddings = svd.fit_transform(laplacian)
-        self.neigh_size = int(np.cbrt(self.node_embeddings.shape[0]))
+        if self.neigh_size is None:
+            self.neigh_size = int(np.cbrt(self.node_embeddings.shape[0]))
 
         
     def transform(self, new_documents):
@@ -146,24 +150,26 @@ class RelationalDocs:
         all_embeddings = []
 
         for doc in tqdm.tqdm(new_documents):
+            
             doc_split = set(
                 [x.lower()[:self.ed_cutoff] for x in doc.strip().split(" ")])
-            distances = []
+            
+            similarities = []
 
             for k, v in self.core_documents.items():
                 dist = self.jaccard_index(doc_split, v)
-                distances.append(dist)
+                similarities.append(dist)
 
-            distances = np.array(distances)
-            sorted_dists = np.argsort(distances)[::-1]
+            similarities = np.array(similarities)
+            sorted_dists = np.argsort(similarities)[::-1]
             local_neigh_size = self.neigh_size
             embedding = np.mean(
                 self.node_embeddings[sorted_dists[0:local_neigh_size]], axis=0)
             all_embeddings.append(embedding)
+            
         all_embeddings = np.array(all_embeddings)
         assert len(new_documents) == all_embeddings.shape[0]
         return all_embeddings
-
     
     def fit_transform(self, documents, b=None):
         """
@@ -173,11 +179,9 @@ class RelationalDocs:
 
         self.fit(documents)
         return self.transform(documents)
-
     
     def get_feature_names(self):
         return list(["dim_" + str(x) for x in range(self.ndim)])
-
     
     def get_graph(self, wspace, ltl):
         """
@@ -210,54 +214,34 @@ class RelationalDocs:
 
 if __name__ == "__main__":
 
-    example_text = pd.read_csv("../data/pan-2017-age/train.tsv",
-                               sep="\t")['text_a']
-    labels = pd.read_csv("../data/pan-2017-age/train.tsv",
-                         sep="\t")['label'].values.tolist()
-    clx = RelationalDocs(percentile_threshold=95, ed_cutoff=-2, targets=labels)
-    sim_features = clx.fit_transform(example_text)
-
     import matplotlib.pyplot as plt
     import operator
 
     from sklearn.linear_model import LogisticRegression
     from sklearn.model_selection import cross_val_score
+    from sklearn.dummy import DummyClassifier
+    
+    example_text = pd.read_csv("../data/sarcasm/train.tsv",
+                               sep="\t")['text_a']
+    labels = pd.read_csv("../data/sarcasm/train.tsv",
+                         sep="\t")['label'].values.tolist()
 
-    # dem = documentEmbedder()
-    # dem_features = dem.fit_transform(example_text).todense()
+    nsize = [None, 2, 4, 8, 16]
+    tuplets = []
+    for neigh_size in nsize:
+        for threshold in [0.95, 0.90, 0.85, 0.80, 0.70]:
+            clx = RelationalDocs(percentile_threshold=95, ed_cutoff=-2, doc_limit=8196, targets=labels, neigh_size = neigh_size)
+            sim_features = clx.fit_transform(example_text)
 
-    # clf = LogisticRegression()
-    # lc = labels.copy()
-    # cross_val_score = cross_val_score(clf, dem_features, lc, cv = 5)
-    # print(np.mean(cross_val_score), "doc2vec")
+            clf = LogisticRegression(max_iter = 100000)
+            lc = labels.copy()
+            cross_val_score1 = cross_val_score(clf, sim_features, lc, cv=5)
 
-    clf = LogisticRegression()
-    lc = labels.copy()
-    cross_val_score = cross_val_score(clf, sim_features, lc, cv=5)
-    print(np.mean(cross_val_score), "dsim")
+            clf = DummyClassifier()
+            cross_val_score2 = cross_val_score(clf, sim_features, labels.copy(), cv = 5)
+            tuplets.append([neigh_size, threshold, np.mean(cross_val_score1), np.mean(cross_val_score2)])
 
-    # clf = DummyClassifier()
-    # cross_val_score = cross_val_score(clf, sim_features, labels.copy(), cv = 5)
-    # print(np.mean(cross_val_score), "dummy")
-
-    print("Plotting")
-    doc_graph = clx.G
-    prx = nx.pagerank(doc_graph)
-    ranks = [y for _, y in prx.items()]
-    colors = []
-    mdoc = list(sorted(prx.items(), key=operator.itemgetter(1)))[-10:]
-
-    # for ex in mdoc:
-
-    #     print(example_text[ex[0]], ex[1])
-
-    print(nx.info(doc_graph))
-
-    pos = nx.spring_layout(doc_graph, scale=2, iterations=1000)
-    nx.draw_networkx_nodes(doc_graph,
-                           pos,
-                           node_size=17,
-                           node_color=clx.targets,
-                           cmap="Set2")
-    nx.draw_networkx_edges(doc_graph, pos, alpha=0.1)
-    plt.show()
+    dfx = pd.DataFrame(tuplets)
+    dfx.columns = ['neighborhoodSize','threshold','DocGraph','Dummy']
+    dfx = dfx.sort_values(by = "DocGraph")
+    print(dfx)
