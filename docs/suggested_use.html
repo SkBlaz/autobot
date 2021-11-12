@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Using custom classifiers &mdash; autoBOTLib  documentation</title>
+  <title>Suggested use &mdash; autoBOTLib  documentation</title>
   
 
   
@@ -38,8 +38,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Using custom feature transformers" href="custom_features.html" />
-    <link rel="prev" title="Feature types" href="features.html" /> 
+    <link rel="next" title="Feature types" href="features.html" />
+    <link rel="prev" title="autoBOTLib library" href="core_idea.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -95,9 +95,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_idea.html">autoBOTLib library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="suggested_use.html">Suggested use</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Suggested use</a></li>
 <li class="toctree-l1"><a class="reference internal" href="features.html">Feature types</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Using custom classifiers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_classifiers.html">Using custom classifiers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_features.html">Using custom feature transformers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_persistence.html">Model persistence</a></li>
 <li class="toctree-l1"><a class="reference internal" href="representations.html">Obtaining underlying representations</a></li>
@@ -162,13 +162,13 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Using custom classifiers</li>
+      <li>Suggested use</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/custom_classifiers.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/suggested_use.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -181,52 +181,37 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="using-custom-classifiers">
-<h1>Using custom classifiers<a class="headerlink" href="#using-custom-classifiers" title="Permalink to this headline">¶</a></h1>
-<p>The <em>vanilla</em> implementation of autoBOTLib uses the <em>SGDClassifier</em> class, suitable for fast exploration of a wide array of various models. However, should you wish to use your custom, sklearn-syntax compatible classifier, the following snippet is a good start.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">autoBOTLib</span>
+  <div class="section" id="suggested-use">
+<h1>Suggested use<a class="headerlink" href="#suggested-use" title="Permalink to this headline">¶</a></h1>
+<p>Current implementation of autoBOT enables the user to explore multiple different representation spaces. However, the end-goal is to offer a tool which serves as a very strong baseline. To this end, the configuration below was shown to perform well across multiple benchmarks/shared tasks. Note that this configuration needs the <cite>sentence-transformers</cite> library (multilingual contextual representations).</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">autoBOTLib</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">SGDClassifier</span>
 
 <span class="c1">## Load example data frame</span>
 <span class="n">dataframe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/insults/train.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">train_sequences</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;text_a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 <span class="n">train_targets</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
-<span class="c1">## The syntax for specifying a learner and the hyperparameter space!</span>
-<span class="c1">## These are the hyperparameters to be explored for each representation.</span>
-<span class="n">classifier_hyperparameters</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;hinge&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;penalty&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;elasticnet&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">],</span>
-        <span class="s2">&quot;l1_ratio&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
-<span class="p">}</span>
-
-<span class="c1">## This is the classifier compatible with the hyperparameters.</span>
-<span class="n">custom_classifier</span> <span class="o">=</span> <span class="n">SGDClassifier</span><span class="p">()</span>
-
 <span class="n">autoBOTLibObj</span> <span class="o">=</span> <span class="n">autoBOTLib</span><span class="o">.</span><span class="n">GAlearner</span><span class="p">(</span>
         <span class="n">train_sequences</span><span class="p">,</span>  <span class="c1"># input sequences</span>
         <span class="n">train_targets</span><span class="p">,</span>  <span class="c1"># target space</span>
-        <span class="n">time_constraint</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>  <span class="c1"># time in hours</span>
-        <span class="n">num_cpu</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>  <span class="c1"># number of CPUs to use</span>
+        <span class="n">time_constraint</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>  <span class="c1"># time in hours</span>
+        <span class="n">num_cpu</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span>  <span class="c1"># number of CPUs to use</span>
         <span class="n">task_name</span><span class="o">=</span><span class="s2">&quot;example test&quot;</span><span class="p">,</span>  <span class="c1"># task identifier</span>
+        <span class="n">scoring_metric</span> <span class="o">=</span> <span class="s2">&quot;f1&quot;</span><span class="p">,</span> <span class="c1"># sklearn-compatible scoring metric as the fitness.</span>
         <span class="n">hof_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>  <span class="c1"># size of the hall of fame</span>
         <span class="n">top_k_importances</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>  <span class="c1"># how many top features to output as final ranking</span>
-        <span class="n">memory_storage</span><span class="o">=</span><span class="s2">&quot;../memory&quot;</span><span class="p">,</span>
-        <span class="n">representation_type</span><span class="o">=</span><span class="s2">&quot;symbolic&quot;</span><span class="p">,</span>
-        <span class="n">learner</span> <span class="o">=</span> <span class="n">custom_classifier</span><span class="p">,</span>
-        <span class="n">learner_hyperparameters</span> <span class="o">=</span> <span class="n">classifier_hyperparameters</span><span class="p">)</span>  <span class="c1"># or neurosymbolic or neural</span>
+        <span class="n">memory_storage</span><span class="o">=</span>
+        <span class="s2">&quot;./memory&quot;</span><span class="p">,</span>  <span class="c1"># tripled base for concept features (see ./examples folder)</span>
+        <span class="n">representation_type</span><span class="o">=</span><span class="s2">&quot;neurosymbolic&quot;</span><span class="p">)</span>
 
 <span class="n">autoBOTLibObj</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span>
-        <span class="n">nind</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>  <span class="c1">## population size</span>
-        <span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;evolution&quot;</span><span class="p">,</span>  <span class="c1">## optimization strategy</span>
-        <span class="n">crossover_proba</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>  <span class="c1">## crossover rate</span>
-        <span class="n">mutpb</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>  <span class="c1">## mutation rate</span>
+                <span class="n">nind</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>  <span class="c1">## population size</span>
+                <span class="n">crossover_proba</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>  <span class="c1">## crossover rate</span>
+                <span class="n">mutpb</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>  <span class="c1">## mutation rate</span>
 </pre></div>
 </div>
+<p>The triplet knowledge bases can be downloaded from e.g., <cite>https://github.com/totogo/awesome-knowledge-graph#knowledge-graph-dataset</cite>. See the <cite>autobot/examples</cite> for more examples.</p>
 </div>
 
 
@@ -235,8 +220,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="custom_features.html" class="btn btn-neutral float-right" title="Using custom feature transformers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="features.html" class="btn btn-neutral float-left" title="Feature types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="features.html" class="btn btn-neutral float-right" title="Feature types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="core_idea.html" class="btn btn-neutral float-left" title="autoBOTLib library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

@@ -164,6 +164,7 @@ class GAlearner:
         self.mlc_flag=False
         if self.verbose:
             print(logo)
+            logging.info(f"Considering preset: {representation_type}")
 
         if self.upsample:
             train_sequences_raw, train_targets=self.upsample_dataset(
