@@ -23,7 +23,7 @@ Current implementation of autoBOT enables the user to explore multiple different
 		hof_size=3,  # size of the hall of fame
 		top_k_importances=25,  # how many top features to output as final ranking
 		memory_storage=
-		"./memory",  # tripled base for concept features (see ./examples folder)
+		"./memory",  # triplet base for concept features (see ./examples folder)
 		representation_type="neurosymbolic")
 		
 	autoBOTLibObj.evolve(
