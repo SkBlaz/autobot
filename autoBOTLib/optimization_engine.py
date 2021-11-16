@@ -19,7 +19,6 @@ import operator
 import copy
 from deap import base, creator, tools
 import logging
-import wget  # For conceptnet download if necessary
 logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
 logging.getLogger().setLevel(logging.INFO)
