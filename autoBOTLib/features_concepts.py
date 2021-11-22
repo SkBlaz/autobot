@@ -247,7 +247,10 @@ if __name__ == "__main__":
     labels = example_text['label']
     rex = ConceptFeatures(knowledge_graph="./memory")
     m = rex.fit_transform(text)
-    print(m.shape)
-    print(np.isnan(m.todense()).any())
     fnames = rex.get_feature_names()
-    print(fnames[0:5])
+
+    m = m.todense()
+    dataframe = pd.DataFrame(m)
+    dataframe.columns = fnames
+    dataframe['target'] = labels
+    dataframe.to_csv("patronizing.tsv", sep = "\t", index=False)

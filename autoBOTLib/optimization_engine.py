@@ -9,7 +9,7 @@ import itertools
 import numpy as np
 import tqdm
 from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.model_selection import GridSearchCV, ShuffleSplit
+from sklearn.model_selection import GridSearchCV, ShuffleSplit, RandomizedSearchCV
 from sklearn.linear_model import SGDClassifier, SGDRegressor
 from scipy import sparse
 from collections import defaultdict, Counter
@@ -999,6 +999,9 @@ class GAlearner:
 
         instances=self.return_dataframe_from_text(instances)
         output_representation=self.vectorizer.transform(instances)
+
+        
+        
         return output_representation
 
     def predict(self, instances):

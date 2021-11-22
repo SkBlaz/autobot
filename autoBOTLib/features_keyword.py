@@ -17,7 +17,7 @@ import collections
 import tqdm
 from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.corpus import stopwords
-from .misc_keyword_detection import RakunDetector, defaultdict
+from misc_keyword_detection import RakunDetector, defaultdict
 
 
 class KeywordFeatures:
@@ -142,11 +142,19 @@ class KeywordFeatures:
 
 if __name__ == "__main__":
 
-    example_text = pd.read_csv("../data/spanish/train.tsv", sep="\t")
+#    example_text = pd.read_csv("../data/spanish/train.tsv", sep="\t")
+    example_text = pd.read_csv("../data/dontpatronize/train.tsv", sep="\t")
     text = example_text['text_a']
     labels = example_text['label']
 
-    rex = KeywordFeatures(targets=labels)
+    rex = KeywordFeatures(targets=labels, max_features=512)
     rex.fit(text)
     m = rex.transform(text)
-    print(m)
+    feature_names = rex.get_feature_names()
+
+    m = m.todense()
+    dfx = pd.DataFrame(m)
+    dfx.columns = feature_names
+    labels = [1 if x > 0 else 0 for x in labels]
+    dfx['target'] = labels
+    dfx.to_csv("seminar_df.tsv", sep = "\t")
