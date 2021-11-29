@@ -17,7 +17,7 @@ import collections
 import tqdm
 from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.corpus import stopwords
-from misc_keyword_detection import RakunDetector, defaultdict
+from .misc_keyword_detection import RakunDetector, defaultdict
 
 
 class KeywordFeatures:

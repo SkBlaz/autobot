@@ -14,7 +14,7 @@ def run():
         train_sequences,
         train_targets,
         representation_type=
-        "neurosymbolic-lite",  ## See the documentation for all possible representation types.
+        "neurosymbolic",  ## See the documentation for all possible representation types.
         n_fold_cv=3,
         memory_storage="memory",
         sparsity=0.1,
