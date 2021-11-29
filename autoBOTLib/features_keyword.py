@@ -143,7 +143,7 @@ class KeywordFeatures:
 if __name__ == "__main__":
 
 #    example_text = pd.read_csv("../data/spanish/train.tsv", sep="\t")
-    example_text = pd.read_csv("../data/dontpatronize/train.tsv", sep="\t")
+    example_text = pd.read_csv("../data/depression/train.tsv", sep="\t")
     text = example_text['text_a']
     labels = example_text['label']
 

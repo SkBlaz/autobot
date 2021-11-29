@@ -235,14 +235,18 @@ class ConceptFeatures:
         :return transformedObj: Transformed texts (to features).
         """
 
-        self.fit(text_vector, self.targets)
+        try:
+            self.fit(text_vector, self.targets)
+        except Exception as es:
+            logging.info(es)
+            
         return self.transform(text_vector,
                               use_conc_docs=True)  # use stored docs
 
 
 if __name__ == "__main__":
 
-    example_text = pd.read_csv("../data/dontpatronize/train.tsv", sep="\t")
+    example_text = pd.read_csv("../data/depression/train.tsv", sep="\t")
     text = example_text['text_a']
     labels = example_text['label']
     rex = ConceptFeatures(knowledge_graph="./memory")

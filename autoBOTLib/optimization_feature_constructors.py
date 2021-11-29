@@ -83,7 +83,7 @@ feature_presets['neurosymbolic-lite'] = [
 feature_presets['neurosymbolic-default'] = [
     'neural_features_dbow', 'neural_features_dm', 'keyword_features',
     'relational_features_char', 'char_features', 'word_features',
-    "pos_features", 'concept_features', 'concept_features'
+    "pos_features", 'concept_features'
 ]
 
 feature_presets['neural'] = [
@@ -456,6 +456,7 @@ def get_features(df_data,
 
         concept_features_transformer = ConceptFeatures(
             max_features=max_num_feat, knowledge_graph=memory_location)
+        
         contextual_features = None
 
         if contextual_feature_library:
@@ -535,7 +536,7 @@ def get_features(df_data,
                                 ('normalize', Normalizer(norm=normalization_norm))])),
             "concept_features": ('concept_features',
                                  pipeline.Pipeline([
-                                     ('s6', text_col(key='no_stopwords')),
+                                     ('s6', text_col(key='text')),
                                      ('concept_features',
                                       concept_features_transformer),
                                      ('normalize', Normalizer(norm=normalization_norm))
@@ -543,7 +544,7 @@ def get_features(df_data,
             "contextual_features":
             ('contextual_features',
              pipeline.Pipeline([('s6', text_col(key='text')),
-                                ('concept_features', contextual_features),
+                                ('contextual_features', contextual_features),
                                 ('normalize', Normalizer(norm=normalization_norm))]))
         }
 
@@ -573,7 +574,7 @@ def get_features(df_data,
     matrix = pipeline.Pipeline([('union',
                                  FeatureUnion(transformer_list=features,
                                               n_jobs=1)),
-                                ('normalize', Normalizer())])
+                                ('normalize', Normalizer())], verbose=True)
 
     try:
         data_matrix = matrix.fit_transform(df_data)
@@ -584,95 +585,3 @@ def get_features(df_data,
         tokenizer = None
 
     return tokenizer, feature_names, data_matrix
-
-
-def get_autoBOT_manual(train_sequences,
-                       dev_sequences,
-                       train_targets,
-                       dev_targets,
-                       time_constraint=1,
-                       num_cpu=1,
-                       max_features=1000,
-                       clf_type="LR"):
-
-    # This is legacy now.
-    total_sequences_training = train_sequences.values.tolist(
-    ) + dev_sequences.values.tolist()
-    total_sequences_training = build_dataframe(total_sequences_training)
-
-    total_labels_training = train_targets.tolist() + dev_targets.tolist()
-    max_num_feat = 10000
-    max_tokenizer, max_feature_names, max_data_matrix = None, None, None
-    representation_type = "neurosymbolic"
-    embedding_dim = 512
-    if representation_type == "neural" or representation_type == "neurosymbolic":
-        sentence_embedder_dm1 = documentEmbedder(max_features=max_num_feat,
-                                                 dm=1,
-                                                 ndim=embedding_dim)
-        sentence_embedder_dm2 = documentEmbedder(max_features=max_num_feat,
-                                                 dm=0,
-                                                 ndim=embedding_dim)
-        neural_features = [
-            ('neural_features_v1',
-             pipeline.Pipeline([('s6', text_col(key='no_stopwords')),
-                                ('sentence_embedding_mean',
-                                 sentence_embedder_dm1)])),
-            ('neural_features_v2',
-             pipeline.Pipeline([('s7', text_col(key='no_stopwords')),
-                                ('sentence_embedding_mean',
-                                 sentence_embedder_dm2)]))
-        ]
-
-    if representation_type == "symbolic" or representation_type == "neurosymbolic":
-        tfidf_word_unigram = TfidfVectorizer(ngram_range=(1, 3),
-                                             sublinear_tf=False,
-                                             max_features=max_num_feat)
-        tfidf_pos_unigram = TfidfVectorizer(ngram_range=(1, 3),
-                                            max_features=max_num_feat)
-        tfidf_char_bigram = TfidfVectorizer(analyzer='char',
-                                            ngram_range=(2, 4),
-                                            max_features=max_num_feat)
-        lr_rel_features_unigram = relationExtractor(max_features=max_num_feat,
-                                                    min_token="unigrams")
-        keyword_features = KeywordFeatures(max_features=max_num_feat,
-                                           targets=train_targets)
-        concept_features_transformer = ConceptFeatures(
-            max_features=max_num_feat)
-        symbolic_features = [
-            ('word_features',
-             pipeline.Pipeline([('s1', text_col(key='no_stopwords')),
-                                ('word_tfidf_unigram', tfidf_word_unigram)])),
-            ('char_features',
-             pipeline.Pipeline([('s2', text_col(key='no_stopwords')),
-                                ('char_tfidf_bigram', tfidf_char_bigram)])),
-            ('pos_features',
-             pipeline.Pipeline([('s3', text_col(key='pos_tag_seq')),
-                                ('pos_tfidf_unigram', tfidf_pos_unigram)])),
-            ('relational_features',
-             pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
-                                ('relational_features_unigram',
-                                 lr_rel_features_unigram)])),
-            ('keyword_features',
-             pipeline.Pipeline([('s5', text_col(key='no_stopwords')),
-                                ('keyword_features', keyword_features)])),
-            ('concept_features',
-             pipeline.Pipeline([('s6', text_col(key='no_stopwords')),
-                                ('concept_features',
-                                 concept_features_transformer)]))
-        ]
-
-    features = symbolic_features + neural_features
-    [x[0] for x in features]
-
-    if clf_type == "LR":
-        clf = LogisticRegression()
-
-    elif clf_type == "SVM":
-        clf = LinearSVC()
-
-    cpipeline = pipeline.Pipeline([('union',
-                                    FeatureUnion(transformer_list=features,
-                                                 n_jobs=1)),
-                                   ('normalize', Normalizer()),
-                                   ('classifier', clf)])
-    return cpipeline.fit(total_sequences_training, total_labels_training)
