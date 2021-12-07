@@ -20,7 +20,7 @@ from deap import base, creator, tools
 import logging
 logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
-logging.getLogger().setLevel(logging.INFO)
+logging.getLogger(__name__).setLevel(logging.INFO)
 
 # evolution helpers -> this needs to be global for proper persistence handling.
 # If there is as better way, please open a pull request!

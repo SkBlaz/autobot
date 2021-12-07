@@ -2,6 +2,7 @@
 
 import autoBOTLib
 import pandas as pd
+from cluster_utils import output_classification_results
 
 
 def run():
@@ -14,7 +15,7 @@ def run():
         train_sequences,
         train_targets,
         representation_type=
-        "neurosymbolic-lite",  ## See the documentation for all possible representation types.
+        "neurosymbolic",  ## See the documentation for all possible representation types.
         n_fold_cv=3,
         memory_storage="memory",
         sparsity=0.1,
@@ -38,11 +39,13 @@ def run():
     test_sequences = dataframe2['text_a']
     predictions = autoBOTLibObj.predict(test_sequences)
     prob_predictions = autoBOTLibObj.predict_proba(test_sequences)
-    print(predictions)
-    print(prob_predictions)
-
     autoBOTLibObj.generate_report(output_folder="./report/",
                                   job_id="REPORTNEW")
+    output_classification_results(
+        predictions,
+        test_classes,
+        f"./predictions/test_{jid}_autobot{reptype}_report.json",
+        model_spec={})
 
 
 if __name__ == "__main__":

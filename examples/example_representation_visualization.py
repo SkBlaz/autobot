@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 def run():
-    dataframe = pd.read_csv("../data/test/train.tsv", sep="\t")
-    train_sequences = dataframe['text_a'][0:1000]
-    train_targets = dataframe['label'][0:1000]
+    dataframe = pd.read_csv("../data/depression/train.tsv", sep="\t")
+    train_sequences = dataframe['text_a'][0:]
+    train_targets = dataframe['label'][0:]
 
     autoBOTLibObj = autoBOTLib.GAlearner(
         train_sequences, train_targets,
