@@ -10,12 +10,12 @@ def run():
     dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t").iloc[:200]
     train_sequences = dataframe['text_a']
     train_targets = dataframe['label']
-
+    reptype="neurosymbolic"
     autoBOTLibObj = autoBOTLib.GAlearner(
         train_sequences,
         train_targets,
         representation_type=
-        "neurosymbolic",  ## See the documentation for all possible representation types.
+        reptype,  ## See the documentation for all possible representation types.
         n_fold_cv=3,
         memory_storage="memory",
         sparsity=0.1,
