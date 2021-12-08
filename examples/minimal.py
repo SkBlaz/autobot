@@ -41,6 +41,7 @@ def run():
     prob_predictions = autoBOTLibObj.predict_proba(test_sequences)
     autoBOTLibObj.generate_report(output_folder="./report/",
                                   job_id="REPORTNEW")
+    jid = "Some random job ID"
     output_classification_results(
         predictions,
         test_classes,
