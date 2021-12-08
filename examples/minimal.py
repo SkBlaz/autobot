@@ -42,6 +42,7 @@ def run():
     autoBOTLibObj.generate_report(output_folder="./report/",
                                   job_id="REPORTNEW")
     jid = "Some random job ID"
+    test_classes = dataframe2['label'].values.tolist()
     output_classification_results(
         predictions,
         test_classes,
