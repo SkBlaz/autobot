@@ -8,7 +8,11 @@ logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
 logging.getLogger().setLevel(logging.INFO)
 
-from sentence_transformers import SentenceTransformer
+try:
+    from sentence_transformers import SentenceTransformer
+    
+except Exception:
+    pass
 
 
 class ContextualDocs:

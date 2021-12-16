@@ -54,7 +54,7 @@ except:
 global contextual_feature_library
 
 try:
-    from .features_contextual import *
+    from autoBOTLib.features.features_contextual import *
     contextual_feature_library = True
 
 except:
