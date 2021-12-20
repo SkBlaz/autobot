@@ -18,6 +18,7 @@ from autoBOTLib.features.features_concepts import *
 from autoBOTLib.features.features_keyword import *
 from autoBOTLib.features.features_sentence_embeddings import *
 from autoBOTLib.features.features_token_relations import *
+from autoBOTLib.features.features_contextual import *
 
 import string
 import re
@@ -49,16 +50,6 @@ except:
 
     def PerceptronTagger():
         return 0
-
-
-global contextual_feature_library
-
-try:
-    from autoBOTLib.features.features_contextual import *
-    contextual_feature_library = True
-
-except:
-    contextual_feature_library = False
 
 global feature_presets
 feature_presets = {}
@@ -547,6 +538,7 @@ def get_features(df_data,
                                 ('contextual_features', contextual_features),
                                 ('normalize', Normalizer(norm=normalization_norm))]))
         }
+
 
         if isinstance(representation_type, str):
 

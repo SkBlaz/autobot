@@ -8,11 +8,14 @@ logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
 logging.getLogger().setLevel(logging.INFO)
 
+global contextual_feature_library
 try:
     from sentence_transformers import SentenceTransformer
+    contextual_feature_library = True
     
-except Exception:
-    pass
+except:
+    logging.info("IMPORTANT: No contextual representations will be considered. Please pip install sentence-transformers for full functionality! (this setting performs the best)")
+    contextual_feature_library = False
 
 
 class ContextualDocs:

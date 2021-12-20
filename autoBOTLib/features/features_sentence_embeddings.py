@@ -69,8 +69,6 @@ class documentEmbedder:
             self.model.train(documents,
                              total_examples=self.model.corpus_count,
                              epochs=32)
-            self.model.delete_temporary_training_data(
-                keep_doctags_vectors=True, keep_inference=True)
 
             
     def transform(self, text_vector):
@@ -113,7 +111,7 @@ class documentEmbedder:
 
 if __name__ == "__main__":
 
-    example_text = pd.read_csv("../data/dontpatronize/train.tsv",
+    example_text = pd.read_csv("../../data/dontpatronize/train.tsv",
                                sep="\t")['text_a']
 
     rex = documentEmbedder(dm=1)
