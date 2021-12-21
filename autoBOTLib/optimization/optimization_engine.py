@@ -67,7 +67,7 @@ class GAlearner:
                  initial_separate_spaces=True,
                  scoring_metric=None,
                  top_k_importances=15,
-                 representation_type="neurosymbolic-lite",
+                 representation_type="neurosymbolic",
                  binarize_importances=False,
                  memory_storage="memory",
                  learner=None,
@@ -742,7 +742,10 @@ space .."
             cv = self.n_fold_cv
             num_cpu = self.num_cpu
 
-        verbosity_factor = 0 if not final_run else 10
+        if self.verbose == 0:
+            verbosity_factor = 0
+        else:
+            verbosity_factor = 0 if not final_run else 10
 
         if final_run:
             clf = GridSearchCV(svc,
@@ -1182,24 +1185,11 @@ space .."
             importances = list(
                 zip(self.feature_names, individual[0:self.weight_params]))
 
-        report = [
-            "-" * 60, "|| Feature type   Importance || (top individual)",
-            "-" * 60
-        ]
+        dfx = pd.DataFrame(importances)
+        dfx.columns = ['Feature type','Importance']
 
-        cnt = -1
-
-        for fn, imp in importances:
-            cnt += 1
-            if len(str(fn)) < 17:
-                fn = str(fn) + (17 - len(str(fn))) * " "
-            report.append(str(fn) + "  " + str(np.round(imp, 2)))
-
-        report.append("-" * 60)
-        report.append("Max {} in generation: {}".format(
-            self.scoring_metric, max_f1))
-
-        print("\n".join(report))
+        print(dfx.to_markdown())
+        logging.info("Max {} in generation: {}\n".format(self.scoring_metric, round(max_f1, 3)))
 
     def mutReg(self, individual, p=1):
         """

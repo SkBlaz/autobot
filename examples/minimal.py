@@ -6,10 +6,10 @@ from cluster_utils import output_classification_results
 
 def run():
     ## Load example data frame
-    dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t").iloc[:]
+    dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t").iloc[:200]
     train_sequences = dataframe['text_a']
     train_targets = dataframe['label']
-    reptype="neurosymbolic"
+    reptype="symbolic"
     autoBOTLibObj = autoBOTLib.GAlearner(
         train_sequences,
         train_targets,
@@ -17,6 +17,7 @@ def run():
         reptype,  ## See the documentation for all possible representation types.
         n_fold_cv=3,
         memory_storage="memory",
+        verbose=0,
         sparsity=0.1,
         visualize_progress=True, ## Stores progress as PROGRESS_{generation}.pdf file
         upsample=
