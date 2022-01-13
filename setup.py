@@ -18,7 +18,7 @@ for a given task, automatically.
 
 packages = [x for x in find_packages() if x != "test"]
 setup(name='autoBOTLib',
-      version='1.16',
+      version='1.17',
       description="AutoBOT: Explainable AutoML for texts",
       long_description=long_description,
       long_description_content_type="text/markdown",

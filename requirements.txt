@@ -60,3 +60,4 @@ urllib3>=1.26.3
 wget>=3.2
 yapf>=0.30.0
 torch>=1.10.0
+tabulate>=0.8.9

@@ -46,7 +46,7 @@ def test_minimal_mlc():
 
 def test_minimal():
     ## Load example data frame
-    dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t")
+    dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t").iloc[:500]
     train_sequences = dataframe['text_a']
     train_targets = dataframe['label']
 
