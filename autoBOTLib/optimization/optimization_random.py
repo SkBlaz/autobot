@@ -3,6 +3,7 @@ This file contains code on random search across tfidf parameter space. Skrlj 201
 """
 
 import logging
+
 logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
 logging.getLogger().setLevel(logging.INFO)

@@ -34,8 +34,7 @@ scikit_intense_final = {
     "power_t": np.arange(0.05, 0.5, 0.05).tolist(),
     "class_weight": ["balanced"],
     "n_iter_no_change": [8, 32],
-    "alpha":
-    [0.01, 0.005, 0.001, 0.0005, 0.0003, 0.0001, 0.00005],
+    "alpha": [0.01, 0.005, 0.001, 0.0005, 0.0003, 0.0001, 0.00005],
     "l1_ratio": np.arange(0, 1, 0.02).tolist()
 }
 
@@ -49,15 +48,9 @@ scikit_generic_final = {
     "l1_ratio": [0, 0.2, 0.4, 0.5, 0.6, 0.8, 1]
 }
 
-scikit_mini_l1 = {
-    "loss": ["log"],
-    "penalty": ["l1"]
-}
+scikit_mini_l1 = {"loss": ["log"], "penalty": ["l1"]}
 
-scikit_mini_l2 = {
-    "loss": ["log"],
-    "penalty": ["l2"]
-}
+scikit_mini_l2 = {"loss": ["log"], "penalty": ["l2"]}
 
 scikit_knn = {
     "n_neighbors": list(range(1, 64, 1)),

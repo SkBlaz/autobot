@@ -17,6 +17,7 @@ import operator
 import copy
 from deap import base, creator, tools
 import logging
+
 logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
 logging.getLogger(__name__).setLevel(logging.INFO)
@@ -53,7 +54,6 @@ class GAlearner:
     2.) Evolve
     3.) Predict
     """
-
     def __init__(self,
                  train_sequences_raw,
                  train_targets,
@@ -275,8 +275,7 @@ class GAlearner:
         if self.verbose:
             logging.info(
                 "Initiating the seed vectorizer instance and initial feature \
-space .."
-            )
+space ..")
 
         # hyperparameter space. Parameters correspond to weights of subspaces,
         # as well as subsets + regularization of LR.
@@ -651,22 +650,25 @@ space .."
 
         # Scikit-based learners
         if self.framework == "scikit":
-            performance_score, clf = scikit_learners(final_run, tmp_feature_space, self.train_targets, self.learner_hyperparameters,
-                                           self.learner_preset,
-                                           self.learner, self.task, self.scoring_metric, self.n_fold_cv,
-                                           self.validation_percentage, self.random_seed, self.verbose,
-                                           self.validation_type, self.num_cpu)
-            
+            performance_score, clf = scikit_learners(
+                final_run, tmp_feature_space, self.train_targets,
+                self.learner_hyperparameters, self.learner_preset,
+                self.learner, self.task, self.scoring_metric, self.n_fold_cv,
+                self.validation_percentage, self.random_seed, self.verbose,
+                self.validation_type, self.num_cpu)
+
         elif self.framework == "torch":
-            performance_score, clf = torch_learners(final_run, tmp_feature_space, self.train_targets, self.learner_hyperparameters,
-                                           self.learner_preset,
-                                           self.learner, self.task, self.scoring_metric, self.n_fold_cv,
-                                           self.validation_percentage, self.random_seed, self.verbose,
-                                                    self.validation_type, self.num_cpu, self.device)
-            
+            performance_score, clf = torch_learners(
+                final_run, tmp_feature_space, self.train_targets,
+                self.learner_hyperparameters, self.learner_preset,
+                self.learner, self.task, self.scoring_metric, self.n_fold_cv,
+                self.validation_percentage, self.random_seed, self.verbose,
+                self.validation_type, self.num_cpu, self.device)
+
         else:
-            raise NotImplementedError("Select either `torch` or `scikit` as the framework used.")
-            
+            raise NotImplementedError(
+                "Select either `torch` or `scikit` as the framework used.")
+
         return performance_score, clf
 
     def evaluate_fitness(self,
@@ -716,8 +718,8 @@ space .."
                 # fine tune final learner
                 if self.verbose:
                     logging.info("Final round of optimization.")
-                performance_score, clf = self.cross_val_scores(tmp_feature_space,
-                                                     final_run=True)
+                performance_score, clf = self.cross_val_scores(
+                    tmp_feature_space, final_run=True)
 
                 return clf, individual[:], performance_score, feature_names
 
@@ -907,8 +909,7 @@ space .."
             if self.verbose:
                 logging.info(
                     "Please call evolution() first to learn the representation\
- mappings."
-                )
+ mappings.")
 
         instances = self.return_dataframe_from_text(instances)
         output_representation = self.vectorizer.transform(instances)
@@ -1072,7 +1073,7 @@ space .."
 
         try:
             max_f1 = np.max(f1_scores)
-        except Exception as es:
+        except Exception:
             max_f1 = 0
 
         try:
@@ -1080,15 +1081,16 @@ space .."
                 zip(self.feature_names,
                     individual[0:self.weight_params].tolist()))
 
-        except Exception as es:
+        except Exception:
             importances = list(
                 zip(self.feature_names, individual[0:self.weight_params]))
 
         dfx = pd.DataFrame(importances)
-        dfx.columns = ['Feature type','Importance']
-        
+        dfx.columns = ['Feature type', 'Importance']
+
         print(dfx.to_markdown())
-        logging.info("Max {} in generation: {}\n".format(self.scoring_metric, round(max_f1, 3)))
+        logging.info("Max {} in generation: {}\n".format(
+            self.scoring_metric, round(max_f1, 3)))
 
     def mutReg(self, individual, p=1):
         """
@@ -1168,9 +1170,9 @@ space .."
                 try:
                     if self.verbose:
                         logging.info(f"Visualizing hyperparameter: {cname}")
-                    sns.lineplot(
-                        learner_dataframe[cname], learner_dataframe.mean_test_score,
-                        color="black")
+                    sns.lineplot(learner_dataframe[cname],
+                                 learner_dataframe.mean_test_score,
+                                 color="black")
                     plt.ylabel(
                         f"Cross validation score ({self.scoring_metric})")
 
@@ -1182,23 +1184,28 @@ space .."
                 except Exception as es:
                     logging.info(es)
 
-    def visualize_global_importances(self, importances_object, job_id, output_folder):
+    def visualize_global_importances(self, importances_object, job_id,
+                                     output_folder):
 
         try:
 
-            importances_object['Importance'] = importances_object['Importance'].astype(float)
-            importances_object = importances_object.sort_values(by=['Importance'])
-            sns.barplot(importances_object.Importance, importances_object[
-                'Feature subspace'], palette="coolwarm")
+            importances_object['Importance'] = importances_object[
+                'Importance'].astype(float)
+            importances_object = importances_object.sort_values(
+                by=['Importance'])
+            sns.barplot(importances_object.Importance,
+                        importances_object['Feature subspace'],
+                        palette="coolwarm")
             plt.tight_layout()
-            plt.savefig(os.path.join(output_folder,f"{job_id}_barplot_global.pdf"), dpi=300)
+            plt.savefig(os.path.join(output_folder,
+                                     f"{job_id}_barplot_global.pdf"),
+                        dpi=300)
             plt.clf()
             plt.cla()
 
         except Exception as es:
 
             logging.info(es)
-
 
     def generate_report(self, output_folder="./report", job_id="genericJobId"):
         """An auxilliary method for creating a report
@@ -1216,7 +1223,8 @@ space .."
                                  sep="\t",
                                  index=False)
 
-        self.visualize_global_importances(importances_global, job_id, output_folder)
+        self.visualize_global_importances(importances_global, job_id,
+                                          output_folder)
         importances_global.to_csv(output_folder + f"{job_id}_global.tsv",
                                   sep="\t",
                                   index=False)
@@ -1227,11 +1235,13 @@ space .."
                         sep="\t",
                         index=False)
 
-        self.visualize_learners(learners, image_path=os.path.join(output_folder,
-                                f"{job_id}_learners_PARAM.pdf"))
+        self.visualize_learners(learners,
+                                image_path=os.path.join(
+                                    output_folder,
+                                    f"{job_id}_learners_PARAM.pdf"))
 
-        fitness = self.visualize_fitness(image_path=os.path.join(output_folder,
-                                         f"{job_id}_fitness.pdf"))
+        fitness = self.visualize_fitness(
+            image_path=os.path.join(output_folder, f"{job_id}_fitness.pdf"))
 
         fitness.to_csv(output_folder + f"{job_id}_fitness.tsv",
                        sep="\t",
@@ -1313,7 +1323,7 @@ space .."
         try:
             feature_ranking = self.global_feature_map  # all features
 
-        except Exception as es:
+        except Exception:
             feature_ranking = pd.DataFrame({k: 1 for k in self.feature_names})
 
         return feature_ranking, dfx
@@ -1417,7 +1427,8 @@ space .."
             file_to_store.close()
         except Exception as es:
             if self.verbose:
-                logging.info(f"Could not store the hall of fame as a pickle: {es}")
+                logging.info(
+                    f"Could not store the hall of fame as a pickle: {es}")
 
     def load_top_solutions(self):
         """Load the top solutions as HOF"""
@@ -1427,9 +1438,10 @@ space .."
                 file_to_store = open("hof_checkpoint.pickle", "rb")
                 self.hof = pickle.load(file_to_store)
                 if self.verbose:
-                    logging.info("Loaded the checkpoint file (hof_checkpoint.pickle)!")
+                    logging.info(
+                        "Loaded the checkpoint file (hof_checkpoint.pickle)!")
                 file_to_store.close()
-            except Exception as es:
+            except Exception:
                 if self.verbose:
                     logging.info("Could not load the checkpoint.")
 
@@ -1468,7 +1480,7 @@ space .."
                 logging.info("Training a learner without evolution.")
             top_individual = np.ones(self.weight_params)
             learner, individual, score, feature_names = self.evaluate_fitness(
-                top_individual, return_clf_and_vec = True)
+                top_individual, return_clf_and_vec=True)
             coefficients = learner.best_estimator_.coef_
             coefficients = np.asarray(np.abs(np.max(coefficients,
                                                     axis=0))).reshape(-1)
@@ -1486,7 +1498,7 @@ space .."
             if self.verbose:
                 logging.info("Selected strategy is evolution.")
 
-            toolbox=base.Toolbox()
+            toolbox = base.Toolbox()
             toolbox.register("attr_float", np.random.uniform, 0.00001,
                              0.999999)
             toolbox.register("individual",
@@ -1545,7 +1557,7 @@ space .."
             fits = list(toolbox.map(toolbox.evaluate, self.population))
 
             for fit, ind in zip(fits, self.population):
-                ind.fitness.values=fit
+                ind.fitness.values = fit
 
             # Update HOF
             self.hof.update(self.population)
@@ -1664,7 +1676,7 @@ space .."
 
                     self.feature_importances.append(
                         (coefficients, feature_names))
-                    
+
                     # Update the final importance space.
                     if self.task == "classification":
                         self.update_global_feature_importances()

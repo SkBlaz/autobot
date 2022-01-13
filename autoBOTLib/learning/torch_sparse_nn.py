@@ -82,7 +82,7 @@ class HyperParamNeuralObject:
                 if self.verbose:
                     logging.info(
                         f"Found a better config: {config} with score: {score}")
-                    
+
                 if score_global == 1:
                     logging.info("Found a perfect fit (beware).")
                     break
@@ -215,7 +215,7 @@ class SFNN:
 
         if features.shape[1] > self.hidden_layer_size:
             self.hidden_layer_size = int(features.shape[1] * 0.75)
-        
+
         self.model = GenericFFNN(features.shape[1],
                                  num_classes=nun,
                                  hidden_layer_size=self.hidden_layer_size,
@@ -256,7 +256,7 @@ class SFNN:
                 logging.info("epoch {}, mean loss per batch {}".format(
                     epoch, mean_loss))
             self.loss_trace.append(mean_loss)
-            
+
         self.get_importances(features)
 
     def predict(self, features, return_proba=False):
@@ -341,10 +341,10 @@ def hyper_opt_neural(X,
 
     if learner_preset == "default":
         n_configs = 3
-        
+
     elif learner_preset == "intense":
         n_configs = 10
-        
+
     else:
         n_configs = 2
 
@@ -369,7 +369,6 @@ def torch_learners(final_run,
                    validation_type,
                    num_cpu,
                    device="cpu"):
-    
     """A method for searching the architecture space"""
     print(final_run)
     score, clf = hyper_opt_neural(X,
@@ -393,7 +392,8 @@ if __name__ == "__main__":
 
     rng = default_rng()
     rvs = stats.uniform().rvs
-    a = random(10000, 30000, density=0.09, random_state=rng, data_rvs=rvs).tocsr()
+    a = random(10000, 30000, density=0.09, random_state=rng,
+               data_rvs=rvs).tocsr()
     b = a[:, 0].multiply(a[:, 1])
     b = b.A
     b = np.where(b > 0.5, 0, 1)

@@ -1,6 +1,7 @@
 ### relation extractor
 
 import logging
+
 logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
 logging.getLogger().setLevel(logging.INFO)
@@ -47,7 +48,6 @@ class documentEmbedder:
         else:
             self.num_cpu = num_cpu
 
-            
     def fit(self, text_vector, b=None, refit=False):
         """
         Fit the model to a text vector.
@@ -70,7 +70,6 @@ class documentEmbedder:
                              total_examples=self.model.corpus_count,
                              epochs=32)
 
-            
     def transform(self, text_vector):
         """
         Transform the data into suitable form.
@@ -93,12 +92,10 @@ class documentEmbedder:
 
         return sparse.csr_matrix(final_matrix)
 
-    
     def get_feature_names(self):
 
         return [str(x) + "_" + str(self.dm) for x in list(range(self.ndim))]
 
-    
     def fit_transform(self, text_vector, a2=None):
         """
         A classifc fit-transform method.

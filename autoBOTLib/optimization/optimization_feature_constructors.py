@@ -32,6 +32,7 @@ from nltk import word_tokenize
 import pandas as pd
 import numpy as np
 import logging
+
 logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
 logging.getLogger(__name__).setLevel(logging.INFO)
@@ -51,14 +52,16 @@ except:
     def PerceptronTagger():
         return 0
 
+
 global feature_presets
 feature_presets = {}
 
 # Full stack
 feature_presets['neurosymbolic'] = [
-    'concept_features', 'document_graph', 'relational_features_token', 'topic_features',
-    'keyword_features', 'relational_features_char', 'char_features',
-    'word_features', 'relational_features_bigram', 'contextual_features'
+    'concept_features', 'document_graph', 'relational_features_token',
+    'topic_features', 'keyword_features', 'relational_features_char',
+    'char_features', 'word_features', 'relational_features_bigram',
+    'contextual_features'
 ]
 
 # This one is ~language agnostic
@@ -446,7 +449,7 @@ def get_features(df_data,
 
         concept_features_transformer = ConceptFeatures(
             max_features=max_num_feat, knowledge_graph=memory_location)
-        
+
         contextual_features = None
 
         if contextual_feature_library:
@@ -463,81 +466,93 @@ def get_features(df_data,
             ('pos_features',
              pipeline.Pipeline([('s3', text_col(key='pos_tag_seq')),
                                 ('pos_tfidf_unigram', tfidf_pos_unigram),
-                                ('normalize', Normalizer(norm=normalization_norm))])),
+                                ('normalize',
+                                 Normalizer(norm=normalization_norm))])),
             "word_features":
             ('word_features',
              pipeline.Pipeline([('s1', text_col(key='no_stopwords')),
                                 ('word_tfidf_unigram', tfidf_word_unigram),
-                                ('normalize', Normalizer(norm=normalization_norm))])),
+                                ('normalize',
+                                 Normalizer(norm=normalization_norm))])),
             "char_features": ('char_features',
                               pipeline.Pipeline([
                                   ('s2', text_col(key='no_stopwords')),
                                   ('char_tfidf_bigram', tfidf_char_bigram),
-                                  ('normalize', Normalizer(norm=normalization_norm))
+                                  ('normalize',
+                                   Normalizer(norm=normalization_norm))
                               ])),
             "relational_features_char":
             ('relational_features_char',
-             pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
-                                ('relational_features_unigram',
-                                 lr_rel_features_unigram),
-                                ('normalize', Normalizer(norm=normalization_norm))])),
+             pipeline.Pipeline([
+                 ('s4', text_col(key='no_stopwords')),
+                 ('relational_features_unigram', lr_rel_features_unigram),
+                 ('normalize', Normalizer(norm=normalization_norm))
+             ])),
             "relational_features_bigram":
             ('relational_features_bigram',
-             pipeline.Pipeline([('s10', text_col(key='no_stopwords')),
-                                ('relational_features_bigram',
-                                 lr_rel_features_bigram),
-                                ('normalize', Normalizer(norm=normalization_norm))])),
+             pipeline.Pipeline([
+                 ('s10', text_col(key='no_stopwords')),
+                 ('relational_features_bigram', lr_rel_features_bigram),
+                 ('normalize', Normalizer(norm=normalization_norm))
+             ])),
             "keyword_features": ('keyword_features',
                                  pipeline.Pipeline([
                                      ('s5', text_col(key='no_stopwords')),
                                      ('keyword_features', keyword_features),
-                                     ('normalize', Normalizer(norm=normalization_norm))
+                                     ('normalize',
+                                      Normalizer(norm=normalization_norm))
                                  ])),
             "topic_features": ('topic_features',
                                pipeline.Pipeline([
                                    ('s6', text_col(key='no_stopwords')),
                                    ('topic_features', topic_features),
-                                   ('normalize', Normalizer(norm=normalization_norm))
+                                   ('normalize',
+                                    Normalizer(norm=normalization_norm))
                                ])),
             "relational_features_token":
             ('relational_features_token',
-             pipeline.Pipeline([('s4', text_col(key='no_stopwords')),
-                                ('relational_features_token',
-                                 lr_rel_features_token),
-                                ('normalize', Normalizer(norm=normalization_norm))])),
-            "neural_features_dm": ('neural_features_dm',
-                                   pipeline.Pipeline([
-                                       ('s7', text_col(key='no_stopwords')),
-                                       ('sentence_embedding_mean',
-                                        sentence_embedder_dm1),
-                                       ('normalize', Normalizer(norm=normalization_norm))
-                                   ])),
-            "neural_features_dbow": ('neural_features_dbow',
-                                     pipeline.Pipeline([
-                                         ('s8', text_col(key='no_stopwords')),
-                                         ('sentence_embedding_mean',
-                                          sentence_embedder_dm2),
-                                         ('normalize', Normalizer(norm=normalization_norm))
-                                     ])),
+             pipeline.Pipeline([
+                 ('s4', text_col(key='no_stopwords')),
+                 ('relational_features_token', lr_rel_features_token),
+                 ('normalize', Normalizer(norm=normalization_norm))
+             ])),
+            "neural_features_dm":
+            ('neural_features_dm',
+             pipeline.Pipeline([
+                 ('s7', text_col(key='no_stopwords')),
+                 ('sentence_embedding_mean', sentence_embedder_dm1),
+                 ('normalize', Normalizer(norm=normalization_norm))
+             ])),
+            "neural_features_dbow":
+            ('neural_features_dbow',
+             pipeline.Pipeline([
+                 ('s8', text_col(key='no_stopwords')),
+                 ('sentence_embedding_mean', sentence_embedder_dm2),
+                 ('normalize', Normalizer(norm=normalization_norm))
+             ])),
             "document_graph":
             ('document_graph',
              pipeline.Pipeline([('s9', text_col(key='no_stopwords')),
                                 ('doc_similarity_features', doc_sim_features),
-                                ('normalize', Normalizer(norm=normalization_norm))])),
+                                ('normalize',
+                                 Normalizer(norm=normalization_norm))])),
             "concept_features": ('concept_features',
                                  pipeline.Pipeline([
                                      ('s6', text_col(key='text')),
                                      ('concept_features',
                                       concept_features_transformer),
-                                     ('normalize', Normalizer(norm=normalization_norm))
+                                     ('normalize',
+                                      Normalizer(norm=normalization_norm))
                                  ])),
-            "contextual_features":
-            ('contextual_features',
-             pipeline.Pipeline([('s6', text_col(key='text')),
-                                ('contextual_features', contextual_features),
-                                ('normalize', Normalizer(norm=normalization_norm))]))
+            "contextual_features": ('contextual_features',
+                                    pipeline.Pipeline([
+                                        ('s6', text_col(key='text')),
+                                        ('contextual_features',
+                                         contextual_features),
+                                        ('normalize',
+                                         Normalizer(norm=normalization_norm))
+                                    ]))
         }
-
 
         if isinstance(representation_type, str):
 
@@ -562,10 +577,10 @@ def get_features(df_data,
         features = features + custom_pipeline
 
     feature_names = [x[0] for x in features]
-    matrix = pipeline.Pipeline([('union',
-                                 FeatureUnion(transformer_list=features,
-                                              n_jobs=1)),
-                                ('normalize', Normalizer())], verbose=True)
+    matrix = pipeline.Pipeline(
+        [('union', FeatureUnion(transformer_list=features, n_jobs=1)),
+         ('normalize', Normalizer())],
+        verbose=True)
 
     try:
         data_matrix = matrix.fit_transform(df_data)

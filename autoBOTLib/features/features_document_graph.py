@@ -1,5 +1,6 @@
 import logging
 from collections import defaultdict
+
 logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
 logging.getLogger().setLevel(logging.INFO)
@@ -45,7 +46,7 @@ class RelationalDocs:
         self.doc_limit = doc_limit
         self.ed_cutoff = ed_cutoff
         self.subsample_classes = []
-        
+
     def jaccard_index(self, set1, set2):
         """
         The classic Jaccard index.
@@ -58,7 +59,7 @@ class RelationalDocs:
         intersection = set1.intersection(set2)
         common_space = set.union(set1, set2)
         return len(intersection) / (len(common_space) + 1)
-    
+
     def fit(self, text_list):
         """
         The fit method.
@@ -66,7 +67,7 @@ class RelationalDocs:
         :param text_list: List of input texts
         
         """
-        
+
         if not type(text_list) == list:
             text_list = text_list.values.tolist()
 
@@ -75,14 +76,14 @@ class RelationalDocs:
             if self.targets is None:
                 if not self.doc_limit is None:
                     text_list = text_list[:self.doc_limit]
-                    
+
             else:
                 unique_targets = np.unique(self.targets)
                 utx = defaultdict(list)
                 for utarget in unique_targets:
                     indices = np.where(self.targets == utarget)[0]
                     utx[utarget] = indices.tolist()
-                    
+
                 sampled_docs = []
                 while len(sampled_docs) < self.doc_limit:
                     for k, v in utx.items():
@@ -90,7 +91,7 @@ class RelationalDocs:
                             relevant_index = v.pop()
                             sampled_docs.append(text_list[relevant_index])
                             self.subsample_classes.append(k)
-                            
+
                 assert len(sampled_docs) == self.doc_limit
                 text_list = sampled_docs
                 del sampled_docs
@@ -98,8 +99,9 @@ class RelationalDocs:
         t_tokens = OrderedDict()
 
         for a in text_list:
-            t_tokens[a] = set([x.lower()[:self.ed_cutoff] for x in a.strip().split(" ")])
-        
+            t_tokens[a] = set(
+                [x.lower()[:self.ed_cutoff] for x in a.strip().split(" ")])
+
         nlist = {}
 
         for a in tqdm.tqdm(range(len(text_list))):
@@ -131,7 +133,6 @@ class RelationalDocs:
         if self.neigh_size is None:
             self.neigh_size = int(np.cbrt(self.node_embeddings.shape[0]))
 
-        
     def transform(self, new_documents):
         """
         Transform method.
@@ -150,10 +151,10 @@ class RelationalDocs:
         all_embeddings = []
 
         for doc in tqdm.tqdm(new_documents):
-            
+
             doc_split = set(
                 [x.lower()[:self.ed_cutoff] for x in doc.strip().split(" ")])
-            
+
             similarities = []
 
             for k, v in self.core_documents.items():
@@ -166,11 +167,11 @@ class RelationalDocs:
             embedding = np.mean(
                 self.node_embeddings[sorted_dists[0:local_neigh_size]], axis=0)
             all_embeddings.append(embedding)
-            
+
         all_embeddings = np.array(all_embeddings)
         assert len(new_documents) == all_embeddings.shape[0]
         return all_embeddings
-    
+
     def fit_transform(self, documents, b=None):
         """
         The sklearn-like fit-transform method.
@@ -179,10 +180,10 @@ class RelationalDocs:
 
         self.fit(documents)
         return self.transform(documents)
-    
+
     def get_feature_names(self):
         return list(["dim_" + str(x) for x in range(self.ndim)])
-    
+
     def get_graph(self, wspace, ltl):
         """
         A method to obtain a graph from a weighted space of documents.
@@ -215,14 +216,12 @@ class RelationalDocs:
 if __name__ == "__main__":
 
     import matplotlib.pyplot as plt
-    import operator
 
     from sklearn.linear_model import LogisticRegression
     from sklearn.model_selection import cross_val_score
     from sklearn.dummy import DummyClassifier
-    
-    example_text = pd.read_csv("../data/sarcasm/train.tsv",
-                               sep="\t")['text_a']
+
+    example_text = pd.read_csv("../data/sarcasm/train.tsv", sep="\t")['text_a']
     labels = pd.read_csv("../data/sarcasm/train.tsv",
                          sep="\t")['label'].values.tolist()
 
@@ -230,18 +229,29 @@ if __name__ == "__main__":
     tuplets = []
     for neigh_size in nsize:
         for threshold in [0.95, 0.90, 0.85, 0.80, 0.70]:
-            clx = RelationalDocs(percentile_threshold=95, ed_cutoff=-2, doc_limit=8196, targets=labels, neigh_size = neigh_size)
+            clx = RelationalDocs(percentile_threshold=95,
+                                 ed_cutoff=-2,
+                                 doc_limit=8196,
+                                 targets=labels,
+                                 neigh_size=neigh_size)
             sim_features = clx.fit_transform(example_text)
 
-            clf = LogisticRegression(max_iter = 100000)
+            clf = LogisticRegression(max_iter=100000)
             lc = labels.copy()
             cross_val_score1 = cross_val_score(clf, sim_features, lc, cv=5)
 
             clf = DummyClassifier()
-            cross_val_score2 = cross_val_score(clf, sim_features, labels.copy(), cv = 5)
-            tuplets.append([neigh_size, threshold, np.mean(cross_val_score1), np.mean(cross_val_score2)])
+            cross_val_score2 = cross_val_score(clf,
+                                               sim_features,
+                                               labels.copy(),
+                                               cv=5)
+            tuplets.append([
+                neigh_size, threshold,
+                np.mean(cross_val_score1),
+                np.mean(cross_val_score2)
+            ])
 
     dfx = pd.DataFrame(tuplets)
-    dfx.columns = ['neighborhoodSize','threshold','DocGraph','Dummy']
-    dfx = dfx.sort_values(by = "DocGraph")
+    dfx.columns = ['neighborhoodSize', 'threshold', 'DocGraph', 'Dummy']
+    dfx = dfx.sort_values(by="DocGraph")
     print(dfx)

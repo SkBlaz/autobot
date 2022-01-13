@@ -5,30 +5,30 @@ from sklearn.neighbors import KNeighborsClassifier
 from autoBOTLib.learning.hyperparameter_configurations import scikit_default, scikit_intense, scikit_mini_l1, scikit_mini_l2, scikit_intense_final, scikit_generic_final, scikit_knn
 
 
-def scikit_learners(final_run, tmp_feature_space, train_targets, learner_hyperparameters,
-                    learner_preset, learner,
-                    task, scoring_metric, n_fold_cv, validation_percentage,
+def scikit_learners(final_run, tmp_feature_space, train_targets,
+                    learner_hyperparameters, learner_preset, learner, task,
+                    scoring_metric, n_fold_cv, validation_percentage,
                     random_seed, verbose, validation_type, num_cpu):
     """An auxilliary method which conducts sklearn-based learning"""
-    
+
     if learner_hyperparameters is None:
 
         # this is for screening purposes.
         if learner_preset == "default":
             parameters = scikit_default
-            
+
         elif learner_preset == "intense":
             parameters = scikit_intense
-            
+
         elif learner_preset == "mini-l1":
             parameters = scikit_mini_l1
-            
+
         elif learner_preset == "mini-l2":
             parameters = scikit_mini_l2
 
         elif learner_preset == "test":
             parameters = scikit_mini_l2
-            
+
         elif learner_preset == "knn":
             parameters = scikit_knn
 
@@ -40,9 +40,9 @@ def scikit_learners(final_run, tmp_feature_space, train_targets, learner_hyperpa
                 parameters = scikit_intense_final
 
             elif learner_preset == "test":
-                
+
                 parameters = scikit_mini_l2
-                
+
             else:
 
                 parameters = scikit_generic_final
@@ -87,7 +87,7 @@ def scikit_learners(final_run, tmp_feature_space, train_targets, learner_hyperpa
 
     if final_run:
         refit = True
-        
+
     else:
         refit = False
 

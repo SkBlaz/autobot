@@ -12,14 +12,15 @@ global contextual_feature_library
 try:
     from sentence_transformers import SentenceTransformer
     contextual_feature_library = True
-    
+
 except:
-    logging.info("IMPORTANT: No contextual representations will be considered. Please pip install sentence-transformers for full functionality! (this setting performs the best)")
+    logging.info(
+        "IMPORTANT: No contextual representations will be considered. Please pip install sentence-transformers for full functionality! (this setting performs the best)"
+    )
     contextual_feature_library = False
 
 
 class ContextualDocs:
-    
     def __init__(self, model="all-mpnet-base-v2"):
         """
         Class initialization method.
@@ -35,14 +36,11 @@ class ContextualDocs:
         except Exception as es:
             logging.info(es)
 
-            
     def fit(self, documents):
         """
         :param documents: The input set of documents.
         """
-        pass
 
-    
     def transform(self, documents):
         """
         :param documents: The input set of documents.
@@ -65,14 +63,12 @@ class ContextualDocs:
         self.ndim = encoded_documents.shape[1]
         return encoded_documents
 
-    
     def fit_transform(self, documents, b=None):
         """
         :param documents: The input set of documents.
         """
         return self.transform(documents)
 
-    
     def get_feature_names(self):
         """
         :param fnames: Feature names (custom api artefact)
@@ -80,11 +76,13 @@ class ContextualDocs:
 
         return [f"dim_{x}" for x in range(self.ndim)]
 
+
 if __name__ == "__main__":
 
     import pandas as pd
 
-    example_text = pd.read_csv("../data/dontpatronize/train.tsv", sep="\t")['text_a']
+    example_text = pd.read_csv("../data/dontpatronize/train.tsv",
+                               sep="\t")['text_a']
     labels = pd.read_csv("../data/dontpatronize/train.tsv",
                          sep="\t")['label'].values.tolist()
     clx = ContextualDocs()

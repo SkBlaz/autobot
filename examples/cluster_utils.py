@@ -57,7 +57,6 @@ def split_jobs(folder="raw_jobs", bsize=4):
 def generate_xrsl_jobs(data,
                        raw_job_folder="raw_jobs",
                        cluster_xrsl_folder="cluster_xrsl"):
-
     """
     A method which generates the xrsl job specifications
     """

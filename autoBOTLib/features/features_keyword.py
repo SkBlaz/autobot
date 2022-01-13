@@ -7,6 +7,7 @@
 ### relation extractor
 
 import logging
+
 logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
 logging.getLogger().setLevel(logging.INFO)
@@ -29,7 +30,6 @@ class KeywordFeatures:
         self.max_features = max_features
         self.targets = targets
 
-        
     def fit(self, text_vector, refit=False):
         """
         Fit the model to a text vector.
@@ -111,7 +111,6 @@ class KeywordFeatures:
         self.keyword_vectorizer = TfidfVectorizer(
             ngram_range=(1, 1), max_features=self.max_features).fit(key_docs)
 
-        
     def transform(self, text_vector):
         """
         Transform the data into suitable form.
@@ -122,12 +121,10 @@ class KeywordFeatures:
 
         return self.keyword_vectorizer.transform(text_vector)
 
-    
     def get_feature_names(self):
 
         return self.keyword_vectorizer.get_feature_names()
 
-    
     def fit_transform(self, text_vector, b=None):
         """
         A classifc fit-transform method.
@@ -142,7 +139,7 @@ class KeywordFeatures:
 
 if __name__ == "__main__":
 
-#    example_text = pd.read_csv("../data/spanish/train.tsv", sep="\t")
+    #    example_text = pd.read_csv("../data/spanish/train.tsv", sep="\t")
     example_text = pd.read_csv("../data/depression/train.tsv", sep="\t")
     text = example_text['text_a']
     labels = example_text['label']
@@ -157,4 +154,4 @@ if __name__ == "__main__":
     dfx.columns = feature_names
     labels = [1 if x > 0 else 0 for x in labels]
     dfx['target'] = labels
-    dfx.to_csv("seminar_df.tsv", sep = "\t")
+    dfx.to_csv("seminar_df.tsv", sep="\t")

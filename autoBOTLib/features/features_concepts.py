@@ -1,9 +1,9 @@
-
 ## relation extractor
 ## https://conceptnet.io/
 ## https://github.com/commonsense/conceptnet5/wiki/Downloads
 
 import logging
+
 logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
 logging.getLogger().setLevel(logging.INFO)
@@ -18,7 +18,13 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 import nltk
 
-POSSIBLE_RELATIONS = ["is_a","part_of","subset_of","represents_a","serves_for","lives_in","works_for","represents_the","looks_like","synonym_for","similar_to","context_of","related_to","knows_of","knowledge_of","serves_to","serves_for","lives_near","parent_of","child_of","superior_to"]
+POSSIBLE_RELATIONS = [
+    "is_a", "part_of", "subset_of", "represents_a", "serves_for", "lives_in",
+    "works_for", "represents_the", "looks_like", "synonym_for", "similar_to",
+    "context_of", "related_to", "knows_of", "knowledge_of", "serves_to",
+    "serves_for", "lives_near", "parent_of", "child_of", "superior_to"
+]
+
 
 class ConceptFeatures:
     """
@@ -51,10 +57,9 @@ class ConceptFeatures:
                     if subject != obj:
                         yield (subject, predicate, obj)
 
-
     def add_triplet(self, tokens, index, relations=["is_a"]):
 
-        token = tokens[index]        
+        token = tokens[index]
         for relation in relations:
             p1, p2 = relation.split("_")
             if token.lower() == p1 and tokens[index + 1].lower() == p2:
@@ -64,10 +69,10 @@ class ConceptFeatures:
                     triplet_adhoc = (tokens[index - 1], relation,
                                      tokens[index + 2])
                     if triplet_adhoc[0] != triplet_adhoc[2]:
-                        if len(triplet_adhoc[0]) > 3 and len(triplet_adhoc[2]) > 3:
+                        if len(triplet_adhoc[0]) > 3 and len(
+                                triplet_adhoc[2]) > 3:
                             yield triplet_adhoc
-        
-                        
+
     def concept_graph(self, document_space, graph_path):
         """
         If no prior knowledge graph is supplied, one is constructed.
@@ -83,7 +88,8 @@ class ConceptFeatures:
             tokens = [word.lower() for word in tokens]
             for i, token in enumerate(tokens):
                 if i > 0 and i < len(tokens) - 1:
-                    found_triplets = self.add_triplet(tokens, i, relations=POSSIBLE_RELATIONS)
+                    found_triplets = self.add_triplet(
+                        tokens, i, relations=POSSIBLE_RELATIONS)
                     for triplet in found_triplets:
                         generic_triplets.append(triplet)
 
@@ -100,7 +106,7 @@ class ConceptFeatures:
                     continue
                 for enx, token in enumerate(tokens):
                     if enx > 1 and enx < len(tokens) - 2:
-                        
+
                         if len(tokens[enx - 1]) >= 2 and len(
                                 tokens[enx + 1]) >= 2:
                             triplet_adhoc = (tokens[enx - 2], token,
@@ -108,7 +114,9 @@ class ConceptFeatures:
                             if triplet_adhoc[0] != triplet_adhoc[2]:
                                 generic_triplets.append(triplet_adhoc)
 
-        logging.info(f"Found the following relations: {set([x[1] for x in generic_triplets])}")
+        logging.info(
+            f"Found the following relations: {set([x[1] for x in generic_triplets])}"
+        )
         try:
 
             kg_sources = os.listdir(graph_path)
@@ -120,7 +128,9 @@ class ConceptFeatures:
 
                 for triplet in triplet_generator:
                     grounded.append(triplet)
-                logging.info(f"Grounded in total: {len(grounded)} triplets (last added from {path}).")
+                logging.info(
+                    f"Grounded in total: {len(grounded)} triplets (last added from {path})."
+                )
 
         except Exception as es:
             logging.info(
@@ -243,7 +253,7 @@ class ConceptFeatures:
             self.fit(text_vector, self.targets)
         except Exception as es:
             logging.info(es)
-            
+
         return self.transform(text_vector,
                               use_conc_docs=True)  # use stored docs
 
@@ -261,4 +271,4 @@ if __name__ == "__main__":
     dataframe = pd.DataFrame(m)
     dataframe.columns = fnames
     dataframe['target'] = labels
-    dataframe.to_csv("patronizing.tsv", sep = "\t", index=False)
+    dataframe.to_csv("patronizing.tsv", sep="\t", index=False)

@@ -11,9 +11,12 @@ def run():
     dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t")
     train_sequences = dataframe['text_a']
     train_targets_c1 = dataframe['label'].values.tolist()
-    train_targets_c2 = [0 if len(x) < 100 else 1 for x in train_sequences.values]
-    joint_target_space = [[train_targets_c1[enx], train_targets_c2[enx]] for enx in range(len(train_targets_c1))]
-        
+    train_targets_c2 = [
+        0 if len(x) < 100 else 1 for x in train_sequences.values
+    ]
+    joint_target_space = [[train_targets_c1[enx], train_targets_c2[enx]]
+                          for enx in range(len(train_targets_c1))]
+
     autoBOTLibObj = autoBOTLib.GAlearner(
         train_sequences,
         joint_target_space,
@@ -35,10 +38,8 @@ def run():
     print(predictions)
     print(prob_predictions)
 
-    autoBOTLibObj.generate_report(output_folder="./report/",
-                                  job_id="MLC")
+    autoBOTLibObj.generate_report(output_folder="./report/", job_id="MLC")
 
 
 if __name__ == "__main__":
     run()
-

@@ -1,5 +1,6 @@
 import logging
 from collections import defaultdict
+
 logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
 logging.getLogger().setLevel(logging.INFO)
@@ -12,7 +13,6 @@ import tqdm
 
 
 class TopicDocs:
-    
     def __init__(self,
                  ndim=128,
                  random_seed=1965123,
@@ -35,7 +35,6 @@ class TopicDocs:
         self.random_seed = random_seed
         self.topic_tokens = topic_tokens
 
-        
     def fit(self, text_list):
         """
         The fit method.
@@ -59,7 +58,6 @@ class TopicDocs:
         for k, v in zip(fnames, cluster_assignments):
             self.topic_features[v].add(k)
 
-            
     def transform(self, new_documents):
         """
         Transform method.
@@ -87,7 +85,6 @@ class TopicDocs:
 
         return new_features
 
-    
     def fit_transform(self, documents, b=None):
         """
         The sklearn-like fit-transform method.
@@ -97,7 +94,6 @@ class TopicDocs:
         self.fit(documents)
         return self.transform(documents)
 
-    
     def get_feature_names(self):
         """
         Get feature names.
