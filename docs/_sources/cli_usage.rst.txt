@@ -4,7 +4,7 @@ To streamline the experiments, it makes a lot of sense to directly use the *auto
 
 .. code-block:: text
 
-	python autobot-cli --help
+	autobot-cli --help
 
 The arguments are defined as follows.
 

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>autoBOTLib.learning package &mdash; autoBOTLib  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="autoBOTLib.misc package" href="autoBOTLib.misc.html" />
+    <link rel="prev" title="autoBOTLib.features package" href="autoBOTLib.features.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> autoBOTLib<img src="_static/autobotScheme.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">About:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="key_idea.html">Key idea underlying autoBOTLib</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorial and first steps:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_idea.html">autoBOTLib library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="suggested_use.html">Suggested use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_persistence.html">Model persistence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_usage.html">autoBOTLib CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Feature types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_classifiers.html">Using custom classifiers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_features.html">Using custom feature transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="representations.html">Obtaining underlying representations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="containerization.html">Singularity container for autoBOT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_knowledge.html">Using custom background knowledge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_metrics.html">Using custom metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ideas.html">Potentially interesting further work</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updates.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">autoBOT API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cluster.html">Scaling up (SLING)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shared_tasks.html">Performance on shared tasks</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">autoBOTLib</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="autoBOTLib.html">autoBOTLib package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="autoBOTLib.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="autoBOTLib.features.html">autoBOTLib.features package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">autoBOTLib.learning package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoBOTLib.misc.html">autoBOTLib.misc package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoBOTLib.optimization.html">autoBOTLib.optimization package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="autoBOTLib.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="autoBOTLib.html#autobotlib-cli-module">autoBOTLib.cli module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="autoBOTLib.html#module-autoBOTLib">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">autoBOTLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">autoBOTLib</a> &raquo;</li>
+          <li><a href="autoBOTLib.html">autoBOTLib package</a> &raquo;</li>
+      <li>autoBOTLib.learning package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/autoBOTLib.learning.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="autobotlib-learning-package">
+<h1>autoBOTLib.learning package<a class="headerlink" href="#autobotlib-learning-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-autoBOTLib.learning.hyperparameter_configurations">
+<span id="autobotlib-learning-hyperparameter-configurations-module"></span><h2>autoBOTLib.learning.hyperparameter_configurations module<a class="headerlink" href="#module-autoBOTLib.learning.hyperparameter_configurations" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-autoBOTLib.learning.scikit_based">
+<span id="autobotlib-learning-scikit-based-module"></span><h2>autoBOTLib.learning.scikit_based module<a class="headerlink" href="#module-autoBOTLib.learning.scikit_based" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="autoBOTLib.learning.scikit_based.scikit_learners">
+<code class="sig-prename descclassname">autoBOTLib.learning.scikit_based.</code><code class="sig-name descname">scikit_learners</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">final_run</span></em>, <em class="sig-param"><span class="n">tmp_feature_space</span></em>, <em class="sig-param"><span class="n">train_targets</span></em>, <em class="sig-param"><span class="n">learner_hyperparameters</span></em>, <em class="sig-param"><span class="n">learner_preset</span></em>, <em class="sig-param"><span class="n">learner</span></em>, <em class="sig-param"><span class="n">task</span></em>, <em class="sig-param"><span class="n">scoring_metric</span></em>, <em class="sig-param"><span class="n">n_fold_cv</span></em>, <em class="sig-param"><span class="n">validation_percentage</span></em>, <em class="sig-param"><span class="n">random_seed</span></em>, <em class="sig-param"><span class="n">verbose</span></em>, <em class="sig-param"><span class="n">validation_type</span></em>, <em class="sig-param"><span class="n">num_cpu</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.scikit_based.scikit_learners" title="Permalink to this definition">¶</a></dt>
+<dd><p>An auxilliary method which conducts sklearn-based learning</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-autoBOTLib.learning.torch_sparse_nn">
+<span id="autobotlib-learning-torch-sparse-nn-module"></span><h2>autoBOTLib.learning.torch_sparse_nn module<a class="headerlink" href="#module-autoBOTLib.learning.torch_sparse_nn" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="autoBOTLib.learning.torch_sparse_nn.E2EDatasetLoader">
+<em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.learning.torch_sparse_nn.</code><code class="sig-name descname">E2EDatasetLoader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">features</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.E2EDatasetLoader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.dataset.T_co</span></code>]</p>
+<p>A generic toch dataframe loader adapted for sparse (CSR) matrices.</p>
+<dl class="py method">
+<dt id="autoBOTLib.learning.torch_sparse_nn.E2EDatasetLoader.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">features</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.E2EDatasetLoader.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.learning.torch_sparse_nn.to_one_hot">
+<code class="sig-prename descclassname">autoBOTLib.learning.torch_sparse_nn.</code><code class="sig-name descname">to_one_hot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lbx</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.to_one_hot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="autoBOTLib.learning.torch_sparse_nn.HyperParamNeuralObject">
+<em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.learning.torch_sparse_nn.</code><code class="sig-name descname">HyperParamNeuralObject</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hyperparam_space</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">device</span><span class="o">=</span><span class="default_value">'cpu'</span></em>, <em class="sig-param"><span class="n">metric</span><span class="o">=</span><span class="default_value">'f1_macro'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.HyperParamNeuralObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Meta learning object governing hyperparameter optimization</p>
+<dl class="py method">
+<dt id="autoBOTLib.learning.torch_sparse_nn.HyperParamNeuralObject.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hyperparam_space</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">device</span><span class="o">=</span><span class="default_value">'cpu'</span></em>, <em class="sig-param"><span class="n">metric</span><span class="o">=</span><span class="default_value">'f1_macro'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.HyperParamNeuralObject.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.learning.torch_sparse_nn.HyperParamNeuralObject.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">Y</span></em>, <em class="sig-param"><span class="n">refit</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">n_configs</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.HyperParamNeuralObject.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic fit method, resembling GridSearchCV</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="autoBOTLib.learning.torch_sparse_nn.GenericFFNN">
+<em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.learning.torch_sparse_nn.</code><code class="sig-name descname">GenericFFNN</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_size</span></em>, <em class="sig-param"><span class="n">num_classes</span></em>, <em class="sig-param"><span class="n">hidden_layer_size</span></em>, <em class="sig-param"><span class="n">num_hidden</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">dropout</span><span class="o">=</span><span class="default_value">0.02</span></em>, <em class="sig-param"><span class="n">device</span><span class="o">=</span><span class="default_value">'cuda'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.GenericFFNN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="py method">
+<dt id="autoBOTLib.learning.torch_sparse_nn.GenericFFNN.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_size</span></em>, <em class="sig-param"><span class="n">num_classes</span></em>, <em class="sig-param"><span class="n">hidden_layer_size</span></em>, <em class="sig-param"><span class="n">num_hidden</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">dropout</span><span class="o">=</span><span class="default_value">0.02</span></em>, <em class="sig-param"><span class="n">device</span><span class="o">=</span><span class="default_value">'cuda'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.GenericFFNN.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.learning.torch_sparse_nn.GenericFFNN.hadamard_act">
+<code class="sig-name descname">hadamard_act</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.GenericFFNN.hadamard_act" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.learning.torch_sparse_nn.GenericFFNN.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.GenericFFNN.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.learning.torch_sparse_nn.GenericFFNN.get_importances">
+<code class="sig-name descname">get_importances</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.GenericFFNN.get_importances" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="autoBOTLib.learning.torch_sparse_nn.GenericFFNN.training">
+<code class="sig-name descname">training</code><em class="property">: bool</em><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.GenericFFNN.training" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="autoBOTLib.learning.torch_sparse_nn.SFNN">
+<em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.learning.torch_sparse_nn.</code><code class="sig-name descname">SFNN</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">batch_size</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">num_epochs</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">learning_rate</span><span class="o">=</span><span class="default_value">0.001</span></em>, <em class="sig-param"><span class="n">stopping_crit</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">hidden_layer_size</span><span class="o">=</span><span class="default_value">64</span></em>, <em class="sig-param"><span class="n">dropout</span><span class="o">=</span><span class="default_value">0.2</span></em>, <em class="sig-param"><span class="n">num_hidden</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">device</span><span class="o">=</span><span class="default_value">'cpu'</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.SFNN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="autoBOTLib.learning.torch_sparse_nn.SFNN.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">batch_size</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">num_epochs</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">learning_rate</span><span class="o">=</span><span class="default_value">0.001</span></em>, <em class="sig-param"><span class="n">stopping_crit</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">hidden_layer_size</span><span class="o">=</span><span class="default_value">64</span></em>, <em class="sig-param"><span class="n">dropout</span><span class="o">=</span><span class="default_value">0.2</span></em>, <em class="sig-param"><span class="n">num_hidden</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">device</span><span class="o">=</span><span class="default_value">'cpu'</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.SFNN.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.learning.torch_sparse_nn.SFNN.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">features</span></em>, <em class="sig-param"><span class="n">labels</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.SFNN.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.learning.torch_sparse_nn.SFNN.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">features</span></em>, <em class="sig-param"><span class="n">return_proba</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.SFNN.predict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.learning.torch_sparse_nn.SFNN.get_importances">
+<code class="sig-name descname">get_importances</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">features</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.SFNN.get_importances" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.learning.torch_sparse_nn.SFNN.predict_proba">
+<code class="sig-name descname">predict_proba</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">features</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.SFNN.predict_proba" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.learning.torch_sparse_nn.cross_val_score_nn">
+<code class="sig-prename descclassname">autoBOTLib.learning.torch_sparse_nn.</code><code class="sig-name descname">cross_val_score_nn</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em>, <em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">Y</span></em>, <em class="sig-param"><span class="n">metric</span><span class="o">=</span><span class="default_value">'f1_macro'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.cross_val_score_nn" title="Permalink to this definition">¶</a></dt>
+<dd><p>A method which performs cross-validation and returns top score</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.learning.torch_sparse_nn.get_random_config">
+<code class="sig-prename descclassname">autoBOTLib.learning.torch_sparse_nn.</code><code class="sig-name descname">get_random_config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cdict</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.get_random_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select a random hyperparam configuration</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.learning.torch_sparse_nn.hyper_opt_neural">
+<code class="sig-prename descclassname">autoBOTLib.learning.torch_sparse_nn.</code><code class="sig-name descname">hyper_opt_neural</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">Y</span></em>, <em class="sig-param"><span class="n">refit</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">device</span><span class="o">=</span><span class="default_value">'cpu'</span></em>, <em class="sig-param"><span class="n">learner_preset</span><span class="o">=</span><span class="default_value">'default'</span></em>, <em class="sig-param"><span class="n">metric</span><span class="o">=</span><span class="default_value">'f1_macro'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.hyper_opt_neural" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic hyperoptimization routine</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="autoBOTLib.learning.torch_sparse_nn.torch_learners">
+<code class="sig-prename descclassname">autoBOTLib.learning.torch_sparse_nn.</code><code class="sig-name descname">torch_learners</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">final_run</span></em>, <em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">Y</span></em>, <em class="sig-param"><span class="n">custom_hyperparameters</span></em>, <em class="sig-param"><span class="n">learner_preset</span></em>, <em class="sig-param"><span class="n">learner</span></em>, <em class="sig-param"><span class="n">task</span></em>, <em class="sig-param"><span class="n">metric</span></em>, <em class="sig-param"><span class="n">num_folds</span></em>, <em class="sig-param"><span class="n">validation_percentage</span></em>, <em class="sig-param"><span class="n">random_seed</span></em>, <em class="sig-param"><span class="n">verbose</span></em>, <em class="sig-param"><span class="n">validation_type</span></em>, <em class="sig-param"><span class="n">num_cpu</span></em>, <em class="sig-param"><span class="n">device</span><span class="o">=</span><span class="default_value">'cpu'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.learning.torch_sparse_nn.torch_learners" title="Permalink to this definition">¶</a></dt>
+<dd><p>A method for searching the architecture space</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-autoBOTLib.learning">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-autoBOTLib.learning" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="autoBOTLib.features.html" class="btn btn-neutral float-left" title="autoBOTLib.features package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="autoBOTLib.misc.html" class="btn btn-neutral float-right" title="autoBOTLib.misc package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Blaz Skrlj.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
