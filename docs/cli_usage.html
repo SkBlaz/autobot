@@ -1,73 +1,31 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>autoBOTLib CLI &mdash; autoBOTLib  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>autoBOTLib CLI &mdash; autoBOTLib  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Singularity container for autoBOT" href="containerization.html" />
-    <link rel="prev" title="Obtaining underlying representations" href="representations.html" /> 
+    <link rel="next" title="Feature types" href="features.html" />
+    <link rel="prev" title="Model persistence" href="model_persistence.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="index.html" class="icon icon-home"> autoBOTLib
-          
-
-          
-            
-            <img src="_static/autobotScheme.png" class="logo" alt="Logo"/>
-          
+            <a href="index.html" class="icon icon-home"> autoBOTLib<img src="_static/autobotScheme.png" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -75,18 +33,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption"><span class="caption-text">About:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="key_idea.html">Key idea underlying autoBOTLib</a></li>
@@ -96,12 +43,12 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="core_idea.html">autoBOTLib library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="suggested_use.html">Suggested use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_persistence.html">Model persistence</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">autoBOTLib CLI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="features.html">Feature types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_classifiers.html">Using custom classifiers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_features.html">Using custom feature transformers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model_persistence.html">Model persistence</a></li>
 <li class="toctree-l1"><a class="reference internal" href="representations.html">Obtaining underlying representations</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">autoBOTLib CLI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="containerization.html">Singularity container for autoBOT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_knowledge.html">Using custom background knowledge</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_metrics.html">Using custom metrics</a></li>
@@ -116,161 +63,105 @@
 <li class="toctree-l1"><a class="reference internal" href="modules.html">autoBOTLib</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">autoBOTLib</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>autoBOTLib CLI</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/cli_usage.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="autobotlib-cli">
 <h1>autoBOTLib CLI<a class="headerlink" href="#autobotlib-cli" title="Permalink to this headline">¶</a></h1>
-<p>To streamline the experiments, it makes a lot of sense to directly use the <em>autoBOTLib</em> as a CLI tool. The library itself implements wrappers for main functions, and can be executed as follows. By running</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>python autoBOTLib --arguments
+<p>To streamline the experiments, it makes a lot of sense to directly use the <em>autoBOTLib</em> as a CLI tool. The library itself implements wrappers for main functions, and can be executed as follows. If you installed the package, the <cite>autobot-cli</cite> tool was also built as part of the installation. By running</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>python autobot-cli --help
 </pre></div>
 </div>
 <p>The arguments are defined as follows.</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: autoBOTLib [-h] [--classifier CLASSIFIER] [--time TIME] [--popsize POPSIZE]
-               [--output_folder OUTPUT_FOLDER] [--hof_size HOF_SIZE]
-               [--representation_type REPRESENTATION_TYPE] [--datafolder DATAFOLDER]
-               [--mutation_rate MUTATION_RATE] [--crossover_rate CROSSOVER_RATE]
-               [--predict_data PREDICT_DATA] [--load_model LOAD_MODEL] [--num_cpu NUM_CPU]
-               [--mode MODE]
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: autobot-cli [-h] [--time TIME] [--job_id JOB_ID] [--popsize POPSIZE]
+           [--output_folder OUTPUT_FOLDER]
+           [--learner_preset LEARNER_PRESET] [--hof_size HOF_SIZE]
+           [--representation_type REPRESENTATION_TYPE]
+           [--train_data TRAIN_DATA] [--mutation_rate MUTATION_RATE]
+           [--crossover_rate CROSSOVER_RATE]
+           [--predict_data PREDICT_DATA] [--load_model LOAD_MODEL]
+           [--num_cpu NUM_CPU] [--upsample UPSAMPLE] [--mode MODE]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --classifier CLASSIFIER
   --time TIME
+  --job_id JOB_ID
   --popsize POPSIZE
   --output_folder OUTPUT_FOLDER
+  --learner_preset LEARNER_PRESET
   --hof_size HOF_SIZE
   --representation_type REPRESENTATION_TYPE
-  --datafolder DATAFOLDER
+  --train_data TRAIN_DATA
   --mutation_rate MUTATION_RATE
   --crossover_rate CROSSOVER_RATE
   --predict_data PREDICT_DATA
   --load_model LOAD_MODEL
   --num_cpu NUM_CPU
+  --upsample UPSAMPLE
   --mode MODE
 </pre></div>
 </div>
-<p>The code outputs the main results into the <em>results</em> folder by default.</p>
-<p>Note that there are two main modes of operation: learning and prediction.
-An example of the output is given in <a class="reference external" href="https://github.com/SkBlaz/autoBOTLib/tree/master/results">results folder.</a>. A working full CLI cycle (training+prediction) is given in <a class="reference external" href="https://github.com/SkBlaz/autoBOTLib/tree/master/cli_example.sh">this script.</a></p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>## Train an autoBOTLib classifier
-python autoBOTLib --mode learning --datafolder ./data/insults --output_folder results --classifier autoBOTLib-base --time 1 --hof_size 3 --representation_type neurosymbolic --mutation_rate 0.3 --crossover_rate 0.6
-
-## Obtain predictions from a trained model
-python autoBOTLib --mode prediction --load_model ./results/autoBOTLibmodel.pickle --predict_data ./data/insults/test.tsv
+<p>Hence, as a minimal example, we can consider running</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>autobot-cli --train_data ./data/insults/train.tsv --output_folder CLI --learner_preset mini-l1
 </pre></div>
 </div>
-<p>This will result in a file called <cite>test_predictions.tsv</cite> in the <cite>results</cite> folder.</p>
+<p>Here, the <cite>train.tsv</cite> file needs to have two attributes; <cite>text_a</cite> - the documents field, and <cite>label</cite>, the label field. Once the run finishes, you will have a trained model with a report in the <cite>CLI</cite> folder. To make predictions on unseen data, simply</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>autobot-cli --mode prediction --predict_data ./data/insults/test.tsv --load_model ./CLI/autoBOTmodel.pickle --output_folder CLI
+</pre></div>
+</div>
+<p>See <cite>https://github.com/skblaz/autobot/cli_example.sh</cite> for a full example.</p>
 </div>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="containerization.html" class="btn btn-neutral float-right" title="Singularity container for autoBOT" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="representations.html" class="btn btn-neutral float-left" title="Obtaining underlying representations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="model_persistence.html" class="btn btn-neutral float-left" title="Model persistence" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="features.html" class="btn btn-neutral float-right" title="Feature types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Blaz Skrlj.
-
-    </p>
+    <p>&#169; Copyright 2021, Blaz Skrlj.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

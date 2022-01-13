@@ -16,12 +16,12 @@ Welcome to *autoBOT*'s documentation
    installation.rst
    core_idea.rst
    suggested_use.rst
+   model_persistence.rst
+   cli_usage.rst
    features.rst
    custom_classifiers.rst
    custom_features.rst
-   model_persistence.rst
    representations.rst
-   cli_usage.rst
    containerization.rst
    custom_knowledge.rst
    custom_metrics.rst

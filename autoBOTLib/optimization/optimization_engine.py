@@ -7,13 +7,12 @@ import time
 import itertools
 import numpy as np
 import tqdm
-from sklearn.model_selection import GridSearchCV, ShuffleSplit
-from sklearn.linear_model import SGDClassifier, SGDRegressor
-from sklearn.neighbors import KNeighborsClassifier
 from scipy import sparse
 from collections import defaultdict, Counter
-from .optimization_metrics import *
-from .optimization_feature_constructors import *
+from autoBOTLib.optimization.optimization_metrics import *
+from autoBOTLib.optimization.optimization_feature_constructors import *
+from autoBOTLib.learning.scikit_based import scikit_learners
+from autoBOTLib.learning.torch_sparse_nn import torch_learners
 import operator
 import copy
 from deap import base, creator, tools
@@ -60,6 +59,7 @@ class GAlearner:
                  train_targets,
                  time_constraint,
                  num_cpu="all",
+                 device="cpu",
                  task_name="Super cool task.",
                  latent_dim=512,
                  sparsity=0.1,
@@ -84,6 +84,7 @@ class GAlearner:
                  contextual_model="all-mpnet-base-v2",
                  upsample=False,
                  verbose=1,
+                 framework="scikit",
                  normalization_norm="l2",
                  validation_percentage=0.2,
                  validation_type="cv"):
@@ -92,6 +93,7 @@ class GAlearner:
 
         :param list/PandasSeries train_sequences_raw: a list of texts
         :param list/np.array train_targets: a list of natural numbers (targets, multiclass), a list of lists (multilabel)
+        :param str device: Specification of the computation backend device
         :param int time_constraint: Number of hours to evolve.
         :param int/str num_cpu: Number of threads to exploit
         :param str task_name: Task identifier for logging
@@ -102,6 +104,7 @@ class GAlearner:
         :param str scoring_metric: The type of metric to optimize (sklearn-compatible)
         :param int top_k_importances: How many top importances to remember for explanations.
         :param str representation_type: "symbolic", "neural", "neurosymbolic", "neurosymbolic-default", "neurosymbolic-lite" or "custom". The "symbolic" feature space will only include feature types that we humans directly comprehend. The "neural" will include the embedding-based ones. The "neurosymbolic-default" will include the ones based on the origin MLJ paper, the "neurosymbolic" is the current alpha version with some new additions (constantly updated/developed). The "neurosymbolic-lite" version includes language-agnostic features but does not consider document graphs (due to space constraints)
+        :param str framework: The framework used for obtaining the final models (torch, scikit)
         :param bool binarize_importances: Feature selection instead of ranking as explanation
         :param str memory_storage: The storage of the gzipped (TSV) triplets (SPO).
         :param obj learner: custom learner. If none, linear learners are used.
@@ -120,9 +123,11 @@ class GAlearner:
 
         # Set the random seed
         self.random_seed = random_seed
+        self.framework = framework
         self.upsample = upsample
         self.visualize_progress = visualize_progress
         self.validation_type = validation_type
+        self.device = device
         self.validation_percentage = validation_percentage
         self.task = task
         self.use_checkpoints = use_checkpoints
@@ -167,9 +172,11 @@ class GAlearner:
 
         self.verbose = verbose
         self.mlc_flag = False
+
         if self.verbose:
             print(logo)
             logging.info(f"Considering preset: {representation_type}")
+            logging.info(f"Considering learning framework: {self.framework}")
 
         if self.upsample:
             train_sequences_raw, train_targets = self.upsample_dataset(
@@ -551,7 +558,7 @@ space .."
         performances = []
         self.subspace_performance = {}
         for subspace, name in zip(self.feature_subspaces, self.feature_names):
-            f1, _ = self.cross_val_scores(subspace, n_cpu=self.num_cpu)
+            f1, _ = self.cross_val_scores(subspace)
             self.subspace_performance[name] = f1
             performances.append(f1)
 
@@ -633,142 +640,34 @@ space .."
 
         return tmp_space
 
-    def cross_val_scores(self, tmp_feature_space, final_run=False, n_cpu=None):
+    def cross_val_scores(self, tmp_feature_space, final_run=False):
         """
         Compute the learnability of the representation.
 
         :param np.array tmp_feature_space: An individual's solution space.
         :param bool final_run: Last run is more extensive.
-        :param int/str n_cpu: Number of CPUs to use.
-        :return float f1_perf, clf: F1 performance and the learned learner.
+        :return float performance_score, clf: F1 performance and the learned learner.
         """
 
-        if self.learner_hyperparameters is None:
-
-            # this is for screening purposes.
-            if self.learner_preset == "default":
-                parameters = {
-                    "loss": ["hinge", "log"],
-                    "penalty": ["elasticnet"],
-                    "alpha": [0.01, 0.001, 0.0001],
-                    "l1_ratio": [0, 0.1, 0.5, 0.9]
-                }
-
-            elif self.learner_preset == "intense":
-                parameters = {
-                    "loss": ["log"],
-                    "penalty": ["elasticnet"],
-                    "power_t": [0.1, 0.2, 0.3, 0.4, 0.5],
-                    "class_weight": ["balanced"],
-                    "n_iter_no_change": [8],
-                    "alpha": [0.0005],
-                    "l1_ratio": [0, 0.05, 0.25, 0.3, 0.6, 0.8, 0.95, 1]
-                }
-
-            elif self.learner_preset == "mini-l1":
-                parameters = {"loss": ["log"], "penalty": ["l1"]}
-
-            elif self.learner_preset == "mini-l2":
-                parameters = {"loss": ["log"], "penalty": ["l2"]}
-
-            elif self.learner_preset == "knn":
-                parameters = {
-                    "n_neighbors": list(range(1, 64, 1)),
-                    "weights": ['uniform', 'distance'],
-                    "metric": ["euclidean", "manhattan", "minkowski"]
-                }
-
-            if final_run and self.learner_preset != "knn":
-
-                # we can afford this final round to be more extensive.
-
-                if self.learner_preset == "intense":
-
-                    parameters = {
-                        "loss": ["hinge", "log", "modified_huber"],
-                        "penalty": ["elasticnet"],
-                        "power_t": np.arange(0.05, 0.5, 0.05).tolist(),
-                        "class_weight": ["balanced"],
-                        "n_iter_no_change": [8, 32],
-                        "alpha": [0.01, 0.005, 0.001, 0.0005, 0.0003, 0.0001,
-                                  0.00005],
-                        "l1_ratio": np.arange(0, 1, 0.02).tolist()
-                    }
-
-                else:
-
-                    parameters = {
-                        "loss": ["hinge", "log", "modified_huber"],
-                        "penalty": ["elasticnet"],
-                        "power_t": [0.1, 0.2, 0.3, 0.4, 0.5],
-                        "class_weight": ["balanced"],
-                        "n_iter_no_change": [8, 32],
-                        "alpha": [0.01, 0.005, 0.001, 0.0005, 0.0001, 0.00005],
-                        "l1_ratio": [0, 0.2, 0.4, 0.5, 0.6, 0.8, 1]
-                    }
-
+        # Scikit-based learners
+        if self.framework == "scikit":
+            performance_score, clf = scikit_learners(final_run, tmp_feature_space, self.train_targets, self.learner_hyperparameters,
+                                           self.learner_preset,
+                                           self.learner, self.task, self.scoring_metric, self.n_fold_cv,
+                                           self.validation_percentage, self.random_seed, self.verbose,
+                                           self.validation_type, self.num_cpu)
+            
+        elif self.framework == "torch":
+            performance_score, clf = torch_learners(final_run, tmp_feature_space, self.train_targets, self.learner_hyperparameters,
+                                           self.learner_preset,
+                                           self.learner, self.task, self.scoring_metric, self.n_fold_cv,
+                                           self.validation_percentage, self.random_seed, self.verbose,
+                                                    self.validation_type, self.num_cpu, self.device)
+            
         else:
-
-            parameters = self.learner_hyperparameters
-
-        if self.learner is None:
-
-            if self.task == "classification":
-
-                if self.learner_preset == "knn":
-                    svc = KNeighborsClassifier()
-                else:
-                    svc = SGDClassifier(max_iter=1000000)
-
-            else:
-                if self.learner_preset == "knn":
-                    svc = KNeighborsClassifier()
-                else:
-                    svc = SGDRegressor(max_iter=1000000)
-                    parameters['loss'] = ['squared_loss']
-
-        else:
-            svc = self.learner
-
-        performance_score = self.scoring_metric
-
-        if self.validation_type == "train_test":
-            cv = ShuffleSplit(n_splits=1,
-                              test_size=self.validation_percentage,
-                              random_state=self.random_seed)
-            num_cpu = 1
-
-        else:
-            cv = self.n_fold_cv
-            num_cpu = self.num_cpu
-
-        if self.verbose == 0:
-            verbosity_factor = 0
-        else:
-            verbosity_factor = 0 if not final_run else 10
-
-        if final_run:
-            clf = GridSearchCV(svc,
-                               parameters,
-                               verbose=self.verbose + verbosity_factor,
-                               n_jobs=num_cpu,
-                               cv=cv,
-                               scoring=performance_score,
-                               refit=True)
-
-        else:
-            clf = GridSearchCV(svc,
-                               parameters,
-                               verbose=self.verbose + verbosity_factor,
-                               n_jobs=num_cpu,
-                               cv=cv,
-                               scoring=performance_score,
-                               refit=False)
-
-        clf.fit(tmp_feature_space, self.train_targets)
-        f1_perf = max(clf.cv_results_['mean_test_score'])
-
-        return f1_perf, clf
+            raise NotImplementedError("Select either `torch` or `scikit` as the framework used.")
+            
+        return performance_score, clf
 
     def evaluate_fitness(self,
                          individual,
@@ -817,14 +716,14 @@ space .."
                 # fine tune final learner
                 if self.verbose:
                     logging.info("Final round of optimization.")
-                f1_perf, clf = self.cross_val_scores(tmp_feature_space,
+                performance_score, clf = self.cross_val_scores(tmp_feature_space,
                                                      final_run=True)
 
-                return clf, individual[:], f1_perf, feature_names
+                return clf, individual[:], performance_score, feature_names
 
-            f1_perf, _ = self.cross_val_scores(tmp_feature_space)
+            performance_score, _ = self.cross_val_scores(tmp_feature_space)
 
-            return (f1_perf, )
+            return (performance_score, )
 
         elif return_clf_and_vec:
 
@@ -1187,7 +1086,7 @@ space .."
 
         dfx = pd.DataFrame(importances)
         dfx.columns = ['Feature type','Importance']
-
+        
         print(dfx.to_markdown())
         logging.info("Max {} in generation: {}\n".format(self.scoring_metric, round(max_f1, 3)))
 
@@ -1741,10 +1640,10 @@ space .."
                     learner, individual, score, feature_names = self.evaluate_fitness(
                         top_individual, return_clf_and_vec=True)
 
-                except Exception:
+                except Exception as es:
                     if self.verbose:
                         logging.info(
-                            f"Evaluation of individual {top_individual} did not produce a viable learner. Increase time!"
+                            f"Evaluation of individual {top_individual} did not produce a viable learner. Increase time! {es}"
                         )
 
                 try:

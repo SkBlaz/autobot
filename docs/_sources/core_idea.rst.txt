@@ -29,7 +29,7 @@ The minimal example is given next. Let's first inspect how a model is trained.
 		top_k_importances=25,  # how many top features to output as final ranking
 		memory_storage=
 		"./memory",  # tripled base for concept features (see ./examples folder)
-		representation_type="neurosymbolic-lite")  # or symbolic or neural or neurosymbolic (neurosymbolic includes doc2graph transformation which is in beta)
+		representation_type="neurosymbolic")  # or symbolic or neural or neurosymbolic (neurosymbolic includes doc2graph transformation which is in beta)
 		
 	autoBOTLibObj.evolve(
 			nind=10,  ## population size

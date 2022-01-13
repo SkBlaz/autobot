@@ -20,6 +20,14 @@ autoBOTLib.features.features\_contextual module
    :undoc-members:
    :show-inheritance:
 
+autoBOTLib.features.features\_contextual\_supervised module
+-----------------------------------------------------------
+
+.. automodule:: autoBOTLib.features.features_contextual_supervised
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 autoBOTLib.features.features\_document\_graph module
 ----------------------------------------------------
 

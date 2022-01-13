@@ -5,7 +5,7 @@ To install the stable version of the code, you can try:
 
 .. code:: bash
 
-    pip install autoBOTLib
+    pip install autoBOTLib --upgrade
 
 Or for the current master branch
 

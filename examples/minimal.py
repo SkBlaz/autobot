@@ -6,10 +6,10 @@ from cluster_utils import output_classification_results
 
 def run():
     ## Load example data frame
-    dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t").iloc[:200]
+    dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t").iloc[:]
     train_sequences = dataframe['text_a']
     train_targets = dataframe['label']
-    reptype="symbolic"
+    reptype="neurosymbolic"
     autoBOTLibObj = autoBOTLib.GAlearner(
         train_sequences,
         train_targets,
@@ -22,7 +22,7 @@ def run():
         visualize_progress=True, ## Stores progress as PROGRESS_{generation}.pdf file
         upsample=
         False,  ## Suitable for imbalanced data - randomized upsampling tends to help.
-        time_constraint=0.1).evolve(
+        time_constraint=0.2).evolve(
             strategy="evolution"
         )  ## strategy = "direct-learning" trains a single learner.
 
@@ -46,7 +46,7 @@ def run():
     output_classification_results(
         predictions,
         test_classes,
-        f"./predictions/test_{jid}_autobot{reptype}_report.json",
+        f"./predictions/SKLEARN.json",
         model_spec={})
 
 

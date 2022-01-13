@@ -58,6 +58,8 @@ class ConceptFeatures:
         for relation in relations:
             p1, p2 = relation.split("_")
             if token.lower() == p1 and tokens[index + 1].lower() == p2:
+                if len(tokens) < index + 3:
+                    continue
                 if len(tokens[index - 1]) > 1 and len(tokens[index + 2]) > 1:
                     triplet_adhoc = (tokens[index - 1], relation,
                                      tokens[index + 2])
@@ -76,7 +78,6 @@ class ConceptFeatures:
 
         generic_triplets = []
         present_tokens = set()
-
         for document in document_space:
             tokens = nltk.word_tokenize(document)
             tokens = [word.lower() for word in tokens]
@@ -90,14 +91,16 @@ class ConceptFeatures:
                 present_tokens.add(token)
 
         grounded = []
-
         if len(generic_triplets) == 0:
             logging.info("Generating the knowledge graph (ad hoc)")
             for document in document_space:
                 tokens = nltk.word_tokenize(document)
                 tokens = [str(x) for x in tokens]
+                if len(tokens) < 3:
+                    continue
                 for enx, token in enumerate(tokens):
                     if enx > 1 and enx < len(tokens) - 2:
+                        
                         if len(tokens[enx - 1]) >= 2 and len(
                                 tokens[enx + 1]) >= 2:
                             triplet_adhoc = (tokens[enx - 2], token,
@@ -198,6 +201,7 @@ class ConceptFeatures:
             sentences = nltk.tokenize.sent_tokenize(doc)
             for els in sentences:
                 sentences_separated.append(els)
+
         self.grounded_triplets = self.concept_graph(sentences_separated,
                                                     self.knowledge_graph)
         logging.info("Relation propositionalization ..")

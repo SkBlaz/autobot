@@ -1,6 +1,7 @@
-## Train an autoBOT classifier
-mkdir results;
-python autoBOTLib --mode learning --datafolder ./data/insults/train.tsv --output_folder results --classifier autoBOT-base --time 0.1 --hof_size 3 --representation_type neurosymbolic-lite --mutation_rate 0.3 --crossover_rate 0.6
+autobot-cli --help
 
-## Obtain predictions from a trained model
-python autoBOTLib --mode prediction --load_model ./results/autoBOTmodel.pickle --predict_data ./data/insults/test.tsv
+# "text_a" is the name of text field and "label" the name of labels
+autobot-cli --train_data ./data/insults/train.tsv --output_folder CLI
+
+# "text_a" is the name of the text field (labels are to be predicted and stored in the CLI folder)
+autobot-cli --predict_data ./data/insults/test.tsv --output_folder CLI

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>autoBOTLib.features package &mdash; autoBOTLib  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="autoBOTLib.misc package" href="autoBOTLib.misc.html" />
+    <link rel="prev" title="autoBOTLib package" href="autoBOTLib.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> autoBOTLib<img src="_static/autobotScheme.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">About:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="key_idea.html">Key idea underlying autoBOTLib</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorial and first steps:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core_idea.html">autoBOTLib library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="suggested_use.html">Suggested use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_persistence.html">Model persistence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_usage.html">autoBOTLib CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Feature types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_classifiers.html">Using custom classifiers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_features.html">Using custom feature transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="representations.html">Obtaining underlying representations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="containerization.html">Singularity container for autoBOT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_knowledge.html">Using custom background knowledge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_metrics.html">Using custom metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ideas.html">Potentially interesting further work</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updates.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">autoBOT API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cluster.html">Scaling up (SLING)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shared_tasks.html">Performance on shared tasks</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">autoBOTLib</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="autoBOTLib.html">autoBOTLib package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="autoBOTLib.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">autoBOTLib.features package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoBOTLib.misc.html">autoBOTLib.misc package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoBOTLib.optimization.html">autoBOTLib.optimization package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="autoBOTLib.html#module-autoBOTLib">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">autoBOTLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">autoBOTLib</a> &raquo;</li>
+          <li><a href="autoBOTLib.html">autoBOTLib package</a> &raquo;</li>
+      <li>autoBOTLib.features package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/autoBOTLib.features.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="autobotlib-features-package">
+<h1>autoBOTLib.features package<a class="headerlink" href="#autobotlib-features-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-autoBOTLib.features.features_concepts">
+<span id="autobotlib-features-features-concepts-module"></span><h2>autoBOTLib.features.features_concepts module<a class="headerlink" href="#module-autoBOTLib.features.features_concepts" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="autoBOTLib.features.features_concepts.ConceptFeatures">
+<em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.features.features_concepts.</code><code class="sig-name descname">ConceptFeatures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">10000</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">knowledge_graph</span><span class="o">=</span><span class="default_value">'../memory'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_concepts.ConceptFeatures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Core class describing sentence embedding methodology employed here.</p>
+<dl class="py method">
+<dt id="autoBOTLib.features.features_concepts.ConceptFeatures.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">10000</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">knowledge_graph</span><span class="o">=</span><span class="default_value">'../memory'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_concepts.ConceptFeatures.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_concepts.ConceptFeatures.get_grounded_from_path">
+<code class="sig-name descname">get_grounded_from_path</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">present_tokens</span></em>, <em class="sig-param"><span class="n">graph_path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_concepts.ConceptFeatures.get_grounded_from_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method which performs a very simple term grounding. This simply evaluates if both terms are present in the corpus.
+:param list present_tokens: The present tokens
+:param str graph_path: Path to the triplet base (compressed)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_concepts.ConceptFeatures.add_triplet">
+<code class="sig-name descname">add_triplet</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tokens</span></em>, <em class="sig-param"><span class="n">index</span></em>, <em class="sig-param"><span class="n">relations</span><span class="o">=</span><span class="default_value">['is_a']</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_concepts.ConceptFeatures.add_triplet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_concepts.ConceptFeatures.concept_graph">
+<code class="sig-name descname">concept_graph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">document_space</span></em>, <em class="sig-param"><span class="n">graph_path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_concepts.ConceptFeatures.concept_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>If no prior knowledge graph is supplied, one is constructed.
+:param document_space: The list of input documents
+:param graph_path: The path of the knowledge graph used.
+:return grounded: Grounded relations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_concepts.ConceptFeatures.get_propositionalized_rep">
+<code class="sig-name descname">get_propositionalized_rep</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">documents</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_concepts.ConceptFeatures.get_propositionalized_rep" title="Permalink to this definition">¶</a></dt>
+<dd><p>The method for constructing the representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>documents</strong> – The input list of documents.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_concepts.ConceptFeatures.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">refit</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">knowledge_graph</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_concepts.ConceptFeatures.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the model to a text vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text_vector</strong> – Input list of documents.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_concepts.ConceptFeatures.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">use_conc_docs</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_concepts.ConceptFeatures.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform the data into suitable form.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_concepts.ConceptFeatures.get_feature_names">
+<code class="sig-name descname">get_feature_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_concepts.ConceptFeatures.get_feature_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_concepts.ConceptFeatures.fit_transform">
+<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">b</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_concepts.ConceptFeatures.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>A classifc fit-transform method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text_vector</strong> – The input list of documents.</p>
+</dd>
+<dt class="field-even">Return transformedObj</dt>
+<dd class="field-even"><p>Transformed texts (to features).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-autoBOTLib.features.features_contextual">
+<span id="autobotlib-features-features-contextual-module"></span><h2>autoBOTLib.features.features_contextual module<a class="headerlink" href="#module-autoBOTLib.features.features_contextual" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="autoBOTLib.features.features_contextual.ContextualDocs">
+<em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.features.features_contextual.</code><code class="sig-name descname">ContextualDocs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="o">=</span><span class="default_value">'all-mpnet-base-v2'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_contextual.ContextualDocs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="autoBOTLib.features.features_contextual.ContextualDocs.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="o">=</span><span class="default_value">'all-mpnet-base-v2'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_contextual.ContextualDocs.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class initialization method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ndim</strong> – Number of latent dimensions</p></li>
+<li><p><strong>model</strong> – The sentence-transformer model</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_contextual.ContextualDocs.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">documents</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_contextual.ContextualDocs.fit" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>documents</strong> – The input set of documents.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_contextual.ContextualDocs.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">documents</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_contextual.ContextualDocs.transform" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>documents</strong> – The input set of documents.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_contextual.ContextualDocs.fit_transform">
+<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">documents</span></em>, <em class="sig-param"><span class="n">b</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_contextual.ContextualDocs.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>documents</strong> – The input set of documents.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_contextual.ContextualDocs.get_feature_names">
+<code class="sig-name descname">get_feature_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_contextual.ContextualDocs.get_feature_names" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fnames</strong> – Feature names (custom api artefact)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-autoBOTLib.features.features_document_graph">
+<span id="autobotlib-features-features-document-graph-module"></span><h2>autoBOTLib.features.features_document_graph module<a class="headerlink" href="#module-autoBOTLib.features.features_document_graph" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="autoBOTLib.features.features_document_graph.RelationalDocs">
+<em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.features.features_document_graph.</code><code class="sig-name descname">RelationalDocs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ndim</span><span class="o">=</span><span class="default_value">128</span></em>, <em class="sig-param"><span class="n">random_seed</span><span class="o">=</span><span class="default_value">1965123</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ed_cutoff</span><span class="o">=</span><span class="default_value">- 2</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">neigh_size</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">doc_limit</span><span class="o">=</span><span class="default_value">4096</span></em>, <em class="sig-param"><span class="n">percentile_threshold</span><span class="o">=</span><span class="default_value">95</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_document_graph.RelationalDocs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="autoBOTLib.features.features_document_graph.RelationalDocs.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ndim</span><span class="o">=</span><span class="default_value">128</span></em>, <em class="sig-param"><span class="n">random_seed</span><span class="o">=</span><span class="default_value">1965123</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ed_cutoff</span><span class="o">=</span><span class="default_value">- 2</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">neigh_size</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">doc_limit</span><span class="o">=</span><span class="default_value">4096</span></em>, <em class="sig-param"><span class="n">percentile_threshold</span><span class="o">=</span><span class="default_value">95</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_document_graph.RelationalDocs.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class initialization method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ndim</strong> – Number of latent dimensions</p></li>
+<li><p><strong>targets</strong> – The target vector</p></li>
+<li><p><strong>random_seed</strong> – The random seed used</p></li>
+<li><p><strong>ed_cutoff</strong> – Cutoff for fuzzy string matching when comparing documents</p></li>
+<li><p><strong>doc_limit</strong> – The max number of documents to be considered.</p></li>
+<li><p><strong>verbose</strong> – Whether to have the printouts</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_document_graph.RelationalDocs.jaccard_index">
+<code class="sig-name descname">jaccard_index</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">set1</span></em>, <em class="sig-param"><span class="n">set2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_document_graph.RelationalDocs.jaccard_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>The classic Jaccard index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>set1</strong> – First set</p></li>
+<li><p><strong>set2</strong> – Second set</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return JaccardIndex</dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_document_graph.RelationalDocs.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_document_graph.RelationalDocs.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>The fit method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text_list</strong> – List of input texts</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_document_graph.RelationalDocs.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_documents</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_document_graph.RelationalDocs.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_documents</strong> – The new set of documents to be transformed.</p>
+</dd>
+<dt class="field-even">Return all_embeddings</dt>
+<dd class="field-even"><p>The final embedding matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_document_graph.RelationalDocs.fit_transform">
+<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">documents</span></em>, <em class="sig-param"><span class="n">b</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_document_graph.RelationalDocs.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sklearn-like fit-transform method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_document_graph.RelationalDocs.get_feature_names">
+<code class="sig-name descname">get_feature_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_document_graph.RelationalDocs.get_feature_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_document_graph.RelationalDocs.get_graph">
+<code class="sig-name descname">get_graph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">wspace</span></em>, <em class="sig-param"><span class="n">ltl</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_document_graph.RelationalDocs.get_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>A method to obtain a graph from a weighted space of documents.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wspace</strong> – node1,node2 weight mapping</p></li>
+<li><p><strong>ltl</strong> – The number of documents</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return G</dt>
+<dd class="field-even"><p>The document graph</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-autoBOTLib.features.features_keyword">
+<span id="autobotlib-features-features-keyword-module"></span><h2>autoBOTLib.features.features_keyword module<a class="headerlink" href="#module-autoBOTLib.features.features_keyword" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="autoBOTLib.features.features_keyword.KeywordFeatures">
+<em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.features.features_keyword.</code><code class="sig-name descname">KeywordFeatures</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">10000</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_keyword.KeywordFeatures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Core class describing sentence embedding methodology employed here.</p>
+<dl class="py method">
+<dt id="autoBOTLib.features.features_keyword.KeywordFeatures.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">10000</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_keyword.KeywordFeatures.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_keyword.KeywordFeatures.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">refit</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_keyword.KeywordFeatures.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the model to a text vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text_vector</strong> – The input list of texts</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_keyword.KeywordFeatures.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_keyword.KeywordFeatures.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform the data into suitable form.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text_vector</strong> – The input list of texts.</p>
+</dd>
+<dt class="field-even">Return transformedObject</dt>
+<dd class="field-even"><p>The transformed input texts (feature space)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_keyword.KeywordFeatures.get_feature_names">
+<code class="sig-name descname">get_feature_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_keyword.KeywordFeatures.get_feature_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_keyword.KeywordFeatures.fit_transform">
+<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">b</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_keyword.KeywordFeatures.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>A classifc fit-transform method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text_vector</strong> – Input list of texts.</p>
+</dd>
+<dt class="field-even">Return transformedObject</dt>
+<dd class="field-even"><p>Transformed list of texts</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-autoBOTLib.features.features_sentence_embeddings">
+<span id="autobotlib-features-features-sentence-embeddings-module"></span><h2>autoBOTLib.features.features_sentence_embeddings module<a class="headerlink" href="#module-autoBOTLib.features.features_sentence_embeddings" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="autoBOTLib.features.features_sentence_embeddings.documentEmbedder">
+<em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.features.features_sentence_embeddings.</code><code class="sig-name descname">documentEmbedder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">10000</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">8</span></em>, <em class="sig-param"><span class="n">dm</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">pretrained_path</span><span class="o">=</span><span class="default_value">'doc2vec.bin'</span></em>, <em class="sig-param"><span class="n">ndim</span><span class="o">=</span><span class="default_value">512</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_sentence_embeddings.documentEmbedder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Core class describing sentence embedding methodology employed here.
+The class functions as a sklearn-like object.</p>
+<dl class="py method">
+<dt id="autoBOTLib.features.features_sentence_embeddings.documentEmbedder.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">10000</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">8</span></em>, <em class="sig-param"><span class="n">dm</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">pretrained_path</span><span class="o">=</span><span class="default_value">'doc2vec.bin'</span></em>, <em class="sig-param"><span class="n">ndim</span><span class="o">=</span><span class="default_value">512</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_sentence_embeddings.documentEmbedder.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>The standard sgn function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_features</strong> – integer, number of latent dimensions</p></li>
+<li><p><strong>num_cpu</strong> – integer, number of CPUs to be used</p></li>
+<li><p><strong>dm</strong> – Whether to use the “distributed memory” model</p></li>
+<li><p><strong>pretrained_path</strong> – The path where a pretrained model is located (if any)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_sentence_embeddings.documentEmbedder.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">b</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">refit</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_sentence_embeddings.documentEmbedder.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the model to a text vector.
+:param text_vector: a list of texts</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_sentence_embeddings.documentEmbedder.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_sentence_embeddings.documentEmbedder.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform the data into suitable form.
+:param text_vector: The text vector to be transformed via a trained model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_sentence_embeddings.documentEmbedder.get_feature_names">
+<code class="sig-name descname">get_feature_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_sentence_embeddings.documentEmbedder.get_feature_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_sentence_embeddings.documentEmbedder.fit_transform">
+<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">a2</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_sentence_embeddings.documentEmbedder.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>A classifc fit-transform method.
+:param text_vector: a text vector used to build and transform a corpus.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-autoBOTLib.features.features_token_relations">
+<span id="autobotlib-features-features-token-relations-module"></span><h2>autoBOTLib.features.features_token_relations module<a class="headerlink" href="#module-autoBOTLib.features.features_token_relations" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="autoBOTLib.features.features_token_relations.relationExtractor">
+<em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.features.features_token_relations.</code><code class="sig-name descname">relationExtractor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">10000</span></em>, <em class="sig-param"><span class="n">split_char</span><span class="o">=</span><span class="default_value">'|||'</span></em>, <em class="sig-param"><span class="n">witem_separator</span><span class="o">=</span><span class="default_value">'&amp;&amp;&amp;&amp;'</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">8</span></em>, <em class="sig-param"><span class="n">neighborhood_token</span><span class="o">=</span><span class="default_value">64</span></em>, <em class="sig-param"><span class="n">min_token</span><span class="o">=</span><span class="default_value">'bigrams'</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_token_relations.relationExtractor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The main token relation extraction class. Works for arbitrary tokens.</p>
+<dl class="py method">
+<dt id="autoBOTLib.features.features_token_relations.relationExtractor.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_features</span><span class="o">=</span><span class="default_value">10000</span></em>, <em class="sig-param"><span class="n">split_char</span><span class="o">=</span><span class="default_value">'|||'</span></em>, <em class="sig-param"><span class="n">witem_separator</span><span class="o">=</span><span class="default_value">'&amp;&amp;&amp;&amp;'</span></em>, <em class="sig-param"><span class="n">num_cpu</span><span class="o">=</span><span class="default_value">8</span></em>, <em class="sig-param"><span class="n">neighborhood_token</span><span class="o">=</span><span class="default_value">64</span></em>, <em class="sig-param"><span class="n">min_token</span><span class="o">=</span><span class="default_value">'bigrams'</span></em>, <em class="sig-param"><span class="n">targets</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_token_relations.relationExtractor.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_token_relations.relationExtractor.compute_distance">
+<code class="sig-name descname">compute_distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pair</span></em>, <em class="sig-param"><span class="n">token_dict</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_token_relations.relationExtractor.compute_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>A core distance for computing index-based differences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pair</strong> – the pair of tokens</p></li>
+<li><p><strong>token_dict</strong> – distance map</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return pair[0], pair[1], dist</dt>
+<dd class="field-even"><p>The two tokens and the distance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_token_relations.relationExtractor.witem_kernel">
+<code class="sig-name descname">witem_kernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">instance</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_token_relations.relationExtractor.witem_kernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple kernel for traversing a given document.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>instance</strong> – a piece of text</p>
+</dd>
+<dt class="field-even">Return global_distances</dt>
+<dd class="field-even"><p>Distances between tokens</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_token_relations.relationExtractor.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">b</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_token_relations.relationExtractor.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the model to a text vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text_vector</strong> – The input list of texts.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_token_relations.relationExtractor.get_feature_names">
+<code class="sig-name descname">get_feature_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_token_relations.relationExtractor.get_feature_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return exact feature names.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_token_relations.relationExtractor.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">custom_shape</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_token_relations.relationExtractor.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform the data into suitable form.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text_vector</strong> – The input list of texts.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_token_relations.relationExtractor.fit_transform">
+<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_vector</span></em>, <em class="sig-param"><span class="n">a2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_token_relations.relationExtractor.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>A classifc fit-transform method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text_vector</strong> – Input list of texts.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-autoBOTLib.features.features_topic">
+<span id="autobotlib-features-features-topic-module"></span><h2>autoBOTLib.features.features_topic module<a class="headerlink" href="#module-autoBOTLib.features.features_topic" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="autoBOTLib.features.features_topic.TopicDocs">
+<em class="property">class </em><code class="sig-prename descclassname">autoBOTLib.features.features_topic.</code><code class="sig-name descname">TopicDocs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ndim</span><span class="o">=</span><span class="default_value">128</span></em>, <em class="sig-param"><span class="n">random_seed</span><span class="o">=</span><span class="default_value">1965123</span></em>, <em class="sig-param"><span class="n">topic_tokens</span><span class="o">=</span><span class="default_value">8196</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_topic.TopicDocs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="autoBOTLib.features.features_topic.TopicDocs.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ndim</span><span class="o">=</span><span class="default_value">128</span></em>, <em class="sig-param"><span class="n">random_seed</span><span class="o">=</span><span class="default_value">1965123</span></em>, <em class="sig-param"><span class="n">topic_tokens</span><span class="o">=</span><span class="default_value">8196</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_topic.TopicDocs.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class initialization method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ndim</strong> – Number of latent dimensions</p></li>
+<li><p><strong>targets</strong> – The target vector</p></li>
+<li><p><strong>random_seed</strong> – The random seed used</p></li>
+<li><p><strong>ed_cutoff</strong> – Cutoff for fuzzy string matching when comparing documents</p></li>
+<li><p><strong>doc_limit</strong> – The max number of documents to be considered.</p></li>
+<li><p><strong>verbose</strong> – Whether to have the printouts</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_topic.TopicDocs.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_topic.TopicDocs.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>The fit method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text_list</strong> – List of input texts</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_topic.TopicDocs.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_documents</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_topic.TopicDocs.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_documents</strong> – The new set of documents to be transformed.</p>
+</dd>
+<dt class="field-even">Return all_embeddings</dt>
+<dd class="field-even"><p>The final embedding matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_topic.TopicDocs.fit_transform">
+<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">documents</span></em>, <em class="sig-param"><span class="n">b</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_topic.TopicDocs.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sklearn-like fit-transform method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="autoBOTLib.features.features_topic.TopicDocs.get_feature_names">
+<code class="sig-name descname">get_feature_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#autoBOTLib.features.features_topic.TopicDocs.get_feature_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get feature names.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-autoBOTLib.features">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-autoBOTLib.features" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="autoBOTLib.html" class="btn btn-neutral float-left" title="autoBOTLib package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="autoBOTLib.misc.html" class="btn btn-neutral float-right" title="autoBOTLib.misc package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Blaz Skrlj.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
