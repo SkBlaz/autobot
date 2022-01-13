@@ -37,12 +37,10 @@ simplefilter(action='ignore')
 try:
     import matplotlib.pyplot as plt
     import seaborn as sns
-    logging.info("Visualization libraries were found (NetworkX, plt, sns).")
 
 except Exception as es:
-
-    logging.info(
-        f"For full visualization, Networkx and Matplotlib are needed! {es}")
+    
+    pass
 
 
 class GAlearner:

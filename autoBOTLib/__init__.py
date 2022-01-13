@@ -11,8 +11,11 @@ from autoBOTLib.optimization.optimization_feature_constructors import *
 from autoBOTLib.optimization.optimization_engine import *
 from autoBOTLib.misc.misc_helpers import *
 
+import os
 import logging
 
 logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
 logging.getLogger().setLevel(logging.INFO)
+
+os.environ['TOKENIZERS_PARALLELISM'] = "false"
