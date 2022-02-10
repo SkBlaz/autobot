@@ -38,8 +38,7 @@ try:
     import matplotlib.pyplot as plt
     import seaborn as sns
 
-except Exception as es:
-    
+except Exception:    
     pass
 
 
@@ -130,10 +129,31 @@ class GAlearner:
         self.task = task
         self.use_checkpoints = use_checkpoints
         self.contextual_model = contextual_model
+        self.multimodal_input = False
         np.random.seed(random_seed)
+        self.verbose = verbose
+        self.mlc_flag = False
+
+        if self.upsample:
+            train_sequences_raw, train_targets = self.upsample_dataset(
+                train_sequences_raw, train_targets)
+        
+        if isinstance(train_sequences_raw[0], str):
+            train_sequences_raw = [{"text_a": x.encode("utf-8")\
+                                    .decode("utf-8")} for x in train_sequences_raw]
+            
+        else:
+            for el in train_sequences_raw:
+                el['text_a'] = el['text_a'].encode("utf-8").decode("utf-8")
+
+        assert isinstance(train_sequences_raw[0], dict)
+
+        if len(train_sequences_raw[0]) > 1:
+            if self.verbose:
+                logging.info(f"Considered multimodal autoBOT! Input types found: {train_sequences_raw[0].keys()}")
+            self.multimodal = True
 
         logo = """
-
       MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
       MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWM
       WWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWWM
@@ -168,20 +188,13 @@ class GAlearner:
       MMMMMMMMMMMMMMMMMMMMMN0OXO:,,,;;o0K0kocdXNNWMMMMMMMMMMMMMMMMMMMMMMMMMM
         """
 
-        self.verbose = verbose
-        self.mlc_flag = False
-
         if self.verbose:
             print(logo)
             logging.info(f"Considering preset: {representation_type}")
             logging.info(f"Considering learning framework: {self.framework}")
-
-        if self.upsample:
-            train_sequences_raw, train_targets = self.upsample_dataset(
-                train_sequences_raw, train_targets)
+            
         self.default_importance = default_importance
         self.learner_preset = learner_preset
-
         self.scoring_metric = scoring_metric
         self.normalization_norm = normalization_norm
         self.representation_type = representation_type
@@ -240,20 +253,7 @@ class GAlearner:
         self.task_name = task_name
         self.topk = top_k_importances
 
-        train_sequences = []
-
-        # Do some mandatory encoding
-        if type(train_sequences_raw) == list:
-            for sequence in train_sequences_raw:
-                train_sequences.append(
-                    sequence.encode("utf-8").decode("utf-8"))
-        else:
-            for sequence in train_sequences_raw.values:
-                train_sequences.append(
-                    sequence.encode("utf-8").decode("utf-8"))
-
-        # build dataframe
-        self.train_seq = self.return_dataframe_from_text(train_sequences)
+        self.train_seq = self.return_dataframe_from_text(train_sequences_raw)
         self.train_targets = train_targets
 
         self.hof = []  # The hall of fame
@@ -435,13 +435,15 @@ space ..")
         if self.verbose:
             logging.info("Computing the seed dataframe ..")
 
+        df = pd.concat(map(func, df))
+        
         # Do a pre-split of the data and compute in parallel.
-        df_split = np.array_split(df, self.num_cpu * 10)
-        pool = mp.Pool(self.num_cpu)
-        df = pd.concat(
-            tqdm.tqdm(pool.imap(func, df_split), total=len(df_split)))
-        pool.close()
-        pool.join()
+        # df_split = np.array_split(df, self.num_cpu * 10)
+        # pool = mp.Pool(self.num_cpu)
+        # df = pd.concat(
+        #     tqdm.tqdm(pool.imap(func, df_split), total=len(df_split)))
+        # pool.close()
+        # pool.join()
         return df
 
     def upsample_dataset(self, X, Y):
@@ -504,7 +506,7 @@ space ..")
         :return parsed df: A parsed text (a DataFrame)
         """
 
-        return self.parallelize_dataframe(text, build_dataframe)
+        return build_dataframe(text)
 
     def generate_random_initial_state(self, weights_importances):
         """
@@ -521,6 +523,7 @@ space ..")
 
     def summarise_dataset(self, list_of_texts, targets):
 
+        list_of_texts = [x['text_a'] for x in list_of_texts]
         if not isinstance(targets, list):
             targets = targets.tolist()
 

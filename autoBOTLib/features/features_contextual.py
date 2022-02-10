@@ -1,6 +1,7 @@
 ### A wrapper for sentence-embeddings library
 
 import logging
+import nltk
 import numpy as np
 import tqdm
 
@@ -54,7 +55,18 @@ class ContextualDocs:
             except:  # numpy
                 documents = documents.tolist()
         try:
-            sentence_embeddings = self.model.encode(documents)
+
+            # Split to sentences, embed, join
+            sentence_embeddings = []
+            for document in tqdm.tqdm(documents):
+                sentences = nltk.sent_tokenize(document)
+                doc_emb = []
+                for sentence in sentences:
+                    s_emb = self.model.encode(sentence, show_progress_bar=False)
+                    doc_emb.append(s_emb)
+                doc_emb = np.array(doc_emb)
+                doc_emb = np.mean(doc_emb, axis=0)
+                sentence_embeddings.append(doc_emb)
 
         except Exception as es:
             print(es, "error in encoding documents", sentence_embeddings)
