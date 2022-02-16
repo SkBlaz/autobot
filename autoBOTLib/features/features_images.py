@@ -1,9 +1,9 @@
 ### A wrapper for sentence-embeddings library
 
 import logging
-import nltk
 import numpy as np
 import tqdm
+from PIL import Image
 
 logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
@@ -21,8 +21,8 @@ except:
     contextual_feature_library = False
 
 
-class ContextualDocs:
-    def __init__(self, model="all-mpnet-base-v2"):
+class ImageEmbeddingTransformer:
+    def __init__(self, model="clip-ViT-B-32"):
         """
         Class initialization method.
 
@@ -47,6 +47,7 @@ class ContextualDocs:
         :param documents: The input set of documents.
         """
 
+
         if not isinstance(documents, list):
 
             try:  # Pandas
@@ -54,24 +55,22 @@ class ContextualDocs:
 
             except:  # numpy
                 documents = documents.tolist()
+
         try:
 
-            # Split to sentences, embed, join
             sentence_embeddings = []
             for document in tqdm.tqdm(documents):
-                sentences = nltk.sent_tokenize(document)
-                doc_emb = []
-                for sentence in sentences:
-                    s_emb = self.model.encode(sentence, show_progress_bar=False)
-                    doc_emb.append(s_emb)
-                doc_emb = np.array(doc_emb)
-                doc_emb = np.mean(doc_emb, axis=0)
-                sentence_embeddings.append(doc_emb)
+                if isinstance(document, str):
+                    loaded_image = Image.open(document)
+                    
+                else:
+                    loaded_image = document
+                sentence_embeddings.append(self.model.encode(loaded_image, show_progress_bar=False))
 
         except Exception as es:
             print(es, "error in encoding documents", sentence_embeddings)
 
-        encoded_documents = np.array(sentence_embeddings)
+        encoded_documents = np.array(sentence_embeddings).reshape(len(documents), -1)
         self.ndim = encoded_documents.shape[1]
         return encoded_documents
 
@@ -92,12 +91,13 @@ class ContextualDocs:
 if __name__ == "__main__":
 
     import pandas as pd
+    from PIL import Image
 
-    example_text = pd.read_csv("../data/dontpatronize/train.tsv",
-                               sep="\t")['text_a']
-    labels = pd.read_csv("../data/dontpatronize/train.tsv",
-                         sep="\t")['label'].values.tolist()
-    clx = ContextualDocs()
+
+    example_text = [Image.open("../../data/multimodal_examples/tasty-recipes/raw/hummus/white-bean-cranberry-hummus.jpg")] * 10
+    example_text = pd.DataFrame({"image_a": example_text})
+    clx = ImageEmbeddingTransformer()
     sim_features = clx.fit_transform(example_text)
 
     print(sim_features.shape)
+    print(sim_features)

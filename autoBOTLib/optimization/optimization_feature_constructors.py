@@ -19,6 +19,7 @@ from autoBOTLib.features.features_keyword import *
 from autoBOTLib.features.features_sentence_embeddings import *
 from autoBOTLib.features.features_token_relations import *
 from autoBOTLib.features.features_contextual import *
+from autoBOTLib.features.features_images import *
 
 import string
 import re
@@ -258,7 +259,9 @@ def build_dataframe(data_docs):
     :return pd.DataFrame df_data: A dataframe corresponding to text representations
     """
 
-    df_data = pd.DataFrame({'text': data_docs})
+    df_data = pd.DataFrame({'text': [x['text_a'] for x in data_docs]})
+    if 'image_a' in data_docs[0]:
+        df_data['images'] = [x['image_a'] for x in data_docs]
     df_data['no_punctuation'] = df_data['text'].map(
         lambda x: remove_punctuation(x))
     df_data['no_stopwords'] = df_data['no_punctuation'].map(
@@ -397,6 +400,15 @@ def get_features(df_data,
 
     # Seeds and np for np
     np.random.seed(random_seed)
+
+    # Are images also part of the input?
+    if "images" in df_data.columns and "neurosymbolic" in representation_type:
+        include_image_transformer = True
+        image_embedder = ImageEmbeddingTransformer()
+        
+    else:
+        include_image_transformer = False
+
 
     if not custom_pipeline is None and combine_with_existing_representation == False:
 
@@ -554,6 +566,17 @@ def get_features(df_data,
                                     ]))
         }
 
+        if include_image_transformer:
+            feature_transformer_vault['image_embedding'] =\
+                ('image_embedding',
+                 pipeline.Pipeline([
+                     ('s7', text_col(key='images')),
+                     ('image_embedding',
+                      image_embedder),
+                     ('normalize',
+                      Normalizer(norm=normalization_norm))
+                 ]))
+
         if isinstance(representation_type, str):
 
             ## representation_type is pre-set
@@ -565,6 +588,8 @@ def get_features(df_data,
 
             preset_features = feature_presets[representation_type]
             features = [feature_transformer_vault[x] for x in preset_features]
+            if include_image_transformer:
+                features.append(feature_transformer_vault['image_embedding'])
 
         else:
 

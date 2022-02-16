@@ -70,7 +70,7 @@ def main():
     )
 
     args = parser.parse_args()
-    args.time
+#    args.time
     directory = args.output_folder
 
     logging.info("Starting the AutoML run, the used arguments are:")

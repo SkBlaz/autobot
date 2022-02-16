@@ -221,8 +221,8 @@ if __name__ == "__main__":
     from sklearn.model_selection import cross_val_score
     from sklearn.dummy import DummyClassifier
 
-    example_text = pd.read_csv("../data/sarcasm/train.tsv", sep="\t")['text_a']
-    labels = pd.read_csv("../data/sarcasm/train.tsv",
+    example_text = pd.read_csv("../../data/sarcasm/train.tsv", sep="\t")['text_a']
+    labels = pd.read_csv("../../data/sarcasm/train.tsv",
                          sep="\t")['label'].values.tolist()
 
     nsize = [None, 2, 4, 8, 16]
