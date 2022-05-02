@@ -40,6 +40,7 @@ but also delve deeper into autoBOT's capabilities. To explore autoBOT's function
 
 ![example workflow](https://github.com/skblaz/autobot/actions/workflows/core-install.yml/badge.svg) ![example workflow](https://github.com/skblaz/autobot/actions/workflows/pylint.yml/badge.svg)
 
+TLDR:
 ![Demo](demo.png)
 
 If you use this work, please cite:
