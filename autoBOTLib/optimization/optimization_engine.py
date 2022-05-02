@@ -530,7 +530,7 @@ space ..")
         lengths = []
         unique_tokens = set()
         targets = [str(x) for x in targets]
-
+        
         for x in list_of_texts:
             lengths.append(len(x))
             parts = x.strip().split()
