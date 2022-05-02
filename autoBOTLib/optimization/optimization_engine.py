@@ -1324,8 +1324,8 @@ space ..")
         try:
             feature_ranking = self.global_feature_map  # all features
 
-        except Exception:
-            feature_ranking = pd.DataFrame({k: 1 for k in self.feature_names})
+        except:            
+            feature_ranking = pd.DataFrame(pd.Series({k: 1.0 for k in self.feature_names})).T
 
         return feature_ranking, dfx
 
@@ -1335,10 +1335,10 @@ space ..")
         :return pd.DataFrame topicList: A list of topic-id tuples.
         """
 
-        feature_ranking = self.global_feature_map
         out_df = None
 
         try:
+            feature_ranking = self.global_feature_map
             topic_transformer_trained = [
                 x
                 for x in self.vectorizer.named_steps['union'].transformer_list

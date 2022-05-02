@@ -8,7 +8,7 @@ import pandas as pd
 
 def run():
     ## Load example data frame
-    dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t")
+    dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t").iloc[:300]
     train_sequences = dataframe['text_a']
     train_targets_c1 = dataframe['label'].values.tolist()
     train_targets_c2 = [
@@ -25,14 +25,14 @@ def run():
         n_fold_cv=3,
         memory_storage="memory2",
         sparsity=0.1,
+        learner_preset="test",
         upsample=
         False,  ## Suitable for imbalanced data - randomized upsampling tends to help.
-        time_constraint=0.5).evolve(
+        time_constraint=0.1).evolve(
             strategy="evolution"
         )  ## strategy = "direct-learning" trains a single learner.
 
-    dataframe2 = pd.read_csv("../data/insults/test.tsv", sep="\t")
-    test_sequences = dataframe2['text_a']
+    test_sequences = pd.read_csv("../data/insults/test.tsv", sep="\t")["text_a"]
     predictions = autoBOTLibObj.predict(test_sequences)
     prob_predictions = autoBOTLibObj.predict_proba(test_sequences)
     print(predictions)

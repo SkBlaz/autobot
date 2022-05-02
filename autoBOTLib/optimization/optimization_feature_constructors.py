@@ -258,8 +258,16 @@ def build_dataframe(data_docs):
     :param list/pd.Series data_docs: The input data documents
     :return pd.DataFrame df_data: A dataframe corresponding to text representations
     """
-
+    
+    if isinstance(data_docs[0], str):
+        data_docs = [{"text_a": x.encode("utf-8")\
+                                    .decode("utf-8")} for x in data_docs]
+    else:
+        for el in data_docs:
+            el['text_a'] = el['text_a'].encode("utf-8").decode("utf-8")
+            
     df_data = pd.DataFrame({'text': [x['text_a'] for x in data_docs]})
+            
     if 'image_a' in data_docs[0]:
         df_data['images'] = [x['image_a'] for x in data_docs]
     df_data['no_punctuation'] = df_data['text'].map(

@@ -25,7 +25,6 @@ def test_minimal_mlc():
         representation_type=
         "symbolic",  ## See the documentation for all possible representation types.
         n_fold_cv=3,
-        memory_storage="memory2",
         sparsity=0.1,
         upsample=
         False,  ## Suitable for imbalanced data - randomized upsampling tends to help.
