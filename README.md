@@ -41,7 +41,37 @@ but also delve deeper into autoBOT's capabilities. To explore autoBOT's function
 ![example workflow](https://github.com/skblaz/autobot/actions/workflows/core-install.yml/badge.svg) ![example workflow](https://github.com/skblaz/autobot/actions/workflows/pylint.yml/badge.svg)
 
 TLDR:
-![Demo](demo.png)
+
+```python
+
+import autoBOTLib
+import pandas as pd
+
+dataframe = pd.read_csv("train.tsv", sep="\t")
+train_sequences = dataframe["text_a"]
+train_targets = dataframe["label"]
+
+autoBOTLibObj = autoBOTLib.GALearner(
+			  train_sequences,
+			  train_targets,
+			  time_constraint=1).evolve()
+
+# Summarize run
+autoBOTLibObj.generate_report(output_folder="report", job_id="testJobId123")
+
+# Store model
+autoBOTLib.store_autobot_model(autoBOTLibObj, "model.pickle")
+
+# Load an existing model
+autoBOTObj = autoBOTLib.load_autobot_model("model.pickle")
+
+# Predict on new data
+dataframe_new = pd.read_csv("test.tsv", sep="\t")
+test_sequences = dataframe_new["text_a"]
+
+predictions_non_prob = autoBOTObj.predict(test_sequences)
+predictions_prob = autoBOTObj.predict_proba(test_sequences)
+```
 
 If you use this work, please cite:
 
