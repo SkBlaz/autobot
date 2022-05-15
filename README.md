@@ -47,7 +47,7 @@ TLDR:
 import autoBOTLib
 import pandas as pd
 
-# Load TSV-based data ("text_a" field are texts, "label" is label)
+# Load TSV-based data ("text_a" field are texts, "label" are labels)
 dataframe = pd.read_csv("train.tsv", sep="\t")
 train_sequences = dataframe["text_a"]
 train_targets = dataframe["label"]
