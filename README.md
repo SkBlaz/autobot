@@ -42,6 +42,14 @@ but also delve deeper into autoBOT's capabilities. To explore autoBOT's function
 
 TLDR:
 
+```bash
+
+pip install autobotlib
+
+```
+
+and then,
+
 ```python
 
 import autoBOTLib
