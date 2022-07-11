@@ -61,7 +61,7 @@ train_sequences = dataframe["text_a"]
 train_targets = dataframe["label"]
 
 # Initialize the object + conduct model search (cross-val is default evaluation)
-autoBOTLibObj = autoBOTLib.GALearner(
+autoBOTLibObj = autoBOTLib.GAlearner(
 			  train_sequences,
 			  train_targets,
 			  time_constraint=1).evolve()
