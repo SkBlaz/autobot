@@ -113,7 +113,7 @@ class RelationalDocs:
 
         self.core_documents = t_tokens
         self.G = self.get_graph(nlist, len(text_list))
-        G = nx.to_scipy_sparse_matrix(self.G,
+        G = nx.to_scipy_sparse_array(self.G,
                                       nodelist=list(range(len(text_list))))
 
         if self.verbose:
