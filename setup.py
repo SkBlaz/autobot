@@ -58,8 +58,5 @@ setup(
     packages=packages,
     zip_safe=False,
     include_package_data=True,
-    install_requires=parse_requirements("requirements.txt"),  # Ensure nltk is included here
-    cmdclass={
-        'install': PostInstallCommand,
-    }
+    install_requires=parse_requirements("requirements.txt")
 )
