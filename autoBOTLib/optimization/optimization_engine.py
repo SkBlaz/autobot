@@ -1290,12 +1290,12 @@ space ..")
         current_fnum = 0
         for transformer in self.vectorizer.named_steps[
                 'union'].transformer_list:
-            features = transformer[1].steps[1][1].get_feature_names()
+            features = transformer[1].steps[1][1].get_feature_names_out()
             self.feature_subspaces.append(
                 self.train_feature_space[:, current_fnum:(current_fnum +
                                                           len(features))])
             current_fnum += len(features)
-            self.all_feature_names += features
+            self.all_feature_names += list(features)
             num_feat = len(features)
             for f in features:
                 self.global_feature_name_hash[f] = transformer[0]

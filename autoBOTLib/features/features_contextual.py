@@ -81,7 +81,7 @@ class ContextualDocs:
         """
         return self.transform(documents)
 
-    def get_feature_names(self):
+    def get_feature_names_out(self):
         """
         :param fnames: Feature names (custom api artefact)
         """

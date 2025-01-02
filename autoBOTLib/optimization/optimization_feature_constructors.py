@@ -296,7 +296,7 @@ class FeaturePrunner:
         print(input_data.shape)
         return input_data
 
-    def get_feature_names(self):
+    def get_feature_names_out(self):
 
         pass
 
@@ -327,7 +327,7 @@ def get_subset(indice_list, data_matrix, vectorizer):
     feature_subspaces = []
     for num_feat, transformer in zip(
             indice_list, vectorizer.named_steps['union'].transformer_list):
-        features = transformer[1].steps[1][1].get_feature_names()
+        features = transformer[1].steps[1][1].get_feature_names_out()
         if num_feat <= len(features):
             subset = data_matrix[:,
                                  current_fnum:(current_fnum +

@@ -121,9 +121,9 @@ class KeywordFeatures:
 
         return self.keyword_vectorizer.transform(text_vector)
 
-    def get_feature_names(self):
+    def get_feature_names_out(self):
 
-        return self.keyword_vectorizer.get_feature_names()
+        return self.keyword_vectorizer.get_feature_names_out()
 
     def fit_transform(self, text_vector, b=None):
         """
@@ -147,7 +147,7 @@ if __name__ == "__main__":
     rex = KeywordFeatures(targets=labels, max_features=512)
     rex.fit(text)
     m = rex.transform(text)
-    feature_names = rex.get_feature_names()
+    feature_names = rex.get_feature_names_out()
 
     m = m.todense()
     dfx = pd.DataFrame(m)

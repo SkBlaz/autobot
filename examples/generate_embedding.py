@@ -17,7 +17,7 @@ def run():
     all_feature_names = []
     for transformer in autoBOTLibObj.vectorizer.named_steps[
             'union'].transformer_list:
-        features = transformer[1].steps[1][1].get_feature_names()
+        features = transformer[1].steps[1][1].get_feature_names_out()
         all_feature_names += features
 
     assert input_instance_embedding.shape[1] == len(all_feature_names)

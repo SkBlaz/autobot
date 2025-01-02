@@ -237,9 +237,9 @@ class ConceptFeatures:
             text_vector = self.get_propositionalized_rep(text_vector)
         return self.concept_vectorizer.transform(text_vector)
 
-    def get_feature_names(self):
+    def get_feature_names_out(self):
 
-        return self.concept_vectorizer.get_feature_names()
+        return self.concept_vectorizer.get_feature_names_out()
 
     def fit_transform(self, text_vector, b=None):
         """
@@ -265,7 +265,7 @@ if __name__ == "__main__":
     labels = example_text['label']
     rex = ConceptFeatures(knowledge_graph="./memory")
     m = rex.fit_transform(text)
-    fnames = rex.get_feature_names()
+    fnames = rexget_feature_names_out()
 
     m = m.todense()
     dataframe = pd.DataFrame(m)

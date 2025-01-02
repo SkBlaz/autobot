@@ -181,7 +181,7 @@ class RelationalDocs:
         self.fit(documents)
         return self.transform(documents)
 
-    def get_feature_names(self):
+    def get_feature_names_out(self):
         return list(["dim_" + str(x) for x in range(self.ndim)])
 
     def get_graph(self, wspace, ltl):
