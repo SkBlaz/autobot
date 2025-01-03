@@ -12,14 +12,14 @@ torch_sparse_nn_ff_basic = {
 }
 
 scikit_default = {
-    "loss": ["hinge", "log"],
+    "loss": ["hinge", "log_loss"],
     "penalty": ["elasticnet"],
     "alpha": [0.01, 0.001, 0.0001],
     "l1_ratio": [0, 0.1, 0.5, 0.9]
 }
 
 scikit_intense = {
-    "loss": ["log"],
+    "loss": ["log_loss"],
     "penalty": ["elasticnet"],
     "power_t": [0.1, 0.2, 0.3, 0.4, 0.5],
     "class_weight": ["balanced"],
@@ -29,7 +29,7 @@ scikit_intense = {
 }
 
 scikit_intense_final = {
-    "loss": ["hinge", "log", "modified_huber"],
+    "loss": ["hinge", "log_loss", "modified_huber"],
     "penalty": ["elasticnet"],
     "power_t": np.arange(0.05, 0.5, 0.05).tolist(),
     "class_weight": ["balanced"],
@@ -39,7 +39,7 @@ scikit_intense_final = {
 }
 
 scikit_generic_final = {
-    "loss": ["hinge", "log", "modified_huber"],
+    "loss": ["hinge", "log_loss", "modified_huber"],
     "penalty": ["elasticnet"],
     "power_t": [0.1, 0.2, 0.3, 0.4, 0.5],
     "class_weight": ["balanced"],
@@ -48,9 +48,9 @@ scikit_generic_final = {
     "l1_ratio": [0, 0.2, 0.4, 0.5, 0.6, 0.8, 1]
 }
 
-scikit_mini_l1 = {"loss": ["log"], "penalty": ["l1"]}
+scikit_mini_l1 = {"loss": ["log_loss"], "penalty": ["l1"]}
 
-scikit_mini_l2 = {"loss": ["log"], "penalty": ["l2"]}
+scikit_mini_l2 = {"loss": ["log_loss"], "penalty": ["l2"]}
 
 scikit_knn = {
     "n_neighbors": list(range(1, 64, 1)),

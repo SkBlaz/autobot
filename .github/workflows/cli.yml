@@ -9,16 +9,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.9
+    - name: Set up Python 3.11
       uses: actions/setup-python@v2
       with:
-        python-version: 3.9
+        python-version: 3.11
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip;
-        pip install autobotlib;
+        pip install .;
     - name: Analysing the code with pylint
       run: |
-        python -m nltk.downloader stopwords;python -m nltk.downloader punkt;
-        python -m nltk.downloader averaged_perceptron_tagger;
         bash cli_example.sh;

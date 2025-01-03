@@ -181,7 +181,7 @@ class relationExtractor:
                 if enx in sorted_correlations
             ]
 
-    def get_feature_names(self):
+    def get_feature_names_out(self):
         """
         Return exact feature names.
         """

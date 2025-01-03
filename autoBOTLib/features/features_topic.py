@@ -94,7 +94,7 @@ class TopicDocs:
         self.fit(documents)
         return self.transform(documents)
 
-    def get_feature_names(self):
+    def get_feature_names_out(self):
         """
         Get feature names.
         """

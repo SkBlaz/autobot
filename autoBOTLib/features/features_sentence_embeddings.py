@@ -92,7 +92,7 @@ class documentEmbedder:
 
         return sparse.csr_matrix(final_matrix)
 
-    def get_feature_names(self):
+    def get_feature_names_out(self):
 
         return [str(x) + "_" + str(self.dm) for x in list(range(self.ndim))]
 
