@@ -265,7 +265,7 @@ if __name__ == "__main__":
     labels = example_text['label']
     rex = ConceptFeatures(knowledge_graph="./memory")
     m = rex.fit_transform(text)
-    fnames = rexget_feature_names_out()
+    fnames = rex.get_feature_names_out()
 
     m = m.todense()
     dataframe = pd.DataFrame(m)
