@@ -74,7 +74,7 @@ class ContextualDocs:
 
         except Exception as es:
             print(es, "error in encoding documents", sentence_embeddings)
-        breakpoint()
+        #breakpoint()
         encoded_documents = np.array(sentence_embeddings)
         self.ndim = encoded_documents.shape[1]
         return encoded_documents
