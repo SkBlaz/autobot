@@ -47,6 +47,7 @@ class ContextualDocs:
         """
         :param documents: The input set of documents.
         """
+        logging.info("[Contextual Features] Transforming new documents.")
 
         if not isinstance(documents, list):
 
