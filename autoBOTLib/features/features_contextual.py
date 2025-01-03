@@ -33,6 +33,7 @@ class ContextualDocs:
 
         try:
             self.model = SentenceTransformer(model)
+            self.output_dim = self.model.get_sentence_embedding_dimension()
 
         except Exception as es:
             logging.info(es)
@@ -46,6 +47,7 @@ class ContextualDocs:
         """
         :param documents: The input set of documents.
         """
+        logging.info("[Contextual Features] Transforming new documents.")
 
         if not isinstance(documents, list):
 
@@ -59,18 +61,21 @@ class ContextualDocs:
             # Split to sentences, embed, join
             sentence_embeddings = []
             for document in tqdm.tqdm(documents):
-                sentences = nltk.sent_tokenize(document)
+                sentences = nltk.sent_tokenize(document) 
+                
                 doc_emb = []
                 for sentence in sentences:
                     s_emb = self.model.encode(sentence, show_progress_bar=False)
                     doc_emb.append(s_emb)
+                else:
+                    doc_emb = np.zeros((self.output_dim,))
                 doc_emb = np.array(doc_emb)
-                doc_emb = np.mean(doc_emb, axis=0)
+                doc_emb = doc_emb if len(doc_emb.shape) == 1 else np.mean(doc_emb, axis=0)
                 sentence_embeddings.append(doc_emb)
 
         except Exception as es:
             print(es, "error in encoding documents", sentence_embeddings)
-
+        #breakpoint()
         encoded_documents = np.array(sentence_embeddings)
         self.ndim = encoded_documents.shape[1]
         return encoded_documents

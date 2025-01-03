@@ -71,7 +71,7 @@ class TopicDocs:
             new_documents.values.tolist()
 
         if self.verbose:
-            logging.info("Transforming new documents.")
+            logging.info("[TopicDocs] Transforming new documents.")
 
         new_features = np.zeros((len(new_documents), self.ndim))
         for enx, doc in tqdm.tqdm(enumerate(new_documents),

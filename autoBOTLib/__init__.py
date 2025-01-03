@@ -12,9 +12,9 @@ from autoBOTLib.optimization.optimization_engine import *
 from autoBOTLib.misc.misc_helpers import *
 
 import nltk
-nltk.download('stopwords')  
-nltk.download('punkt_tab')
-nltk.download('averaged_perceptron_tagger_eng')
+nltk.download('stopwords', quiet=True)  
+nltk.download('punkt_tab', quiet=True)
+nltk.download('averaged_perceptron_tagger_eng', quiet=True)
 
 import os
 import logging

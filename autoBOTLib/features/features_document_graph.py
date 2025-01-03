@@ -146,7 +146,7 @@ class RelationalDocs:
             new_documents.values.tolist()
 
         if self.verbose:
-            logging.info("Transforming new documents.")
+            logging.info("[RelationalDocs] Transforming new documents.")
 
         all_embeddings = []
 
@@ -160,7 +160,6 @@ class RelationalDocs:
             for k, v in self.core_documents.items():
                 dist = self.jaccard_index(doc_split, v)
                 similarities.append(dist)
-
             similarities = np.array(similarities)
             sorted_dists = np.argsort(similarities)[::-1]
             local_neigh_size = self.neigh_size
