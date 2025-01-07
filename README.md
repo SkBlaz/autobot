@@ -44,7 +44,7 @@ TLDR:
 
 ```bash
 
-pip install autobotlib
+pip install pip install git+https://github.com/skblaz/autobot/
 
 ```
 

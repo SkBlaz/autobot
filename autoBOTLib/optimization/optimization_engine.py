@@ -1171,8 +1171,8 @@ space ..")
                 try:
                     if self.verbose:
                         logging.info(f"Visualizing hyperparameter: {cname}")
-                    sns.lineplot(learner_dataframe[cname],
-                                 learner_dataframe.mean_test_score,
+                    sns.lineplot(x=learner_dataframe[cname],
+                                 y=learner_dataframe.mean_test_score,
                                  color="black")
                     plt.ylabel(
                         f"Cross validation score ({self.scoring_metric})")
@@ -1194,9 +1194,13 @@ space ..")
                 'Importance'].astype(float)
             importances_object = importances_object.sort_values(
                 by=['Importance'])
-            sns.barplot(importances_object.Importance,
-                        importances_object['Feature subspace'],
+            sns.barplot(x='Importance', 
+                        y='Feature subspace', 
+                        data=importances_object, 
                         palette="coolwarm")
+            #sns.barplot(importances_object.Importance,
+            #            importances_object['Feature subspace'],
+            #            palette="coolwarm")
             plt.tight_layout()
             plt.savefig(os.path.join(output_folder,
                                      f"{job_id}_barplot_global.pdf"),
@@ -1399,12 +1403,10 @@ space ..")
             max_fitness = dfx.max(axis=1)
             min_fitness = dfx.min(axis=1)
             generations = list(range(dfx.shape[0]))
-            sns.lineplot(generations,
-                         mean_fitness,
-                         color="black",
-                         label="mean")
-            sns.lineplot(generations, max_fitness, color="green", label="max")
-            sns.lineplot(generations, min_fitness, color="red", label="min")
+            sns.lineplot(x=generations, y=mean_fitness, color="black", label="mean")
+            sns.lineplot(x=generations, y=max_fitness, color="green", label="max")
+            sns.lineplot(x=generations, y=min_fitness, color="red", label="min")
+
             plt.xlabel("Generation")
             plt.ylabel(f"Fitness ({self.scoring_metric})")
             plt.legend()
