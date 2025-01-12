@@ -82,6 +82,12 @@ test_sequences = dataframe_new["text_a"]
 predictions_non_prob = autoBOTObj.predict(test_sequences)
 predictions_prob = autoBOTObj.predict_proba(test_sequences)
 ```
+Demo Colab Notebook is available here 
+
+
+You can run a demo notebook directly in Google Colab by clicking on 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1nVPUZO__SxRe5-0-wu5wWPkai9IJUGnS?usp=sharing)
+
 
 If you use this work, please cite:
 
