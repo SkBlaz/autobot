@@ -11,7 +11,6 @@ import operator
 import pandas as pd
 from collections import defaultdict
 import numpy as np
-from scipy import sparse
 import tqdm
 import multiprocessing as mp
 import scipy.sparse as sps
@@ -116,7 +115,7 @@ class relationExtractor:
                 if distance > 2:
                     context_size = int(np.log2(distance))
                     encoded_witem = w1 + "--" + str(context_size) + "--" + w2
-                    if not encoded_witem in global_distances:
+                    if encoded_witem not in global_distances:
                         global_distances[encoded_witem] = 0
                     global_distances[encoded_witem] += 1
 

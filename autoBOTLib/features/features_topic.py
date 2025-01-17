@@ -80,7 +80,7 @@ class TopicDocs:
             for k, v in self.topic_features.items():
                 denominator = len(v)
                 overlap = len(parts.intersection(v)) / denominator
-                if not overlap is None:
+                if overlap is not None:
                     new_features[enx, k] = overlap
 
         return new_features

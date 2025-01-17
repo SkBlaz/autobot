@@ -9,7 +9,6 @@ import pandas as pd
 import numpy as np
 from scipy.sparse import csgraph
 from sklearn.decomposition import TruncatedSVD
-import matplotlib.pyplot as plt
 import tqdm
 from collections import OrderedDict
 import networkx as nx
@@ -74,7 +73,7 @@ class RelationalDocs:
         # Subsample the document space to reduce graph size.
         if len(text_list) > self.doc_limit:
             if self.targets is None:
-                if not self.doc_limit is None:
+                if self.doc_limit is not None:
                     text_list = text_list[:self.doc_limit]
 
             else:
@@ -214,7 +213,6 @@ class RelationalDocs:
 
 if __name__ == "__main__":
 
-    import matplotlib.pyplot as plt
 
     from sklearn.linear_model import LogisticRegression
     from sklearn.model_selection import cross_val_score

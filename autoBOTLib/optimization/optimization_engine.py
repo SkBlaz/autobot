@@ -6,7 +6,6 @@ import os
 import time
 import itertools
 import numpy as np
-import tqdm
 from scipy import sparse
 from collections import defaultdict, Counter
 from autoBOTLib.optimization.optimization_metrics import *
@@ -377,7 +376,7 @@ space ..")
             for fx, coef in zip(subspace_features, coefficients):
                 space_of_the_feature = self.global_feature_name_hash[fx]
 
-                if not fx in fdict:
+                if fx not in fdict:
                     fdict[fx] = np.abs(coef)
 
                 else:

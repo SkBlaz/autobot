@@ -384,11 +384,9 @@ def torch_learners(final_run,
 if __name__ == "__main__":
 
     import numpy as np
-    from scipy.sparse import csr_matrix
     from numpy.random import default_rng
     from scipy.sparse import random
     from scipy import stats
-    import matplotlib.pyplot as plt
 
     rng = default_rng()
     rvs = stats.uniform().rvs
