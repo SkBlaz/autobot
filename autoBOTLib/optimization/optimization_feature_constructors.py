@@ -8,8 +8,7 @@ from sklearn import pipeline
 from sklearn.pipeline import FeatureUnion
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.model_selection import GridSearchCV
-from sklearn.svm import LinearSVC
-from sklearn.linear_model import LogisticRegression, SGDClassifier
+from sklearn.linear_model import SGDClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 from autoBOTLib.features.features_topic import *
@@ -418,7 +417,7 @@ def get_features(df_data,
         include_image_transformer = False
 
 
-    if not custom_pipeline is None and combine_with_existing_representation == False:
+    if custom_pipeline is not None and combine_with_existing_representation == False:
 
         features = custom_pipeline
 
@@ -589,7 +588,7 @@ def get_features(df_data,
 
             ## representation_type is pre-set
 
-            if not representation_type in feature_presets:
+            if representation_type not in feature_presets:
                 logging.info(
                     "Please, specify a valid preset! (see the documentation for the up-to-date namings)"
                 )
@@ -606,7 +605,7 @@ def get_features(df_data,
                 feature_transformer_vault[x] for x in representation_type
             ]
 
-    if not custom_pipeline is None and combine_with_existing_representation:
+    if custom_pipeline is not None and combine_with_existing_representation:
         features = features + custom_pipeline
 
     feature_names = [x[0] for x in features]

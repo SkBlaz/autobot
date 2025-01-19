@@ -25,16 +25,16 @@ class RakunDetector:
         self.distance_method = hyperparameters["distance_method"]
         self.hyperparameters = hyperparameters
 
-        if not "max_occurrence" in self.hyperparameters:
+        if "max_occurrence" not in self.hyperparameters:
             self.hyperparameters['max_occurrence'] = 3
 
-        if not "max_similar" in self.hyperparameters:
+        if "max_similar" not in self.hyperparameters:
             self.hyperparameters['max_similar'] = 3
 
-        if not 'stopwords' in self.hyperparameters:
+        if 'stopwords' not in self.hyperparameters:
             self.hyperparameters['stopwords'] = None
 
-        if not 'connectives' in self.hyperparameters:
+        if 'connectives' not in self.hyperparameters:
             self.hyperparameters['connectives'] = True
 
         self.verbose = verbose
@@ -89,17 +89,17 @@ class RakunDetector:
             line = line.strip()
             line = [i for i in word_tokenize(line.lower()) if i not in stop]
             self.whole_document += line
-            if not stopwords is None:
-                line = [w for w in line if not w in stopwords]
+            if stopwords is not None:
+                line = [w for w in line if w not in stopwords]
 
-            if not stemmer is None:
+            if stemmer is not None:
                 line = [stemmer.stem(w) for w in line]
 
-            if not lemmatizer is None:
+            if lemmatizer is not None:
                 new_line = []
                 for x in line:
                     lemma = lemmatizer.lemmatize(x)
-                    if not (lemma in self.inverse_lemmatizer_mapping):
+                    if lemma not in self.inverse_lemmatizer_mapping:
                         self.inverse_lemmatizer_mapping[lemma] = set()
                     self.inverse_lemmatizer_mapping[lemma].add(x)
                     new_line.append(lemma)
@@ -295,7 +295,7 @@ class RakunDetector:
                 w2 = pair[1]
                 if w1 in kw_map and w2 in kw_map:
                     score = np.mean([kw_map[w1], kw_map[w2]])
-                    if not w1 + " " + w2 in all_terms:
+                    if w1 + " " + w2 not in all_terms:
                         higher_order_1.append((w1 + " " + w2, score))
                         all_terms.add(w1 + " " + w2)
 
@@ -309,7 +309,7 @@ class RakunDetector:
                         ]
                         term = edge[0] + " " + pair[0] + " " + pair[1]
                         score = np.mean(trip_score)
-                        if not term in all_terms:
+                        if term not in all_terms:
                             higher_order_2.append((term, score))
                             all_terms.add(term)
 
@@ -320,7 +320,7 @@ class RakunDetector:
                         ]
                         term = pair[0] + " " + pair[1] + " " + edge[1]
                         score = np.mean(trip_score)
-                        if not term in all_terms:
+                        if term not in all_terms:
                             higher_order_2.append((term, score))
                             all_terms.add(term)
         else:
