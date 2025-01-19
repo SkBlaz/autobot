@@ -44,7 +44,7 @@ TLDR:
 
 ```bash
 
-pip install pip install git+https://github.com/skblaz/autobot/
+pip install git+https://github.com/skblaz/autobot/
 
 ```
 
