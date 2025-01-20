@@ -19,6 +19,7 @@ from autoBOTLib.features.features_sentence_embeddings import *
 from autoBOTLib.features.features_token_relations import *
 from autoBOTLib.features.features_contextual import *
 from autoBOTLib.features.features_images import *
+from autoBOTLib.features.features_word_graph import *
 
 import string
 import re
@@ -61,7 +62,8 @@ feature_presets['neurosymbolic'] = [
     'concept_features', 'document_graph', 'relational_features_token',
     'topic_features', 'keyword_features', 'relational_features_char',
     'char_features', 'word_features', 'relational_features_bigram',
-    'contextual_features'
+    'contextual_features',
+    'word_graph'
 ]
 
 # This one is ~language agnostic
@@ -69,7 +71,8 @@ feature_presets['neurosymbolic-lite'] = [
     'document_graph', 'neural_features_dbow', 'neural_features_dm',
     'topic_features', 'keyword_features', 'relational_features_char',
     'relational_features_token', 'char_features', 'word_features',
-    'relational_features_bigram', 'concept_features'
+    'relational_features_bigram', 'concept_features',
+    'word_graph'
 ]
 
 # MLJ paper versions
@@ -86,7 +89,8 @@ feature_presets['neural'] = [
 feature_presets['symbolic'] = [
     'concept_features', 'relational_features_token', 'topic_features',
     'keyword_features', 'relational_features_char', 'char_features',
-    'word_features', 'pos_features', 'relational_features_bigram'
+    'word_features', 'pos_features', 'relational_features_bigram',
+    'word_graph'
 ]
 
 if not contextual_feature_library:
@@ -466,6 +470,10 @@ def get_features(df_data,
 
         topic_features = TopicDocs(ndim=embedding_dim)
 
+        word_graph = WordGraph(fast=True, window_size=2, 
+                                           sample_ratio=0.3, 
+                                           repeats=5)
+        
         concept_features_transformer = ConceptFeatures(
             max_features=max_num_feat, knowledge_graph=memory_location)
 
@@ -570,7 +578,13 @@ def get_features(df_data,
                                          contextual_features),
                                         ('normalize',
                                          Normalizer(norm=normalization_norm))
-                                    ]))
+                                    ])),
+            "word_graph": ('word_graph',
+             pipeline.Pipeline([
+                 ('s10', text_col(key='no_stopwords')),
+                 ('word_graph', word_graph),
+                 ('normalize', Normalizer(norm=normalization_norm))
+             ])),
         }
 
         if include_image_transformer:
