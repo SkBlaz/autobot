@@ -180,11 +180,6 @@ class ComperhensionFeatures:
         """
         Class initialization method.
 
-        :param ndim: Number of latent dimensions
-        :param targets: The target vector
-        :param random_seed: The random seed used
-        :param ed_cutoff: Cutoff for fuzzy string matching when comparing documents
-        :param doc_limit: The max number of documents to be considered.
         :param verbose: Whether to have the printouts
         
         """
