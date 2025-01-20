@@ -1,16 +1,16 @@
-import logging
-
-logging.basicConfig(format='%(asctime)s - %(message)s',
-                    datefmt='%d-%b-%y %H:%M:%S')
-logging.getLogger().setLevel(logging.INFO)
-
+import math
+import re
 import pandas as pd
 import numpy as np
 import tqdm
 import nltk 
 from nltk import sent_tokenize, regexp_tokenize
-import math
-import re
+
+import logging
+
+logging.basicConfig(format='%(asctime)s - %(message)s',
+                    datefmt='%d-%b-%y %H:%M:%S')
+logging.getLogger().setLevel(logging.INFO)
 
 def sylco(word):
     word = word.lower()
@@ -26,12 +26,12 @@ def sylco(word):
     # 2) if doesn't end with "ted" or "tes" or "ses" or "ied" or "ies", discard "es" and "ed" at the end.
     # if it has only 1 vowel or 1 set of consecutive vowels, discard. (like "speed", "fled" etc.)
     # 4) check if consecutive vowels exists, triplets or pairs, count them as one.
-    doubleAndtripple = len(re.findall(r'[eaoui][eaoui]', word))
+    double_and_triple = len(re.findall(r'[eaoui][eaoui]', word))
     tripple = len(re.findall(r'[eaoui][eaoui][eaoui]', word))
-    disc += doubleAndtripple + tripple
+    disc += double_and_triple + tripple
 
     # 5) count remaining vowels in word.
-    numVowels = len(re.findall(r'[eaoui]', word))
+    num_vowels = len(re.findall(r'[eaoui]', word))
 
     # 9) if starts with "tri-" or "bi-" and is followed by a vowel, add one.
     if word[:3] == "tri" and len(word) > 3 and word[3] in "aeoui":
@@ -45,105 +45,101 @@ def sylco(word):
     # (These rules would be added if needed.)
 
     # calculate the output
-    return numVowels - disc + syls
+    return num_vowels - disc + syls
 
 
 def gfi(text):
     # Gunning Fog Index
     word_tokens = regexp_tokenize(text, r'\w+')
-    lengthW = len(word_tokens)
+    length_w = len(word_tokens)
     sents = sent_tokenize(text)
-    lengthS = len(sents)
+    length_s = len(sents)
 
-    # Check for division by zero (if there are no sentences)
-    if lengthS == 0 or lengthW == 0:
+    if length_s == 0 or length_w == 0:
         return 0
 
     long_words = [w for w in word_tokens if len(w) > 7]
-    pl = len(long_words) / lengthW * 100  # percentage long words
-    GFI = 0.4 * ((lengthW / lengthS) + pl)
-    return GFI
+    pl = len(long_words) / length_w * 100  # percentage long words
+    gfi = 0.4 * ((length_w / length_s) + pl)
+    return gfi
 
 
 def fre(text):
     # Flesch Reading Ease
     word_tokens = regexp_tokenize(text, r'\w+')
-    lengthW = len(word_tokens)
+    length_w = len(word_tokens)
     sents = sent_tokenize(text)
-    lengthS = len(sents)
+    length_s = len(sents)
 
-    # Avoid division by zero if no sentences or no words
-    if lengthS == 0 or lengthW == 0:
+    if length_s == 0 or length_w == 0:
         return 0
 
     ts = 0  # total syllables
     for word in word_tokens:
         ts += sylco(word)
 
-    FRE = 206.835 - 1.015 * (lengthW / lengthS) - 84.6 * (ts / lengthW)
-    return FRE
+    fre = 206.835 - 1.015 * (length_w / length_s) - 84.6 * (ts / length_w)
+    return fre
 
 
 def fkgl(text):
     # Flesch–Kincaid Grade Level
     word_tokens = regexp_tokenize(text, r'\w+')
-    lengthW = len(word_tokens)
+    length_w = len(word_tokens)
     sents = sent_tokenize(text)
-    lengthS = len(sents)
+    length_s = len(sents)
 
-    # Avoid division by zero if no sentences or no words
-    if lengthS == 0 or lengthW == 0:
+    if length_s == 0 or length_w == 0:
         return 0
 
     ts = 0  # total syllables
     for word in word_tokens:
         ts += sylco(word)
 
-    FKGL = 0.39 * (lengthW / lengthS) + 11.8 * (ts / lengthW) - 15.59
-    return FKGL
+    fkgl = 0.39 * (length_w / length_s) + 11.8 * (ts / length_w) - 15.59
+    return fkgl
 
 
 def dcrf(text):
     # Dale–Chall Readability Formula
     word_tokens = regexp_tokenize(text, r'\w+')
-    lengthW = len(word_tokens)
+    length_w = len(word_tokens)
     sents = sent_tokenize(text)
-    lengthS = len(sents)
+    length_s = len(sents)
 
-    # Avoid division by zero
-    if lengthS == 0 or lengthW == 0:
+    if length_s == 0 or length_w == 0:
         return 0
 
     long_words = [w for w in word_tokens if len(w) > 7]
-    pl = len(long_words) / lengthW * 100  # percentage of long words
+    pl = len(long_words) / length_w * 100  # percentage of long words
 
-    DCRF = 0.1579 * pl + 0.0496 * (lengthW / lengthS)
-    return DCRF
+    dcrf = 0.1579 * pl + 0.0496 * (length_w / length_s)
+    return dcrf
 
 
 def ari(text):
     # Automated Readability Index
     word_tokens = regexp_tokenize(text, r'\w+')
-    lengthW = len(word_tokens)
+    length_w = len(word_tokens)
     sents = sent_tokenize(text)
-    lengthS = len(sents)
-    lengthCH = len(text)
+    length_s = len(sents)
+    length_ch = len(text)
 
     # Avoid division by zero
-    if lengthW == 0 or lengthS == 0:
+    if length_w == 0 or length_s == 0:
         return 0
 
-    ARI = 4.71 * (lengthCH / lengthW) + 0.5 * (lengthW / lengthS) - 21.43
-    return ARI
+    ari = 4.71 * (length_ch / length_w) + 0.5 * (length_w / length_s) - 21.43
+    return ari
 
 
 def smog(text):
     # SMOG Index
     word_tokens = regexp_tokenize(text, r'\w+')
     sents = sent_tokenize(text)
-    lengthS = len(sents)
+    length_s = len(sents)
 
-    if lengthS == 0:
+    if length_s == 0:
         return 0
 
     tps = 0  # total words with more than 2 syllables
@@ -151,7 +147,7 @@ def smog(text):
         if sylco(word) > 2:
             tps += 1
 
-    SMOG = 1.043 * math.sqrt(tps * (30 / lengthS)) + 3.1291
+    SMOG = 1.043 * math.sqrt(tps * (30 / length_s)) + 3.1291
     return SMOG
 
 
@@ -209,7 +205,7 @@ class ComperhensionFeatures:
         
         """
 
-        if not type(new_documents) == list:
+        if type(new_documents) is not list:
             new_documents.values.tolist()
 
         if self.verbose:
