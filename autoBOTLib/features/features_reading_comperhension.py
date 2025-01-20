@@ -1,5 +1,4 @@
 import logging
-from collections import defaultdict
 
 logging.basicConfig(format='%(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
@@ -9,7 +8,7 @@ import pandas as pd
 import numpy as np
 import tqdm
 import nltk 
-from nltk import sent_tokenize
+from nltk import sent_tokenize, regexp_tokenize
 import math
 import re
 
@@ -51,7 +50,7 @@ def sylco(word):
 
 def gfi(text):
     # Gunning Fog Index
-    word_tokens = nltk.tokenize.regexp_tokenize(text, r'\w+')
+    word_tokens = regexp_tokenize(text, r'\w+')
     lengthW = len(word_tokens)
     sents = sent_tokenize(text)
     lengthS = len(sents)
@@ -68,7 +67,7 @@ def gfi(text):
 
 def fre(text):
     # Flesch Reading Ease
-    word_tokens = nltk.tokenize.regexp_tokenize(text, r'\w+')
+    word_tokens = regexp_tokenize(text, r'\w+')
     lengthW = len(word_tokens)
     sents = sent_tokenize(text)
     lengthS = len(sents)
@@ -87,7 +86,7 @@ def fre(text):
 
 def fkgl(text):
     # Flesch–Kincaid Grade Level
-    word_tokens = nltk.tokenize.regexp_tokenize(text, r'\w+')
+    word_tokens = regexp_tokenize(text, r'\w+')
     lengthW = len(word_tokens)
     sents = sent_tokenize(text)
     lengthS = len(sents)
@@ -106,7 +105,7 @@ def fkgl(text):
 
 def dcrf(text):
     # Dale–Chall Readability Formula
-    word_tokens = nltk.tokenize.regexp_tokenize(text, r'\w+')
+    word_tokens = regexp_tokenize(text, r'\w+')
     lengthW = len(word_tokens)
     sents = sent_tokenize(text)
     lengthS = len(sents)
@@ -124,7 +123,7 @@ def dcrf(text):
 
 def ari(text):
     # Automated Readability Index
-    word_tokens = nltk.tokenize.regexp_tokenize(text, r'\w+')
+    word_tokens = regexp_tokenize(text, r'\w+')
     lengthW = len(word_tokens)
     sents = sent_tokenize(text)
     lengthS = len(sents)
@@ -140,7 +139,7 @@ def ari(text):
 
 def smog(text):
     # SMOG Index
-    word_tokens = nltk.tokenize.regexp_tokenize(text, r'\w+')
+    word_tokens = regexp_tokenize(text, r'\w+')
     sents = sent_tokenize(text)
     lengthS = len(sents)
 
