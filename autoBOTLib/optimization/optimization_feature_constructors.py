@@ -19,6 +19,7 @@ from autoBOTLib.features.features_sentence_embeddings import *
 from autoBOTLib.features.features_token_relations import *
 from autoBOTLib.features.features_contextual import *
 from autoBOTLib.features.features_images import *
+from autoBOTLib.features.features_reading_comperhension import *
 
 import string
 import re
@@ -61,7 +62,7 @@ feature_presets['neurosymbolic'] = [
     'concept_features', 'document_graph', 'relational_features_token',
     'topic_features', 'keyword_features', 'relational_features_char',
     'char_features', 'word_features', 'relational_features_bigram',
-    'contextual_features'
+    'contextual_features', 'reading_features'
 ]
 
 # This one is ~language agnostic
@@ -69,14 +70,14 @@ feature_presets['neurosymbolic-lite'] = [
     'document_graph', 'neural_features_dbow', 'neural_features_dm',
     'topic_features', 'keyword_features', 'relational_features_char',
     'relational_features_token', 'char_features', 'word_features',
-    'relational_features_bigram', 'concept_features'
+    'relational_features_bigram', 'concept_features', 'reading_features'
 ]
 
 # MLJ paper versions
 feature_presets['neurosymbolic-default'] = [
     'neural_features_dbow', 'neural_features_dm', 'keyword_features',
     'relational_features_char', 'char_features', 'word_features',
-    "pos_features", 'concept_features'
+    "pos_features", 'concept_features', 'reading_features'
 ]
 
 feature_presets['neural'] = [
@@ -86,7 +87,7 @@ feature_presets['neural'] = [
 feature_presets['symbolic'] = [
     'concept_features', 'relational_features_token', 'topic_features',
     'keyword_features', 'relational_features_char', 'char_features',
-    'word_features', 'pos_features', 'relational_features_bigram'
+    'word_features', 'pos_features', 'relational_features_bigram', 'reading_features'
 ]
 
 if not contextual_feature_library:
@@ -464,6 +465,8 @@ def get_features(df_data,
         keyword_features = KeywordFeatures(max_features=max_num_feat,
                                            targets=targets)
 
+        reading_features = ComperhensionFeatures()
+
         topic_features = TopicDocs(ndim=embedding_dim)
 
         concept_features_transformer = ConceptFeatures(
@@ -570,7 +573,15 @@ def get_features(df_data,
                                          contextual_features),
                                         ('normalize',
                                          Normalizer(norm=normalization_norm))
-                                    ]))
+                                    ])),
+            "reading_features": ("reading_features", pipeline.Pipeline([
+                                     ('s7', text_col(key='text')),
+                                     ('reading_features',
+                                      reading_features),
+                                     ('normalize',
+                                      Normalizer(norm=normalization_norm))
+                                 ]
+                                 ))
         }
 
         if include_image_transformer:
