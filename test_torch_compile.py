@@ -90,6 +90,10 @@ def test_torch_compile_functionality():
             
             print(f"    Predictions shape - Compiled: {pred_compiled.shape}, Uncompiled: {pred_uncompiled.shape}")
             print(f"    Probabilities shape - Compiled: {proba_compiled.shape}, Uncompiled: {proba_uncompiled.shape}")
+            
+            # Verify both models produce consistent outputs
+            assert pred_compiled.shape == pred_uncompiled.shape, "Prediction shapes should match"
+            assert proba_compiled.shape == proba_uncompiled.shape, "Probability shapes should match"
 
 
 def test_torch_compile_edge_cases():
@@ -115,6 +119,10 @@ def test_torch_compile_edge_cases():
     proba_single = model_tiny.predict_proba(X_tiny[:1])
     print(f"Single prediction shape: {pred_single.shape}")
     print(f"Single probability shape: {proba_single.shape}")
+    
+    # Verify predictions work (shapes are consistent with existing behavior)
+    assert pred_single.shape == (1,), f"Expected single prediction shape (1,), got {pred_single.shape}"
+    assert proba_single.shape == (1,), f"Expected single probability shape (1,), got {proba_single.shape}"
 
 
 def test_compatibility_across_pytorch_versions():
