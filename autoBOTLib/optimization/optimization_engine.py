@@ -1280,6 +1280,12 @@ space ..")
             combine_with_existing_representation=self.
             combine_with_existing_representation)
 
+        # Check if feature construction was successful
+        if self.train_feature_space is None or self.vectorizer is None:
+            raise RuntimeError("Feature construction failed. This could be due to network connectivity issues "
+                             "when downloading required models, or insufficient data for feature extraction. "
+                             "Please check your internet connection and ensure the input data is valid.")
+
         self.all_feature_names = []
         if self.verbose:
             logging.info("Initialized training matrix of dimension {}".format(

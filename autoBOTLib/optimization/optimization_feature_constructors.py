@@ -374,6 +374,7 @@ def get_simple_features(df_data, max_num_feat=10000):
     except Exception as es:
         print(es, "Feature construction error.")
         tokenizer = None
+        data_matrix = None
 
     return tokenizer, feature_names, data_matrix
 
@@ -632,5 +633,6 @@ def get_features(df_data,
     except Exception as es:
         print(es, "Feature construction error.")
         tokenizer = None
+        data_matrix = None
 
     return tokenizer, feature_names, data_matrix
