@@ -172,6 +172,7 @@ class SFNN:
                  num_hidden=2,
                  device="cpu",
                  verbose=0,
+                 torch_compile=True,
                  *args,
                  **kwargs):
         self.device = device
@@ -184,6 +185,7 @@ class SFNN:
         self.hidden_layer_size = hidden_layer_size
         self.num_hidden = num_hidden
         self.learning_rate = learning_rate
+        self.torch_compile = torch_compile
         self.model = None
         self.optimizer = None
         self.num_params = None
@@ -222,6 +224,19 @@ class SFNN:
                                  num_hidden=self.num_hidden,
                                  dropout=self.dropout,
                                  device=self.device).to(self.device)
+        
+        # Apply torch.compile for faster training if available and enabled
+        if self.torch_compile and hasattr(torch, 'compile'):
+            try:
+                self.model = torch.compile(self.model)
+                if self.verbose:
+                    logging.info("Model compiled with torch.compile for faster training")
+            except Exception as e:
+                if self.verbose:
+                    logging.warning(f"torch.compile failed, continuing without compilation: {e}")
+        elif self.torch_compile and self.verbose:
+            logging.warning("torch.compile requested but not available (requires PyTorch >= 2.0)")
+        
         self.optimizer = torch.optim.Adam(self.model.parameters(),
                                           lr=self.learning_rate)
         self.num_params = sum(p.numel() for p in self.model.parameters())
@@ -286,7 +301,11 @@ class SFNN:
         predictions = []
         self.model.eval()
         with torch.no_grad():
-            for features, _ in test_dataset:
+            for data in test_dataset:
+                if isinstance(data, tuple):
+                    features = data[0]
+                else:
+                    features = data
                 features = features.float().to(self.device)
                 representation = self.model.forward(features)
                 pred = representation.detach().cpu().numpy()[0]
