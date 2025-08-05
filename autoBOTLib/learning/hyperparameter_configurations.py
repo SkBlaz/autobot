@@ -9,7 +9,7 @@ torch_sparse_nn_ff_basic = {
     "num_hidden": [1, 2, 4],
     "dropout": [0.01, 0.1, 0.3, 0.4],
     "device": ["cpu"],
-    "torch_compile": [True]
+    "torch_compile": [True, False]
 }
 
 scikit_default = {

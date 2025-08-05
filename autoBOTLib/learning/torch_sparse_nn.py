@@ -225,17 +225,18 @@ class SFNN:
                                  dropout=self.dropout,
                                  device=self.device).to(self.device)
         
-        # Apply torch.compile for faster training if available and enabled
-        if self.torch_compile and hasattr(torch, 'compile'):
-            try:
-                self.model = torch.compile(self.model)
-                if self.verbose:
-                    logging.info("Model compiled with torch.compile for faster training")
-            except Exception as e:
-                if self.verbose:
-                    logging.warning(f"torch.compile failed, continuing without compilation: {e}")
-        elif self.torch_compile and self.verbose:
-            logging.warning("torch.compile requested but not available (requires PyTorch >= 2.0)")
+        # Apply torch.compile for faster training only if explicitly enabled and available
+        if self.torch_compile:
+            if hasattr(torch, 'compile'):
+                try:
+                    self.model = torch.compile(self.model)
+                    if self.verbose:
+                        logging.info("Model compiled with torch.compile for faster training")
+                except Exception as e:
+                    if self.verbose:
+                        logging.warning(f"torch.compile failed, continuing without compilation: {e}")
+            elif self.verbose:
+                logging.warning("torch.compile requested but not available (requires PyTorch >= 2.0)")
         
         self.optimizer = torch.optim.Adam(self.model.parameters(),
                                           lr=self.learning_rate)
@@ -303,11 +304,11 @@ class SFNN:
         with torch.no_grad():
             for data in test_dataset:
                 if isinstance(data, tuple):
-                    features = data[0]
+                    batch_features = data[0]
                 else:
-                    features = data
-                features = features.float().to(self.device)
-                representation = self.model.forward(features)
+                    batch_features = data
+                batch_features = batch_features.float().to(self.device)
+                representation = self.model.forward(batch_features)
                 pred = representation.detach().cpu().numpy()[0]
                 predictions.append(pred)
         a = [a_[1] for a_ in predictions]
