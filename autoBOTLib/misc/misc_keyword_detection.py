@@ -80,10 +80,8 @@ class RakunDetector:
 
         def process_line(line):
 
-            nonlocal G
             nonlocal ctx
             nonlocal reps
-            nonlocal dictionary_with_counts_of_pairs
 
             stop = list(string.punctuation)
             line = line.strip()

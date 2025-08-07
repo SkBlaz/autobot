@@ -1,0 +1,50 @@
+[project]
+name = "autoBOTLib"
+description = "AutoBOT: Explainable AutoML for texts"
+authors = [
+    {name = "Blaž Škrlj", email = "blaz.skrlj@ijs.si"},
+]
+license = {text = "BSD-3-Clause-Clear"}
+readme = "README.md"
+requires-python = ">=3.8"
+dynamic = ["version"]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.flake8]
+max-line-length = 127
+max-complexity = 15
+ignore = [
+    "E402",  # module level import not at top of file (temporarily ignore due to NLTK downloads)
+    "F401",  # imported but unused (temporarily ignore due to wildcard imports)
+    "F403",  # star import used (temporarily ignore while maintaining compatibility)
+    "W503",  # line break before binary operator
+]
+exclude = [
+    ".git",
+    "__pycache__",
+    ".pytest_cache",
+    "build",
+    "dist",
+    "*.egg-info",
+    ".tox",
+    ".venv",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-v",
+    "--tb=short",
+]
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 127
+known_first_party = ["autoBOTLib"]
