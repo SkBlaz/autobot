@@ -7,7 +7,7 @@ authors = [
 license = {text = "BSD-3-Clause-Clear"}
 readme = "README.md"
 requires-python = ">=3.8"
-dynamic = ["version"]
+dynamic = ["version", "dependencies", "classifiers", "scripts"]
 
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]

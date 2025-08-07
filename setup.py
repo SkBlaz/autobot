@@ -1,8 +1,5 @@
 from pathlib import Path
 from setuptools import setup, find_packages
-from setuptools.command.install import install
-import subprocess
-import sys
 
 
 def parse_requirements(file):
@@ -19,27 +16,6 @@ def parse_requirements(file):
     except FileNotFoundError:
         print(f"Warning: {file} not found. Using default requirements.")
     return required_packages
-
-
-class PostInstallCommand(install):
-    """Post-installation for downloading NLTK resources."""
-    def run(self):
-        install.run(self)
-
-        try:
-            import nltk
-        except ImportError:
-            print("NLTK is not installed. Installing NLTK...")
-            subprocess.check_call([sys.executable, "-m", "pip", "install", "nltk"])
-
-        try:
-            print("Downloading NLTK resources...")
-            for lib in ['stopwords', 'punkt_tab', 'averaged_perceptron_tagger_eng']:
-                subprocess.check_call([sys.executable, "-m", "nltk.downloader", lib])
-                print(f"NLTK {lib} downloaded successfully.")
-        except subprocess.CalledProcessError as e:
-            print(f"Failed to download NLTK resources: {e}")
-            sys.exit(1)  # Exit with error code
 
 long_description = """
 autoBOT is an AutoML system for text classification with an emphasis on explainability.
@@ -66,9 +42,6 @@ setup(
     zip_safe=False,
     include_package_data=True,
     install_requires=parse_requirements("requirements.txt"),
-    cmdclass={
-        'install': PostInstallCommand,
-    },
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
