@@ -6,11 +6,12 @@ from sklearn.linear_model import SGDClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import pipeline  ## A necessary import
 import pytest
+import os
 
 
 def test_minimal_mlc():
     ## Load example data frame
-    dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t")
+    dataframe = pd.read_csv("data/insults/train.tsv", sep="\t")
     train_sequences = dataframe['text_a']
     train_targets_c1 = dataframe['label'].values.tolist()
     train_targets_c2 = [
@@ -32,7 +33,7 @@ def test_minimal_mlc():
             strategy="direct-learning"
         )  ## strategy = "direct-learning" trains a single learner.
 
-    dataframe2 = pd.read_csv("../data/insults/test.tsv", sep="\t")
+    dataframe2 = pd.read_csv("data/insults/test.tsv", sep="\t")
     test_sequences = dataframe2['text_a']
     predictions = autoBOTLibObj.predict(test_sequences)
     prob_predictions = autoBOTLibObj.predict_proba(test_sequences)
@@ -45,7 +46,7 @@ def test_minimal_mlc():
 
 def test_minimal():
     ## Load example data frame
-    dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t").iloc[:500]
+    dataframe = pd.read_csv("data/insults/train.tsv", sep="\t").iloc[:500]
     train_sequences = dataframe['text_a']
     train_targets = dataframe['label']
 
@@ -63,7 +64,7 @@ def test_minimal():
             strategy="evolution"
         )  ## strategy = "direct-learning" trains a single learner.
 
-    dataframe2 = pd.read_csv("../data/insults/test.tsv", sep="\t")
+    dataframe2 = pd.read_csv("data/insults/test.tsv", sep="\t")
     test_sequences = dataframe2['text_a']
     predictions = autoBOTLibObj.predict(test_sequences)
     prob_predictions = autoBOTLibObj.predict_proba(test_sequences)
@@ -82,7 +83,7 @@ def test_minimal():
 def test_initializations(fold_number, representation_type, sparsity,
                          time_constraint):
 
-    dataframe = pd.read_csv("../data/insults/train.tsv", sep="\t")
+    dataframe = pd.read_csv("data/insults/train.tsv", sep="\t")
     train_sequences = dataframe['text_a']
     train_targets = dataframe['label']
     autoBOTLibObj = autoBOTLib.GAlearner(
