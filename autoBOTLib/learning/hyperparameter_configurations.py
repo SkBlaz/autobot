@@ -8,7 +8,8 @@ torch_sparse_nn_ff_basic = {
     "hidden_layer_size": [64, 128, 256],
     "num_hidden": [1, 2, 4],
     "dropout": [0.01, 0.1, 0.3, 0.4],
-    "device": ["cpu"]
+    "device": ["cpu"],
+    "compile_model": [False, True]
 }
 
 scikit_default = {

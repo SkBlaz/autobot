@@ -172,6 +172,7 @@ class SFNN:
                  num_hidden=2,
                  device="cpu",
                  verbose=0,
+                 compile_model=False,
                  *args,
                  **kwargs):
         self.device = device
@@ -184,6 +185,7 @@ class SFNN:
         self.hidden_layer_size = hidden_layer_size
         self.num_hidden = num_hidden
         self.learning_rate = learning_rate
+        self.compile_model = compile_model
         self.model = None
         self.optimizer = None
         self.num_params = None
@@ -222,6 +224,12 @@ class SFNN:
                                  num_hidden=self.num_hidden,
                                  dropout=self.dropout,
                                  device=self.device).to(self.device)
+        
+        # Apply torch.compile if enabled
+        if self.compile_model:
+            if self.verbose:
+                logging.info("Compiling model with torch.compile")
+            self.model = torch.compile(self.model)
         self.optimizer = torch.optim.Adam(self.model.parameters(),
                                           lr=self.learning_rate)
         self.num_params = sum(p.numel() for p in self.model.parameters())
@@ -286,7 +294,7 @@ class SFNN:
         predictions = []
         self.model.eval()
         with torch.no_grad():
-            for features, _ in test_dataset:
+            for features in test_dataset:
                 features = features.float().to(self.device)
                 representation = self.model.forward(features)
                 pred = representation.detach().cpu().numpy()[0]
