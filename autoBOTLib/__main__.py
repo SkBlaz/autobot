@@ -45,8 +45,7 @@ def main():
         "--framework",
         default="scikit",
         type=str,
-        help=
-        "The computational ML back-end to use. Currently supports scikit (Default) and pyTorch (neural nets for sparse inputs)"
+        help="The computational ML back-end to use. Currently supports scikit (Default) and pyTorch (neural nets for sparse inputs)"
     )
     parser.add_argument("--memory_storage", default="memory", type=str)
     parser.add_argument("--sparsity", default=0.05, type=float)
