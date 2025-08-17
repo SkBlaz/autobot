@@ -1,4 +1,5 @@
 # Some Torch-based FFNNs - Skrlj 2021
+# torch.compile support added in 2025 for PyTorch 2.8+
 
 import torch
 import torch.nn as nn
@@ -162,6 +163,33 @@ class GenericFFNN(nn.Module):
 
 
 class SFNN:
+    """
+    Sparse Feedforward Neural Network for binary classification.
+    
+    Parameters:
+    -----------
+    batch_size : int, default=32
+        Batch size for training
+    num_epochs : int, default=32
+        Number of training epochs
+    learning_rate : float, default=0.001
+        Learning rate for optimizer
+    stopping_crit : int, default=10
+        Early stopping criterion (number of epochs without improvement)
+    hidden_layer_size : int, default=64
+        Size of hidden layers
+    dropout : float, default=0.2
+        Dropout probability
+    num_hidden : int, default=2
+        Number of hidden layers
+    device : str, default="cpu"
+        Device to run on ("cpu" or "cuda")
+    verbose : int, default=0
+        Verbosity level
+    compile_model : bool, default=False
+        Whether to compile the model with torch.compile for optimization.
+        Requires PyTorch 2.0+ and can provide significant speedup.
+    """
     def __init__(self,
                  batch_size=32,
                  num_epochs=32,
@@ -172,6 +200,7 @@ class SFNN:
                  num_hidden=2,
                  device="cpu",
                  verbose=0,
+                 compile_model=False,
                  *args,
                  **kwargs):
         self.device = device
@@ -184,6 +213,7 @@ class SFNN:
         self.hidden_layer_size = hidden_layer_size
         self.num_hidden = num_hidden
         self.learning_rate = learning_rate
+        self.compile_model = compile_model
         self.model = None
         self.optimizer = None
         self.num_params = None
@@ -222,6 +252,12 @@ class SFNN:
                                  num_hidden=self.num_hidden,
                                  dropout=self.dropout,
                                  device=self.device).to(self.device)
+        
+        # Apply torch.compile if enabled
+        if self.compile_model:
+            if self.verbose:
+                logging.info("Compiling model with torch.compile")
+            self.model = torch.compile(self.model)
         self.optimizer = torch.optim.Adam(self.model.parameters(),
                                           lr=self.learning_rate)
         self.num_params = sum(p.numel() for p in self.model.parameters())
@@ -286,7 +322,7 @@ class SFNN:
         predictions = []
         self.model.eval()
         with torch.no_grad():
-            for features, _ in test_dataset:
+            for features in test_dataset:
                 features = features.float().to(self.device)
                 representation = self.model.forward(features)
                 pred = representation.detach().cpu().numpy()[0]
