@@ -1,4 +1,5 @@
 # Some Torch-based FFNNs - Skrlj 2021
+# torch.compile support added in 2025 for PyTorch 2.8+
 
 import torch
 import torch.nn as nn
@@ -162,6 +163,33 @@ class GenericFFNN(nn.Module):
 
 
 class SFNN:
+    """
+    Sparse Feedforward Neural Network for binary classification.
+    
+    Parameters:
+    -----------
+    batch_size : int, default=32
+        Batch size for training
+    num_epochs : int, default=32
+        Number of training epochs
+    learning_rate : float, default=0.001
+        Learning rate for optimizer
+    stopping_crit : int, default=10
+        Early stopping criterion (number of epochs without improvement)
+    hidden_layer_size : int, default=64
+        Size of hidden layers
+    dropout : float, default=0.2
+        Dropout probability
+    num_hidden : int, default=2
+        Number of hidden layers
+    device : str, default="cpu"
+        Device to run on ("cpu" or "cuda")
+    verbose : int, default=0
+        Verbosity level
+    compile_model : bool, default=False
+        Whether to compile the model with torch.compile for optimization.
+        Requires PyTorch 2.0+ and can provide significant speedup.
+    """
     def __init__(self,
                  batch_size=32,
                  num_epochs=32,
