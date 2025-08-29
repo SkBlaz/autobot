@@ -49,7 +49,14 @@ class TopicDocs:
         docspace = self.clx.fit_transform(text_list).T
         fnames = [(x, y) for x, y in self.clx.vocabulary_.items()]
         fnames = [x[0] for x in sorted(fnames, key=lambda x: x[1])]
-        self.clustering_algo = MiniBatchKMeans(n_clusters=self.ndim)
+        
+        # Ensure we don't have more clusters than samples
+        n_samples = docspace.shape[0]
+        n_clusters = min(self.ndim, n_samples - 1) if n_samples > 1 else 1
+        if n_clusters < 1:
+            n_clusters = 1
+            
+        self.clustering_algo = MiniBatchKMeans(n_clusters=n_clusters)
         clusters = self.clustering_algo.fit(docspace)
         assert len(clusters.labels_) == docspace.shape[0]
         cluster_assignments = clusters.labels_
