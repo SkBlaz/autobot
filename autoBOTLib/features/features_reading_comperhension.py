@@ -216,7 +216,8 @@ class ComperhensionFeatures:
                                   total=len(new_documents)):
             for mid, method in enumerate(self.features):
                 value = self.features[method](doc)
-                new_features[mid] = value
+                if mid < new_features.shape[1]:  # Check column bounds
+                    new_features[enx, mid] = value
 
         return new_features
 

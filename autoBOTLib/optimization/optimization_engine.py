@@ -895,7 +895,12 @@ space ..")
         zero_index = np.where(csum == 0)[0]
 
         for j in zero_index:
-            prob_df.iloc[j, self.majority_class] = 1
+            # Ensure majority_class index is within bounds
+            if self.majority_class < prob_df.shape[1]:
+                prob_df.iloc[j, self.majority_class] = 1
+            else:
+                # Use the first column if majority_class is out of bounds
+                prob_df.iloc[j, 0] = 1
 
         prob_df = prob_df.fillna(0)
         assert len(np.where(prob_df.sum(axis=1) < 1)[0]) == 0
