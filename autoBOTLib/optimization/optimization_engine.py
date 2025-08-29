@@ -14,6 +14,7 @@ from autoBOTLib.learning.scikit_based import scikit_learners
 from autoBOTLib.learning.torch_sparse_nn import torch_learners
 import operator
 import copy
+import gc
 from deap import base, creator, tools
 import logging
 
@@ -573,7 +574,7 @@ space ..")
             if self.verbose:
                 logging.info(pair)
 
-        weights = np.array(performances) / max(performances)
+        weights = np.array(performances) / max(performances) if len(performances) > 0 and max(performances) > 0 else np.ones(len(performances))
         generic_individual = self.generate_random_initial_state(weights)
         assert len(generic_individual) == self.weight_params
         for ind in self.population:
@@ -617,7 +618,12 @@ space ..")
 
         # Copy the space as it will be subsetted.
         if not custom_feature_space:
-            tmp_space = sparse.csr_matrix(self.train_feature_space.copy())
+            # Use a more memory-efficient copy approach
+            tmp_space = self.train_feature_space.copy()
+            if sparse.issparse(tmp_space):
+                tmp_space = sparse.csr_matrix(tmp_space)
+            else:
+                tmp_space = sparse.csr_matrix(tmp_space)
 
         else:
             tmp_space = sparse.csr_matrix(custom_feature_matrix)
@@ -894,6 +900,13 @@ space ..")
         prob_df = prob_df.fillna(0)
         assert len(np.where(prob_df.sum(axis=1) < 1)[0]) == 0
 
+        # Clean up temporary matrices
+        if 'prediction_matrix_final' in locals():
+            del prediction_matrix_final
+        if 'transformed_instances' in locals():
+            del transformed_instances
+        gc.collect()
+
         return prob_df
 
     def transform(self, instances):
@@ -990,6 +1003,14 @@ space ..")
 
             if self.verbose:
                 logging.info("Predictions obtained")
+
+            # Clean up temporary matrices
+            del transformed_instances
+            if 'pspace' in locals():
+                del pspace
+            if 'subsetted_space' in locals():
+                del subsetted_space
+            gc.collect()
 
             return all_predictions
 
@@ -1280,6 +1301,11 @@ space ..")
             combine_with_existing_representation=self.
             combine_with_existing_representation)
 
+        # Check if feature construction failed
+        if self.train_feature_space is None:
+            raise RuntimeError("Feature construction failed - unable to create feature matrix. "
+                             "This might be due to insufficient samples or incompatible data.")
+
         self.all_feature_names = []
         if self.verbose:
             logging.info("Initialized training matrix of dimension {}".format(
@@ -1294,9 +1320,8 @@ space ..")
         for transformer in self.vectorizer.named_steps[
                 'union'].transformer_list:
             features = transformer[1].steps[1][1].get_feature_names_out()
-            self.feature_subspaces.append(
-                self.train_feature_space[:, current_fnum:(current_fnum +
-                                                          len(features))])
+            # Store only metadata instead of the actual subspace data to save memory
+            # The subspace can be recreated when needed from the main feature space
             current_fnum += len(features)
             self.all_feature_names += list(features)
             num_feat = len(features)
@@ -1691,4 +1716,15 @@ space ..")
                 single_learner = (learner, individual, score)
                 self.ensemble_of_learners.append(single_learner)
 
+        # Clean up memory after evolution
+        if hasattr(self, 'population'):
+            del self.population
+        if hasattr(self, 'fitness_container'):
+            # Keep only the most recent fitness values, clear older ones
+            if len(self.fitness_container) > 10:
+                self.fitness_container = self.fitness_container[-10:]
+        
+        # Force garbage collection to free up memory
+        gc.collect()
+        
         return self

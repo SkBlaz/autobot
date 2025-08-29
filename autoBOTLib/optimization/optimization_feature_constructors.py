@@ -151,7 +151,7 @@ def remove_url(text, replace_token):
     :return str string: A new text
     """
 
-    regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+    regex = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
     return re.sub(regex, replace_token, text)
 
 
@@ -374,6 +374,7 @@ def get_simple_features(df_data, max_num_feat=10000):
     except Exception as es:
         print(es, "Feature construction error.")
         tokenizer = None
+        data_matrix = None
 
     return tokenizer, feature_names, data_matrix
 
@@ -633,4 +634,5 @@ def get_features(df_data,
         print(es, "Feature construction error.")
         tokenizer = None
 
+        data_matrix = None
     return tokenizer, feature_names, data_matrix
