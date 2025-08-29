@@ -22,7 +22,7 @@ def debug_test():
         autoBOTLibObj = autoBOTLib.GAlearner(
             train_sequences,
             train_targets,
-            representation_type="symbolic",
+            representation_type="neurosymbolic",
             n_fold_cv=2,  # Smaller CV
             sparsity=0.8,  # Higher sparsity
             time_constraint=0.005,
